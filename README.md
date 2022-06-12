@@ -1,2 +1,2 @@
-# CidocOnline2022
+# OntoMatchGame
 Public repo.
