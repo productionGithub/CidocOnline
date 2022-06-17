@@ -29,7 +29,7 @@ namespace StarterCore.Core.Scenes.Form
 
         private async UniTaskVoid FetchAsync()
         {
-            List<User> users = await _net.GetRandomUsersAsync("God");
+            List<User> users = await _net.GetRandomUsersAsync("Satan");
 
             if(users != null && users.Count > 0)
             {

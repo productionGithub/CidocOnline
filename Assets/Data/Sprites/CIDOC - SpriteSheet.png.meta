@@ -1,0 +1,789 @@
+fileFormatVersion: 2
+guid: c76abf057320eab4ab52840fea9a2f1a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -326594200175278128
+    second: card
+  - first:
+      213: -4101896417205295400
+    second: buttonShadow
+  - first:
+      213: 3650084832899040334
+    second: Mask
+  - first:
+      213: 5694064971355121422
+    second: CROWN
+  - first:
+      213: 2698666744351289585
+    second: panelLittle
+  - first:
+      213: -5374670012434240969
+    second: filterSideCard
+  - first:
+      213: -709759140970683722
+    second: cardBack
+  - first:
+      213: -7122592331249037816
+    second: shadow
+  - first:
+      213: -4547917944784195893
+    second: panelWhite
+  - first:
+      213: 9007508822129359425
+    second: cardBackProperties
+  - first:
+      213: 7265820592732383372
+    second: panelRed
+  - first:
+      213: -5800193884520958235
+    second: button
+  - first:
+      213: -6960510289024243610
+    second: dots
+  - first:
+      213: 2092027356027234123
+    second: Background
+  - first:
+      213: 2829339665934043763
+    second: filterColor
+  - first:
+      213: 44999675182432288
+    second: filterShadow
+  - first:
+      213: 5869048951520686161
+    second: panelShadow
+  - first:
+      213: 1127905380867337692
+    second: filterYellow
+  - first:
+      213: 7353234025797870779
+    second: filterLightBlue
+  - first:
+      213: -2045923420049179593
+    second: filterGreen
+  - first:
+      213: -4388424044245189372
+    second: filterGrey
+  - first:
+      213: -5323202425036856783
+    second: filterPurple
+  - first:
+      213: -7341653842548367800
+    second: filterWhite
+  - first:
+      213: 5341630260747444223
+    second: iconLocation
+  - first:
+      213: 4649418515743254860
+    second: iconClock
+  - first:
+      213: -1203442699669443914
+    second: iconCube
+  - first:
+      213: -321702659693917684
+    second: iconIdea
+  - first:
+      213: -1047732025741553909
+    second: iconForms
+  - first:
+      213: -3795841427161349358
+    second: IconID
+  - first:
+      213: -2937021725448997186
+    second: iconUser
+  - first:
+      213: -1174425266225857208
+    second: iconRuler
+  - first:
+      213: -7916038005329450590
+    second: iconMoebius
+  - first:
+      213: 604130363547700279
+    second: iconAxis
+  - first:
+      213: -5894205125000167668
+    second: panelLittle
+  - first:
+      213: -9000742922002124214
+    second: filterSideCard
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: card
+      rect:
+        serializedVersion: 2
+        x: 377
+        y: 551
+        width: 215
+        height: 331
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 25, y: 30, z: 28, w: 25}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d789d82e44b77bf0800000000000000
+      internalID: -326594200175278128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buttonShadow
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 61
+        width: 305
+        height: 105
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 12, y: 12, z: 12, w: 12}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d6e70bf0f22317c0800000000000000
+      internalID: -4101896417205295400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: filterSideCard
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 620
+        width: 20
+        height: 272
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 5, y: 6, z: 6, w: 7}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73aa9e399165965b0800000000000000
+      internalID: -5374670012434240969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shadow
+      rect:
+        serializedVersion: 2
+        x: 849
+        y: 546
+        width: 224
+        height: 340
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 15, y: 15, z: 15, w: 15}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80ecaf70308772d90800000000000000
+      internalID: -7122592331249037816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: panelWhite
+      rect:
+        serializedVersion: 2
+        x: 1739
+        y: 629
+        width: 101
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 8, y: 8, z: 8, w: 8}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bce6381a9bc82e0c0800000000000000
+      internalID: -4547917944784195893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 186
+        width: 295
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 12, y: 12, z: 12, w: 12}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e63cbc8462918fa0800000000000000
+      internalID: -5800193884520958235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dots
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 417
+        width: 99
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 28, y: 0, z: 28, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 668224f35cc476f90800000000000000
+      internalID: -6960510289024243610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Background
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 968
+        width: 1920
+        height: 1080
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b472768dbcf580d10800000000000000
+      internalID: 2092027356027234123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: filterColor
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 829
+        width: 175
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37acbe88f65d34720800000000000000
+      internalID: 2829339665934043763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: filterShadow
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 724
+        width: 201
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 020c14657fedf9000800000000000000
+      internalID: 44999675182432288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iconLocation
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 310
+        width: 100
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fff1455cb68412a40800000000000000
+      internalID: 5341630260747444223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iconClock
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 310
+        width: 100
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c492003a18d068040800000000000000
+      internalID: 4649418515743254860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iconCube
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 310
+        width: 100
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ba6aa2ad338c4fe0800000000000000
+      internalID: -1203442699669443914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iconIdea
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 310
+        width: 100
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0a45ada225198bf0800000000000000
+      internalID: -321702659693917684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iconForms
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 310
+        width: 100
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0fcfd11645b571f0800000000000000
+      internalID: -1047732025741553909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: IconID
+      rect:
+        serializedVersion: 2
+        x: 763
+        y: 310
+        width: 100
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 213065e4556725bc0800000000000000
+      internalID: -3795841427161349358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iconUser
+      rect:
+        serializedVersion: 2
+        x: 887
+        y: 310
+        width: 100
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb6f10d3d4a9d37d0800000000000000
+      internalID: -2937021725448997186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iconRuler
+      rect:
+        serializedVersion: 2
+        x: 1009
+        y: 310
+        width: 100
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84d3d57517a93bfe0800000000000000
+      internalID: -1174425266225857208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iconMoebius
+      rect:
+        serializedVersion: 2
+        x: 1144
+        y: 310
+        width: 100
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a9a8d70065942290800000000000000
+      internalID: -7916038005329450590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iconAxis
+      rect:
+        serializedVersion: 2
+        x: 1267
+        y: 310
+        width: 100
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73cc9456d5d426800800000000000000
+      internalID: 604130363547700279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: scrollButton
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 609
+        width: 55
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 20, y: 16, z: 20, w: 16}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0ff31beaa3933ea0800000000000000
+      internalID: 4369967896870525631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: scrollBar
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 671
+        width: 250
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 11, y: 0, z: 11, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a42b37b1000f61380800000000000000
+      internalID: -1239648207557840330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mask
+      rect:
+        serializedVersion: 2
+        x: 1093
+        y: 551
+        width: 215
+        height: 331
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 25, y: 25, z: 25, w: 25}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e440df801d4b7a230800000000000000
+      internalID: 3650084832899040334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CROWN
+      rect:
+        serializedVersion: 2
+        x: 1528
+        y: 21
+        width: 500
+        height: 500
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e07ed994ce1650f40800000000000000
+      internalID: 5694064971355121422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: panelShadow
+      rect:
+        serializedVersion: 2
+        x: 1852
+        y: 624
+        width: 111
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 16, y: 16, z: 16, w: 16}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 150f4c40dec037150800000000000000
+      internalID: 5869048951520686161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      filterColor: 2829339665934043763
+      filterShadow: 44999675182432288
+      iconCube: -1203442699669443914
+      iconAxis: 604130363547700279
+      shadow: -7122592331249037816
+      buttonShadow: -4101896417205295400
+      iconMoebius: -7916038005329450590
+      button: -5800193884520958235
+      CROWN: 5694064971355121422
+      iconLocation: 5341630260747444223
+      iconIdea: -321702659693917684
+      filterSideCard: -5374670012434240969
+      iconRuler: -1174425266225857208
+      scrollBar: -1239648207557840330
+      iconUser: -2937021725448997186
+      panelWhite: -4547917944784195893
+      card: -326594200175278128
+      dots: -6960510289024243610
+      Background: 2092027356027234123
+      IconID: -3795841427161349358
+      scrollButton: 4369967896870525631
+      Mask: 3650084832899040334
+      panelShadow: 5869048951520686161
+      iconClock: 4649418515743254860
+      iconForms: -1047732025741553909
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
