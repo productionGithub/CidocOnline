@@ -2,13 +2,12 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace StarterCore.Core.Scenes.Board
 {
     // One element of the list, in the view
 
-    public class Ticker: MonoBehaviour, IPointerClickHandler
+    public class TickDisplayer: MonoBehaviour, IPointerClickHandler
     {
         [SerializeField] private int PositionOffset;
 
