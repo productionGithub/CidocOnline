@@ -24,6 +24,7 @@ namespace StarterCore.Core.Scenes.Form
 
         private void Refresh()
         {
+            Debug.Log("We refresh !");
             FetchAsync().Forget();
         }
 
