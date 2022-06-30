@@ -24,30 +24,40 @@ namespace StarterCore.Core.Scenes.Signup
             _controller.OnFormSubmittedEvent += SubmitClicked;
         }
 
-        private void SubmitClicked()
+        private void SubmitClicked(SignupEventData signupData)
         {
-            SubmitAsync().Forget();
+            SignupModelUp netModel = new SignupModelUp
+            {
+                Email = signupData.Email,
+                Password = signupData.Password,
+                Country = signupData.Country,
+                Optin = signupData.Optin
+            };
+
+            Debug.Log("[SignupManager] Valid form has been submitted, call net service with email : " + _controller.formInstance._email.text);
+            SubmitAsync(netModel).Forget();
             //Debug.Log("[SignupManager] Valid form has been submitted, call net service with : ");
             //Debug.Log(string.Format("Email : {0}, password : {1}, Country : {2}, Optin : {3}",
             //    c._email.text, c._password.text, c._country.text, c._toggleOptinButton.isOn));
         }       
 
-        private async UniTaskVoid SubmitAsync()
+
+        private async UniTaskVoid SubmitAsync(SignupModelUp form)
         {
-            SignupForm f = _controller.formInstance;
+            //SignupForm f = _controller.formInstance;
 
-            UserProfile profile = new UserProfile
-            {
-                Gamename = "OntoMatchGame",//TODO : Refactor not hard coded
-                Email = f._email.text,
-                Password = f._password.text,
-                Country = f._country.text,
-                Optin = f._toggleOptinButton.isOn.ToString()
-            };
+            //UserProfile profile = new UserProfile
+            //{
+            //    Gamename = "OntoMatchGame",//TODO : Refactor not hard coded
+            //    Email = f._email.text,
+            //    Password = f._password.text,
+            //    Country = f._country.text,
+            //    Optin = f._toggleOptinButton.isOn.ToString()
+            //};
 
-            ActivationCode code = await _net.CreateUserAccountAsync(profile);
+            SignupModelDown code = await _net.TestJSON(form);
             //Test result
-            Debug.Log("Activation code is :" + code.Activationcode);
+            Debug.Log("Activation code is :" + code.Code);
         }
     }
 }

@@ -2531,8 +2531,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _alertEmail: {fileID: 859754335}
-  _email: {fileID: 1809366722}
-  _password: {fileID: 1209005663}
+  _email: {fileID: 901219200}
+  _password: {fileID: 986692352}
   _country: {fileID: 1705893261}
   _toggleOptinButton: {fileID: 763864973}
   _submitButton: {fileID: 124620813}
@@ -3646,6 +3646,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _template: {fileID: 1055183943}
   _parent: {fileID: 1441386452}
+  formInstance: {fileID: 0}
 --- !u!1 &1452690311
 GameObject:
   m_ObjectHideFlags: 0
@@ -3872,8 +3873,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1492686535}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 316.2238, y: 469.84644, z: -0.59278065}
-  m_LocalScale: {x: 0.6063068, y: 0.6063068, z: 0.6063068}
+  m_LocalPosition: {x: 316.22372, y: 469.84637, z: -0.59278065}
+  m_LocalScale: {x: 0.6063069, y: 0.6063069, z: 0.6063069}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 986692351}

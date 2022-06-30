@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using StarterCore.Core.Utils;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -36,7 +37,14 @@ namespace StarterCore.Core.Services.Network
                 {
                     using (UnityWebRequest webRequest = UnityWebRequest.Post(url, json))
                     {
+                        webRequest.SetRequestHeader("Content-Type", "application/json");
+                        //Debug.Log("upload Handler is : " + FormatByteArray(webRequest.uploadHandler.data));
+
+                        //webRequest.useHttpContinue = true;
                         await webRequest.SendWebRequest();
+                        Debug.Log("uwr encoding is : " + webRequest.GetResponseHeader("Content-Encoding"));
+                        Debug.Log("Nb bytes downloaded" + webRequest.downloadedBytes);
+                        Debug.Log("Response data" + webRequest.downloadHandler.text);
                         return ParseResult<T>(webRequest);
                     }
                 }
@@ -56,7 +64,10 @@ namespace StarterCore.Core.Services.Network
         {
             if (webRequest.result == UnityWebRequest.Result.Success)
             {
+                //Debug.Log("Request is done ? -> " + webRequest.isDone); // True.
                 string content = webRequest.downloadHandler.text;
+                Debug.Log("WR content : " + webRequest.downloadHandler.text);
+
                 if (JSON.TryDeserialize<T>(content, out T parsed))
                 {
                     return parsed;
@@ -72,6 +83,23 @@ namespace StarterCore.Core.Services.Network
             }
             return default;
         }
+
+        public static string FormatByteArray(byte[] aData)
+        {
+            if (aData == null)
+                return "byte array is null";
+            var sb = new System.Text.StringBuilder();
+            sb.Append("byte array ( length: ").Append(aData.Length).Append(") ").AppendLine();
+            int count = 0;
+            foreach (var b in aData)
+            {
+                sb.AppendFormat("{0,2:X2} ", b);
+                if (++count % 16 == 0)
+                    sb.AppendLine();
+            }
+            return sb.ToString();
+        }
+
 
         // Kept as example for pure C# version, doesn't work on WebGL !
         //private HttpClient _http;
@@ -93,4 +121,5 @@ namespace StarterCore.Core.Services.Network
         //    return default;
         //}
     }
+
 }
