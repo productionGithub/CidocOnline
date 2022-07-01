@@ -35,15 +35,14 @@ namespace StarterCore.Core.Services.Network
             {
                 if(JSON.TrySerialize(data, out string json, indent: false))
                 {
-                    using (UnityWebRequest webRequest = UnityWebRequest.Post(url, json))
+                    using (UnityWebRequest webRequest = UnityWebRequest.Put(url, json))
                     {
+                        webRequest.method = "POST";
                         webRequest.SetRequestHeader("Content-Type", "application/json");
-                        //Debug.Log("upload Handler is : " + FormatByteArray(webRequest.uploadHandler.data));
+                        //webRequest.SetRequestHeader("Accept", "application/json");
 
-                        //webRequest.useHttpContinue = true;
                         await webRequest.SendWebRequest();
                         Debug.Log("uwr encoding is : " + webRequest.GetResponseHeader("Content-Encoding"));
-                        Debug.Log("Nb bytes downloaded" + webRequest.downloadedBytes);
                         Debug.Log("Response data" + webRequest.downloadHandler.text);
                         return ParseResult<T>(webRequest);
                     }

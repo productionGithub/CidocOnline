@@ -16,17 +16,7 @@ namespace StarterCore.Core.Scenes.Signup
 
         public SignupForm formInstance;
 
-        WWWForm wwwForm;//Content of formInstance fields
-        
         public event Action<SignupEventData> OnFormSubmittedEvent;
-
-        //private void Start()
-        //{
-        //    Show();
-        //}
-
-        string myUrl = "https://ontomatchgame.huma-num.fr/php/";
-        string insertUrl = "userSave.php";
 
         public void Show()
         {
@@ -42,13 +32,9 @@ namespace StarterCore.Core.Scenes.Signup
 
         private void OnSubmitSignupFormClicked()
         {
-
-
-            //StartCoroutine(SubmitAsync());
-
-
             if (ValidateForm())
             {
+                formInstance.AlertEmail.SetActive(false);
                 string email = formInstance._email.text;
                 string password = formInstance._password.text;
                 string country = formInstance._country.text;
@@ -57,91 +43,15 @@ namespace StarterCore.Core.Scenes.Signup
                 var evt = new SignupEventData(email, password, country, optin);
 
                 OnFormSubmittedEvent?.Invoke(evt);
-
-
-                //StartCoroutine(SubmitAsync());
-
-
-                //Create a Unity WWWForm
-
-                /*
-                WWWForm form = new WWWForm();
-                form.AddField("gamename", "GamingNamos");
-                form.AddField("email", formInstance._email.text);
-                form.AddField("password", formInstance._password.text);
-                form.AddField("firstname", "Bitos");
-                form.AddField("lastname", "aka Bitman");
-                form.AddField("country", formInstance._country.text);
-
-                Debug.Log(formInstance._email.text);
-
-                //Fire OnFormSubmittedEvent event
-                //OnFormSubmittedEvent?.Invoke();
-                //Debug.Log("[SignupController] Form validated, Email is : " + formInstance._email.text);
-                //OnFormSubmittedEvent?.Invoke(formInstance._email.text);
-                OnFormSubmittedEvent?.Invoke(form);
-
-                */
             }
             else
             {
                 Debug.Log("[SignupController] Form not valid (lacking email)");
+                formInstance.AlertEmail.SetActive(true);
             }
         }
 
-
-        /*
-
-        // insert a player to database
-        IEnumerator SubmitAsync()
-        {
-            string urlTest = "https://ontomatchgame.huma-num.fr/php/phptest-tbd.php";
-
-
-            UnityWebRequest www = UnityWebRequest.Get(urlTest);
-
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                // You can use Debug logs 
-                Debug.Log(www.error);
-            }
-            else
-            {
-                // You can use Debug logs 
-                Debug.Log("php test return content: " + www.downloadHandler.text);
-                OnFormSubmittedEvent?.Invoke(formInstance._email.text);
-            }
-            */
-        /*
-        WWWForm form = new WWWForm();
-        form.AddField("gamename", "GamingNamos");
-        form.AddField("email", formInstance._email.text);
-        form.AddField("password", formInstance._password.text);
-        form.AddField("firstname", "Bitos");
-        form.AddField("lastname", "aka Bitman");
-        form.AddField("country", formInstance._country.text);
-
-        UnityWebRequest www = UnityWebRequest.Get(myUrl + insertUrl);//, form);
-        yield return www.SendWebRequest();
-
-        if (www.isNetworkError || www.isHttpError)
-        {
-            // You can use Debug logs 
-            Debug.Log(www.error);
-        }
-        else
-        {
-            string activationCode = www.downloadHandler.text;
-            // You can use Debug logs 
-            Debug.Log("Form insert complete! code is : " + activationCode);
-        }
-
-    }
-                    */
-
-        public bool ValidateForm()
+        public bool ValidateForm()//TODO Finish form validation with other checks
         {
             return ValidateEmail();
         }

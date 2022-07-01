@@ -1,13 +1,12 @@
 using Newtonsoft.Json;
 using System;
 
-
 namespace StarterCore.Core.Services.Network.Models
 {
     [Serializable]
-    public class SignupModelDown
+    public class EmailValidationDown
     {
-        [JsonProperty("code")]
-        public string Code;
+        [JsonProperty("isValid")]
+        public string IsValid;
     }
 }

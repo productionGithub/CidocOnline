@@ -17,6 +17,9 @@ namespace StarterCore.Core.Scenes.Signup
         [Inject] private MockNetService _net;
         [Inject] private SignupController _controller;
 
+        string myUrl = "https://ontomatchgame.huma-num.fr/php/";
+        string checkEmail = "checkemail.php";
+
         public void Initialize()
         {
             Debug.Log("SignupManager initialized!");
@@ -26,6 +29,12 @@ namespace StarterCore.Core.Scenes.Signup
 
         private void SubmitClicked(SignupEventData signupData)
         {
+            //Check Email
+            string email = signupData.Email;
+            CheckEmail(email);
+
+
+            //Register user
             SignupModelUp netModel = new SignupModelUp
             {
                 Email = signupData.Email,
@@ -34,30 +43,26 @@ namespace StarterCore.Core.Scenes.Signup
                 Optin = signupData.Optin
             };
 
-            Debug.Log("[SignupManager] Valid form has been submitted, call net service with email : " + _controller.formInstance._email.text);
-            SubmitAsync(netModel).Forget();
-            //Debug.Log("[SignupManager] Valid form has been submitted, call net service with : ");
-            //Debug.Log(string.Format("Email : {0}, password : {1}, Country : {2}, Optin : {3}",
-            //    c._email.text, c._password.text, c._country.text, c._toggleOptinButton.isOn));
-        }       
+            RegisterUser(netModel).Forget();
+        }
 
-
-        private async UniTaskVoid SubmitAsync(SignupModelUp form)
+        private async UniTask<EmailValidationDown> CheckEmail(string email)
         {
-            //SignupForm f = _controller.formInstance;
+            EmailValidationDown result =  await _net.CheckEmail(email);
+            Debug.Log("Email availability is : " + result.IsValid);
+            return result;
+        }
 
-            //UserProfile profile = new UserProfile
-            //{
-            //    Gamename = "OntoMatchGame",//TODO : Refactor not hard coded
-            //    Email = f._email.text,
-            //    Password = f._password.text,
-            //    Country = f._country.text,
-            //    Optin = f._toggleOptinButton.isOn.ToString()
-            //};
-
-            SignupModelDown code = await _net.TestJSON(form);
-            //Test result
+        private async UniTaskVoid RegisterUser(SignupModelUp form)
+        {
+            SignupModelDown code = await _net.Register(form);
             Debug.Log("Activation code is :" + code.Code);
         }
     }
 }
+
+
+
+//Debug.Log("[SignupManager] Valid form has been submitted, call net service with : ");
+//Debug.Log(string.Format("Email : {0}, password : {1}, Country : {2}, Optin : {3}",
+//    c._email.text, c._password.text, c._country.text, c._toggleOptinButton.isOn));
