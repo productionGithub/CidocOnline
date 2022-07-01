@@ -31,6 +31,12 @@ namespace StarterCore.Core.Scenes.Signup
         {
             //Check Email
             string email = signupData.Email;
+
+            //ICI : Pourquoi ce CS4014 ? Le result me semble bien 'await'
+            //Je voudrais tester si CheckEmail() retourne un EmailValidationDown avec 'true', avant d'appeler RegisterUser()
+            //Comment faire ça ?
+            // I must admit I'm confused ^^
+
             CheckEmail(email);
 
 
