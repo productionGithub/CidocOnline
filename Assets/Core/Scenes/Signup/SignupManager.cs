@@ -27,35 +27,35 @@ namespace StarterCore.Core.Scenes.Signup
             _controller.OnFormSubmittedEvent += SubmitClicked;
         }
 
-        private void SubmitClicked(SignupEventData signupData)
+        private async void SubmitClicked(SignupEventData signupData)
         {
             //Check Email
             string email = signupData.Email;
 
-            //ICI : Pourquoi ce CS4014 ? Le result me semble bien 'await'
-            //Je voudrais tester si CheckEmail() retourne un EmailValidationDown avec 'true', avant d'appeler RegisterUser()
-            //Comment faire ça ?
-            // I must admit I'm confused ^^
+            var result = await CheckEmail(email);
 
-            CheckEmail(email);
-
-
-            //Register user
-            SignupModelUp netModel = new SignupModelUp
+            if (result.DoesExist == false)//False = Did not find the email in DB
             {
-                Email = signupData.Email,
-                Password = signupData.Password,
-                Country = signupData.Country,
-                Optin = signupData.Optin
-            };
+                //Register user
+                SignupModelUp netModel = new SignupModelUp
+                {
+                    Email = signupData.Email,
+                    Password = signupData.Password,
+                    Country = signupData.Country,
+                    Optin = signupData.Optin
+                };
 
-            RegisterUser(netModel).Forget();
+                RegisterUser(netModel).Forget();
+            } else
+            {
+                Debug.Log("Email already exists");
+            }
         }
 
         private async UniTask<EmailValidationDown> CheckEmail(string email)
         {
             EmailValidationDown result =  await _net.CheckEmail(email);
-            Debug.Log("Email availability is : " + result.IsValid);
+            Debug.Log("Email availability is : " + result.DoesExist);
             return result;
         }
 
