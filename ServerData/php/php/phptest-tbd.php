@@ -1,8 +1,27 @@
 <?php
-
     include("connect.php");
-    
-    class ActivationCode
+
+    header('Content-Type: application/json');
+
+    //Check & log DB connexion
+    if (!$connection->ping()) {
+      printf ("Error: %s\n", $connection->error);
+    }
+
+    //DTOs
+    //Data client -> server, get email
+    class SignupModelUp
+    {
+      public $email;
+
+      public function __construct($c) 
+      {
+          $this->email = $c;
+      }
+    }
+
+    //Data server -> client, create activation code from email
+    class SignupModelDown
     {
       public $code;   
 
@@ -11,15 +30,21 @@
           $this->code = $c;
       }
     }
+    //End DTOs
 
-    $code = new ActivationCode("code29");
+    $body = file_get_contents('php://input');//Needed because data are json, not from xxx-form-encoded
+    $parsed = json_decode($body);
+    $email = $parsed->email;
 
-    echo $code;
-    /*
-    echo '<br>';
-    echo "After include...";
-    echo '<br>';
-    */
+    echo $email;
+    
+    //Generate activation code
+    $email =  hash("sha256", $parsed->email, $binary=false);
+
+    //Encapsulate as JSON object
+    $instance = new SignupModelDown($email);
+    echo json_encode($instance);
+
 
     // $query = "SELECT * FROM User WHERE email='".$_GET["email"]."'";
 
