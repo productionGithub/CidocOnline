@@ -32,9 +32,11 @@ namespace StarterCore.Core.Scenes.Signup
 
         private void OnSubmitSignupFormClicked()
         {
+            formInstance.AlertEmailNotValid.SetActive(false);
+            formInstance.AlertEmailAlreadyExists.SetActive(false);
+            formInstance.AlertPasswordNotValid.SetActive(false);
             if (ValidateForm())
             {
-                formInstance.AlertEmail.SetActive(false);
                 string email = formInstance._email.text;
                 string password = formInstance._password.text;
                 string country = formInstance._country.text;
@@ -44,16 +46,11 @@ namespace StarterCore.Core.Scenes.Signup
 
                 OnFormSubmittedEvent?.Invoke(evt);
             }
-            else
-            {
-                Debug.Log("[SignupController] Form not valid (lacking email)");
-                formInstance.AlertEmail.SetActive(true);
-            }
         }
 
         public bool ValidateForm()//TODO Finish form validation with other checks
         {
-            return ValidateEmail();
+            return ValidateEmail() && ValidatePassword();
         }
 
         private bool ValidateEmail()
@@ -63,7 +60,33 @@ namespace StarterCore.Core.Scenes.Signup
             if (match.Success)
                 return true;
             else
+            {
+                formInstance.AlertEmailNotValid.SetActive(true);
                 return false;
+            }
+        }
+
+        private bool ValidatePassword()
+        {
+            if(formInstance._password.text.Length >= 8)
+            {
+                return true;
+            }
+            else
+            {
+                formInstance.AlertPasswordNotValid.SetActive(true);
+                return false;
+            }
+        }
+
+        internal void EmailAlreadyExists()
+        {
+            formInstance.AlertEmailAlreadyExists.SetActive(true);
+        }
+
+        internal void AccountCreated()
+        {
+            formInstance.AlertUserAcccountCreated.SetActive(true);
         }
     }
 }

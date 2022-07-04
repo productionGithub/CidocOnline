@@ -25,21 +25,21 @@ namespace StarterCore.Core.Scenes.Form
         private void Refresh()
         {
             Debug.Log("We refresh !");
-            FetchAsync().Forget();
+            //FetchAsync().Forget();
         }
 
-        private async UniTaskVoid FetchAsync()
-        {
-            List<User> users = await _net.GetRandomUsersAsync("Satan");
+        //private async UniTaskVoid FetchAsync()
+        //{
+        //    List<User> users = await _net.GetRandomUsersAsync("Satan");
 
-            if(users != null && users.Count > 0)
-            {
-                _controller.Show(users);
-            }
-            else
-            {
-                Debug.Log("[FormManager] Failed to fetch users !");
-            }
-        }
+        //    if(users != null && users.Count > 0)
+        //    {
+        //        _controller.Show(users);
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("[FormManager] Failed to fetch users !");
+        //    }
+        //}
     }
 }

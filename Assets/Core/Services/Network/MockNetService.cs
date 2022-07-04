@@ -18,15 +18,7 @@ namespace StarterCore.Core.Services.Network
         [Inject] private NetworkService _net;
 
 
-
-        //GET
-        public async UniTask<List<User>> GetRandomUsersAsync(string name)
-        {
-            string url = string.Format(URL_FORMAT_User, name);
-            List<User> result = await _net.GetAsync<List<User>>(url);
-            return result;
-        }
-
+        //CHECK EMAIL
         public async UniTask<EmailValidationDown> CheckEmail(string email)
         {
             string url = string.Format(URL_CHECK_EMAIL, email);
@@ -41,17 +33,25 @@ namespace StarterCore.Core.Services.Network
         //}
 
 
-        //POST
+        //REGISTER
         public async UniTask<SignupModelDown> Register(SignupModelUp formData)
         {
-            SignupModelDown result = await _net.PostAsync<SignupModelDown>(URL_TEST_PHP, formData);
-            Debug.Log(result.Code);
+            SignupModelDown result = await _net.PostAsync<SignupModelDown>(URL_CREATE_USER, formData);
+            //Debug.Log(result.Code);
             return result;
         }
 
-
         // More methods about the API
-
     }
 }
 
+
+/*
+   //EXAMPLE OF DYNAMIC FETCH & DISPLAY
+        public async UniTask<List<User>> GetRandomUsersAsync(string name)
+        {
+            string url = string.Format(URL_FORMAT_User, name);
+            List<User> result = await _net.GetAsync<List<User>>(url);
+            return result;
+        }
+*/

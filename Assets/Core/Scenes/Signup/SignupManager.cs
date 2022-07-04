@@ -17,9 +17,6 @@ namespace StarterCore.Core.Scenes.Signup
         [Inject] private MockNetService _net;
         [Inject] private SignupController _controller;
 
-        string myUrl = "https://ontomatchgame.huma-num.fr/php/";
-        string checkEmail = "checkemail.php";
-
         public void Initialize()
         {
             Debug.Log("SignupManager initialized!");
@@ -48,27 +45,26 @@ namespace StarterCore.Core.Scenes.Signup
                 RegisterUser(netModel).Forget();
             } else
             {
-                Debug.Log("Email already exists");
+                _controller.EmailAlreadyExists();
             }
         }
 
         private async UniTask<EmailValidationDown> CheckEmail(string email)
         {
             EmailValidationDown result =  await _net.CheckEmail(email);
-            Debug.Log("Email availability is : " + result.DoesExist);
             return result;
         }
 
         private async UniTaskVoid RegisterUser(SignupModelUp form)
         {
             SignupModelDown code = await _net.Register(form);
-            Debug.Log("Activation code is :" + code.Code);
+            if (code.Code != "")
+            {
+                _controller.AccountCreated();
+                Debug.Log("Activation code is :" + code.Code);
+            }
+            else
+                Debug.LogError("Sorry. Coud not create account du to server issue.");
         }
     }
 }
-
-
-
-//Debug.Log("[SignupManager] Valid form has been submitted, call net service with : ");
-//Debug.Log(string.Format("Email : {0}, password : {1}, Country : {2}, Optin : {3}",
-//    c._email.text, c._password.text, c._country.text, c._toggleOptinButton.isOn));

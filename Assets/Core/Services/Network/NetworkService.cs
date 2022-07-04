@@ -17,7 +17,7 @@ namespace StarterCore.Core.Services.Network
                     await webRequest.SendWebRequest();
 
                     string content = webRequest.downloadHandler.text;
-                    Debug.Log(content);
+                    //Debug.Log(content);
 
                     return ParseResult<T>(webRequest);
                 }
@@ -42,8 +42,7 @@ namespace StarterCore.Core.Services.Network
                         //webRequest.SetRequestHeader("Accept", "application/json");
 
                         await webRequest.SendWebRequest();
-                        Debug.Log("uwr encoding is : " + webRequest.GetResponseHeader("Content-Encoding"));
-                        Debug.Log("Response data" + webRequest.downloadHandler.text);
+                        //Debug.Log("Response data" + webRequest.downloadHandler.text);
                         return ParseResult<T>(webRequest);
                     }
                 }
@@ -65,7 +64,7 @@ namespace StarterCore.Core.Services.Network
             {
                 //Debug.Log("Request is done ? -> " + webRequest.isDone); // True.
                 string content = webRequest.downloadHandler.text;
-                Debug.Log("WR content : " + webRequest.downloadHandler.text);
+                //Debug.Log("WR content : " + webRequest.downloadHandler.text);
 
                 if (JSON.TryDeserialize<T>(content, out T parsed))
                 {

@@ -6,7 +6,7 @@ namespace StarterCore.Core.Services.Network.Models
     [Serializable]
     public class EmailValidationDown
     {
-        [JsonProperty("isValid")]
+        [JsonProperty("doesExist")]
         public bool DoesExist;
     }
 }
