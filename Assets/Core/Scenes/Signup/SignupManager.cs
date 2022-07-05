@@ -64,7 +64,7 @@ namespace StarterCore.Core.Scenes.Signup
                 Debug.Log("Activation code is :" + code.Code);
             }
             else
-                Debug.LogError("Sorry. Coud not create account du to server issue.");
+                Debug.LogError("Sorry. Coud not create account due to server issue.");
         }
     }
 }

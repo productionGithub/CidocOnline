@@ -14,6 +14,7 @@ namespace StarterCore.Core.Services.Network
         private const string URL_CREATE_USER = "https://ontomatchgame.huma-num.fr/php/userSave.php";
         private const string URL_TEST_PHP = "https://ontomatchgame.huma-num.fr/php/phptest-tbd.php";
         private const string URL_CHECK_EMAIL = "https://ontomatchgame.huma-num.fr/php/checkemail.php?email={0}";
+        private const string URL_LOGIN = "https://ontomatchgame.huma-num.fr/php/login.php";
 
         [Inject] private NetworkService _net;
 
@@ -38,6 +39,15 @@ namespace StarterCore.Core.Services.Network
         {
             SignupModelDown result = await _net.PostAsync<SignupModelDown>(URL_CREATE_USER, formData);
             //Debug.Log(result.Code);
+            return result;
+        }
+
+        //LOGIN
+        public async UniTask<SigninModelDown> Login(SigninModelUp formData)
+        {
+            SigninModelDown result = await _net.PostAsync<SigninModelDown>(URL_LOGIN, formData);
+
+            Debug.Log("[Login] UNITASK Loginresult _> " + result.LoginResult);
             return result;
         }
 

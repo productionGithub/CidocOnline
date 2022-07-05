@@ -5,7 +5,7 @@
 
     //Check & log DB connexion
     if (!$connection->ping()) {
-      printf ("Error: %s\n", $connection->error);
+        printf ("Error: %s\n", $connection->error);
     }
 
     //DTOs
@@ -23,7 +23,6 @@
 
     $body = file_get_contents('php://input');//Needed because data are json, not from xxx-form-encoded
     $parsed = json_decode($body);
-
 
     //gamename field
     if(isset($parsed->gamename) && $parsed->gamename != '')

@@ -9,8 +9,8 @@ namespace StarterCore.Core.Scenes.Signin
 
         public override void InstallBindings()
         {
-            //Container.BindInterfacesAndSelfTo<SignupManager>().AsSingle();
-            //Container.Bind<SignupController>().FromInstance(_controller);
+            Container.BindInterfacesAndSelfTo<SigninManager>().AsSingle();
+            Container.Bind<SigninController>().FromInstance(_controller);
         }
     }
 }
