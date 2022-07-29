@@ -1,8 +1,8 @@
 ﻿using Cysharp.Threading.Tasks;
 using StarterCore.Core.Services.Network;
 using StarterCore.Core.Services.Network.Models;
-using System;
-using System.Collections.Generic;
+using StarterCore.Core.Services.Navigation;
+
 using UnityEngine;
 using Zenject;
 
@@ -16,12 +16,14 @@ namespace StarterCore.Core.Scenes.Signup
     {   
         [Inject] private MockNetService _net;
         [Inject] private SignupController _controller;
+        [Inject] private NavigationService _navService;
 
         public void Initialize()
         {
             Debug.Log("SignupManager initialized!");
             _controller.Show();
             _controller.OnFormSubmittedEvent += SubmitClicked;
+            _controller.OnBackEvent += BackEventClicked;
         }
 
         private async void SubmitClicked(SignupEventData signupData)
@@ -65,6 +67,11 @@ namespace StarterCore.Core.Scenes.Signup
             }
             else
                 Debug.LogError("Sorry. Coud not create account due to server issue.");
+        }
+
+        private void BackEventClicked()
+        {
+            _navService.Pop();
         }
     }
 }

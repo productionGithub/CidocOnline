@@ -19,6 +19,7 @@ namespace StarterCore.Core.Scenes.Signup
         public int OnBackButtonClicked { get; private set; }
 
         public event Action<SignupEventData> OnFormSubmittedEvent;
+        public event Action OnBackEvent;
 
         public void Show()
         {
@@ -35,8 +36,9 @@ namespace StarterCore.Core.Scenes.Signup
 
         private void OnBackClicked()
         {
-            SceneManager.LoadSceneAsync("SigninScene");
-            SceneManager.UnloadSceneAsync("SignupScene");
+            //SceneManager.LoadSceneAsync("SigninScene");
+            //SceneManager.UnloadSceneAsync("SignupScene");
+            OnBackEvent?.Invoke();
         }
 
         private void OnSubmitSignupFormClicked()

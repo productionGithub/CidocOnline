@@ -93,17 +93,29 @@ namespace StarterCore.Core.Scenes.Signin
             }
         }
 
+        private void ForgotPassword(string email)
+        {
+            //Load SignUp scene
+            _navService.Push("SignupScene");
+        }
+
+
+
+        /*
         private async void ForgotPassword(string email)
         {
             //Get activation code
             //POst reset.php avec code
+
+
             Debug.Log("[Signin Manager] Call async task GetACtivationCode with email : " + email);
             ActivationCode code = await _net.PostActivationCode(email);
             Debug.Log("[Signin Manager] Got activation code: " + code.Code);
-            _navService.Initialize();
+
+
             Debug.Log("[NavService] current scene name : " + _navService.CurrentSceneName);
         }
-
+        */
 
 
 
