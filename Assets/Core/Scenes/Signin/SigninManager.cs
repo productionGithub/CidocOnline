@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
+using StarterCore.Core.Services.Navigation;
 
 namespace StarterCore.Core.Scenes.Signin
 {
@@ -17,6 +18,7 @@ namespace StarterCore.Core.Scenes.Signin
     {
         [Inject] private MockNetService _net;
         [Inject] private SigninController _controller;
+        [Inject] private NavigationService _navService;
 
         public void Initialize()
         {
@@ -98,6 +100,8 @@ namespace StarterCore.Core.Scenes.Signin
             Debug.Log("[Signin Manager] Call async task GetACtivationCode with email : " + email);
             ActivationCode code = await _net.PostActivationCode(email);
             Debug.Log("[Signin Manager] Got activation code: " + code.Code);
+            _navService.Initialize();
+            Debug.Log("[NavService] current scene name : " + _navService.CurrentSceneName);
         }
 
 

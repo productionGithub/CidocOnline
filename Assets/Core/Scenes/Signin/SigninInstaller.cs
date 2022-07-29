@@ -1,5 +1,6 @@
 using UnityEngine;
 using Zenject;
+using StarterCore.Core.Services.Navigation;
 
 namespace StarterCore.Core.Scenes.Signin
 {
