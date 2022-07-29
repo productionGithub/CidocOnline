@@ -18,9 +18,10 @@ namespace StarterCore.Core.Scenes.Signup
         [SerializeField] internal TMP_Text _country;
         [SerializeField] internal Toggle _toggleOptinButton;
         [SerializeField] private Button _submitButton;
-
+        [SerializeField] private Button _backButton;
 
         public event Action OnSubmitSignupFormClickedEvent;
+        public event Action OnBackClickedEvent;
 
         public void Show()
         {
@@ -29,6 +30,7 @@ namespace StarterCore.Core.Scenes.Signup
             AlertPasswordNotValid.SetActive(false);
             AlertUserAcccountCreated.SetActive(false);
             _submitButton.onClick.AddListener(() => OnSubmitSignupFormClickedEvent?.Invoke());
+            _backButton.onClick.AddListener(() => OnBackClickedEvent?.Invoke());
         }
     }
 }

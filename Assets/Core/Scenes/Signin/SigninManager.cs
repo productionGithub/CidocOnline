@@ -3,6 +3,7 @@ using StarterCore.Core.Services.Network;
 using StarterCore.Core.Services.Network.Models;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -22,6 +23,7 @@ namespace StarterCore.Core.Scenes.Signin
             Debug.Log("SigninManager initialized!");
             _controller.Show();
             _controller.OnSigninFormSubmittedEvent += SubmitClicked;
+            _controller.OnForgotPasswordClickedEvent += ForgotPassword;
         }
 
         private async void SubmitClicked(SigninEventData signinData)
@@ -38,17 +40,34 @@ namespace StarterCore.Core.Scenes.Signin
             }
             else
             {
-                Debug.Log("Account found check credentials");
-                //Found email, check credentials
-                SigninModelUp credentials = new SigninModelUp
-                {
-                    Email = signinData.Email,
-                    Password = signinData.Password
-                };
+                //var status = await CheckStatus(email);
 
-                Login(credentials).Forget();
+                //if (status.DoesExist == true)
+                //{
+                    Debug.Log("Account activated, check credentials");
+                    //Found email, check credentials
+                    SigninModelUp credentials = new SigninModelUp
+                    {
+                        Email = signinData.Email,
+                        Password = signinData.Password
+                    };
+
+                    Login(credentials).Forget();
+                //}
+                //else
+                //{
+                //    Debug.Log("ACCOOUNT NOT ACTIVATED");
+                //    _controller.formInstance.AlertActivation.SetActive(true);
+                //}
             }
         }
+
+
+        //private async UniTask<EmailValidationDown> CheckStatus(string email)
+        //{
+        //    EmailValidationDown result = await _net.CheckStatus(email);
+        //    return result;
+        //}
 
         private async UniTask<EmailValidationDown> CheckEmail(string email)
         {
@@ -71,5 +90,34 @@ namespace StarterCore.Core.Scenes.Signin
                 Debug.Log("Sorry, wrong email/password combination.");
             }
         }
+
+        private async void ForgotPassword(string email)
+        {
+            //Get activation code
+            //POst reset.php avec code
+            Debug.Log("[Signin Manager] Call async task GetACtivationCode with email : " + email);
+            ActivationCode code = await _net.PostActivationCode(email);
+            Debug.Log("[Signin Manager] Got activation code: " + code.Code);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //activation code = GET activationcode.php(email)
+        //GET reset.php (activationcode)
+        //Check email
     }
 }

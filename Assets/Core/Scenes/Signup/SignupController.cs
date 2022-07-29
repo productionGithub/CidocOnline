@@ -4,7 +4,7 @@ using System.Net.Mail;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using System.Collections;
-using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 namespace StarterCore.Core.Scenes.Signup
 {
@@ -15,6 +15,8 @@ namespace StarterCore.Core.Scenes.Signup
         [SerializeField] private Transform _parent;
 
         public SignupForm formInstance;
+
+        public int OnBackButtonClicked { get; private set; }
 
         public event Action<SignupEventData> OnFormSubmittedEvent;
 
@@ -27,7 +29,14 @@ namespace StarterCore.Core.Scenes.Signup
             formInstance.gameObject.SetActive(true);
 
             formInstance.OnSubmitSignupFormClickedEvent += OnSubmitSignupFormClicked; // Equiv to += () => OnSubmitSignupFormClicked();
+            formInstance.OnBackClickedEvent += OnBackClicked; // Equiv to += () => OnSubmitSignupFormClicked();
             formInstance.Show();
+        }
+
+        private void OnBackClicked()
+        {
+            SceneManager.LoadSceneAsync("SigninScene");
+            SceneManager.UnloadSceneAsync("SignupScene");
         }
 
         private void OnSubmitSignupFormClicked()
@@ -68,7 +77,7 @@ namespace StarterCore.Core.Scenes.Signup
 
         private bool ValidatePassword()
         {
-            if(formInstance._password.text.Length >= 8)
+            if(formInstance._password.text.Length >= 6)
             {
                 return true;
             }

@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Globalization;
 using System.Collections;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 namespace StarterCore.Core.Scenes.Signin
 {
@@ -17,6 +18,7 @@ namespace StarterCore.Core.Scenes.Signin
         public SigninForm formInstance;
 
         public event Action<SigninEventData> OnSigninFormSubmittedEvent;
+        public event Action<string> OnForgotPasswordClickedEvent;
 
         public void Show()
         {
@@ -27,7 +29,17 @@ namespace StarterCore.Core.Scenes.Signin
             formInstance.gameObject.SetActive(true);
 
             formInstance.OnSubmitSigninFormClickedEvent += OnSubmitSigninFormClicked; // Equiv to += () => OnSubmitSignupFormClicked();
+            formInstance.OnForgotPasswordClickedEvent += OnForgotPasswordClicked; // Equiv to += () => OnSubmitSignupFormClicked();
+            formInstance.OnCreateAccountClickedEvent += OnCreateAccountClicked; // Equiv to += () => OnSubmitSignupFormClicked();
+
             formInstance.Show();
+        }
+
+        private void OnCreateAccountClicked()
+        {
+            Debug.Log("Create account !");
+            SceneManager.LoadSceneAsync("SignupScene");
+            SceneManager.UnloadSceneAsync("SigninScene");
         }
 
         private void OnSubmitSigninFormClicked()
@@ -37,6 +49,7 @@ namespace StarterCore.Core.Scenes.Signin
             formInstance.AlertPasswordNotValid.SetActive(false);
             formInstance.AlertWrongCombination.SetActive(false);
             formInstance.AlertRightCombination.SetActive(false);
+            //formInstance.AlertActivation.SetActive(false);
 
             if (ValidateForm())
             {
@@ -49,6 +62,17 @@ namespace StarterCore.Core.Scenes.Signin
             }
         }
 
+        private void OnForgotPasswordClicked()
+        {
+            OnForgotPasswordClickedEvent?.Invoke(formInstance._email.text);
+            Debug.Log("[Signin controller] OnForgotPasswordClickedEvent invoked !");
+        }
+
+
+        /// <summary>
+        /// Form validation
+        /// </summary>
+        /// <returns></returns>
         public bool ValidateForm()//TODO Finish form validation with other checks
         {
             return ValidateEmail() && ValidatePassword();
@@ -69,7 +93,7 @@ namespace StarterCore.Core.Scenes.Signin
 
         private bool ValidatePassword()
         {
-            if (formInstance._password.text.Length >= 8)
+            if (formInstance._password.text.Length >= 6)
             {
                 return true;
             }
@@ -84,6 +108,8 @@ namespace StarterCore.Core.Scenes.Signin
         {
             formInstance.AlertNoAccount.SetActive(true);
         }
+
+
     }
 }
 
