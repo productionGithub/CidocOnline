@@ -20,20 +20,25 @@ namespace StarterCore.Core.Services.Network
         private const string URL_LOGIN = "https://ontomatchgame.huma-num.fr/php/login.php";
         private const string URL_GET_ACTIVATION_CODE = "https://ontomatchgame.huma-num.fr/php/getactivationcode.php";
         private const string URL_RESET_PASSWORD = "https://ontomatchgame.huma-num.fr/php/reset.php";
+        private const string URL_SEND_RESET_EMAIL = "https://ontomatchgame.huma-num.fr/php/sendresetlink.php";
 
         [Inject] private NetworkService _net;
 
         //CALL RESET PHP PAGE
-        public async UniTask<ResetPasswordModelDown> CallResetPasswordForm(ResetPasswordModelUp data)
+        /*
+        public async UniTask<UpdatePasswordModelDown> CallResetPasswordForm(ResetPasswordModelUp data)
         {
             string url = string.Format(URL_RESET_PASSWORD, data);
             Debug.Log("String url is : " + url);
-            var result = await _net.GetAsync<ResetPasswordModelDown>(url);
+            var result = await _net.GetAsync<UpdatePasswordModelDown>(url);
             //GetActivation code
             //Call sendResetLink with activation code
-            Debug.Log("Called reset.php script !!!" + result.EmailSent);
+            Debug.Log("Called reset.php script !!!" + result.IsUpdated);
             return result;
         }
+        */
+
+
 
 
         //CHECK EMAIL
@@ -81,10 +86,25 @@ namespace StarterCore.Core.Services.Network
             Debug.Log("[PostActivation code !");
 
             ActivationCodeModelDown code = await _net.PostAsync<ActivationCodeModelDown>(URL_GET_ACTIVATION_CODE, email);
-            Debug.Log("Code = " + code.Code);
             return code;
         }
 
+        //SEND RESET PASSWORD EMAIL
+        public async UniTask<UpdatePasswordModelDown> SendResetEmail(ResetPasswordModelUp data)
+        {
+            //string url = string.Format(URL_RESET_PASSWORD, data);
+            //Debug.Log("String url is : " + url);
+            UpdatePasswordModelDown emailSent = await _net.PostAsync<UpdatePasswordModelDown>(URL_SEND_RESET_EMAIL, data);
+            Debug.Log("Called reset.php script !!!" + emailSent.IsUpdated);
+            return emailSent;
+        }
+
+
+        //public async UniTask<UpdatePasswordModelDown> PostNewPassword(UpdatePasswordModelDown v)
+        //{
+        //    UpdatePasswordModelDown updated = await _net.PostAsync<UpdatePasswordModelDown>(URL_GET_ACTIVATION_CODE, v);
+        //    return updated;
+        //}
         // More methods about the API
     }
 }

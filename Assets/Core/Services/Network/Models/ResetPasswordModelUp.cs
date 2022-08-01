@@ -8,6 +8,6 @@ namespace StarterCore.Core.Services.Network.Models
         public string Email;
 
         [JsonProperty("code")]
-        public bool Code;
+        public string Code;
     }
 }
