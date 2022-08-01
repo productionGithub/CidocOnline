@@ -18,7 +18,7 @@ namespace StarterCore.Core.Scenes.Signin
         public SigninForm formInstance;
 
         public event Action<SigninEventData> OnSigninFormSubmittedEvent;
-        public event Action<string> OnForgotPasswordClickedEvent;
+        public event Action OnForgotPasswordClickedEvent;
 
         public void Show()
         {
@@ -64,7 +64,7 @@ namespace StarterCore.Core.Scenes.Signin
 
         private void OnForgotPasswordClicked()
         {
-            OnForgotPasswordClickedEvent?.Invoke(formInstance._email.text);
+            OnForgotPasswordClickedEvent?.Invoke();
             Debug.Log("[Signin controller] OnForgotPasswordClickedEvent invoked !");
         }
 

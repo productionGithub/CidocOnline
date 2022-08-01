@@ -4,9 +4,9 @@ using Newtonsoft.Json;
 namespace StarterCore.Core.Services.Network.Models
 {
     [Serializable]
-    public class ActivationCode
+    public class ActivationCodeModelUp
     {
-        [JsonProperty("code")]
-        public string Code;
+        [JsonProperty("email")]
+        public string Email;
     }
 }

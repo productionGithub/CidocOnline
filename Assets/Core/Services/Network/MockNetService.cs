@@ -76,9 +76,12 @@ namespace StarterCore.Core.Services.Network
             return result;
         }
 
-        public async UniTask<ActivationCode> PostActivationCode(string email)
+        public async UniTask<ActivationCodeModelDown> PostActivationCode(ActivationCodeModelUp email)
         {
-            ActivationCode code = await _net.PostAsync<ActivationCode>(URL_GET_ACTIVATION_CODE, email);
+            Debug.Log("[PostActivation code !");
+
+            ActivationCodeModelDown code = await _net.PostAsync<ActivationCodeModelDown>(URL_GET_ACTIVATION_CODE, email);
+            Debug.Log("Code = " + code.Code);
             return code;
         }
 

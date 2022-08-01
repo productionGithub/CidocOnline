@@ -93,10 +93,10 @@ namespace StarterCore.Core.Scenes.Signin
             }
         }
 
-        private void ForgotPassword(string email)
+        private void ForgotPassword()
         {
             //Load SignUp scene
-            _navService.Push("SignupScene");
+            _navService.Push("ResetPasswordScene");
         }
 
 

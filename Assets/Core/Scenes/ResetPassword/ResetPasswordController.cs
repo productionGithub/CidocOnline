@@ -18,6 +18,7 @@ namespace StarterCore.Core.Scenes.ResetPassword
         public ResetPasswordForm formInstance;
 
         public event Action<string> OnResetPasswordEvent;
+        public event Action OnBackEvent;
 
         public void Show()
         {
@@ -27,23 +28,32 @@ namespace StarterCore.Core.Scenes.ResetPassword
             formInstance = Instantiate(_template, _parent);
             formInstance.gameObject.SetActive(true);
             formInstance.OnResetPasswordClickedEvent += OnResetPasswordFormClicked; // Equiv to += () => OnSubmitSignupFormClicked();
+            formInstance.OnBackClickedEvent += OnBackClicked; // Equiv to += () => OnSubmitSignupFormClicked();
             formInstance.Show();
+        }
+
+        private void OnBackClicked()
+        {
+            OnBackEvent?.Invoke();
         }
 
         private void OnResetPasswordFormClicked()
         {
             formInstance.AlertEmailNotValid.SetActive(false);
             formInstance.AlertNoAccount.SetActive(false);
+            formInstance.AlertCheckEmail.SetActive(false);
             formInstance.ConfirmationMsg.SetActive(false);
 
             if (ValidateForm())
             {
+                formInstance.AlertCheckEmail.SetActive(true);
                 OnResetPasswordEvent?.Invoke(formInstance._email.text);
             }
         }
 
         internal void NoAccountFound()
         {
+            formInstance.AlertCheckEmail.SetActive(false);
             formInstance.AlertNoAccount.SetActive(true);
         }
 
@@ -70,10 +80,10 @@ namespace StarterCore.Core.Scenes.ResetPassword
             }
         }
 
-        internal void NoAccount()
-        {
-            formInstance.AlertNoAccount.SetActive(true);
-        }
+        //internal void NoAccount()
+        //{
+        //    formInstance.AlertNoAccount.SetActive(true);
+        //}
 
     }
 }

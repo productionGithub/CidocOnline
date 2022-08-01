@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
+using StarterCore.Core.Services.Navigation;
 
 namespace StarterCore.Core.Scenes.ResetPassword
 {
@@ -17,12 +18,14 @@ namespace StarterCore.Core.Scenes.ResetPassword
     {
         [Inject] private MockNetService _net;
         [Inject] private ResetPasswordController _controller;
+        [Inject] private NavigationService _navService;
 
         public void Initialize()
         {
             Debug.Log("ResetPassword Manager initialized!");
             _controller.Show();
             _controller.OnResetPasswordEvent += CreateNewPassword;
+            _controller.OnBackEvent += BackEventClicked;
         }
 
         private async void CreateNewPassword(string email)
@@ -37,8 +40,14 @@ namespace StarterCore.Core.Scenes.ResetPassword
             {
                 //Get activation code
                 Debug.Log("[Reset Manager] Call async task GetActivationCode with email : " + email);
-                ActivationCode code = await _net.PostActivationCode(email);
+                ActivationCodeModelUp emailUp = new ActivationCodeModelUp
+                {
+                    Email = email
+                };
+                ActivationCodeModelDown code = await _net.PostActivationCode(emailUp);
                 Debug.Log("[Reset Manager] Got activation code: " + code.Code);
+
+                //TODO Next : Call (GET) reset.php avec activation code en parametre
             }
         }
 
@@ -48,5 +57,9 @@ namespace StarterCore.Core.Scenes.ResetPassword
             return result;
         }
 
+        private void BackEventClicked()
+        {
+            _navService.Pop();
+        }
     }
 }

@@ -37,7 +37,6 @@ namespace StarterCore.Core.Services.Network
                 {
                     using (UnityWebRequest webRequest = UnityWebRequest.Put(url, json))
                     {
-                        Debug.Log("");
                         webRequest.method = "POST";
                         webRequest.SetRequestHeader("Content-Type", "application/json");
                         //webRequest.SetRequestHeader("Accept", "application/json");
