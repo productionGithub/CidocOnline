@@ -19,6 +19,7 @@ namespace StarterCore.Core.Scenes.Signin
 
         public event Action<SigninEventData> OnSigninFormSubmittedEvent;
         public event Action OnForgotPasswordClickedEvent;
+        public event Action OnCreateAccountClickedEvent;
 
         public void Show()
         {
@@ -37,19 +38,18 @@ namespace StarterCore.Core.Scenes.Signin
 
         private void OnCreateAccountClicked()
         {
-            Debug.Log("Create account !");
-            SceneManager.LoadSceneAsync("SignupScene");
-            SceneManager.UnloadSceneAsync("SigninScene");
+            //Debug.Log("Create account !");
+            //SceneManager.LoadSceneAsync("SignupScene");
+            //SceneManager.UnloadSceneAsync("SigninScene");
+
+            OnCreateAccountClickedEvent?.Invoke();
+            Debug.Log("[Signin controller] OnCreateAccountClickedEvent invoked !");
         }
 
         private void OnSubmitSigninFormClicked()
         {
-            formInstance.AlertNoAccount.SetActive(false);
-            formInstance.AlertEmailNotValid.SetActive(false);
-            formInstance.AlertPasswordNotValid.SetActive(false);
-            formInstance.AlertWrongCombination.SetActive(false);
-            formInstance.AlertRightCombination.SetActive(false);
-            //formInstance.AlertActivation.SetActive(false);
+            HideAllAlerts();
+            formInstance.AlertWaitingForCredentials.SetActive(true);
 
             if (ValidateForm())
             {
@@ -109,6 +109,16 @@ namespace StarterCore.Core.Scenes.Signin
             formInstance.AlertNoAccount.SetActive(true);
         }
 
+        internal void HideAllAlerts()
+        {
+            formInstance.AlertNoAccount.SetActive(false);
+            formInstance.AlertEmailNotValid.SetActive(false);
+            formInstance.AlertPasswordNotValid.SetActive(false);
+            formInstance.AlertWrongCombination.SetActive(false);
+            formInstance.AlertRightCombination.SetActive(false);
+            formInstance.AlertActivation.SetActive(false);
+            formInstance.AlertWaitingForCredentials.SetActive(false);
+        }
 
     }
 }

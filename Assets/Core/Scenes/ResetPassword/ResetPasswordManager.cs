@@ -20,8 +20,6 @@ namespace StarterCore.Core.Scenes.ResetPassword
         [Inject] private ResetPasswordController _controller;
         [Inject] private NavigationService _navService;
 
-        public event Action<string> ActivationCodeOKEvent;
-
         public void Initialize()
         {
             Debug.Log("ResetPassword Manager initialized!");
@@ -47,19 +45,28 @@ namespace StarterCore.Core.Scenes.ResetPassword
                     Email = email
                 };
                 ActivationCodeModelDown code = await _net.PostActivationCode(emailUp);
+
                 Debug.Log("[Reset Manager] Got activation code: " + code.Code);
 
 
-                //Next : call update password.
-                //ActivationCodeOKEvent?.Invoke(code.Code);
+                //Setup data to pass to php script.
                 ResetPasswordModelUp data = new ResetPasswordModelUp
                 {
                     Email = email,
-                    Code = code.Code
+                    Code = "0"// code.Code
                 };
 
-                UpdatePasswordModelDown updated = await _net.SendResetEmail(data);
-                Debug.Log("An email has been sent to reset your password!");
+                ResetPasswordModelDown resetLinkSent = await _net.SendResetEmail(data);
+
+                //Alert of return value
+                if(resetLinkSent.EmailSent == true)
+                {
+                    _controller.ConfirmEmailSent();
+                }
+                else
+                {
+                    _controller.EmailNotSentError();
+                }
             }
         }
 

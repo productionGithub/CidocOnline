@@ -17,7 +17,7 @@ namespace StarterCore.Core.Services.Network
                     await webRequest.SendWebRequest();
 
                     string content = webRequest.downloadHandler.text;
-                    //Debug.Log(content);
+                    Debug.Log("Content returned =====> " + content);
 
                     return ParseResult<T>(webRequest);
                 }
@@ -63,11 +63,11 @@ namespace StarterCore.Core.Services.Network
             {
                 //Debug.Log("Request is done ? -> " + webRequest.isDone); // True.
                 string content = webRequest.downloadHandler.text;
-                Debug.Log("WebRequest content : " + webRequest.downloadHandler.text);
+                //Debug.Log("WebRequest content : " + webRequest.downloadHandler.text);
 
                 if (JSON.TryDeserialize<T>(content, out T parsed))
                 {
-                    Debug.Log("Parsed Json response -> " + parsed);
+                    //Debug.Log("Parsed Json response -> " + parsed);
                     return parsed;
                 }
                 else

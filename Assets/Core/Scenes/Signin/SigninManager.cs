@@ -26,11 +26,12 @@ namespace StarterCore.Core.Scenes.Signin
             _controller.Show();
             _controller.OnSigninFormSubmittedEvent += SubmitClicked;
             _controller.OnForgotPasswordClickedEvent += ForgotPassword;
+            _controller.OnCreateAccountClickedEvent += SignUp;
         }
 
+        //SUBMIT FORM
         private async void SubmitClicked(SigninEventData signinData)
         {
-            //Check Email
             string email = signinData.Email;
 
             var result = await CheckEmail(email);
@@ -42,11 +43,12 @@ namespace StarterCore.Core.Scenes.Signin
             }
             else
             {
-                //var status = await CheckStatus(email);
+                var status = await CheckStatus(email);
+                Debug.Log("Check status result is ------> " + status.IsActive);
 
-                //if (status.DoesExist == true)
-                //{
-                    Debug.Log("Account activated, check credentials");
+                if (status.IsActive == true)
+                {
+                    Debug.Log("Account activated, checking credentials");
                     //Found email, check credentials
                     SigninModelUp credentials = new SigninModelUp
                     {
@@ -55,85 +57,58 @@ namespace StarterCore.Core.Scenes.Signin
                     };
 
                     Login(credentials).Forget();
-                //}
-                //else
-                //{
-                //    Debug.Log("ACCOOUNT NOT ACTIVATED");
-                //    _controller.formInstance.AlertActivation.SetActive(true);
-                //}
+                }
+                else
+                {
+                    _controller.HideAllAlerts();
+                    _controller.formInstance.AlertActivation.SetActive(true);
+                }
             }
         }
 
-
-        //private async UniTask<EmailValidationDown> CheckStatus(string email)
-        //{
-        //    EmailValidationDown result = await _net.CheckStatus(email);
-        //    return result;
-        //}
-
+        //CHECK EMAIL
         private async UniTask<EmailValidationDown> CheckEmail(string email)
         {
             EmailValidationDown result = await _net.CheckEmail(email);
             return result;
         }
 
+        //CHECK STATUS
+        private async UniTask<StatusModelDown> CheckStatus(string email)
+        {
+            StatusModelDown result = await _net.CheckStatus(email);
+            return result;
+        }
+
+        //LOGIN PROCESS
         private async UniTaskVoid Login(SigninModelUp formData)
         {
             SigninModelDown result = await _net.Login(formData);
 
             if (result.LoginResult == true)
             {
+                _controller.HideAllAlerts();
                 _controller.formInstance.AlertRightCombination.SetActive(true);
-                Debug.Log("You are login !");
             }
             else
             {
+                _controller.HideAllAlerts();
                 _controller.formInstance.AlertWrongCombination.SetActive(true);
-                Debug.Log("Sorry, wrong email/password combination.");
             }
         }
 
+        //CLICK ON RESET PSASWORD LINK
         private void ForgotPassword()
         {
             //Load SignUp scene
             _navService.Push("ResetPasswordScene");
         }
 
-
-
-        /*
-        private async void ForgotPassword(string email)
+        //CLICK ON CREATE ACCOUNT BUTTON
+        private void SignUp()
         {
-            //Get activation code
-            //POst reset.php avec code
-
-
-            Debug.Log("[Signin Manager] Call async task GetACtivationCode with email : " + email);
-            ActivationCode code = await _net.PostActivationCode(email);
-            Debug.Log("[Signin Manager] Got activation code: " + code.Code);
-
-
-            Debug.Log("[NavService] current scene name : " + _navService.CurrentSceneName);
+            //Load SignUp scene
+            _navService.Push("SignupScene");
         }
-        */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //activation code = GET activationcode.php(email)
-        //GET reset.php (activationcode)
-        //Check email
     }
 }

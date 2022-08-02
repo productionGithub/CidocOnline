@@ -39,7 +39,13 @@ namespace StarterCore.Core.Services.Network
         */
 
 
-
+        //CHECK STATUS
+        public async UniTask<StatusModelDown> CheckStatus(string email)
+        {
+            string url = string.Format(URL_CHECK_STATUS, email);
+            StatusModelDown result = await _net.GetAsync<StatusModelDown>(url);
+            return result;
+        }
 
         //CHECK EMAIL
         public async UniTask<EmailValidationDown> CheckEmail(string email)
@@ -90,12 +96,12 @@ namespace StarterCore.Core.Services.Network
         }
 
         //SEND RESET PASSWORD EMAIL
-        public async UniTask<UpdatePasswordModelDown> SendResetEmail(ResetPasswordModelUp data)
+        public async UniTask<ResetPasswordModelDown> SendResetEmail(ResetPasswordModelUp data)
         {
             //string url = string.Format(URL_RESET_PASSWORD, data);
             //Debug.Log("String url is : " + url);
-            UpdatePasswordModelDown emailSent = await _net.PostAsync<UpdatePasswordModelDown>(URL_SEND_RESET_EMAIL, data);
-            Debug.Log("Called reset.php script !!!" + emailSent.IsUpdated);
+            ResetPasswordModelDown emailSent = await _net.PostAsync<ResetPasswordModelDown>(URL_SEND_RESET_EMAIL, data);
+            Debug.Log("Returned from reset.php script ===> " + emailSent.EmailSent);
             return emailSent;
         }
 

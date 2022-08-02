@@ -39,10 +39,7 @@ namespace StarterCore.Core.Scenes.ResetPassword
 
         private void OnResetPasswordFormClicked()
         {
-            formInstance.AlertEmailNotValid.SetActive(false);
-            formInstance.AlertNoAccount.SetActive(false);
-            formInstance.AlertCheckEmail.SetActive(false);
-            formInstance.ConfirmationMsg.SetActive(false);
+            HideAllAlerts();
 
             if (ValidateForm())
             {
@@ -53,10 +50,21 @@ namespace StarterCore.Core.Scenes.ResetPassword
 
         internal void NoAccountFound()
         {
-            formInstance.AlertCheckEmail.SetActive(false);
+            HideAllAlerts();
             formInstance.AlertNoAccount.SetActive(true);
         }
 
+        internal void ConfirmEmailSent()
+        {
+            HideAllAlerts();
+            formInstance.AlertConfirmation.SetActive(true);
+        }
+
+        internal void EmailNotSentError()
+        {
+            HideAllAlerts();
+            formInstance.AlertEmailNotSent.SetActive(true);
+        }
 
         /// <summary>
         /// Form validation
@@ -80,10 +88,14 @@ namespace StarterCore.Core.Scenes.ResetPassword
             }
         }
 
-        //internal void NoAccount()
-        //{
-        //    formInstance.AlertNoAccount.SetActive(true);
-        //}
+        private void HideAllAlerts()
+        {
+            formInstance.AlertEmailNotValid.SetActive(false);
+            formInstance.AlertNoAccount.SetActive(false);
+            formInstance.AlertCheckEmail.SetActive(false);
+            formInstance.AlertConfirmation.SetActive(false);
+            formInstance.AlertEmailNotSent.SetActive(false);
+        }
 
     }
 }

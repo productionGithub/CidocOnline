@@ -19,7 +19,8 @@ namespace StarterCore.Core.Scenes.Signin
         public GameObject AlertPasswordNotValid;
         public GameObject AlertWrongCombination;
         public GameObject AlertRightCombination;
-        //public GameObject AlertActivation;
+        public GameObject AlertActivation;
+        public GameObject AlertWaitingForCredentials;
 
         public event Action OnSubmitSigninFormClickedEvent;
         public event Action OnForgotPasswordClickedEvent;
@@ -32,7 +33,8 @@ namespace StarterCore.Core.Scenes.Signin
             AlertPasswordNotValid.SetActive(false);
             AlertWrongCombination.SetActive(false);
             AlertRightCombination.SetActive(false);
-            //AlertActivation.SetActive(false);
+            AlertActivation.SetActive(false);
+            AlertWaitingForCredentials.SetActive(false);
 
             _submitFormButton.onClick.AddListener(() => OnSubmitSigninFormClickedEvent?.Invoke());
             _forgotPassword.onClick.AddListener(() => OnForgotPasswordClickedEvent?.Invoke());

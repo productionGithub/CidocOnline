@@ -14,7 +14,9 @@ namespace StarterCore.Core.Scenes.ResetPassword
         public GameObject AlertNoAccount;
         public GameObject AlertEmailNotValid;
         public GameObject AlertCheckEmail;
-        public GameObject ConfirmationMsg;
+        public GameObject AlertConfirmation;
+        public GameObject AlertEmailNotSent;
+        
 
         public event Action OnResetPasswordClickedEvent;
         public event Action OnBackClickedEvent;
@@ -26,7 +28,8 @@ namespace StarterCore.Core.Scenes.ResetPassword
             AlertNoAccount.SetActive(false);
             AlertEmailNotValid.SetActive(false);
             AlertCheckEmail.SetActive(false);
-            ConfirmationMsg.SetActive(false);
+            AlertConfirmation.SetActive(false);
+            AlertEmailNotSent.SetActive(false);
 
             _ResetButton.onClick.AddListener(() => OnResetPasswordClickedEvent?.Invoke());
             _BackButton.onClick.AddListener(() => OnBackClickedEvent?.Invoke());

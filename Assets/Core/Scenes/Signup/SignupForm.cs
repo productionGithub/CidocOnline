@@ -29,6 +29,7 @@ namespace StarterCore.Core.Scenes.Signup
             AlertEmailAlreadyExists.SetActive(false);
             AlertPasswordNotValid.SetActive(false);
             AlertUserAcccountCreated.SetActive(false);
+
             _submitButton.onClick.AddListener(() => OnSubmitSignupFormClickedEvent?.Invoke());
             _backButton.onClick.AddListener(() => OnBackClickedEvent?.Invoke());
         }
