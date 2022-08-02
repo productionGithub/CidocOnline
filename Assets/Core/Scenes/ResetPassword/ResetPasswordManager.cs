@@ -38,34 +38,41 @@ namespace StarterCore.Core.Scenes.ResetPassword
             }
             else
             {
-                //Get activation code
-                Debug.Log("[Reset Manager] Call async task GetActivationCode with email : " + email);
-                ActivationCodeModelUp emailUp = new ActivationCodeModelUp
+                var status = await CheckStatus(email);
+                if (status.IsActive == true)
                 {
-                    Email = email
-                };
-                ActivationCodeModelDown code = await _net.PostActivationCode(emailUp);
+                    //Get activation code
+                    Debug.Log("[Reset Manager] Call async task GetActivationCode with email : " + email);
+                    ActivationCodeModelUp emailUp = new ActivationCodeModelUp
+                    {
+                        Email = email
+                    };
+                    ActivationCodeModelDown code = await _net.PostActivationCode(emailUp);
 
-                Debug.Log("[Reset Manager] Got activation code: " + code.Code);
+                    Debug.Log("[Reset Manager] Got activation code: " + code.Code);
 
 
-                //Setup data to pass to php script.
-                ResetPasswordModelUp data = new ResetPasswordModelUp
-                {
-                    Email = email,
-                    Code = "0"// code.Code
-                };
+                    //Setup data to pass to php script.
+                    ResetPasswordModelUp data = new ResetPasswordModelUp
+                    {
+                        Email = email,
+                        Code = code.Code
+                    };
+                    ResetPasswordModelDown resetLinkSent = await _net.SendResetEmail(data);
 
-                ResetPasswordModelDown resetLinkSent = await _net.SendResetEmail(data);
-
-                //Alert of return value
-                if(resetLinkSent.EmailSent == true)
-                {
-                    _controller.ConfirmEmailSent();
+                    //Alert of return value
+                    if (resetLinkSent.EmailSent == true)
+                    {
+                        _controller.ConfirmEmailSent();
+                    }
+                    else
+                    {
+                        _controller.EmailNotSentError();
+                    }
                 }
                 else
                 {
-                    _controller.EmailNotSentError();
+                    _controller.AlertStatus();
                 }
             }
         }
@@ -76,7 +83,11 @@ namespace StarterCore.Core.Scenes.ResetPassword
             return result;
         }
 
-
+        private async UniTask<StatusModelDown> CheckStatus(string email)
+        {
+            StatusModelDown result = await _net.CheckStatus(email);
+            return result;
+        }
 
 
         private void BackEventClicked()

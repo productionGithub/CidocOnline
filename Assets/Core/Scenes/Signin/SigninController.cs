@@ -48,9 +48,6 @@ namespace StarterCore.Core.Scenes.Signin
 
         private void OnSubmitSigninFormClicked()
         {
-            HideAllAlerts();
-            formInstance.AlertWaitingForCredentials.SetActive(true);
-
             if (ValidateForm())
             {
                 string email = formInstance._email.text;
@@ -59,6 +56,9 @@ namespace StarterCore.Core.Scenes.Signin
                 var evt = new SigninEventData(email, password);
 
                 OnSigninFormSubmittedEvent?.Invoke(evt);
+
+                HideAllAlerts();
+                formInstance.AlertWaitingForCredentials.SetActive(true);
             }
         }
 
@@ -86,6 +86,7 @@ namespace StarterCore.Core.Scenes.Signin
                 return true;
             else
             {
+                HideAllAlerts();
                 formInstance.AlertEmailNotValid.SetActive(true);
                 return false;
             }
@@ -99,6 +100,7 @@ namespace StarterCore.Core.Scenes.Signin
             }
             else
             {
+                HideAllAlerts();
                 formInstance.AlertPasswordNotValid.SetActive(true);
                 return false;
             }
@@ -106,7 +108,14 @@ namespace StarterCore.Core.Scenes.Signin
 
         internal void NoAccount()
         {
+            HideAllAlerts();
             formInstance.AlertNoAccount.SetActive(true);
+        }
+
+        internal void WaitMessage()
+        {
+            HideAllAlerts();
+            formInstance.AlertWaitingForCredentials.SetActive(true);
         }
 
         internal void HideAllAlerts()

@@ -66,6 +66,11 @@ namespace StarterCore.Core.Scenes.ResetPassword
             formInstance.AlertEmailNotSent.SetActive(true);
         }
 
+        internal void AlertStatus()
+        {
+            HideAllAlerts();
+            formInstance.AlertStatus.SetActive(true);
+        }
         /// <summary>
         /// Form validation
         /// </summary>
