@@ -9,5 +9,8 @@ namespace StarterCore.Core.Services.Network.Models
 
         [JsonProperty("code")]
         public string Code;
+
+        [JsonProperty("lang")]
+        public string Lang;
     }
 }

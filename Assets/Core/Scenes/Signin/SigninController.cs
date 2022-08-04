@@ -128,7 +128,6 @@ namespace StarterCore.Core.Scenes.Signin
             formInstance.AlertActivation.SetActive(false);
             formInstance.AlertWaitingForCredentials.SetActive(false);
         }
-
     }
 }
 

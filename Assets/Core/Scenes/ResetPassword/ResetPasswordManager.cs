@@ -56,7 +56,8 @@ namespace StarterCore.Core.Scenes.ResetPassword
                     ResetPasswordModelUp data = new ResetPasswordModelUp
                     {
                         Email = email,
-                        Code = code.Code
+                        Code = code.Code,
+                        Lang = "fr"//TODO manage multilingual game. Backend OK!
                     };
                     ResetPasswordModelDown resetLinkSent = await _net.SendResetEmail(data);
 
