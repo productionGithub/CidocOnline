@@ -14,8 +14,8 @@ namespace StarterCore.Core
         {
             Container.Bind<NetworkService>().AsSingle();
             Container.Bind<MockNetService>().AsSingle();
-            Container.BindInterfacesAndSelfTo<NavigationService>().AsSingle();
             Container.Bind<NavigationSetup>().FromInstance(_navSetup);
+            Container.BindInterfacesAndSelfTo<NavigationService>().AsSingle().NonLazy();
         }
     }
 }
