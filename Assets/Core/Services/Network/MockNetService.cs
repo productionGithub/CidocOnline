@@ -24,20 +24,6 @@ namespace StarterCore.Core.Services.Network
 
         [Inject] private NetworkService _net;
 
-        //CALL RESET PHP PAGE
-        /*
-        public async UniTask<UpdatePasswordModelDown> CallResetPasswordForm(ResetPasswordModelUp data)
-        {
-            string url = string.Format(URL_RESET_PASSWORD, data);
-            Debug.Log("String url is : " + url);
-            var result = await _net.GetAsync<UpdatePasswordModelDown>(url);
-            //GetActivation code
-            //Call sendResetLink with activation code
-            Debug.Log("Called reset.php script !!!" + result.IsUpdated);
-            return result;
-        }
-        */
-
 
         //CHECK STATUS
         public async UniTask<StatusModelDown> CheckStatus(string email)

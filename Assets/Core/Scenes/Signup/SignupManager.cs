@@ -41,7 +41,8 @@ namespace StarterCore.Core.Scenes.Signup
                     Email = signupData.Email,
                     Password = signupData.Password,
                     Country = signupData.Country,
-                    Optin = signupData.Optin
+                    Optin = signupData.Optin,
+                    Lang = "fr"
                 };
 
                 RegisterUser(netModel).Forget();

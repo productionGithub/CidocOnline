@@ -15,5 +15,8 @@ namespace StarterCore.Core.Services.Network.Models
 
         [JsonProperty("optin")]
         public bool Optin;
+
+        [JsonProperty("lang")]
+        public string Lang;
     }
 }
