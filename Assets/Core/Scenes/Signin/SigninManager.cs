@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 using StarterCore.Core.Services.Navigation;
+using StarterCore.Core.Services.GameState;
+
+
+using TMPro;
+using UnityEngine.SceneManagement;
 
 namespace StarterCore.Core.Scenes.Signin
 {
@@ -16,18 +21,33 @@ namespace StarterCore.Core.Scenes.Signin
 
     public class SigninManager : IInitializable
     {
+        //[Inject] private GameState _state;
         [Inject] private MockNetService _net;
         [Inject] private SigninController _controller;
         [Inject] private NavigationService _navService;
+        [Inject] private GameStateManager _gameState;
 
         public void Initialize()
         {
-            Debug.Log("SigninManager initialized!");
             _controller.Show();
             _controller.OnSigninFormSubmittedEvent += SubmitClicked;
             _controller.OnForgotPasswordClickedEvent += ForgotPassword;
             _controller.OnCreateAccountClickedEvent += SignUp;
+
+            _gameState.SetLocale("fr");
+            Debug.Log("=============+> Lang is now : " + _gameState.GameState.Lang);
+
+            //SceneChange(_navService.CurrentSceneName);
+
+            //var cards = await _state.LoadCards();
+            //_controller._cardName.GetComponent<TextMeshProUGUI>().text = cards[8].imageName;
         }
+
+
+        //private void SceneChange(string obj)
+        //{
+        //    Debug.Log("[LocalizeManager] Scene has changed to : " + obj);
+        //}
 
         //SUBMIT FORM
         private async void SubmitClicked(SigninEventData signinData)
@@ -35,6 +55,11 @@ namespace StarterCore.Core.Scenes.Signin
             string email = signinData.Email;
 
             var result = await CheckEmail(email);
+
+            //TEST
+            //var cards = await _net.GetJsonFile();
+            //_controller._cardName.GetComponent<TextMeshProUGUI>().text = cards[8].ImageName;
+            //Debug.Log("Fetched JSON is : " + cards);
 
             if (result.DoesExist == false)//False = Did not find the email in DB
             {
@@ -97,7 +122,7 @@ namespace StarterCore.Core.Scenes.Signin
             }
         }
 
-        //CLICK ON RESET PSASWORD LINK
+        //CLICK ON RESET PASSWORD LINK
         private void ForgotPassword()
         {
             //Load SignUp scene

@@ -2,6 +2,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 namespace StarterCore.Core.Scenes.Signin
 {
@@ -26,6 +28,8 @@ namespace StarterCore.Core.Scenes.Signin
         public event Action OnForgotPasswordClickedEvent;
         public event Action OnCreateAccountClickedEvent;
 
+        public UnityAction<Scene, LoadSceneMode> OnSceneLoaded;
+
         public void Show()
         {
             AlertNoAccount.SetActive(false);
@@ -39,7 +43,8 @@ namespace StarterCore.Core.Scenes.Signin
             _submitFormButton.onClick.AddListener(() => OnSubmitSigninFormClickedEvent?.Invoke());
             _forgotPassword.onClick.AddListener(() => OnForgotPasswordClickedEvent?.Invoke());
             _createAccountButton.onClick.AddListener(() => OnCreateAccountClickedEvent?.Invoke());
-        }
 
+            OnSceneLoaded?.Invoke(SceneManager.GetActiveScene(), LoadSceneMode.Single);
+        }
     }
 }

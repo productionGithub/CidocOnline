@@ -17,7 +17,9 @@ namespace StarterCore.Core.Services.Navigation
         public bool FromPop { get; private set; }
         public int StackSize => _mainScenes.Count;
 
-        public event Action OnSceneChangeEvent;
+        //public event Action OnSceneChangeEvent;
+        public event Action<string> OnSceneChangeEvent;
+
 
         private object _mainBundle;
         private Stack<(string sceneName, object bundle)> _mainScenes;
@@ -233,9 +235,9 @@ namespace StarterCore.Core.Services.Navigation
 
         private async UniTask LoadMainSceneAsync(string nextSceneName, string previousSceneName)
         {
-            _ = SceneManager.UnloadSceneAsync(previousSceneName);
             await _sceneLoader.LoadSceneAsync(nextSceneName, LoadSceneMode.Additive);
-            OnSceneChangeEvent?.Invoke();
+            _ = SceneManager.UnloadSceneAsync(previousSceneName);
+            OnSceneChangeEvent?.Invoke(SceneManager.GetActiveScene().name);
         }
 
         public override string ToString()

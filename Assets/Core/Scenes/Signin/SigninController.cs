@@ -14,6 +14,7 @@ namespace StarterCore.Core.Scenes.Signin
 
         [SerializeField] private SigninForm _template;
         [SerializeField] private Transform _parent;
+        [SerializeField] public Transform _cardName;
 
         public SigninForm formInstance;
 
@@ -23,7 +24,6 @@ namespace StarterCore.Core.Scenes.Signin
 
         public void Show()
         {
-            Debug.Log("SigninController instanciated");
             _template.gameObject.SetActive(false); // Disable template
 
             formInstance = Instantiate(_template, _parent);
@@ -38,12 +38,7 @@ namespace StarterCore.Core.Scenes.Signin
 
         private void OnCreateAccountClicked()
         {
-            //Debug.Log("Create account !");
-            //SceneManager.LoadSceneAsync("SignupScene");
-            //SceneManager.UnloadSceneAsync("SigninScene");
-
             OnCreateAccountClickedEvent?.Invoke();
-            Debug.Log("[Signin controller] OnCreateAccountClickedEvent invoked !");
         }
 
         private void OnSubmitSigninFormClicked()
@@ -65,7 +60,6 @@ namespace StarterCore.Core.Scenes.Signin
         private void OnForgotPasswordClicked()
         {
             OnForgotPasswordClickedEvent?.Invoke();
-            Debug.Log("[Signin controller] OnForgotPasswordClickedEvent invoked !");
         }
 
 

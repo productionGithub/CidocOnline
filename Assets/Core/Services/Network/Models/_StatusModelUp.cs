@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace StarterCore.Core.Services.Network.Models
 {
     [Serializable]
-    public class StatusModelUp
+    public class _StatusModelUp
     {
         [JsonProperty("email")]
         public string Email;

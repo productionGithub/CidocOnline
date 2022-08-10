@@ -8,6 +8,27 @@ namespace StarterCore.Core.Services.Network
 {
     public class NetworkService
     {
+        public async UniTask<String> GetRawStringAsync<T>(string url)
+        {
+            if (!string.IsNullOrWhiteSpace(url))
+            {
+                using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+                {
+                    await webRequest.SendWebRequest();
+
+                    string content = webRequest.downloadHandler.text;
+                    Debug.Log("Content returned =====> " + content);
+
+                    return content;// ParseResult<T>(webRequest);
+                }
+            }
+            else
+            {
+                Debug.LogError("[NetworkService] GET Given url is empty.");
+            }
+            return default;
+        }
+
         public async UniTask<T> GetAsync<T>(string url)
         {
             if (!string.IsNullOrWhiteSpace(url))

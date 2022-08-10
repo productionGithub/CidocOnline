@@ -5,12 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Data/Scenes/FormScene.unity
-    guid: 72087746a03d70e4b9883e3a309dea63
-  - enabled: 0
-    path: Assets/Data/Scenes/DeckTest.unity
-    guid: d9b7ce10dff054798b9e9cbe494d9880
   - enabled: 1
     path: Assets/Data/Scenes/SigninScene.unity
     guid: c3e6b2d6053d92c4f9beb8489795508b
@@ -20,4 +14,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Data/Scenes/ResetPasswordScene.unity
     guid: d3e9bb5d5cccb49938679408a90c8132
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 8fbc4261557184d04a0e478f7c16893b, type: 2}
+    com.unity.localization.settings: {fileID: 11400000, guid: ef0639c84ed0940bfbf127268a6c418a, type: 2}

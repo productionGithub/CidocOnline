@@ -5,24 +5,50 @@ using Zenject;
 using UnityEngine;
 using System.Threading.Tasks;
 using System;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace StarterCore.Core.Services.Network
 {
     public class MockNetService
     {
-        // More examples data here : https://random-data-api.com/documentation
-
-        private const string URL_FORMAT_User = "https://www.talgorn.me/phpTest/hello.php?name={0}";
         private const string URL_CREATE_USER = "https://ontomatchgame.huma-num.fr/php/userSave.php";
-        private const string URL_TEST_PHP = "https://ontomatchgame.huma-num.fr/php/phptest-tbd.php";
         private const string URL_CHECK_EMAIL = "https://ontomatchgame.huma-num.fr/php/checkemail.php?email={0}";
         private const string URL_CHECK_STATUS = "https://ontomatchgame.huma-num.fr/php/checkstatus.php?email={0}";
         private const string URL_LOGIN = "https://ontomatchgame.huma-num.fr/php/login.php";
         private const string URL_GET_ACTIVATION_CODE = "https://ontomatchgame.huma-num.fr/php/getactivationcode.php";
-        private const string URL_RESET_PASSWORD = "https://ontomatchgame.huma-num.fr/php/reset.php";
         private const string URL_SEND_RESET_EMAIL = "https://ontomatchgame.huma-num.fr/php/sendresetlink.php";
+        private const string URL_JSON = "https://ontomatchgame.huma-num.fr/json/instance.json";
+        private const string URL_JSON_SA = "https://ontomatchgame.huma-num.fr/StreamingAssets/DecksFiles/Instances/Instances.json";
+
+
+        
 
         [Inject] private NetworkService _net;
+
+
+        /**/
+        //Path to instances.json file
+        readonly private string jsonFileLocation = "DecksFiles/Instances/";
+        private string jsonFilePath;
+        private readonly string jsonFileName = "Instances.json";
+
+        //Path to application '.../StreamingAssets' folder
+        private string applicationStreamingAssetsPath;
+
+        //Instance cards
+        public List<InstanceCard> instanceCards;
+
+        /**/
+
+        //GET JSON FILE
+        public async UniTask<List<InstanceCardModelDown>> GetJsonFile()
+        {
+            //string url = string.Format(URL_RESET_PASSWORD, data);
+            //Debug.Log("String url is : " + url);
+            List<InstanceCardModelDown> jsonString = await _net.GetAsync<List<InstanceCardModelDown>>(URL_JSON_SA);
+            return jsonString;
+        }
 
 
         //CHECK STATUS
@@ -41,21 +67,6 @@ namespace StarterCore.Core.Services.Network
             return result;
         }
 
-        ////CHECK STATUS
-        //public async UniTask<EmailValidationDown> CheckStatus(string email)
-        //{
-        //    string url = string.Format(URL_CHECK_STATUS, email);
-        //    EmailValidationDown result = await _net.GetAsync<EmailValidationDown>(url);
-        //    return result;
-        //}
-
-        //public async UniTask<ActivationCode> CreateUserAccountAsync(UserProfile profile)
-        //{
-        //    ActivationCode result = await _net.PostAsync<ActivationCode>(URL_CREATE_USER, profile);
-        //    return result;
-        //}
-
-
         //REGISTER
         public async UniTask<SignupModelDown> Register(SignupModelUp formData)
         {
@@ -73,6 +84,7 @@ namespace StarterCore.Core.Services.Network
             return result;
         }
 
+        //ACTIVATION CODE
         public async UniTask<ActivationCodeModelDown> PostActivationCode(ActivationCodeModelUp email)
         {
             Debug.Log("[PostActivation code !");
@@ -92,12 +104,7 @@ namespace StarterCore.Core.Services.Network
         }
 
 
-        //public async UniTask<UpdatePasswordModelDown> PostNewPassword(UpdatePasswordModelDown v)
-        //{
-        //    UpdatePasswordModelDown updated = await _net.PostAsync<UpdatePasswordModelDown>(URL_GET_ACTIVATION_CODE, v);
-        //    return updated;
-        //}
-        // More methods about the API
+
     }
 }
 
