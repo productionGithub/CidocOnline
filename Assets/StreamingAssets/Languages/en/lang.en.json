@@ -1,38 +1,35 @@
 {
-   "locale":"en",
-   "static-text":[
-      {
-         "SigninScene":{
-            "SigninScene.title":"Welcome to OntoMatchGame!",
-            "SigninScene.intro.text":"Semantic Data Representation should let you generate, share and consume Cultural Heritage data with colleagues around the world, to ask and answer questions against more data and more integrated knowledge nets.",
-            "SigninScene.email.label":"Email address",
-            "SigninScene.password.label":"Password",
-            "SigninScene.forgot.label":"Forgot your password?",
-            "SigninScene.ok.button":"Forgot your password?",
-            "SigninScene.fail.text":"[TEST]\nWrong email / password combination.\nTry again.",
-            "SigninScene.success.text":"[TEST]\nLOGIN SUCCESSFUL!",
-            "SigninScene.activation.text":"[TEST]\nAccount not activated.\nCheck your email and click on activation link.",
-            "SigninScene.waiting.text":"Checking credentials.\nPlease wait...",
-            "SigninScene.signup.label":"Don't have an account?",
-            "SigninScene.create.button":"create my account",
-            "SigninScene.dumbfield.text":"This is a test"
-         }
-      },
-      {
-         "SignupScene":{
-            "SignupScene.title":"Create account.",
-            "SignupScene.intro.text":"Semantic Data Representation should let you generate, share and consume Cultural Heritage data with colleagues around the world, to ask and answer questions against more data and more integrated knowledge nets.",
-            "SignupScene.email.label":"Email address",
-            "SignupScene.password.label":"Password",
-            "SignupScene.forgot.label":"Forgot your password?",
-            "SignupScene.ok.button":"Forgot your password?",
-            "SignupScene.fail.text":"[TEST]\nWrong email / password combination.\nTry again.",
-            "SignupScene.success.text":"[TEST]\nLOGIN SUCCESSFUL!",
-            "SignupScene.activation.text":"[TEST]\nAccount not activated.\nCheck your email and click on activation link.",
-            "SignupScene.waiting.text":"Checking credentials.\nPlease wait...",
-            "SignupScene.signup.label":"Don't have an account?",
-            "SignupScene.create.button":"create my account"
-         }
-      }
-   ]
+   "locale": "en",
+"static-toxt" : {
+   "SigninScene": {
+      "title-text": "Welcome to OntoMatchGame!",
+      "intro-text": "Semantic Data Representation should let you generate, share and consume Cultural Heritage data with colleagues around the world, to ask and answer questions against more data and more integrated knowledge nets.",
+      "SigninScene-email-label": "Email address",
+      "SigninScene-password-label": "Password",
+      "SigninScene-forgot-label": "Forgot your password?",
+      "SigninScene-ok-button": "Forgot your password?",
+      "SigninScene-fail-text": "Wrong email / password combination-Try again-",
+      "SigninScene-success-text": "LOGIN SUCCESSFUL!",
+      "SigninScene-activation-text": "Account not activated-Check your email and click on activation link-",
+      "SigninScene-waiting-text": "Checking credentials-Please wait...",
+      "SigninScene-signup-label": "Dont have an account?",
+      "SigninScene-create-button": "create my account",
+      "SigninScene-dumbfield-text": "This is a test"
+   },
+      "SignupScene": {
+      "SignupScene-title-text": "Welcome AGAIN!",
+      "SignupScene-intro-text": "Semantic Data Representation should let you generate, share and consume Cultural Heritage data with colleagues around the world, to ask and answer questions against more data and more integrated knowledge nets.",
+      "SignupScene-email-label": "Email address",
+      "SignupScene-password-label": "Password",
+      "SignupScene-forgot-label": "Forgot your password?",
+      "SignupScene-ok-button": "Forgot your password?",
+      "SignupScene-fail-text": "Wrong email / password combination-Try again-",
+      "SignupScene-success-text": "LOGIN SUCCESSFUL!",
+      "SignupScene-activation-text": "Account not activated-Check your email and click on activation link-",
+      "SignupScene-waiting-text": "Checking credentials-Please wait...",
+      "SignupScene-signup-label": "Dont have an account?",
+      "SignupScene-create-button": "create my account",
+      "SignupScene-dumbfield-text": "This is a test"
+    }
+    }
 }

@@ -2165,7 +2165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _controller: {fileID: 2041574973}
-  _localizationController: {fileID: 0}
+  _localizationController: {fileID: 715829763}
 --- !u!114 &715829763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5204,7 +5204,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: WELCOME TO ONTOMATCHGAME!
+  m_text: title-text
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6423,12 +6423,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Semantic Data Representation should let you generate, share and consume
-    Cultural Heritage data with colleagues around the world, to ask and answer questions
-    against more data and more integrated knowledge nets.
-
-    @George, this intro
-    text could be updated for the V2?'
+  m_text: intro-text
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
