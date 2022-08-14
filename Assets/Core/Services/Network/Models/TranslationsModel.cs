@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace StarterCore.Core.Services.Localization.Models
+namespace StarterCore.Core.Services.Network.Models
 {
-    public class Translations
+    public class TranslationsModel
     {
         [JsonProperty("locale")]
         public string Locale;
-        [JsonProperty("static-toxt")]
+        [JsonProperty("static-text")]
         public Dictionary<string, Dictionary<string, string>> StaticText;
     }
 }

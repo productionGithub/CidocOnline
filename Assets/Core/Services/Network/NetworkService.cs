@@ -17,7 +17,7 @@ namespace StarterCore.Core.Services.Network
                     await webRequest.SendWebRequest();
 
                     string content = webRequest.downloadHandler.text;
-                    Debug.Log("Content returned =====> " + content);
+                    //Debug.Log("Content returned =====> " + content);
 
                     return content;// ParseResult<T>(webRequest);
                 }
@@ -38,7 +38,7 @@ namespace StarterCore.Core.Services.Network
                     await webRequest.SendWebRequest();
 
                     string content = webRequest.downloadHandler.text;
-                    Debug.Log("Content returned =====> " + content);
+                    ///Debug.Log("Content returned =====> " + content);
 
                     return ParseResult<T>(webRequest);
                 }

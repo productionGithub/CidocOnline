@@ -21,7 +21,6 @@ namespace StarterCore.Core.Scenes.Signin
 
     public class SigninManager : IInitializable
     {
-        //[Inject] private GameState _state;
         [Inject] private MockNetService _net;
         [Inject] private SigninController _controller;
         [Inject] private NavigationService _navService;
@@ -34,20 +33,9 @@ namespace StarterCore.Core.Scenes.Signin
             _controller.OnForgotPasswordClickedEvent += ForgotPassword;
             _controller.OnCreateAccountClickedEvent += SignUp;
 
-            _gameState.SetLocale("fr");
-            Debug.Log("=============+> Lang is now : " + _gameState.GameState.Lang);
-
-            //SceneChange(_navService.CurrentSceneName);
-
             //var cards = await _state.LoadCards();
             //_controller._cardName.GetComponent<TextMeshProUGUI>().text = cards[8].imageName;
         }
-
-
-        //private void SceneChange(string obj)
-        //{
-        //    Debug.Log("[LocalizeManager] Scene has changed to : " + obj);
-        //}
 
         //SUBMIT FORM
         private async void SubmitClicked(SigninEventData signinData)

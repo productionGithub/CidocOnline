@@ -12,44 +12,38 @@ namespace StarterCore.Core.Services.Network
 {
     public class MockNetService
     {
-        private const string URL_CREATE_USER = "https://ontomatchgame.huma-num.fr/php/userSave.php";
-        private const string URL_CHECK_EMAIL = "https://ontomatchgame.huma-num.fr/php/checkemail.php?email={0}";
-        private const string URL_CHECK_STATUS = "https://ontomatchgame.huma-num.fr/php/checkstatus.php?email={0}";
-        private const string URL_LOGIN = "https://ontomatchgame.huma-num.fr/php/login.php";
-        private const string URL_GET_ACTIVATION_CODE = "https://ontomatchgame.huma-num.fr/php/getactivationcode.php";
-        private const string URL_SEND_RESET_EMAIL = "https://ontomatchgame.huma-num.fr/php/sendresetlink.php";
-        private const string URL_JSON = "https://ontomatchgame.huma-num.fr/json/instance.json";
-        private const string URL_JSON_SA = "https://ontomatchgame.huma-num.fr/StreamingAssets/DecksFiles/Instances/Instances.json";
-
-
-        
-
         [Inject] private NetworkService _net;
 
+        const string HomeUrl = "https://ontomatchgame.huma-num.fr/";
+        const string LanguagesFolder = "StreamingAssets/Languages/";
 
-        /**/
-        //Path to instances.json file
-        readonly private string jsonFileLocation = "DecksFiles/Instances/";
-        private string jsonFilePath;
-        private readonly string jsonFileName = "Instances.json";
+        //Signin & Signup process
+        private string URL_CREATE_USER = Path.Combine(HomeUrl, "php/userSave.php");
+        private string URL_CHECK_EMAIL = Path.Combine(HomeUrl, "php/checkemail.php?email={0}");
+        private string URL_CHECK_STATUS = Path.Combine(HomeUrl, "php/checkstatus.php?email={0}");
+        private string URL_LOGIN = Path.Combine(HomeUrl, "php/login.php");
+        private string URL_GET_ACTIVATION_CODE = Path.Combine(HomeUrl, "php/getactivationcode.php");
+        private string URL_SEND_RESET_EMAIL = Path.Combine(HomeUrl, "php/sendresetlink.php");
+        private string URL_GET_LOCALES_MANIFEST = "StreamingAssets/Languages/manifest.json";
 
-        //Path to application '.../StreamingAssets' folder
-        private string applicationStreamingAssetsPath;
-
-        //Instance cards
-        public List<InstanceCard> instanceCards;
-
-        /**/
-
-        //GET JSON FILE
-        public async UniTask<List<InstanceCardModelDown>> GetJsonFile()
+        //FETCH LANGUAGE MANIFEST JSON FILE
+        public async UniTask<LocalesManifestModel> GetLocalesManifestFile()
         {
-            //string url = string.Format(URL_RESET_PASSWORD, data);
-            //Debug.Log("String url is : " + url);
-            List<InstanceCardModelDown> jsonString = await _net.GetAsync<List<InstanceCardModelDown>>(URL_JSON_SA);
-            return jsonString;
+            string url = Path.Combine(HomeUrl, URL_GET_LOCALES_MANIFEST);
+            LocalesManifestModel result = await _net.GetAsync<LocalesManifestModel>(url);
+            return result;
         }
 
+        //FETCH LANGUAGE DICTIONARY FOR LOCALIZATION
+        public async UniTask<TranslationsModel> GetLocaleDictionary(string locale)
+        {
+            string localePath = LanguagesFolder + locale;
+            string fileNamePath = localePath + "/lang-" + locale + ".json";
+            string languagePath = Path.Combine(HomeUrl, fileNamePath);
+
+            var dictionary = await _net.GetAsync<TranslationsModel>(languagePath);
+            return dictionary;
+        }
 
         //CHECK STATUS
         public async UniTask<StatusModelDown> CheckStatus(string email)
@@ -71,7 +65,6 @@ namespace StarterCore.Core.Services.Network
         public async UniTask<SignupModelDown> Register(SignupModelUp formData)
         {
             SignupModelDown result = await _net.PostAsync<SignupModelDown>(URL_CREATE_USER, formData);
-            //Debug.Log(result.Code);
             return result;
         }
 
@@ -79,16 +72,12 @@ namespace StarterCore.Core.Services.Network
         public async UniTask<SigninModelDown> Login(SigninModelUp formData)
         {
             SigninModelDown result = await _net.PostAsync<SigninModelDown>(URL_LOGIN, formData);
-
-            Debug.Log("[Login] UNITASK Loginresult _> " + result.LoginResult);
             return result;
         }
 
         //ACTIVATION CODE
         public async UniTask<ActivationCodeModelDown> PostActivationCode(ActivationCodeModelUp email)
         {
-            Debug.Log("[PostActivation code !");
-
             ActivationCodeModelDown code = await _net.PostAsync<ActivationCodeModelDown>(URL_GET_ACTIVATION_CODE, email);
             return code;
         }
@@ -96,18 +85,17 @@ namespace StarterCore.Core.Services.Network
         //SEND RESET PASSWORD EMAIL
         public async UniTask<ResetPasswordModelDown> SendResetEmail(ResetPasswordModelUp data)
         {
-            //string url = string.Format(URL_RESET_PASSWORD, data);
-            //Debug.Log("String url is : " + url);
             ResetPasswordModelDown emailSent = await _net.PostAsync<ResetPasswordModelDown>(URL_SEND_RESET_EMAIL, data);
             Debug.Log("Returned from reset.php script ===> " + emailSent.EmailSent);
             return emailSent;
         }
-
-
-
     }
 }
 
+//Decks
+//private string URL_JSON_SA = Path.Combine(HomeUrl, "StreamingAssets/DecksFiles/Instances/Instances.json");
+//private string URL_JSON = Path.Combine(HomeUrl, "json/instance.json");
+//Localisation
 
 /*
    //EXAMPLE OF DYNAMIC FETCH & DISPLAY
@@ -117,4 +105,23 @@ namespace StarterCore.Core.Services.Network
             List<User> result = await _net.GetAsync<List<User>>(url);
             return result;
         }
+*/
+
+/*
+//Path to instances.json file
+readonly private string jsonFileLocation = "DecksFiles/Instances/";
+private string jsonFilePath;
+private readonly string jsonFileName = "Instances.json";
+
+//Instance cards
+public List<InstanceCard> instanceCards;
+
+//GET JSON FILE
+public async UniTask<List<InstanceCardModelDown>> GetJsonFile()
+{
+    //string url = string.Format(URL_RESET_PASSWORD, data);
+    //Debug.Log("String url is : " + url);
+    List<InstanceCardModelDown> jsonString = await _net.GetAsync<List<InstanceCardModelDown>>(URL_JSON_SA);
+    return jsonString;
+}
 */

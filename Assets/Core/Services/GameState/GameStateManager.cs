@@ -15,29 +15,26 @@ namespace StarterCore.Core.Services.GameState
 {
     public class GameStateManager : IInitializable
     {
-        //Path to instances.json file
-        //readonly private string jsonFileLocation = "web_main/DecksFiles/Instances/";
-        //private string jsonFilePath;
-        //private readonly string jsonFileName = "Instances.json";
-
-        //Instance cards
-        public List<InstanceCard> instanceCards;
-
         private GameStateModel gameState;
-        public GameStateModel GameState { get { return gameState; } }
+        private GameStateModel GameState { get { return gameState; } }
+
+        public string Locale { get { return gameState.Locale; } set { GameState.Locale = value; } }
+        public string DefaultLocale { get { return gameState.DefaultLocale; } }
+
 
         public void SetLocale(string locale)
         {
-            gameState.Lang = locale;
+            gameState.Locale = locale;
         }
 
         public void Initialize()
         {
             gameState = new GameStateModel
             {
-                Lang = "en"
+                Locale = "fr",
+                DefaultLocale = "en"
             };
-            Debug.Log("GameState initialized with language : " + gameState.Lang);
+            Debug.Log("GameState initialized with language : " + Locale);
         }
     }
 }

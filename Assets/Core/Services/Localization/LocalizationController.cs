@@ -5,72 +5,68 @@ using Zenject;
 using TMPro;
 
 using StarterCore.Core.Utils;
-using StarterCore.Core.Services.Localization.Models;
+using StarterCore.Core.Services.Network;
+using StarterCore.Core.Services.GameState;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using StarterCore.Core.Services.Network.Models;
+
+
+using Cysharp.Threading.Tasks;
 
 namespace StarterCore.Core.Services.Localization
 {
     public class LocalizationController : MonoBehaviour
     {
-        Translations t;//DTO for Json language file
-        TextMeshProUGUI[] _tmProUGUIList;//Array of all TMProUGUI object in current scene
-
         [Inject] private NavigationService _navService;
+        [Inject] private MockNetService _netService;
+        [Inject] private GameStateManager _gamestate;
 
-
-        //Fetch proper JSON language depending on the Locale of the game
-        private string _langDictionary = @"{
-   ""locale"": ""en"",
-""static-toxt"" : {
-   ""SigninScene"": {
-      ""title-text"": ""Welcome to OntoMatchGame!"",
-      ""intro-text"": ""Semantic Data Representation should let you generate, share and consume Cultural Heritage data with colleagues around the world, to ask and answer questions against more data and more integrated knowledge nets."",
-      ""SigninScene-email-label"": ""Email address"",
-      ""SigninScene-password-label"": ""Password"",
-      ""SigninScene-forgot-label"": ""Forgot your password?"",
-      ""SigninScene-ok-button"": ""Forgot your password?"",
-      ""SigninScene-fail-text"": ""Wrong email / password combination-Try again-"",
-      ""SigninScene-success-text"": ""LOGIN SUCCESSFUL!"",
-      ""SigninScene-activation-text"": ""Account not activated-Check your email and click on activation link-"",
-      ""SigninScene-waiting-text"": ""Checking credentials-Please wait..."",
-      ""SigninScene-signup-label"": ""Dont have an account?"",
-      ""SigninScene-create-button"": ""create my account"",
-      ""SigninScene-dumbfield-text"": ""This is a test""
-   },
-      ""SignupScene"": {
-      ""SignupScene-title-text"": ""Welcome AGAIN!"",
-      ""SignupScene-intro-text"": ""Semantic Data Representation should let you generate, share and consume Cultural Heritage data with colleagues around the world, to ask and answer questions against more data and more integrated knowledge nets."",
-      ""SignupScene-email-label"": ""Email address"",
-      ""SignupScene-password-label"": ""Password"",
-      ""SignupScene-forgot-label"": ""Forgot your password?"",
-      ""SignupScene-ok-button"": ""Forgot your password?"",
-      ""SignupScene-fail-text"": ""Wrong email / password combination-Try again-"",
-      ""SignupScene-success-text"": ""LOGIN SUCCESSFUL!"",
-      ""SignupScene-activation-text"": ""Account not activated-Check your email and click on activation link-"",
-      ""SignupScene-waiting-text"": ""Checking credentials-Please wait..."",
-      ""SignupScene-signup-label"": ""Dont have an account?"",
-      ""SignupScene-create-button"": ""create my account"",
-      ""SignupScene-dumbfield-text"": ""This is a test""
-    }
-    }
-}"
-;
-
-        void Start()
+        async void Start()
         {
-            //Check locale
-            //Get Json Locale dictionary
-            //Translate scene
-            TranslateStaticText(_langDictionary);
+            TranslationsModel t;//Dictionary of all static texts in a specific language
 
+            LocalesManifestModel manifestModel = await GetLocaleManifest();
+            if(SearchLocaleMatch(manifestModel))
+            {
+                t = await GetLocaleDictionary(_gamestate.Locale);
+            }
+            else
+            {
+                Debug.Log("Locale not found in language file, falling back to default language : " + _gamestate.DefaultLocale);
+                t = await GetLocaleDictionary(_gamestate.DefaultLocale);
+            }
+            TranslateStaticText(t);
         }
 
-        private void TranslateStaticText(string json)
+        private async UniTask<LocalesManifestModel> GetLocaleManifest()
         {
-            _tmProUGUIList = FindObjectsOfType<TextMeshProUGUI>();
-            JSON.TryDeserialize<Translations>(json, out t);
+            var result = await _netService.GetLocalesManifestFile();
+            return result;
+        }
+
+        private async UniTask<TranslationsModel> GetLocaleDictionary(string locale)
+        {
+            var result = await _netService.GetLocaleDictionary(locale);
+            return result;
+        }
+
+        private bool SearchLocaleMatch(LocalesManifestModel m)
+        {
+            foreach (string l in m.Locales.Keys)
+            {
+                if(l.Equals(_gamestate.Locale))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void TranslateStaticText(TranslationsModel t)
+        {
+            TextMeshProUGUI[] _tmProUGUIList = FindObjectsOfType<TextMeshProUGUI>();
 
             //Parse scene names in JSON
             foreach (KeyValuePair<string, Dictionary<string, string>> snKey in t.StaticText)
@@ -97,6 +93,5 @@ namespace StarterCore.Core.Services.Localization
                 }
             }
         }
-
     }
 }

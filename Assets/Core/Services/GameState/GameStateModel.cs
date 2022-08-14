@@ -6,7 +6,10 @@ namespace StarterCore.Core.Services.GameState
     [Serializable]
     public class GameStateModel
     {
-        [JsonProperty("lang")]
-        public string Lang { get; set; }
+        [JsonProperty("locale")]
+        public string Locale;
+
+        [JsonProperty("default-locale")]
+        public string DefaultLocale;
     }
 }

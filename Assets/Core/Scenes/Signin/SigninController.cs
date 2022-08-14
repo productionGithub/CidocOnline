@@ -30,8 +30,8 @@ namespace StarterCore.Core.Scenes.Signin
             formInstance.gameObject.SetActive(true);
 
             formInstance.OnSubmitSigninFormClickedEvent += OnSubmitSigninFormClicked; // Equiv to += () => OnSubmitSignupFormClicked();
-            formInstance.OnForgotPasswordClickedEvent += OnForgotPasswordClicked; // Equiv to += () => OnSubmitSignupFormClicked();
-            formInstance.OnCreateAccountClickedEvent += OnCreateAccountClicked; // Equiv to += () => OnSubmitSignupFormClicked();
+            formInstance.OnForgotPasswordClickedEvent += OnForgotPasswordClicked;
+            formInstance.OnCreateAccountClickedEvent += OnCreateAccountClicked;
 
             formInstance.Show();
         }
