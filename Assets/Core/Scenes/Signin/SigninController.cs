@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Collections;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace StarterCore.Core.Scenes.Signin
 {
@@ -14,7 +15,8 @@ namespace StarterCore.Core.Scenes.Signin
 
         [SerializeField] private SigninForm _template;
         [SerializeField] private Transform _parent;
-        [SerializeField] public Transform _cardName;
+        [Inject] private DiContainer _container;
+        //[SerializeField] public Transform _cardName;
 
         public SigninForm formInstance;
 
@@ -22,20 +24,37 @@ namespace StarterCore.Core.Scenes.Signin
         public event Action OnForgotPasswordClickedEvent;
         public event Action OnCreateAccountClickedEvent;
 
+        //Localization
+        public event Action<string> OnLocalizationEvent;
+
         public void Show()
         {
             _template.gameObject.SetActive(false); // Disable template
 
             formInstance = Instantiate(_template, _parent);
+            _container.InjectGameObject(formInstance.gameObject);//Inject dynamically : entity.gameObject injects on component AND children
+
+
             formInstance.gameObject.SetActive(true);
 
             formInstance.OnSubmitSigninFormClickedEvent += OnSubmitSigninFormClicked; // Equiv to += () => OnSubmitSignupFormClicked();
             formInstance.OnForgotPasswordClickedEvent += OnForgotPasswordClicked;
             formInstance.OnCreateAccountClickedEvent += OnCreateAccountClicked;
 
+            //Localization events
+            formInstance.OnLocalizationFlagClickedEvent += OnLocalizationFlagClicked;
+
             formInstance.Show();
         }
 
+        //Localization events
+        private void OnLocalizationFlagClicked(string locale)
+        {
+            Debug.Log("Received event for localization : " + locale);
+            OnLocalizationEvent?.Invoke(locale);
+        }
+
+        //Form events
         private void OnCreateAccountClicked()
         {
             OnCreateAccountClickedEvent?.Invoke();

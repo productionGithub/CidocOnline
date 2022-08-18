@@ -3,10 +3,12 @@ using UnityEngine;
 using Zenject;
 using StarterCore.Core.Services.Navigation;
 using StarterCore.Core.Services.GameState;
+using StarterCore.Core.Services.Localization;
 
 namespace StarterCore.Core
 {
     [CreateAssetMenu(fileName = "GlobalInstaller", menuName = "StarterCore/GlobalInstaller", order = 0)]
+
     public class GlobalInstaller : ScriptableObjectInstaller
     {
         [SerializeField] private NavigationSetup _navSetup;
@@ -14,6 +16,8 @@ namespace StarterCore.Core
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<GameStateManager>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<LocalizationManager>().AsSingle().NonLazy();
+            //Debug.Log("Install bindings");
 
             Container.Bind<NetworkService>().AsSingle();
             Container.Bind<MockNetService>().AsSingle();

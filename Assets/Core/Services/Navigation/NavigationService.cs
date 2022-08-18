@@ -119,6 +119,11 @@ namespace StarterCore.Core.Services.Navigation
             }
         }
 
+        public void RefreshCurrentScene()
+        {
+            SceneManager.LoadScene(CurrentSceneName);
+        }
+
         public void SetMainBundle(object bundle)
         {
             if (bundle != null && _mainScenes.Count > 0)

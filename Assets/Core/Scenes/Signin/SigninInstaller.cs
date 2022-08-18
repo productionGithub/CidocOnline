@@ -1,20 +1,20 @@
 using UnityEngine;
 using Zenject;
-using StarterCore.Core.Services.Navigation;
 using StarterCore.Core.Services.Localization;
+using StarterCore.Core.Scenes.Form;
 
 namespace StarterCore.Core.Scenes.Signin
 {
     public class SigninInstaller : MonoInstaller
     {
-        [SerializeField] private SigninController _controller;
-        [SerializeField] private LocalizationController _localizationController;
+        [SerializeField] private SigninController _signinController;
+        [SerializeField] private LocalizationManager _localization;
+        //[SerializeField] private FormController _FormController;
 
         public override void InstallBindings()
         {
-            Container.Bind<LocalizationController>().FromInstance(_localizationController);
             Container.BindInterfacesAndSelfTo<SigninManager>().AsSingle();
-            Container.Bind<SigninController>().FromInstance(_controller);
+            Container.Bind<SigninController>().FromInstance(_signinController);
         }
     }
 }

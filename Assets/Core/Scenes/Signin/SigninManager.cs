@@ -8,7 +8,7 @@ using UnityEngine;
 using Zenject;
 using StarterCore.Core.Services.Navigation;
 using StarterCore.Core.Services.GameState;
-
+using StarterCore.Core.Services.Localization;
 
 using TMPro;
 using UnityEngine.SceneManagement;
@@ -28,13 +28,31 @@ namespace StarterCore.Core.Scenes.Signin
 
         public void Initialize()
         {
+            //Set language
+            //SetLocalization(_gameState.Locale);
+
             _controller.Show();
             _controller.OnSigninFormSubmittedEvent += SubmitClicked;
             _controller.OnForgotPasswordClickedEvent += ForgotPassword;
             _controller.OnCreateAccountClickedEvent += SignUp;
 
+            //Localization
+            _controller.OnLocalizationEvent += SetLocalization;
+            _navService.OnSceneChangeEvent += SceneIsLoaded;
             //var cards = await _state.LoadCards();
             //_controller._cardName.GetComponent<TextMeshProUGUI>().text = cards[8].imageName;
+        }
+
+        private void SetLocalization(string locale)
+        {
+            _gameState.SetLocale(locale);
+            //_navService.RefreshCurrentScene();
+            //_ = _localizationController.ChangeLocale(locale);
+        }
+
+        private void SceneIsLoaded(string name)
+        {
+            Debug.Log("Scene is loaded, let's translate it -> " + name);
         }
 
         //SUBMIT FORM

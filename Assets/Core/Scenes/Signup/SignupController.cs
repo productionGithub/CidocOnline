@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
+
 namespace StarterCore.Core.Scenes.Signup
 {
     public class SignupController : MonoBehaviour
@@ -27,6 +28,7 @@ namespace StarterCore.Core.Scenes.Signup
             _template.gameObject.SetActive(false); // Disable template
 
             formInstance = Instantiate(_template, _parent);
+
             formInstance.gameObject.SetActive(true);
 
             formInstance.OnSubmitSignupFormClickedEvent += OnSubmitSignupFormClicked; // Equiv to += () => OnSubmitSignupFormClicked();

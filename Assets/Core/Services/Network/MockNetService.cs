@@ -30,16 +30,22 @@ namespace StarterCore.Core.Services.Network
         public async UniTask<LocalesManifestModel> GetLocalesManifestFile()
         {
             string url = Path.Combine(HomeUrl, URL_GET_LOCALES_MANIFEST);
+
             LocalesManifestModel result = await _net.GetAsync<LocalesManifestModel>(url);
+
+            //Debug.Log("[MockNet Service] Resutl returned from GetLocalesManifestFile()" + result.Locales.ToString());
             return result;
         }
 
         //FETCH LANGUAGE DICTIONARY FOR LOCALIZATION
         public async UniTask<TranslationsModel> GetLocaleDictionary(string locale)
         {
+            //Debug.Log("[MockNetService] Get local dictionary from remote language file]");
+
             string localePath = LanguagesFolder + locale;
             string fileNamePath = localePath + "/lang-" + locale + ".json";
             string languagePath = Path.Combine(HomeUrl, fileNamePath);
+            Debug.Log("LanguageFile path ===> " + languagePath);
 
             var dictionary = await _net.GetAsync<TranslationsModel>(languagePath);
             return dictionary;

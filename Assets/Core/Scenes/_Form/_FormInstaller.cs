@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Zenject;
+using StarterCore.Core.Services.Localization;
 
 namespace StarterCore.Core.Scenes.Form
 {

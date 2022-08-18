@@ -1,0 +1,36 @@
+{
+   "locale": "fr",
+"static-text" : {
+   "SigninScene": {
+      "title-text": "Bienvenue en France!",
+      "intro-text": "Vestibulum suscipit tortor at lectus malesuada, sodales sodales felis efficitur. Nullam id dolor et erat dapibus hendrerit eu a nibh. Etiam nisl libero, elementum sed varius at, aliquet ut tellus. Aliquam ut sem dolor. Suspendisse condimentum ut mauris ut aliquam. Morbi sodales massa sit amet metus pretium lacinia. Phasellus a fermentum diam, eget consequat nisi. ",
+      "signin-scene-email-label": "Email",
+      "SigninScene-email-placeholder" : "Entrez un email valide...",
+      "SigninScene-password-label": "Mot de passe",
+      "SigninScene-forgot-label": "J'ai oublié mon mot de passe",
+      "SigninScene-ok-button": "OK",
+      "SigninScene-fail-text": "Email ou mot de passe incorrect.",
+      "SigninScene-success-text": "LOGIN VALIDE!",
+      "SigninScene-activation-text": "Compte non activé. Veuillez vérifier vos emails et cliquer sur le lien d'activation.",
+      "SigninScene-waiting-text": "Connexion au serveur. Vérification-Patientez...",
+      "SigninScene-signup-label": "Vous n'avez  pas de compte?",
+      "SigninScene-create-button": "Créer mon compte",
+      "SigninScene-dumbfield-text": "Ceci est un test"
+   },
+      "SignupScene": {
+      "SignupScene-title-text": "BienvenueAGAIN!",
+      "SignupScene-intro-text": "Semantic Data Representation should let you generate, share and consume Cultural Heritage data with colleagues around the world, to ask and answer questions against more data and more integrated knowledge nets.",
+      "SignupScene-email-label": "Email address",
+      "SignupScene-password-label": "Password",
+      "SignupScene-forgot-label": "Forgot your password?",
+      "SignupScene-ok-button": "Forgot your password?",
+      "SignupScene-fail-text": "Wrong email / password combination-Try again-",
+      "SignupScene-success-text": "LOGIN SUCCESSFUL!",
+      "SignupScene-activation-text": "Account not activated-Check your email and click on activation link-",
+      "SignupScene-waiting-text": "Checking credentials-Please wait...",
+      "SignupScene-signup-label": "Dont have an account?",
+      "SignupScene-create-button": "create my account",
+      "SignupScene-dumbfield-text": "This is a test"
+    }
+    }
+}

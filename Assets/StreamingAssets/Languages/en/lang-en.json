@@ -1,11 +1,12 @@
 {
    "locale": "en",
-"static-toxt" : {
+"static-text" : {
    "SigninScene": {
       "title-text": "Welcome to OntoMatchGame!",
       "intro-text": "Semantic Data Representation should let you generate, share and consume Cultural Heritage data with colleagues around the world, to ask and answer questions against more data and more integrated knowledge nets.",
-      "SigninScene-email-label": "Email address",
-      "SigninScene-password-label": "Password",
+      "signin-scene-email-label": "Email address",
+      "SigninScene-email-placeholder" : "Enter a valid email address",
+      "signin-scene-password-label": "Password",
       "SigninScene-forgot-label": "Forgot your password?",
       "SigninScene-ok-button": "Forgot your password?",
       "SigninScene-fail-text": "Wrong email / password combination-Try again-",
@@ -19,8 +20,8 @@
       "SignupScene": {
       "SignupScene-title-text": "Welcome AGAIN!",
       "SignupScene-intro-text": "Semantic Data Representation should let you generate, share and consume Cultural Heritage data with colleagues around the world, to ask and answer questions against more data and more integrated knowledge nets.",
-      "SignupScene-email-label": "Email address",
-      "SignupScene-password-label": "Password",
+      "signup-scene-email-label": "Email address",
+      "signup-scene-password-label": "Password",
       "SignupScene-forgot-label": "Forgot your password?",
       "SignupScene-ok-button": "Forgot your password?",
       "SignupScene-fail-text": "Wrong email / password combination-Try again-",
