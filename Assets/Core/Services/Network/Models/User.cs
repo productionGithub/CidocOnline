@@ -18,6 +18,9 @@ namespace StarterCore.Core.Services.Network.Models
         [JsonProperty("Country")]
         public string Country;
 
+        [JsonProperty("CountryCode")]
+        public string CountryCode;
+
         [JsonProperty("Email")]
         public string Email;
     }

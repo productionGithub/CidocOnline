@@ -5,6 +5,7 @@ using StarterCore.Core.Services.Navigation;
 
 using UnityEngine;
 using Zenject;
+using System.Collections.Generic;
 
 namespace StarterCore.Core.Scenes.Signup
 {
@@ -24,6 +25,7 @@ namespace StarterCore.Core.Scenes.Signup
             _controller.Show();
             _controller.OnFormSubmittedEvent += SubmitClicked;
             _controller.OnBackEvent += BackEventClicked;
+            //_controller.OnFetchCountriesList += GetCountries;
         }
 
         private async void SubmitClicked(SignupEventData signupData)
@@ -41,6 +43,7 @@ namespace StarterCore.Core.Scenes.Signup
                     Email = signupData.Email,
                     Password = signupData.Password,
                     Country = signupData.Country,
+                    CountryCode = signupData.CountryCode,
                     Optin = signupData.Optin,
                     Lang = "fr"
                 };
@@ -48,6 +51,7 @@ namespace StarterCore.Core.Scenes.Signup
                 RegisterUser(netModel).Forget();
             } else
             {
+                _controller.HideAllAlerts();
                 _controller.EmailAlreadyExists();
             }
         }
@@ -60,19 +64,32 @@ namespace StarterCore.Core.Scenes.Signup
 
         private async UniTaskVoid RegisterUser(SignupModelUp form)
         {
+
             SignupModelDown code = await _net.Register(form);
             if (code.Code != "")
             {
+                _controller.HideAllAlerts();
                 _controller.AccountCreated();
-                Debug.Log("Activation code is :" + code.Code);
+                //Debug.Log("Activation code is :" + code.Code);
             }
             else
+            {
+                _controller.HideAllAlerts();
+                _controller.AccountCreatedFailed();
                 Debug.LogError("Sorry. Coud not create account due to server issue.");
+            }
         }
 
         private void BackEventClicked()
         {
             _navService.Pop();
         }
+
+
+        //public async UniTask<CountriesModelDown> GetCountries()
+        //{
+        //    var result = await _net.GetCountriesJson();
+        //    return result;
+        //}
     }
 }

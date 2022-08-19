@@ -13,6 +13,9 @@ namespace StarterCore.Core.Services.Network.Models
         [JsonProperty("country")]
         public string Country;
 
+        [JsonProperty("countryCode")]
+        public string CountryCode;
+
         [JsonProperty("optin")]
         public bool Optin;
 

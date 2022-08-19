@@ -64,23 +64,16 @@ namespace StarterCore.Core.Services.Localization
             Debug.Log("[LocalizationManager] GetTranslation() called with key " + key);
            
             string text=string.Empty;
-            text = _languageDictionary.StaticText[_navService.CurrentSceneName][key];
-
-            //if (key.Equals("signin-scene-title-text"))
-            //{
-            //    text = _languageDictionary.StaticText[_navService.CurrentSceneName][key];
-            //}
-
+            if(_languageDictionary != null)
+            {
+                text = _languageDictionary.StaticText[_navService.CurrentSceneName][key];
+            }
             return text;
-
-            //Debug.Log("======================>" + _languageDictionary.StaticText);//[_navService.CurrentSceneName]);
         }
 
         public async UniTask<LocalesManifestModel> GetLocaleManifest()
         {
-            //Debug.Log("GET LOCALE MANIFEST ASYNC");
             var result = await _netService.GetLocalesManifestFile();
-            //Debug.Log("RESULT RETURNED IS %" + result.Locales.ToString());
             return result;
         }
 

@@ -18,7 +18,7 @@ namespace StarterCore.Core.Scenes.Signin
 
         //Localization
         [SerializeField] private Button _englishFlagButton;
-        [SerializeField] private Button _frenchFlagButton;
+        [SerializeField] private Button _frenchFlagButton; 
 
         public GameObject AlertNoAccount;
         public GameObject AlertEmailNotValid;
@@ -34,8 +34,6 @@ namespace StarterCore.Core.Scenes.Signin
 
         //Localization
         public event Action<string> OnLocalizationFlagClickedEvent;
-
-        public UnityAction<Scene, LoadSceneMode> OnSceneLoaded;
 
         public void Show()
         {

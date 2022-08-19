@@ -25,6 +25,7 @@ namespace StarterCore.Core.Services.Network
         private string URL_GET_ACTIVATION_CODE = Path.Combine(HomeUrl, "php/getactivationcode.php");
         private string URL_SEND_RESET_EMAIL = Path.Combine(HomeUrl, "php/sendresetlink.php");
         private string URL_GET_LOCALES_MANIFEST = "StreamingAssets/Languages/manifest.json";
+        private string URL_GET_COUNTRIES = "StreamingAssets/Languages/countries/countries.json";
 
         //FETCH LANGUAGE MANIFEST JSON FILE
         public async UniTask<LocalesManifestModel> GetLocalesManifestFile()
@@ -34,6 +35,15 @@ namespace StarterCore.Core.Services.Network
             LocalesManifestModel result = await _net.GetAsync<LocalesManifestModel>(url);
 
             //Debug.Log("[MockNet Service] Resutl returned from GetLocalesManifestFile()" + result.Locales.ToString());
+            return result;
+        }
+
+        //FETCH COUNTRIES JSON FILE
+        public async UniTask<CountriesModelDown> GetCountriesJson()
+        {
+            string url = Path.Combine(HomeUrl, URL_GET_COUNTRIES);
+
+            CountriesModelDown result = await _net.GetAsync<CountriesModelDown>(url);
             return result;
         }
 

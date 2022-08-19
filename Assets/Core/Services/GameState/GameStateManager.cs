@@ -36,7 +36,7 @@ namespace StarterCore.Core.Services.GameState
                 DefaultLocale = "en"
             };
             Debug.Log("[GameStateManager] Initialized.");
-            SetLocale(Locale);
+            //SetLocale(Locale);
         }
 
         public void SetLocale(string locale)

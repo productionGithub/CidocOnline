@@ -15,7 +15,7 @@ namespace StarterCore.Core.Services.Localization
         private void Start()
         {
             _localization.OnTranslateEvent += GetTranslation;
-            //GetTranslation();
+            GetTranslation();
         }
 
         private void GetTranslation()

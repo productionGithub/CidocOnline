@@ -39,6 +39,8 @@ namespace StarterCore.Core.Scenes.Signin
             //Localization
             _controller.OnLocalizationEvent += SetLocalization;
             _navService.OnSceneChangeEvent += SceneIsLoaded;
+
+            
             //var cards = await _state.LoadCards();
             //_controller._cardName.GetComponent<TextMeshProUGUI>().text = cards[8].imageName;
         }
@@ -52,6 +54,7 @@ namespace StarterCore.Core.Scenes.Signin
 
         private void SceneIsLoaded(string name)
         {
+
             Debug.Log("Scene is loaded, let's translate it -> " + name);
         }
 
