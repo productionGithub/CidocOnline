@@ -39,10 +39,13 @@ namespace StarterCore.Core.Services.Network
         }
 
         //FETCH COUNTRIES JSON FILE
-        public async UniTask<CountriesModelDown> GetCountriesJson()
+        public async UniTask<CountriesModelDown> GetCountriesJson(string locale)
         {
-            string url = Path.Combine(HomeUrl, URL_GET_COUNTRIES);
 
+            string countriesPath = LanguagesFolder + locale + "/countries/countries.json";
+
+            string url = Path.Combine(HomeUrl, countriesPath);
+            Debug.Log("LOCALE URL = " + url);
             CountriesModelDown result = await _net.GetAsync<CountriesModelDown>(url);
             return result;
         }

@@ -1,5 +1,7 @@
 using UnityEngine;
 using System;
+using Zenject;
+
 using System.Net.Mail;
 using System.Text.RegularExpressions;
 using System.Globalization;
@@ -14,6 +16,7 @@ namespace StarterCore.Core.Scenes.ResetPassword
 
         [SerializeField] private ResetPasswordForm _template;
         [SerializeField] private Transform _parent;
+        [Inject] private DiContainer _container;
 
         public ResetPasswordForm formInstance;
 
@@ -26,6 +29,9 @@ namespace StarterCore.Core.Scenes.ResetPassword
             _template.gameObject.SetActive(false); // Disable template
 
             formInstance = Instantiate(_template, _parent);
+            _container.InjectGameObject(formInstance.gameObject);//Inject dynamically : entity.gameObject injects on component AND children
+
+
             formInstance.gameObject.SetActive(true);
             formInstance.OnResetPasswordClickedEvent += OnResetPasswordFormClicked; // Equiv to += () => OnSubmitSignupFormClicked();
             formInstance.OnBackClickedEvent += OnBackClicked; // Equiv to += () => OnSubmitSignupFormClicked();

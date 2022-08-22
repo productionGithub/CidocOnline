@@ -53,7 +53,8 @@ namespace StarterCore.Core.Services.Localization
             else
             {
                 Debug.Log("[Localization Manager] Locale not found in language file, falling back to default language : " + _gamestate.DefaultLocale);
-                _languageDictionary = await GetLocaleDictionary(_gamestate.DefaultLocale);
+                _gamestate.Locale = _gamestate.DefaultLocale;
+                _languageDictionary = await GetLocaleDictionary(_gamestate.Locale);
             }
 
             OnTranslateEvent?.Invoke();//Refresh Localizables

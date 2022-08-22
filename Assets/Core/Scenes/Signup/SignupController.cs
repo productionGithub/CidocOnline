@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using TMPro;
 using StarterCore.Core.Services.Network;
 using StarterCore.Core.Services.Network.Models;
+using StarterCore.Core.Services.GameState;
+
 using Newtonsoft.Json;
 using Cysharp.Threading.Tasks;
 
@@ -18,13 +20,13 @@ namespace StarterCore.Core.Scenes.Signup
 {
     public class SignupController : MonoBehaviour
     {
-
         [SerializeField] private SignupForm _template;
         [SerializeField] private Transform _parent;
-        //[SerializeField] private TMP_Dropdown _dropDown;
 
         [Inject] private DiContainer _container;
-        [Inject] private MockNetService _networkService;
+        [Inject] private MockNetService _MockNetService;
+        [Inject] private GameStateManager _gameState;
+
 
         public SignupForm formInstance;
         public CountriesModelDown _countriesDic;
@@ -49,7 +51,7 @@ namespace StarterCore.Core.Scenes.Signup
             formInstance.OnSubmitSignupFormClickedEvent += OnSubmitSignupFormClicked; // Equiv to += () => OnSubmitSignupFormClicked();
             formInstance.OnBackClickedEvent += OnBackClicked; // Equiv to += () => OnSubmitSignupFormClicked();
 
-            FetchCountries();
+            UpdateCountryDropDown();
 
             formInstance.Show();
 
@@ -58,11 +60,11 @@ namespace StarterCore.Core.Scenes.Signup
         }
 
         //Populate list of countries
-        public async void FetchCountries()
+        public async void UpdateCountryDropDown()
         {
             List<string> countryNames = new List<string>();
 
-            _countriesDic = await _networkService.GetCountriesJson();
+            _countriesDic = await _MockNetService.GetCountriesJson(_gameState.Locale);
             //var countriesDic = await _networkService.GetCountriesJson();
             for (int i = 0; i < _countriesDic.Countries.Count; i++)
             {
@@ -71,14 +73,14 @@ namespace StarterCore.Core.Scenes.Signup
             }
 
             //Populate item DropDown list with strings
-            //TMP_Dropdown dd = _dropDown.GetComponent<TMP_Dropdown>();
-            //_template._dropDown.gameObject.SetActive(false);
             formInstance._dropDown.options.Clear();
             formInstance._dropDown.AddOptions(countryNames);
             formInstance._dropDown.RefreshShownValue();
-            //_template._dropDown.gameObject.SetActive(true);
 
-            //Debug.Log("");
+
+            //Write names to file
+            //Serialize List
+            //var Json = JsonConvert.SerializeObject(countryNames);
         }
 
 
@@ -162,9 +164,9 @@ namespace StarterCore.Core.Scenes.Signup
         //}
 
 
-        public async UniTask<CountriesModelDown> GetCountries()
+        public async UniTask<CountriesModelDown> GetCountries(string locale)
         {
-            var result = await _networkService.GetCountriesJson();
+            var result = await _MockNetService.GetCountriesJson(locale);
             return result;
         }
 

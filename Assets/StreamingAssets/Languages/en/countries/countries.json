@@ -1,4 +1,6 @@
-[
+{
+  "countries":
+  [
   {
     "name": "Afghanistan",
     "code": "AF"
@@ -20,7 +22,7 @@
     "code": "AS"
   },
   {
-    "name": "AndorrA",
+    "name": "Andorra",
     "code": "AD"
   },
   {
@@ -504,7 +506,7 @@
     "code": "MO"
   },
   {
-    "name": "Macedonia, The Former Yugoslav Republic of",
+    "name": "Macedonia",
     "code": "MK"
   },
   {
@@ -960,3 +962,4 @@
     "code": "ZN"
   }
 ]
+}

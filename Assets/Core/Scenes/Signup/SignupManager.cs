@@ -25,7 +25,6 @@ namespace StarterCore.Core.Scenes.Signup
             _controller.Show();
             _controller.OnFormSubmittedEvent += SubmitClicked;
             _controller.OnBackEvent += BackEventClicked;
-            //_controller.OnFetchCountriesList += GetCountries;
         }
 
         private async void SubmitClicked(SignupEventData signupData)
@@ -84,12 +83,5 @@ namespace StarterCore.Core.Scenes.Signup
         {
             _navService.Pop();
         }
-
-
-        //public async UniTask<CountriesModelDown> GetCountries()
-        //{
-        //    var result = await _net.GetCountriesJson();
-        //    return result;
-        //}
     }
 }
