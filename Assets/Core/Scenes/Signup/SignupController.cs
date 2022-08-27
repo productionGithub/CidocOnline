@@ -216,7 +216,13 @@ namespace StarterCore.Core.Scenes.Signup
             formInstance.AlertWaitingForCredentials.SetActive(false);
             formInstance.AlertUserAcccountCreatedFailed.SetActive(false);
             formInstance.AlertUserAccountCreated.SetActive(false);
-    }
+        }
+
+        private void OnDestroy()
+        {
+            formInstance.OnSubmitSignupFormClickedEvent -= OnSubmitSignupFormClicked;
+            formInstance.OnBackClickedEvent -= OnBackClicked;
+        }
     }
 }
 

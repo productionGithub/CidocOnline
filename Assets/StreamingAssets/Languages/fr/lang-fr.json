@@ -51,6 +51,24 @@
       "resetpassword-scene-errormessage-text" : "Ooops! Une erreur est survenue\nVeuillez contacter l'administrateur",
       "resetpassword-scene-notactivated-text" : "Compte non activé\nVérifiez votre email et suivez les instructions",
       "resetpassword-scene-backbutton-text" : "Retour"
+    },
+      "GameSelectionScene" :{
+      "gameselection-scene-title-text": "SELECTION DES JEUX",
+      "gameselection-scene-backbutton-text":"Retour au menu principal",
+      "gameselection-scene-searchplaceholder-text":"Noms de tags séparés par des espaces",
+      "gameselection-scene-searchbutton-text":"Chercher",
+      "gameselection-scene-domain-label":"Domaine",
+      "gameselection-scene-domain1-text":"Archéologie",
+      "gameselection-scene-domain2-text":"Histoire",
+      "gameselection-scene-domain3-text":"Science",
+      "gameselection-scene-domain4-text":"Civilisation",
+      "gameselection-scene-domain5-text":"Art",
+      "gameselection-scene-domain6-text":"Literature",
+      "gameselection-scene-domain7-text":"Yet another tag",
+      "gameselection-scene-ontology-label":"Ontology",
+      "gameselection-scene-language-label":"Language",
+      "gameselection-scene-language1-text":"Anglais",
+      "gameselection-scene-language2-text":"Français"
     }
     }
 }

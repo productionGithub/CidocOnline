@@ -1,0 +1,18 @@
+{
+    "Language":
+    {
+        "code" : "en",
+        "code" : "fr"
+    },
+    "Domain":
+    {
+    "name":"Archeology",
+    "name":"History",
+    "name":"Cultural heritage"
+    },
+    "Ontology":
+    {
+        "name":"CidocCRM"
+    }
+}
+

@@ -176,9 +176,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e674ff26380b93a40be774189b460682, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nameTxt: {fileID: 697615109}
-  _emailTxt: {fileID: 2127010530}
-  _deleteButton: {fileID: 1878181612}
+  _nameTxt: {fileID: 0}
+  _emailTxt: {fileID: 0}
+  _deleteButton: {fileID: 0}
 --- !u!1 &70657556
 GameObject:
   m_ObjectHideFlags: 0
@@ -785,7 +785,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _refreshButton: {fileID: 997585820}
   _template: {fileID: 51384555}
-  _container: {fileID: 1450565074}
+  _container: {fileID: 0}
 --- !u!4 &1293954952
 Transform:
   m_ObjectHideFlags: 0
@@ -1658,7 +1658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b5164bf620bd7248a510418ac239aad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _controller: {fileID: 1293954951}
+  _controller: {fileID: 4570530845733017532}
 --- !u!1 &4570530845733017531
 GameObject:
   m_ObjectHideFlags: 0
@@ -1670,6 +1670,7 @@ GameObject:
   - component: {fileID: 4570530845733017528}
   - component: {fileID: 4570530845733017529}
   - component: {fileID: 4570530845733017530}
+  - component: {fileID: 4570530845733017532}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -1677,3 +1678,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &4570530845733017532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4570530845733017531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94c0bec4afd720e4ba4da4273803aafc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _refreshButton: {fileID: 997585820}
+  _template: {fileID: 51384555}
+  _container: {fileID: 1450565074}

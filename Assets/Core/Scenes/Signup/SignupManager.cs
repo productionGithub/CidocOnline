@@ -2,6 +2,7 @@
 using StarterCore.Core.Services.Network;
 using StarterCore.Core.Services.Network.Models;
 using StarterCore.Core.Services.Navigation;
+using StarterCore.Core.Services.GameState;
 
 using UnityEngine;
 using Zenject;
@@ -18,6 +19,7 @@ namespace StarterCore.Core.Scenes.Signup
         [Inject] private MockNetService _net;
         [Inject] private SignupController _controller;
         [Inject] private NavigationService _navService;
+        [Inject] private GameStateManager _gameState;
 
         public void Initialize()
         {
@@ -44,7 +46,7 @@ namespace StarterCore.Core.Scenes.Signup
                     Country = signupData.Country,
                     CountryCode = signupData.CountryCode,
                     Optin = signupData.Optin,
-                    Lang = "fr"
+                    Lang = _gameState.Locale//Locale of the game when account created
                 };
 
                 RegisterUser(netModel).Forget();

@@ -37,15 +37,12 @@ namespace StarterCore.Core.Scenes.Signup
 
             _registerButton.onClick.AddListener(() => OnSubmitSignupFormClickedEvent?.Invoke());
             _backButton.onClick.AddListener(() => OnBackClickedEvent?.Invoke());
-
-
-
-
-
             //PopulateCountries();
         }
 
 
+
+        /*
         //Populate list of countries
         public void PopulateCountries()
         {
@@ -74,6 +71,7 @@ namespace StarterCore.Core.Scenes.Signup
             //_dropDown.gameObject.SetActive(false);
             //_dropDown.gameObject.SetActive(true);
         }
+        */
 
     }
 }

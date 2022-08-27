@@ -16,6 +16,8 @@ namespace StarterCore.Core.Scenes.Signin
         [SerializeField] private Button _createAccountButton;
         [SerializeField] private Button _forgotPassword;
 
+        [SerializeField] private Button _test;//Todo : delete after use
+
         //Localization
         [SerializeField] private Button _englishFlagButton;
         [SerializeField] private Button _frenchFlagButton; 
@@ -31,6 +33,8 @@ namespace StarterCore.Core.Scenes.Signin
         public event Action OnSubmitSigninFormClickedEvent;
         public event Action OnForgotPasswordClickedEvent;
         public event Action OnCreateAccountClickedEvent;
+
+        public event Action OnTestClickedEvent;//Todo : delete after use
 
         //Localization
         public event Action<string> OnLocalizationFlagClickedEvent;
@@ -53,6 +57,10 @@ namespace StarterCore.Core.Scenes.Signin
             //Localization flags
             _englishFlagButton.onClick.AddListener(() => OnLocalizationFlagClickedEvent?.Invoke("en"));
             _frenchFlagButton.onClick.AddListener(() => OnLocalizationFlagClickedEvent?.Invoke("fr"));
+
+            //Test
+            _test.onClick.AddListener(() => OnTestClickedEvent?.Invoke());
+
         }
     }
 }

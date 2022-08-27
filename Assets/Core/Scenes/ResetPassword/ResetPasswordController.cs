@@ -16,6 +16,7 @@ namespace StarterCore.Core.Scenes.ResetPassword
 
         [SerializeField] private ResetPasswordForm _template;
         [SerializeField] private Transform _parent;
+
         [Inject] private DiContainer _container;
 
         public ResetPasswordForm formInstance;
@@ -108,6 +109,11 @@ namespace StarterCore.Core.Scenes.ResetPassword
             formInstance.AlertEmailNotSent.SetActive(false);
         }
 
+        private void OnDestroy()
+        {
+            formInstance.OnResetPasswordClickedEvent -= OnResetPasswordFormClicked;
+            formInstance.OnBackClickedEvent -= OnBackClicked;
+        }
     }
 }
 

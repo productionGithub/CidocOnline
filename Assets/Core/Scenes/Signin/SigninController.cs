@@ -23,7 +23,8 @@ namespace StarterCore.Core.Scenes.Signin
         public event Action<SigninEventData> OnSigninFormSubmittedEvent;
         public event Action OnForgotPasswordClickedEvent;
         public event Action OnCreateAccountClickedEvent;
-
+        public event Action OnTestEvent;
+        
         //Localization
         public event Action<string> OnLocalizationEvent;
 
@@ -43,8 +44,14 @@ namespace StarterCore.Core.Scenes.Signin
 
             //Localization events
             formInstance.OnLocalizationFlagClickedEvent += OnLocalizationFlagClicked;
+            formInstance.OnTestClickedEvent += OnTestClicked;
 
             formInstance.Show();
+        }
+
+        private void OnTestClicked()
+        {
+            OnTestEvent?.Invoke();
         }
 
         //Localization events
@@ -140,6 +147,17 @@ namespace StarterCore.Core.Scenes.Signin
             formInstance.AlertRightCombination.SetActive(false);
             formInstance.AlertActivation.SetActive(false);
             formInstance.AlertWaitingForCredentials.SetActive(false);
+        }
+
+        private void OnDestroy()
+        {
+            formInstance.OnSubmitSigninFormClickedEvent -= OnSubmitSigninFormClicked; // Equiv to += () => OnSubmitSignupFormClicked();
+            formInstance.OnForgotPasswordClickedEvent -= OnForgotPasswordClicked;
+            formInstance.OnCreateAccountClickedEvent -= OnCreateAccountClicked;
+
+            //Localization events
+            formInstance.OnLocalizationFlagClickedEvent -= OnLocalizationFlagClicked;
+            formInstance.OnTestClickedEvent -= OnTestClicked;
         }
     }
 }

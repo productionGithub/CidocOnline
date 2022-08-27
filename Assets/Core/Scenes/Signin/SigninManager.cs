@@ -40,9 +40,17 @@ namespace StarterCore.Core.Scenes.Signin
             _controller.OnLocalizationEvent += SetLocalization;
             _navService.OnSceneChangeEvent += SceneIsLoaded;
 
+            //TEST
+            _controller.OnTestEvent += LoadTestScene;
+
             
             //var cards = await _state.LoadCards();
             //_controller._cardName.GetComponent<TextMeshProUGUI>().text = cards[8].imageName;
+        }
+
+        private void LoadTestScene()
+        {
+            _navService.Push("GameSelectionScene");
         }
 
         private void SetLocalization(string locale)
