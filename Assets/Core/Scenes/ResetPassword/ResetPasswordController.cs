@@ -8,18 +8,51 @@ using System.Globalization;
 using System.Collections;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using TMPro;
+using UnityEngine.UI;
 
 namespace StarterCore.Core.Scenes.ResetPassword
 {
     public class ResetPasswordController : MonoBehaviour
     {
+        [SerializeField] internal TMP_InputField _email;
+        [SerializeField] private Button _ResetButton;
+        [SerializeField] private Button _BackButton;
 
-        [SerializeField] private ResetPasswordForm _template;
-        [SerializeField] private Transform _parent;
+        public GameObject AlertNoAccount;
+        public GameObject AlertEmailNotValid;
+        public GameObject AlertCheckEmail;
+        public GameObject AlertConfirmation;
+        public GameObject AlertEmailNotSent;
+        public GameObject AlertStatus;
 
-        [Inject] private DiContainer _container;
 
-        public ResetPasswordForm formInstance;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //[SerializeField] private ResetPasswordForm _template;
+        //[SerializeField] private Transform _parent;
+
+        //[Inject] private DiContainer _container;
+
+        //public ResetPasswordForm 
 
         public event Action<string> OnResetPasswordEvent;
         public event Action OnBackEvent;
@@ -27,20 +60,25 @@ namespace StarterCore.Core.Scenes.ResetPassword
         public void Show()
         {
             Debug.Log("ResetController instanciated");
-            _template.gameObject.SetActive(false); // Disable template
+            HideAllAlerts();
 
-            formInstance = Instantiate(_template, _parent);
-            _container.InjectGameObject(formInstance.gameObject);//Inject dynamically : entity.gameObject injects on component AND children
+            //_template.gameObject.SetActive(false); // Disable template
+
+            //= Instantiate(_template, _parent);
+            //_container.InjectGameObject(gameObject);//Inject dynamically : entity.gameObject injects on component AND children
 
 
-            formInstance.gameObject.SetActive(true);
-            formInstance.OnResetPasswordClickedEvent += OnResetPasswordFormClicked; // Equiv to += () => OnSubmitSignupFormClicked();
-            formInstance.OnBackClickedEvent += OnBackClicked; // Equiv to += () => OnSubmitSignupFormClicked();
-            formInstance.Show();
+            //gameObject.SetActive(true);
+            _ResetButton.onClick.AddListener(OnResetPasswordFormClicked);
+            _BackButton.onClick.AddListener(OnBackClicked);
+
+            //OnBackClickedEvent += OnBackClicked; // Equiv to += () => OnSubmitSignupFormClicked();
+            //Show();
         }
 
         private void OnBackClicked()
         {
+            Debug.Log("Back btn event ok");
             OnBackEvent?.Invoke();
         }
 
@@ -50,33 +88,33 @@ namespace StarterCore.Core.Scenes.ResetPassword
 
             if (ValidateForm())
             {
-                formInstance.AlertCheckEmail.SetActive(true);
-                OnResetPasswordEvent?.Invoke(formInstance._email.text);
+                AlertCheckEmail.SetActive(true);
+                OnResetPasswordEvent?.Invoke(_email.text);
             }
         }
 
         internal void NoAccountFound()
         {
             HideAllAlerts();
-            formInstance.AlertNoAccount.SetActive(true);
+            AlertNoAccount.SetActive(true);
         }
 
         internal void ConfirmEmailSent()
         {
             HideAllAlerts();
-            formInstance.AlertConfirmation.SetActive(true);
+            AlertConfirmation.SetActive(true);
         }
 
         internal void EmailNotSentError()
         {
             HideAllAlerts();
-            formInstance.AlertEmailNotSent.SetActive(true);
+            AlertEmailNotSent.SetActive(true);
         }
 
-        internal void AlertStatus()
+        internal void StatusAlert()
         {
             HideAllAlerts();
-            formInstance.AlertStatus.SetActive(true);
+            AlertStatus.SetActive(true);
         }
         /// <summary>
         /// Form validation
@@ -90,29 +128,30 @@ namespace StarterCore.Core.Scenes.ResetPassword
         private bool ValidateEmail()
         {
             Regex regex = new(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,63})+)$");
-            Match match = regex.Match(formInstance._email.text);
+            Match match = regex.Match(_email.text);
             if (match.Success)
                 return true;
             else
             {
-                formInstance.AlertEmailNotValid.SetActive(true);
+                AlertEmailNotValid.SetActive(true);
                 return false;
             }
         }
 
         private void HideAllAlerts()
         {
-            formInstance.AlertEmailNotValid.SetActive(false);
-            formInstance.AlertNoAccount.SetActive(false);
-            formInstance.AlertCheckEmail.SetActive(false);
-            formInstance.AlertConfirmation.SetActive(false);
-            formInstance.AlertEmailNotSent.SetActive(false);
+            AlertNoAccount.SetActive(false);
+            AlertEmailNotValid.SetActive(false);
+            AlertCheckEmail.SetActive(false);
+            AlertConfirmation.SetActive(false);
+            AlertEmailNotSent.SetActive(false);
+            AlertStatus.SetActive(false);
         }
 
         private void OnDestroy()
         {
-            formInstance.OnResetPasswordClickedEvent -= OnResetPasswordFormClicked;
-            formInstance.OnBackClickedEvent -= OnBackClicked;
+            //OnResetPasswordClickedEvent -= OnResetPasswordFormClicked;
+            //OnBackClickedEvent -= OnBackClicked;
         }
     }
 }

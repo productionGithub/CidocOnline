@@ -25,30 +25,9 @@ namespace StarterCore.Core.Services.Localization
 
         TranslationsModel _languageDictionary;
 
-        //async void Start()
-        //{
-        //    TranslationsModel t;//Dictionary of all static texts in a specific language
-
-        //    LocalesManifestModel manifestModel = await GetLocaleManifest();
-        //    Debug.Log("MANIFEST MODEL IS " + manifestModel.Locales);
-        //    if (SearchLocaleMatch(manifestModel))
-        //    {
-        //        t = await GetLocaleDictionary(_gamestate.Locale);
-        //    }
-        //    else
-        //    {
-        //        Debug.Log("Locale not found in language file, falling back to default language : " + _gamestate.DefaultLocale);
-        //        t = await GetLocaleDictionary(_gamestate.DefaultLocale);
-        //    }
-        //    //_ = await SetLocaleDictionary(_gamestate.Locale);
-        //    TranslateStaticText(t);
-        //}
-
         async private void Start()
         {
             LocalesManifestModel manifestModel = await GetLocaleManifest();//Contains languages file paths
-
-            Debug.Log("MANIFEST MODEL IS " + manifestModel.Locales);
 
             //Test if game locale exists in manifestModel
             if (SearchLocaleMatch(manifestModel))

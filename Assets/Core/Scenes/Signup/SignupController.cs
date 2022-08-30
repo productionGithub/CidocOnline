@@ -14,24 +14,41 @@ using StarterCore.Core.Services.GameState;
 
 using Newtonsoft.Json;
 using Cysharp.Threading.Tasks;
-
+using UnityEngine.UI;
 
 namespace StarterCore.Core.Scenes.Signup
 {
     public class SignupController : MonoBehaviour
     {
-        [SerializeField] private SignupForm _template;
-        [SerializeField] private Transform _parent;
+        public GameObject AlertEmailNotValid;
+        public GameObject AlertEmailAlreadyExists;
+        public GameObject AlertPasswordNotValid;
+        public GameObject AlertUserAccountCreated;
+        public GameObject AlertUserAcccountCreatedFailed;
+        public GameObject AlertWaitingForCredentials;
 
-        [Inject] private DiContainer _container;
+        [SerializeField] internal TMP_InputField _email;
+        [SerializeField] internal TMP_InputField _password;
+        [SerializeField] internal TMP_Text _country;
+        [SerializeField] internal Toggle _toggleOptinButton;
+        [SerializeField] private Button _registerButton;
+        [SerializeField] internal TMP_Dropdown _dropDown;
+
+        //public event Action OnSubmitSignupFormClickedEvent;
+
+        //[SerializeField] private SignupForm _template;
+        //[SerializeField] private Transform _parent;
+
+        [SerializeField] private Button _backButton;
+
+        //[Inject] private DiContainer _container;
         [Inject] private MockNetService _MockNetService;
         [Inject] private GameStateManager _gameState;
 
 
-        public SignupForm formInstance;
-        public CountriesModelDown _countriesDic;
+        private CountriesModelDown _countriesDic;
 
-        public int OnBackButtonClicked { get; private set; }
+        //public int OnBackButtonClicked { get; private set; }
 
         public event Action<SignupEventData> OnFormSubmittedEvent;
         public event Action OnBackEvent;
@@ -39,24 +56,10 @@ namespace StarterCore.Core.Scenes.Signup
 
         public void Show()
         {
-            // Disable template that is instanciated
-            _template.gameObject.SetActive(false);
-
-            //Instanciate template, update DI container
-            formInstance = Instantiate(_template, _parent);
-            _container.InjectGameObject(formInstance.gameObject);//Inject dynamically : entity.gameObject injects on component AND children
-
-            formInstance.gameObject.SetActive(true);
-
-            formInstance.OnSubmitSignupFormClickedEvent += OnSubmitSignupFormClicked; // Equiv to += () => OnSubmitSignupFormClicked();
-            formInstance.OnBackClickedEvent += OnBackClicked; // Equiv to += () => OnSubmitSignupFormClicked();
-
+            HideAllAlerts();
             UpdateCountryDropDown();
-
-            formInstance.Show();
-
-            //OnFetchCountriesList?.Invoke();
-            //PopulateCountries();
+            _registerButton.onClick.AddListener(OnSubmitSignupFormClicked);// () => OnSubmitSignupFormClickedEvent?.Invoke());
+            _backButton.onClick.AddListener(OnBackClicked);
         }
 
         //Populate list of countries
@@ -73,14 +76,9 @@ namespace StarterCore.Core.Scenes.Signup
             }
 
             //Populate item DropDown list with strings
-            formInstance._dropDown.options.Clear();
-            formInstance._dropDown.AddOptions(countryNames);
-            formInstance._dropDown.RefreshShownValue();
-
-
-            //Write names to file
-            //Serialize List
-            //var Json = JsonConvert.SerializeObject(countryNames);
+            _dropDown.options.Clear();
+            _dropDown.AddOptions(countryNames);
+            _dropDown.RefreshShownValue();
         }
 
 
@@ -93,26 +91,32 @@ namespace StarterCore.Core.Scenes.Signup
         {
             if (ValidateForm())
             {
-                string code="";
+                //Debug.Log("Form validated");
+
+                string code ="";
+                //Debug.Log("_countriesDic.Countries.Count" + _countriesDic.Countries.Count);
 
                 for (int i=0; i < _countriesDic.Countries.Count; i++)
                 {
-                    if(_countriesDic.Countries[i].Name == formInstance._country.text)
+                    if (_countriesDic.Countries[i].Name.Equals(_country.text))
                     {
                         code = _countriesDic.Countries[i].Code;
                     }
                 }
 
                 WaitingForCredentials();//Display 'Wait' message
-                string email = formInstance._email.text;
-                string password = formInstance._password.text;
-                string country = formInstance._country.text;
+                string email = _email.text;
+                string password = _password.text;
+                string country = _country.text;
                 string countryCode = code;
-                bool optin = formInstance._toggleOptinButton.isOn;
+                bool optin = _toggleOptinButton.isOn;
 
-                var evt = new SignupEventData(email, password, country, countryCode, optin);
+                SignupEventData evt = new SignupEventData(email, password, country, countryCode, optin);
 
-                OnFormSubmittedEvent?.Invoke(evt);
+                if (evt != null)
+                {
+                    OnFormSubmittedEvent?.Invoke(evt);
+                }
             }
         }
 
@@ -124,7 +128,7 @@ namespace StarterCore.Core.Scenes.Signup
         private bool ValidateEmail()
         {
             Regex regex = new(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,63})+)$");
-            Match match = regex.Match(formInstance._email.text);
+            Match match = regex.Match(_email.text);
             if (match.Success)
                 return true;
             else
@@ -136,7 +140,7 @@ namespace StarterCore.Core.Scenes.Signup
 
         private bool ValidatePassword()
         {
-            if(formInstance._password.text.Length >= 6)
+            if(_password.text.Length >= 6)
             {
                 return true;
             }
@@ -175,53 +179,51 @@ namespace StarterCore.Core.Scenes.Signup
         internal void EmailAlreadyExists()
         {
             HideAllAlerts();
-            formInstance.AlertEmailAlreadyExists.SetActive(true);
+            AlertEmailAlreadyExists.SetActive(true);
         }
 
         internal void AccountCreated()
         {
             HideAllAlerts();
-            formInstance.AlertUserAccountCreated.SetActive(true);
+            AlertUserAccountCreated.SetActive(true);
         }
 
         internal void AccountCreatedFailed()
         {
             HideAllAlerts();
-            formInstance.AlertUserAcccountCreatedFailed.SetActive(true);
+            AlertUserAcccountCreatedFailed.SetActive(true);
         }
 
         internal void WaitingForCredentials()
         {
             HideAllAlerts();
-            formInstance.AlertWaitingForCredentials.SetActive(true);
+            AlertWaitingForCredentials.SetActive(true);
         }
 
         internal void EmailNotValid()
         {
             HideAllAlerts();
-            formInstance.AlertEmailNotValid.SetActive(true);
+            AlertEmailNotValid.SetActive(true);
         }
 
         internal void PasswordNotValid()
         {
             HideAllAlerts();
-            formInstance.AlertPasswordNotValid.SetActive(true);
+            AlertPasswordNotValid.SetActive(true);
         }
 
         internal void HideAllAlerts()
         {
-            formInstance.AlertEmailNotValid.SetActive(false);
-            formInstance.AlertEmailAlreadyExists.SetActive(false);
-            formInstance.AlertPasswordNotValid.SetActive(false);
-            formInstance.AlertWaitingForCredentials.SetActive(false);
-            formInstance.AlertUserAcccountCreatedFailed.SetActive(false);
-            formInstance.AlertUserAccountCreated.SetActive(false);
+            AlertEmailNotValid.SetActive(false);
+            AlertEmailAlreadyExists.SetActive(false);
+            AlertPasswordNotValid.SetActive(false);
+            AlertWaitingForCredentials.SetActive(false);
+            AlertUserAcccountCreatedFailed.SetActive(false);
+            AlertUserAccountCreated.SetActive(false);
         }
 
         private void OnDestroy()
         {
-            formInstance.OnSubmitSignupFormClickedEvent -= OnSubmitSignupFormClicked;
-            formInstance.OnBackClickedEvent -= OnBackClicked;
         }
     }
 }

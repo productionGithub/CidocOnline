@@ -9,6 +9,7 @@ namespace StarterCore.Core.Scenes.Signin
 {
     public class SigninForm : MonoBehaviour
     {
+        /*
         [SerializeField] internal TMP_InputField _email;
         [SerializeField] internal TMP_InputField _password;
 
@@ -62,5 +63,6 @@ namespace StarterCore.Core.Scenes.Signin
             _test.onClick.AddListener(() => OnTestClickedEvent?.Invoke());
 
         }
+        */
     }
 }

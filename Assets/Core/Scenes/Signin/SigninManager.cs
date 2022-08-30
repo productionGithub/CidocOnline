@@ -103,7 +103,7 @@ namespace StarterCore.Core.Scenes.Signin
                 else
                 {
                     _controller.HideAllAlerts();
-                    _controller.formInstance.AlertActivation.SetActive(true);
+                    _controller.AlertActivation.SetActive(true);
                 }
             }
         }
@@ -130,12 +130,12 @@ namespace StarterCore.Core.Scenes.Signin
             if (result.LoginResult == true)
             {
                 _controller.HideAllAlerts();
-                _controller.formInstance.AlertRightCombination.SetActive(true);
+                _controller.AlertRightCombination.SetActive(true);
             }
             else
             {
                 _controller.HideAllAlerts();
-                _controller.formInstance.AlertWrongCombination.SetActive(true);
+                _controller.AlertWrongCombination.SetActive(true);
             }
         }
 

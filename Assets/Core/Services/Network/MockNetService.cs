@@ -45,7 +45,7 @@ namespace StarterCore.Core.Services.Network
             string countriesPath = LanguagesFolder + locale + "/countries/countries.json";
 
             string url = Path.Combine(HomeUrl, countriesPath);
-            Debug.Log("LOCALE URL = " + url);
+            //Debug.Log("LOCALE URL = " + url);
             CountriesModelDown result = await _net.GetAsync<CountriesModelDown>(url);
             return result;
         }
@@ -58,7 +58,7 @@ namespace StarterCore.Core.Services.Network
             string localePath = LanguagesFolder + locale;
             string fileNamePath = localePath + "/lang-" + locale + ".json";
             string languagePath = Path.Combine(HomeUrl, fileNamePath);
-            Debug.Log("LanguageFile path ===> " + languagePath);
+            //Debug.Log("LanguageFile path ===> " + languagePath);
 
             var dictionary = await _net.GetAsync<TranslationsModel>(languagePath);
             return dictionary;

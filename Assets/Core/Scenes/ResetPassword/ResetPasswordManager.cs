@@ -73,7 +73,7 @@ namespace StarterCore.Core.Scenes.ResetPassword
                 }
                 else
                 {
-                    _controller.AlertStatus();
+                    _controller.StatusAlert();
                 }
             }
         }

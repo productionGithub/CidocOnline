@@ -20,7 +20,7 @@ namespace StarterCore.Core.Services.Localization
 
         private void GetTranslation()
         {
-            Debug.Log("[Localizable] Received event OnTranslateEvent !");
+            //Debug.Log("[Localizable] Received event OnTranslateEvent !");
             LocalizedText.SetText(_localization.GetTranslation(LocalizeKey));
         }
 

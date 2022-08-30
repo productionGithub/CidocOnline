@@ -7,6 +7,7 @@ namespace StarterCore.Core.Scenes.ResetPassword
 {
     public class ResetPasswordForm : MonoBehaviour
     {
+        /*
         [SerializeField] internal TMP_InputField _email;
         [SerializeField] private Button _ResetButton;
         [SerializeField] private Button _BackButton;
@@ -35,5 +36,6 @@ namespace StarterCore.Core.Scenes.ResetPassword
             _ResetButton.onClick.AddListener(() => OnResetPasswordClickedEvent?.Invoke());
             _BackButton.onClick.AddListener(() => OnBackClickedEvent?.Invoke());
         }
+        */
     }
 }

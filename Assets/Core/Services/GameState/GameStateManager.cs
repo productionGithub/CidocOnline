@@ -32,7 +32,7 @@ namespace StarterCore.Core.Services.GameState
         {
             gameState = new GameStateModel
             {
-                Locale = "pl",
+                Locale = "fr",
                 DefaultLocale = "en"
             };
             Debug.Log("[GameStateManager] Initialized.");

@@ -1,52 +1,76 @@
 using UnityEngine;
 using System;
-using System.Net.Mail;
 using System.Text.RegularExpressions;
-using System.Globalization;
-using System.Collections;
-using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
 using Zenject;
+using TMPro;
+using UnityEngine.UI;
 
 namespace StarterCore.Core.Scenes.Signin
 {
     public class SigninController : MonoBehaviour
     {
-
-        [SerializeField] private SigninForm _template;
-        [SerializeField] private Transform _parent;
-        [Inject] private DiContainer _container;
-        //[SerializeField] public Transform _cardName;
-
-        public SigninForm formInstance;
-
         public event Action<SigninEventData> OnSigninFormSubmittedEvent;
+
+        public event Action OnSubmitSigninFormClickedEvent;
         public event Action OnForgotPasswordClickedEvent;
         public event Action OnCreateAccountClickedEvent;
-        public event Action OnTestEvent;
-        
-        //Localization
         public event Action<string> OnLocalizationEvent;
+
+        //test
+        public event Action OnTestEvent;//Todo : delete after use
+
+        //Localization
+        public event Action<string> OnLocalizationFlagClickedEvent;
+
+        //Form
+        [SerializeField] internal TMP_InputField _email;
+        [SerializeField] internal TMP_InputField _password;
+        [SerializeField] private Button _submitFormButton;
+        [SerializeField] private Button _createAccountButton;
+        [SerializeField] private Button _forgotPassword;
+
+        //Test screen
+        [SerializeField] private Button _test;//Todo : delete after use
+
+        //Localization
+        [SerializeField] private Button _englishFlagButton;
+        [SerializeField] private Button _frenchFlagButton;
+
+        //Alert messages
+        public GameObject AlertNoAccount;
+        public GameObject AlertEmailNotValid;
+        public GameObject AlertPasswordNotValid;
+        public GameObject AlertWrongCombination;
+        public GameObject AlertRightCombination;
+        public GameObject AlertActivation;
+        public GameObject AlertWaitingForCredentials;
 
         public void Show()
         {
-            _template.gameObject.SetActive(false); // Disable template
+            AlertNoAccount.SetActive(false);
+            AlertEmailNotValid.SetActive(false);
+            AlertPasswordNotValid.SetActive(false);
+            AlertWrongCombination.SetActive(false);
+            AlertRightCombination.SetActive(false);
+            AlertActivation.SetActive(false);
+            AlertWaitingForCredentials.SetActive(false);
 
-            formInstance = Instantiate(_template, _parent);
-            _container.InjectGameObject(formInstance.gameObject);//Inject dynamically : entity.gameObject injects on component AND children
+            //Form
+            _submitFormButton.onClick.AddListener(OnSubmitSigninFormClicked);// => OnSubmitSigninFormClickedEvent?.Invoke());
+            _forgotPassword.onClick.AddListener(OnForgotPasswordClicked); // => OnForgotPasswordClickedEvent?.Invoke());// ;
+            _createAccountButton.onClick.AddListener(OnCreateAccountClicked);// => OnCreateAccountClickedEvent?.Invoke());
 
+            //Localization flags
+            _englishFlagButton.onClick.AddListener(() => OnLocalizationFlagClicked("en")); //OnLocalizationFlagClickedEvent?.Invoke("en"));
+            _frenchFlagButton.onClick.AddListener(() => OnLocalizationFlagClicked("fr"));//=> OnLocalizationFlagClickedEvent?.Invoke("fr"));
 
-            formInstance.gameObject.SetActive(true);
+            //Test
+            _test.onClick.AddListener(Couille);// () => OnTestClickedEvent?.Invoke());
+        }
 
-            formInstance.OnSubmitSigninFormClickedEvent += OnSubmitSigninFormClicked; // Equiv to += () => OnSubmitSignupFormClicked();
-            formInstance.OnForgotPasswordClickedEvent += OnForgotPasswordClicked;
-            formInstance.OnCreateAccountClickedEvent += OnCreateAccountClicked;
-
-            //Localization events
-            formInstance.OnLocalizationFlagClickedEvent += OnLocalizationFlagClicked;
-            formInstance.OnTestClickedEvent += OnTestClicked;
-
-            formInstance.Show();
+        private void Couille()
+        {
+            OnTestEvent?.Invoke();
         }
 
         private void OnTestClicked()
@@ -57,7 +81,6 @@ namespace StarterCore.Core.Scenes.Signin
         //Localization events
         private void OnLocalizationFlagClicked(string locale)
         {
-            Debug.Log("Received event for localization : " + locale);
             OnLocalizationEvent?.Invoke(locale);
         }
 
@@ -71,15 +94,15 @@ namespace StarterCore.Core.Scenes.Signin
         {
             if (ValidateForm())
             {
-                string email = formInstance._email.text;
-                string password = formInstance._password.text;
+                string email = _email.text;
+                string password = _password.text;
 
                 var evt = new SigninEventData(email, password);
 
                 OnSigninFormSubmittedEvent?.Invoke(evt);
 
                 HideAllAlerts();
-                formInstance.AlertWaitingForCredentials.SetActive(true);
+                AlertWaitingForCredentials.SetActive(true);
             }
         }
 
@@ -88,9 +111,8 @@ namespace StarterCore.Core.Scenes.Signin
             OnForgotPasswordClickedEvent?.Invoke();
         }
 
-
         /// <summary>
-        /// Form validation
+        /// Form messages
         /// </summary>
         /// <returns></returns>
         public bool ValidateForm()//TODO Finish form validation with other checks
@@ -101,27 +123,27 @@ namespace StarterCore.Core.Scenes.Signin
         private bool ValidateEmail()
         {
             Regex regex = new(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,63})+)$");
-            Match match = regex.Match(formInstance._email.text);
+            Match match = regex.Match(_email.text);
             if (match.Success)
                 return true;
             else
             {
                 HideAllAlerts();
-                formInstance.AlertEmailNotValid.SetActive(true);
+                AlertEmailNotValid.SetActive(true);
                 return false;
             }
         }
 
         private bool ValidatePassword()
         {
-            if (formInstance._password.text.Length >= 6)
+            if (_password.text.Length >= 6)
             {
                 return true;
             }
             else
             {
                 HideAllAlerts();
-                formInstance.AlertPasswordNotValid.SetActive(true);
+                AlertPasswordNotValid.SetActive(true);
                 return false;
             }
         }
@@ -129,36 +151,53 @@ namespace StarterCore.Core.Scenes.Signin
         internal void NoAccount()
         {
             HideAllAlerts();
-            formInstance.AlertNoAccount.SetActive(true);
+            AlertNoAccount.SetActive(true);
         }
 
         internal void WaitMessage()
         {
             HideAllAlerts();
-            formInstance.AlertWaitingForCredentials.SetActive(true);
+           AlertWaitingForCredentials.SetActive(true);
         }
 
         internal void HideAllAlerts()
         {
-            formInstance.AlertNoAccount.SetActive(false);
-            formInstance.AlertEmailNotValid.SetActive(false);
-            formInstance.AlertPasswordNotValid.SetActive(false);
-            formInstance.AlertWrongCombination.SetActive(false);
-            formInstance.AlertRightCombination.SetActive(false);
-            formInstance.AlertActivation.SetActive(false);
-            formInstance.AlertWaitingForCredentials.SetActive(false);
+            AlertNoAccount.SetActive(false);
+            AlertEmailNotValid.SetActive(false);
+            AlertPasswordNotValid.SetActive(false);
+            AlertWrongCombination.SetActive(false);
+            AlertRightCombination.SetActive(false);
+            AlertActivation.SetActive(false);
+            AlertWaitingForCredentials.SetActive(false);
         }
 
         private void OnDestroy()
         {
-            formInstance.OnSubmitSigninFormClickedEvent -= OnSubmitSigninFormClicked; // Equiv to += () => OnSubmitSignupFormClicked();
-            formInstance.OnForgotPasswordClickedEvent -= OnForgotPasswordClicked;
-            formInstance.OnCreateAccountClickedEvent -= OnCreateAccountClicked;
+            OnSubmitSigninFormClickedEvent -= OnSubmitSigninFormClicked; // Equiv to += () => OnSubmitSignupFormClicked();
+            OnForgotPasswordClickedEvent -= OnForgotPasswordClicked;
+            OnCreateAccountClickedEvent -= OnCreateAccountClicked;
 
             //Localization events
-            formInstance.OnLocalizationFlagClickedEvent -= OnLocalizationFlagClicked;
-            formInstance.OnTestClickedEvent -= OnTestClicked;
+            OnLocalizationFlagClickedEvent -= OnLocalizationFlagClicked;
+            OnTestEvent -= OnTestClicked;
         }
     }
 }
 
+
+
+/*
+//Exemple d'injection sur objets dynamiques
+//[Inject] private DiContainer _container;
+
+//[....] in method Show() {
+// Disable template that is instanciated
+_template.gameObject.SetActive(false);
+
+//Instanciate template, update DI container
+formInstance = Instantiate(_template, _parent);
+_container.InjectGameObject(formInstance.gameObject);//Inject dynamically : entity.gameObject injects on component AND children
+
+formInstance.gameObject.SetActive(true);
+}
+*/
