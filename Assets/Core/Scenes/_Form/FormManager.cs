@@ -32,7 +32,7 @@ namespace StarterCore.Core.Scenes.Form
         //{
         //    List<User> users = await _net.GetRandomUsersAsync("Satan");
 
-        //    if(users != null && users.Count > 0)
+        //    if (users != null && users.Count > 0)
         //    {
         //        _controller.Show(users);
         //    }

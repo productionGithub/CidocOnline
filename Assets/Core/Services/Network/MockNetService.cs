@@ -26,6 +26,8 @@ namespace StarterCore.Core.Services.Network
         private string URL_SEND_RESET_EMAIL = Path.Combine(HomeUrl, "php/sendresetlink.php");
         private string URL_GET_LOCALES_MANIFEST = "StreamingAssets/Languages/manifest.json";
         private string URL_GET_COUNTRIES = "StreamingAssets/Languages/countries/countries.json";
+        //TODO Refactor GetCountriesJson with URL_GET_COUNTRIES
+
 
         //FETCH LANGUAGE MANIFEST JSON FILE
         public async UniTask<LocalesManifestModel> GetLocalesManifestFile()

@@ -23,8 +23,27 @@ namespace StarterCore.Core.Scenes.GameSelection
         public void Initialize()
         {
             Debug.Log("[GameSelectionManager] Initialized!");
-            _controller.Show();
+
+
+            List<Panel> entriesData = new List<Panel>();
+
+            //Test purpose : data will be fetched from remote server
+            for (int i = 0; i <= 9; i++)
+            {
+                string title = "Titre jeu #" + i.ToString();
+                string description = "Description du jeu numéro : " + i.ToString();
+                Panel panelData = new Panel { GameTitle = title, Description = description };
+                entriesData.Add(panelData);
+            }
+
+            _controller.Show(entriesData);
             _controller.OnBackEvent += BackEventClicked;
+            _controller.OnPanelClickedEvent += PanelClicked;
+        }
+
+        private void PanelClicked(string panelName)
+        {
+            Debug.Log("[GameSelecitonManager] Game Panel named " + panelName + " clicked!. Let's load it");
         }
 
         private void BackEventClicked()

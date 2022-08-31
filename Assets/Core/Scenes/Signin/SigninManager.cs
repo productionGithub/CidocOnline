@@ -38,7 +38,7 @@ namespace StarterCore.Core.Scenes.Signin
 
             //Localization
             _controller.OnLocalizationEvent += SetLocalization;
-            _navService.OnSceneChangeEvent += SceneIsLoaded;
+            //_navService.OnSceneChangeEvent += SceneIsLoaded;
 
             //TEST
             _controller.OnTestEvent += LoadTestScene;
@@ -60,11 +60,11 @@ namespace StarterCore.Core.Scenes.Signin
             //_ = _localizationController.ChangeLocale(locale);
         }
 
-        private void SceneIsLoaded(string name)
-        {
+        //private void SceneIsLoaded(string name)
+        //{
 
-            Debug.Log("Scene is loaded, let's translate it -> " + name);
-        }
+        //    Debug.Log("Scene is loaded, let's translate it -> " + name);
+        //}
 
         //SUBMIT FORM
         private async void SubmitClicked(SigninEventData signinData)
