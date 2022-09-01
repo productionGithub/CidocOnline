@@ -31,6 +31,10 @@ namespace StarterCore.Core.Scenes.Signup
 
         private async void SubmitClicked(SignupEventData signupData)
         {
+            //Test load of game data
+            TestLoadGame().Forget();
+
+
             //Check Email
             string email = signupData.Email;
 
@@ -55,6 +59,8 @@ namespace StarterCore.Core.Scenes.Signup
                 _controller.HideAllAlerts();
                 _controller.EmailAlreadyExists();
             }
+
+
         }
 
         private async UniTask<EmailValidationDown> CheckEmail(string email)
@@ -65,7 +71,6 @@ namespace StarterCore.Core.Scenes.Signup
 
         private async UniTaskVoid RegisterUser(SignupModelUp form)
         {
-
             SignupModelDown code = await _net.Register(form);
             if (code.Code != "")
             {
@@ -79,6 +84,16 @@ namespace StarterCore.Core.Scenes.Signup
                 _controller.AccountCreatedFailed();
                 Debug.LogError("Sorry. Coud not create account due to server issue.");
             }
+        }
+
+        private async UniTaskVoid TestLoadGame()
+        {
+            GameModelDown game = await _net.LoadGame();
+            Debug.Log("Game loaded game title : " + game.Title);
+            Debug.Log("Game loaded is : " + game.DomainTags[1]);
+            Debug.Log("Game loaded is : " + game.OntologyTags[0]);
+            Debug.Log("Game loaded is in language : " + game.LanguageTags[0]);
+            Debug.Log("Game loaded first challenge title is : " + game.ChallengeList[0].Title);
         }
 
         private void BackEventClicked()

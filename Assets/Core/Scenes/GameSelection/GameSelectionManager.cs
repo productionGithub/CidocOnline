@@ -30,8 +30,8 @@ namespace StarterCore.Core.Scenes.GameSelection
             //Test purpose : data will be fetched from remote server
             for (int i = 0; i <= 9; i++)
             {
-                string title = "Titre jeu #" + i.ToString();
-                string description = "Description du jeu numéro : " + i.ToString();
+                string title = "Abbaye de Marmoutier #" + i.ToString();
+                string description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ac tristique enim, vitae sodales elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Pellentesque rutrum massa mi, id consequat risus feugiat ut. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aenean tincidunt accumsan nunc vel hendrerit. Vestibulum ut massa risus.";
                 Panel panelData = new Panel { GameTitle = title, Description = description };
                 entriesData.Add(panelData);
             }

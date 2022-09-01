@@ -25,7 +25,12 @@ namespace StarterCore.Core.Services.Network
         private string URL_GET_ACTIVATION_CODE = Path.Combine(HomeUrl, "php/getactivationcode.php");
         private string URL_SEND_RESET_EMAIL = Path.Combine(HomeUrl, "php/sendresetlink.php");
         private string URL_GET_LOCALES_MANIFEST = "StreamingAssets/Languages/manifest.json";
-        private string URL_GET_COUNTRIES = "StreamingAssets/Languages/countries/countries.json";
+        private string URL_GET_COUNTRIES = "StreamingAssets/Games/Marmoutier/marmoutier.json";
+
+        //Test load games
+        private string URL_GET_GAMES = "http://ontomatchgame.huma-num.fr/StreamingAssets/Games/Marmoutier/marmoutier.json";
+
+
         //TODO Refactor GetCountriesJson with URL_GET_COUNTRIES
 
 
@@ -89,6 +94,12 @@ namespace StarterCore.Core.Services.Network
             return result;
         }
 
+
+        public async UniTask<GameModelDown> LoadGame()
+        {
+            GameModelDown result = await _net.GetAsync<GameModelDown>(URL_GET_GAMES);
+            return result;
+        }
         //LOGIN
         public async UniTask<SigninModelDown> Login(SigninModelUp formData)
         {

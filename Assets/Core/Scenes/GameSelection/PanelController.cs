@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 using StarterCore.Core.Services.Network.Models;
+using UnityEngine.UI;
 
 namespace StarterCore.Core.Scenes.GameSelection
 {
@@ -15,9 +16,6 @@ namespace StarterCore.Core.Scenes.GameSelection
         [Header("Dynamic")]
         [SerializeField] private PanelEntry _panelTemplate;
         [SerializeField] private Transform _templateContainer;
-
-        //[SerializeField] private TextMeshProUGUI _gameName;
-
 
         private List<PanelEntry> _entries;
 
