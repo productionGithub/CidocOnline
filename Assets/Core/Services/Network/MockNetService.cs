@@ -26,6 +26,8 @@ namespace StarterCore.Core.Services.Network
         private string URL_SEND_RESET_EMAIL = Path.Combine(HomeUrl, "php/sendresetlink.php");
         private string URL_GET_LOCALES_MANIFEST = "StreamingAssets/Languages/manifest.json";
         private string URL_GET_COUNTRIES = "StreamingAssets/Games/Marmoutier/marmoutier.json";
+        private string URL_SCENARII_CATALOG = "StreamingAssets/scenarii/scenariiCatalog.json";
+
 
         //Test load games
         private string URL_GET_GAMES = "http://ontomatchgame.huma-num.fr/StreamingAssets/Games/Marmoutier/marmoutier.json";
@@ -33,6 +35,16 @@ namespace StarterCore.Core.Services.Network
 
         //TODO Refactor GetCountriesJson with URL_GET_COUNTRIES
 
+        //FETCH SCENARII CATALOG
+        public async UniTask<ScenariiModelDown> GetCatalog()
+        {
+            string url = Path.Combine(HomeUrl, URL_SCENARII_CATALOG);
+
+            ScenariiModelDown result = await _net.GetAsync<ScenariiModelDown>(url);
+
+            Debug.Log("[MockNet Service] Result returned from GetCatalog" + result.ToString());
+            return result;
+        }
 
         //FETCH LANGUAGE MANIFEST JSON FILE
         public async UniTask<LocalesManifestModel> GetLocalesManifestFile()

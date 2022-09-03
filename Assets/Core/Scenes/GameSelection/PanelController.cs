@@ -14,10 +14,10 @@ namespace StarterCore.Core.Scenes.GameSelection
     {
 
         [Header("Dynamic")]
-        [SerializeField] private PanelEntry _panelTemplate;
+        [SerializeField] private PanelEntryController _panelTemplate;
         [SerializeField] private Transform _templateContainer;
 
-        private List<PanelEntry> _entries;
+        private List<PanelEntryController> _entries;
 
         public event Action<string> OnGamePanelClickEvent;
 
@@ -25,33 +25,17 @@ namespace StarterCore.Core.Scenes.GameSelection
         {
             Clear();//Clear panel list _entries
 
-
-            /*
-            foreach (User user in users)
-            {
-                FormEntry instance = Instantiate(_template, _container);
-                instance.Show(user);
-                instance.OnDeleteClickEvent += () => OnDelete(instance, user);
-                instance.gameObject.SetActive(true);
-                _entries.Add(instance);
-            }
-            */
-            //_templateContainer.gameObject.SetActive(false);
-
             foreach (Panel panel in panels)
             {
-                PanelEntry instance = Instantiate(_panelTemplate, _templateContainer);
+                PanelEntryController instance = Instantiate(_panelTemplate, _templateContainer);
                 instance.Show(panel);
-                instance.OnClickEvent += GamePanelClicked;
-                //instance.GetComponent<PanelController>().OnGamePanelClickEvent += GamePanelClicked;
+                instance.OnPanelClickEvent += GamePanelClicked;
                 instance.gameObject.SetActive(true);
                 _entries.Add(instance);
-
-                //_diContainer.InjectGameObject(_panelTemplate.gameObject);
-
             }
         }
 
+        //TODO Va sauter au profit de la vue detail...
         private void GamePanelClicked(string panelName)
         {
             OnGamePanelClickEvent?.Invoke(panelName);
@@ -62,7 +46,7 @@ namespace StarterCore.Core.Scenes.GameSelection
         {
             if (_entries == null)
             {
-                _entries = new List<PanelEntry>();
+                _entries = new List<PanelEntryController>();
                 _panelTemplate.gameObject.SetActive(false); // Disable template
                 //_refreshButton.onClick.AddListener(() => OnRefreshClickedEvent?.Invoke());
             }

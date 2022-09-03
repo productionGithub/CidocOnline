@@ -1014,8 +1014,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2096554256}
   m_HandleRect: {fileID: 2096554255}
   m_Direction: 2
-  m_Value: 0.99999255
-  m_Size: 0.96824175
+  m_Value: 1
+  m_Size: 0.96824163
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2758,6 +2758,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 383448205}
+  - component: {fileID: 383448206}
   m_Layer: 5
   m_Name: ChapterLine
   m_TagString: Untagged
@@ -2789,6 +2790,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1240, y: 55}
   m_Pivot: {x: 0, y: 1}
+--- !u!114 &383448206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383448204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf0f905c560e94290835cfced4a43b17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _chapterTitleTxt: {fileID: 103167516}
+  _chapterDescriptionTxt: {fileID: 349780652}
+  _playButton: {fileID: 867350125}
 --- !u!1 &412736063
 GameObject:
   m_ObjectHideFlags: 0
@@ -6272,7 +6288,7 @@ GameObject:
   - component: {fileID: 931664094}
   - component: {fileID: 931664093}
   m_Layer: 5
-  m_Name: GameTitle
+  m_Name: ScenarioTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6428,7 +6444,7 @@ RectTransform:
   m_Father: {fileID: 1344055201}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.36363637}
+  m_AnchorMin: {x: 0, y: 0.36363643}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -7727,7 +7743,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1469652655}
   m_HandleRect: {fileID: 1469652654}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -9017,8 +9033,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 933560577}
   m_HandleRect: {fileID: 933560576}
   m_Direction: 2
-  m_Value: 1.0000002
-  m_Size: 0.6363636
+  m_Value: 1.0000004
+  m_Size: 0.63636357
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -9743,10 +9759,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d44b6c89df1747639ff2aadbc5d7353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameTitleTxt: {fileID: 931664093}
+  _detailEntry: {fileID: 0}
+  _scenarioTitleTxt: {fileID: 931664093}
   _descriptionTxt: {fileID: 1899438728}
   _detailButton: {fileID: 574383089}
   _detailPanel: {fileID: 1414511766}
+  _detailToggleState: 0
 --- !u!1 &1365057795
 GameObject:
   m_ObjectHideFlags: 0
@@ -14311,7 +14329,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1806302397}
   m_HandleRect: {fileID: 1806302396}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

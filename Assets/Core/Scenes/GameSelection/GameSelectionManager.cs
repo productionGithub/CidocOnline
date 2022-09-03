@@ -15,7 +15,7 @@ namespace StarterCore.Core.Scenes.GameSelection
 {
     public class GameSelectionManager : IInitializable
     {
-        //[Inject] private MockNetService _net;
+        [Inject] private MockNetService _net;
         [Inject] private GameSelectionController _controller;
         [Inject] private NavigationService _navService;
         //[Inject] private GameStateManager _gameState;
@@ -36,6 +36,9 @@ namespace StarterCore.Core.Scenes.GameSelection
                 entriesData.Add(panelData);
             }
 
+            //Get scenarii catalog
+            FetchCatalog().Forget();
+            //TODO create entriesData from catalog before calling _controller.Show()
             _controller.Show(entriesData);
             _controller.OnBackEvent += BackEventClicked;
             _controller.OnPanelClickedEvent += PanelClicked;
@@ -51,5 +54,32 @@ namespace StarterCore.Core.Scenes.GameSelection
             Debug.Log("[MANAGER BACKEVET OK!");
             _navService.Pop();
         }
+
+        //TODO just one method CreateEntries that await _netGetCatalog ?
+        //Maybe be more concised.
+        private async UniTaskVoid FetchCatalog()
+        {
+            var catalog = await GetScenariiCatalog();
+            Debug.Log("Description of scenario1 / chapter 2 is :");
+
+            foreach (Scenario s in catalog.Scenarii)
+            {
+                Debug.Log("Scenar title : " + s.ScenarioTitle);
+                Debug.Log("Scenar description : " + s.ScenarioDescription);
+                foreach (Chapter c in s.Chapters)
+                {
+                    Debug.Log("Chapter title : " + c.ChapterTitle);
+                    Debug.Log("Chapter description : " + c.ChapterDescription);
+                }
+            }
+        }
+
+        private async UniTask<ScenariiModelDown> GetScenariiCatalog()
+        {
+            ScenariiModelDown catalog = await _net.GetCatalog();
+            Debug.Log("Catalog content is " + catalog);
+            return catalog;
+        }
+
     }
 }

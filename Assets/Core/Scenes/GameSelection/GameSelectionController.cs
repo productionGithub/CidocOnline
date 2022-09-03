@@ -23,16 +23,9 @@ namespace StarterCore.Core.Scenes.GameSelection
         [Header("Static")]
         [SerializeField] private Button _BackButton;
         [SerializeField] private PanelController _panelController;
-        [Inject] private DiContainer _diContainer;
-
 
         public event Action OnBackClickedEvent;
         public event Action<string> OnPanelClickedEvent;
-
-
-
-        //PanelController _panel;
-
 
         public event Action OnBackEvent;
 
@@ -40,35 +33,9 @@ namespace StarterCore.Core.Scenes.GameSelection
         {
 
             _panelController.Show(entries);
-
-
-
-            //_panelTemplate.gameObject.SetActive(false);
-            //foreach(PanelEntry entry in entries)
-            //{
-            //    PanelController panel = Instantiate(_panelTemplate, _templateContainer);
-
-            //    panel.GetComponent<PanelController>().OnGamePanelClickEvent += GamePanelClicked;
-            //    panel._gameName.text = entry.name;
-            //    panel..text = entry.name;
-            //    panel.gameObject.SetActive(true);
-
-            //    _diContainer.InjectGameObject(_panelTemplate.gameObject);
-            //    panel.Show();
-            //}
-
-
             _BackButton.onClick.AddListener(BackClickedEvent);
+            //TODO Va sauter au profit des details
             _panelController.OnGamePanelClickEvent += PanelClicked;
-
-            //// Disable template that is instanciated
-            //_template.gameObject.SetActive(false);
-            //_gameSelection = Instantiate(_template, _parent);
-            //_container.InjectGameObject(_gameSelection.gameObject);
-
-            //_gameSelection.gameObject.SetActive(true);
-            //_gameSelection.Show();
-            //_gameSelection.OnBackClickedEvent += BackClickedEvent;
         }
 
         private void PanelClicked(string panelName)

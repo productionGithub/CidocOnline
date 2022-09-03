@@ -1,0 +1,38 @@
+[
+   {
+      "scenario-title":"Marmoutier",
+      "scenario-description":"This is a lorem ipsum for description.",
+      "chapters":[
+         {
+            "chapter-title":"Marmou chapter1",
+            "chapter-description":"Description of the super chapter."
+         },
+         {
+            "chapter-title":"Marmou chapter2",
+            "chapter-description":"Description of the super chapter."
+         },
+         {
+            "chapter-title":"Marmou chapter3",
+            "chapter-description":"Description of the super chapter."
+         }
+      ]
+   },
+   {
+      "scenario-title":"Asinou",
+      "scenario-description":"This is a lorem ipsum for Asinou.",
+      "chapters":[
+         {
+            "chapter-title":"Asinou chapter1",
+            "chapter-description":"Description of the super chapter."
+         },
+         {
+            "chapter-title":"Asinou chapter2",
+            "chapter-description":"Description of the super chapter."
+         },
+         {
+            "chapter-title":"Asinou chapter3",
+            "chapter-description":"Description of the super chapter."
+         }
+      ]
+   }
+]
