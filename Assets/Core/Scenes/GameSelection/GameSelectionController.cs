@@ -16,42 +16,34 @@ namespace StarterCore.Core.Scenes.GameSelection
 {
     public class GameSelectionController : MonoBehaviour
     {
-
-        //[SerializeField] private GameSelection _template;
-        //[SerializeField] private Transform _parent;
-
         [Header("Static")]
         [SerializeField] private Button _BackButton;
         [SerializeField] private PanelController _panelController;
+        [SerializeField] private DetailEntryController _detailController;
 
-        public event Action OnBackClickedEvent;
-        public event Action<string> OnPanelClickedEvent;
-
+        public event Action<string, string> OnGameSelectionControllerPlayChapterEvent;
         public event Action OnBackEvent;
 
-        public void Show(List<Panel> entries)
+        public void Show(List<Scenario> entries)
         {
-
             _panelController.Show(entries);
+            _panelController.OnPanelControllerPlayChapterEvent += OnPlayChapter;
             _BackButton.onClick.AddListener(BackClickedEvent);
-            //TODO Va sauter au profit des details
-            _panelController.OnGamePanelClickEvent += PanelClicked;
         }
 
-        private void PanelClicked(string panelName)
+        private void OnPlayChapter(string scenarioTitle, string chapterTitle)
         {
-            OnPanelClickedEvent?.Invoke(panelName);
+            OnGameSelectionControllerPlayChapterEvent?.Invoke(scenarioTitle, chapterTitle);
         }
 
         private void BackClickedEvent()
         {
-            Debug.Log("BACK TO USSR !");
             OnBackEvent?.Invoke();
         }
 
         private void OnDestroy()
         {
-            OnBackClickedEvent -= BackClickedEvent;
+            OnBackEvent -= BackClickedEvent;
         }
     }
 }

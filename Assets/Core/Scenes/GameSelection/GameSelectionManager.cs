@@ -9,7 +9,7 @@ using Zenject;
 using StarterCore.Core.Services.Navigation;
 using StarterCore.Core.Services.GameState;
 using StarterCore.Core.Services.Localization;
-
+using StarterCore.Core.Scenes.DeckTest;
 
 namespace StarterCore.Core.Scenes.GameSelection
 {
@@ -18,54 +18,57 @@ namespace StarterCore.Core.Scenes.GameSelection
         [Inject] private MockNetService _net;
         [Inject] private GameSelectionController _controller;
         [Inject] private NavigationService _navService;
-        //[Inject] private GameStateManager _gameState;
+
+        ScenariiModelDown _catalog;
 
         public void Initialize()
         {
             Debug.Log("[GameSelectionManager] Initialized!");
-
-
-            List<Panel> entriesData = new List<Panel>();
-
-            //Test purpose : data will be fetched from remote server
-            for (int i = 0; i <= 9; i++)
-            {
-                string title = "Abbaye de Marmoutier #" + i.ToString();
-                string description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ac tristique enim, vitae sodales elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Pellentesque rutrum massa mi, id consequat risus feugiat ut. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aenean tincidunt accumsan nunc vel hendrerit. Vestibulum ut massa risus.";
-                Panel panelData = new Panel { GameTitle = title, Description = description };
-                entriesData.Add(panelData);
-            }
+            List<Scenario> scenarioList = new List<Scenario>();
 
             //Get scenarii catalog
             FetchCatalog().Forget();
-            //TODO create entriesData from catalog before calling _controller.Show()
-            _controller.Show(entriesData);
+
             _controller.OnBackEvent += BackEventClicked;
-            _controller.OnPanelClickedEvent += PanelClicked;
+            _controller.OnGameSelectionControllerPlayChapterEvent += LoadChapter;
         }
 
-        private void PanelClicked(string panelName)
+        private void LoadChapter(string scenarioTitle, string chapterTitle)
         {
-            Debug.Log("[GameSelecitonManager] Game Panel named " + panelName + " clicked!. Let's load it");
+            ChapterInfoBundle bundle = new ChapterInfoBundle(scenarioTitle, chapterTitle);
+            _navService.Push("DeckTest", bundle);
+            Debug.Log(string.Format("[GameSelectionManager] Load chapter{0} of scenario {1}", chapterTitle, scenarioTitle));
         }
 
-        private void BackEventClicked()
-        {
-            Debug.Log("[MANAGER BACKEVET OK!");
-            _navService.Pop();
-        }
-
-        //TODO just one method CreateEntries that await _netGetCatalog ?
-        //Maybe be more concised.
         private async UniTaskVoid FetchCatalog()
         {
-            var catalog = await GetScenariiCatalog();
-            Debug.Log("Description of scenario1 / chapter 2 is :");
+            _catalog = await GetScenariiCatalog();
 
-            foreach (Scenario s in catalog.Scenarii)
+            if(_catalog != null)
+            {
+                _controller.Show(_catalog.Scenarii);
+                //DebugScenarii();
+            }
+        }
+
+        private void DebugScenarii()
+        {
+            foreach (Scenario s in _catalog.Scenarii)
             {
                 Debug.Log("Scenar title : " + s.ScenarioTitle);
                 Debug.Log("Scenar description : " + s.ScenarioDescription);
+                foreach (string ont in s.OntologyTags)
+                {
+                    Debug.Log("Ontology tags : " + ont);
+                }
+                foreach (string dom in s.DomainTags)
+                {
+                    Debug.Log("Ontology tags : " + dom);
+                }
+                foreach (string lan in s.LanguageTags)
+                {
+                    Debug.Log("Language tags : " + lan);
+                }
                 foreach (Chapter c in s.Chapters)
                 {
                     Debug.Log("Chapter title : " + c.ChapterTitle);
@@ -77,9 +80,12 @@ namespace StarterCore.Core.Scenes.GameSelection
         private async UniTask<ScenariiModelDown> GetScenariiCatalog()
         {
             ScenariiModelDown catalog = await _net.GetCatalog();
-            Debug.Log("Catalog content is " + catalog);
             return catalog;
         }
 
+        private void BackEventClicked()
+        {
+            _navService.Pop();
+        }
     }
 }

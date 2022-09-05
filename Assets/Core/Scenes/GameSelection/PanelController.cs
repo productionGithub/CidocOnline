@@ -19,27 +19,26 @@ namespace StarterCore.Core.Scenes.GameSelection
 
         private List<PanelEntryController> _entries;
 
-        public event Action<string> OnGamePanelClickEvent;
+        public event Action<string, string> OnPanelControllerPlayChapterEvent;
 
-        public void Show(List<Panel> panels)
+        public void Show(List<Scenario> scenariiPanels)
         {
+
             Clear();//Clear panel list _entries
 
-            foreach (Panel panel in panels)
+            foreach(Scenario scenario in scenariiPanels)
             {
                 PanelEntryController instance = Instantiate(_panelTemplate, _templateContainer);
-                instance.Show(panel);
-                instance.OnPanelClickEvent += GamePanelClicked;
+                instance.Show(scenario);
+                instance.OnPanelEntryControllerPlayEvent += OnPlayChapterClicked;
                 instance.gameObject.SetActive(true);
                 _entries.Add(instance);
             }
         }
 
-        //TODO Va sauter au profit de la vue detail...
-        private void GamePanelClicked(string panelName)
+        private void OnPlayChapterClicked(string scenarioTitle, string chapterName)
         {
-            OnGamePanelClickEvent?.Invoke(panelName);
-            //Debug.Log("Panel clicked -> " + panelName);
+            OnPanelControllerPlayChapterEvent?.Invoke(scenarioTitle, chapterName);
         }
 
         private void Clear()
@@ -48,7 +47,6 @@ namespace StarterCore.Core.Scenes.GameSelection
             {
                 _entries = new List<PanelEntryController>();
                 _panelTemplate.gameObject.SetActive(false); // Disable template
-                //_refreshButton.onClick.AddListener(() => OnRefreshClickedEvent?.Invoke());
             }
             else
             {
