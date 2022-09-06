@@ -17,11 +17,15 @@ namespace StarterCore.Core.Scenes.GameSelection
 
         [SerializeField] private bool _detailToggleState = false;
 
+        [SerializeField] private TagsGroupController _tagsGroup;
+
         public event Action<string, string> OnPanelEntryControllerPlayEvent; 
 
         public event Action OnDetailClickEvent;
 
+        //Scenario title needed when Play chapter is clicked. See OnPlayClicked().
         private string _scenarioTitle;
+
 
         public void Show(Scenario scenario)
         {
@@ -29,11 +33,15 @@ namespace StarterCore.Core.Scenes.GameSelection
 
             _detailButton.onClick.AddListener(OnDetailButtonClicked);
 
-            _scenarioTitleTxt.text = $"{scenario.ScenarioTitle}";
+            _scenarioTitleTxt.text = $"{scenario.ScenarioTitle}" + " - [" + $"{scenario.LanguageTag}" + "]";
             _descriptionTxt.text = $"{scenario.ScenarioDescription}";
 
+            //Detail panel
             _detailPanel.Show(scenario.Chapters);
             _detailPanel.OnDetailEntryControllerPlayEvent += OnPlayClicked;
+
+            //TagsGroup
+            _tagsGroup.Show(scenario.DomainTags, scenario.OntologyTags, scenario.AuthorTags);
         }
 
         private void OnPlayClicked(string chapterName)

@@ -65,10 +65,9 @@ namespace StarterCore.Core.Scenes.GameSelection
                 {
                     Debug.Log("Ontology tags : " + dom);
                 }
-                foreach (string lan in s.LanguageTags)
-                {
-                    Debug.Log("Language tags : " + lan);
-                }
+
+                Debug.Log("Language tags : " + s.LanguageTag);
+
                 foreach (Chapter c in s.Chapters)
                 {
                     Debug.Log("Chapter title : " + c.ChapterTitle);

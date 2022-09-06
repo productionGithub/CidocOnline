@@ -1,38 +1,156 @@
-[
-   {
-      "scenario-title":"Marmoutier",
-      "scenario-description":"This is a lorem ipsum for description.",
-      "chapters":[
-         {
-            "chapter-title":"Marmou chapter1",
-            "chapter-description":"Description of the super chapter."
-         },
-         {
-            "chapter-title":"Marmou chapter2",
-            "chapter-description":"Description of the super chapter."
-         },
-         {
-            "chapter-title":"Marmou chapter3",
-            "chapter-description":"Description of the super chapter."
-         }
+{
+  "scenarii": [
+    {
+      "scenario-title": "Abbaye de Marmoutier",
+      "ontologyTags": [
+        "CidocCRM",
+        "ric-O"
+      ],
+      "domainTags": [
+        "History",
+        "Archeology"
+      ],
+    "authorTags": [
+      "Masa",
+      "Huma-num"
+      ],
+      "languageTag": "Français",
+      "scenario-description": "Ceci est une description en Français du scénario Abbaye de Marmoutier situé à Tours.",
+      "chapters": [
+        {
+          "chapter-title": "Les bases de l'ontologie",
+          "chapter-description": "Description du chapitre..."
+        },
+        {
+          "chapter-title": "Les entités",
+          "chapter-description": "Description du chapitre..."
+        },
+        {
+          "chapter-title": "Les propriétés",
+          "chapter-description": "Description du chapitre..."
+        },
+        {
+          "chapter-title": "Créer des relations",
+          "chapter-description": "Description du chapitre..."
+        },
+        {
+          "chapter-title": "Relations complexes",
+          "chapter-description": "Description du chapitre..."
+        }
       ]
-   },
-   {
-      "scenario-title":"Asinou",
-      "scenario-description":"This is a lorem ipsum for Asinou.",
-      "chapters":[
-         {
-            "chapter-title":"Asinou chapter1",
-            "chapter-description":"Description of the super chapter."
-         },
-         {
-            "chapter-title":"Asinou chapter2",
-            "chapter-description":"Description of the super chapter."
-         },
-         {
-            "chapter-title":"Asinou chapter3",
-            "chapter-description":"Description of the super chapter."
-         }
+    },
+
+
+    {
+      "scenario-title": "Abbay of Marmoutier",
+      "ontologyTags": [
+        "CidocCRM",
+        "ric-O"
+      ],
+      "domainTags": [
+        "History",
+        "Archeology"
+      ],
+    "authorTags": [
+      "Masa",
+      "Huma-num"
+      ],
+      "languageTag": "English",
+      "scenario-description": "This is an English description of Marmoutier scenario that takes place in Tours.",
+      "chapters": [
+        {
+          "chapter-title": "Ontology basics",
+          "chapter-description": "Description of the chapter..."
+        },
+        {
+          "chapter-title": "Entities",
+          "chapter-description": "Description of the chapter..."
+        },
+        {
+          "chapter-title": "Properties",
+          "chapter-description": "Description of the chapter..."
+        },
+        {
+          "chapter-title": "Build relations",
+          "chapter-description": "Description of the chapter..."
+        },
+        {
+          "chapter-title": "Complex relations",
+          "chapter-description": "Description of the chapter..."
+        }
       ]
-   }
-]
+    },
+
+
+        {
+      "scenario-title": "Αββαείο του Marmoutier",
+      "ontologyTags": [
+        "CidocCRM",
+        "ric-O"
+      ],
+      "domainTags": [
+        "History",
+        "Archeology"
+      ],
+    "authorTags": [
+      "Masa",
+      "Huma-num"
+      ],
+      "languageTag": "Ελληνική",
+      "scenario-description": "Στο πλαίσιο των ανασκαφών που οργανώνονται στην Τουρ, στο αβαείο Marmoutier, το σενάριο αυτό σας διδάσκει να μοντελοποιείτε σύνθετες καταστάσεις.",
+      "chapters": [
+        {
+          "chapter-title": "Παιχνίδι 1",
+          "chapter-description": "Περιγραφή του κεφαλαίου..."
+        },
+        {
+          "chapter-title": "Παιχνίδι 2",
+          "chapter-description": "Περιγραφή του κεφαλαίου..."
+        },
+        {
+          "chapter-title": "Παιχνίδι 3",
+          "chapter-description": "Περιγραφή του κεφαλαίου..."
+        },
+        {
+          "chapter-title": "Παιχνίδι 4",
+          "chapter-description": "Περιγραφή του κεφαλαίου..."
+        },
+        {
+          "chapter-title": "Παιχνίδι 5",
+          "chapter-description": "Περιγραφή του κεφαλαίου..."
+        }
+      ]
+    },
+
+
+    {
+      "scenario-title": "Asinou",
+      "ontologyTags": [
+        "ric-O"
+      ],
+      "domainTags": [
+        "Cultur. heritage",
+        "Archeology"
+      ],
+    "authorTags": [
+      "Greek corp."
+      ],
+      "languageTag": "Ελληνική",
+      "scenario-description": "Μια ελληνική περιγραφή του σεναρίου Asinou.",
+      "chapters": [
+        {
+          "chapter-title": "Παιχνίδι 1",
+          "chapter-description": "Περιγραφή του κεφαλαίου..."
+        },
+        {
+          "chapter-title": "Παιχνίδι 2",
+          "chapter-description": "Περιγραφή του κεφαλαίου..."
+        },
+        {
+          "chapter-title": "Παιχνίδι 3",
+          "chapter-description": "Περιγραφή του κεφαλαίου..."
+        }
+      ]
+    }
+  ]
+}
