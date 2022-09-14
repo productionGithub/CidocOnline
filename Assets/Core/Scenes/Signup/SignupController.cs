@@ -20,6 +20,9 @@ namespace StarterCore.Core.Scenes.Signup
 {
     public class SignupController : MonoBehaviour
     {
+        public GameObject AlertUsernameNotValid;
+        public GameObject AlertUsernameAlreadyExists;
+
         public GameObject AlertEmailNotValid;
         public GameObject AlertEmailAlreadyExists;
         public GameObject AlertPasswordNotValid;
@@ -27,6 +30,8 @@ namespace StarterCore.Core.Scenes.Signup
         public GameObject AlertUserAcccountCreatedFailed;
         public GameObject AlertWaitingForCredentials;
 
+
+        [SerializeField] internal TMP_InputField _username;
         [SerializeField] internal TMP_InputField _email;
         [SerializeField] internal TMP_InputField _password;
         [SerializeField] internal TMP_Text _country;
@@ -105,13 +110,14 @@ namespace StarterCore.Core.Scenes.Signup
                 }
 
                 WaitingForCredentials();//Display 'Wait' message
+                string username = _username.text;
                 string email = _email.text;
                 string password = _password.text;
                 string country = _country.text;
                 string countryCode = code;
                 bool optin = _toggleOptinButton.isOn;
 
-                SignupEventData evt = new SignupEventData(email, password, country, countryCode, optin);
+                SignupEventData evt = new SignupEventData(username, email, password, country, countryCode, optin);
 
                 if (evt != null)
                 {
@@ -122,7 +128,7 @@ namespace StarterCore.Core.Scenes.Signup
 
         public bool ValidateForm()//TODO Finish form validation with other checks
         {
-            return ValidateEmail() && ValidatePassword();
+            return ValidateUsername() && ValidateEmail() && ValidatePassword();
         }
 
         private bool ValidateEmail()
@@ -134,6 +140,26 @@ namespace StarterCore.Core.Scenes.Signup
             else
             {
                 EmailNotValid();
+                return false;
+            }
+        }
+
+        private bool ValidateUsername()
+        {
+            if (string.IsNullOrEmpty(_username.text))
+            {
+                UsernameNotValid();
+                return false;
+            }
+
+            Regex regex = new(@"[^\u0020-\u03FF]+");
+            Match match = regex.Match(_username.text);
+            //!string.IsNullOrEmpty(_username.text) && 
+            if (!match.Success)
+                return true;
+            else
+            {
+                UsernameNotValid();
                 return false;
             }
         }
@@ -176,10 +202,28 @@ namespace StarterCore.Core.Scenes.Signup
 
 
         //Messages hide/Show
+        internal void UsernameAlreadyExists()
+        {
+            HideAllAlerts();
+            AlertUsernameAlreadyExists.SetActive(true);
+        }
+
+        internal void UsernameNotValid()
+        {
+            HideAllAlerts();
+            AlertUsernameNotValid.SetActive(true);
+        }
+
         internal void EmailAlreadyExists()
         {
             HideAllAlerts();
             AlertEmailAlreadyExists.SetActive(true);
+        }
+
+        internal void EmailNotValid()
+        {
+            HideAllAlerts();
+            AlertEmailNotValid.SetActive(true);
         }
 
         internal void AccountCreated()
@@ -200,12 +244,6 @@ namespace StarterCore.Core.Scenes.Signup
             AlertWaitingForCredentials.SetActive(true);
         }
 
-        internal void EmailNotValid()
-        {
-            HideAllAlerts();
-            AlertEmailNotValid.SetActive(true);
-        }
-
         internal void PasswordNotValid()
         {
             HideAllAlerts();
@@ -214,6 +252,8 @@ namespace StarterCore.Core.Scenes.Signup
 
         internal void HideAllAlerts()
         {
+            AlertUsernameNotValid.SetActive(false);
+            AlertUsernameAlreadyExists.SetActive(false);
             AlertEmailNotValid.SetActive(false);
             AlertEmailAlreadyExists.SetActive(false);
             AlertPasswordNotValid.SetActive(false);

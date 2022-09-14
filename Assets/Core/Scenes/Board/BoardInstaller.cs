@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using Zenject;
 
+using StarterCore.Core.Services.GameState;
+
 namespace StarterCore.Core.Scenes.Board
 {
     public class BoardInstaller : MonoInstaller

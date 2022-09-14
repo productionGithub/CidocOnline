@@ -11,5 +11,8 @@ namespace StarterCore.Core.Services.GameState
 
         [JsonProperty("default-locale")]
         public string DefaultLocale;
+
+        [JsonProperty("username")]
+        public string Username;
     }
 }

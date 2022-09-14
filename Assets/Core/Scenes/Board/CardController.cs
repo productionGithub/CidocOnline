@@ -3,13 +3,18 @@ using System;
 using Zenject;
 using StarterCore.Core.Services.Navigation;
 using StarterCore.Core.Scenes.DeckTest;
+using TMPro;
+
+using StarterCore.Core.Services.GameState;
 
 namespace StarterCore.Core.Scenes.Board
 {
     public class CardController : MonoBehaviour
     {
         [Inject] private NavigationService _navService;
+        [Inject] private GameStateManager _gameState;
 
+        [SerializeField] private TextMeshProUGUI _username;
         [SerializeField] private CardDisplayer _leftCard;
         [SerializeField] private CardDisplayer _rightCard;
 
@@ -17,8 +22,10 @@ namespace StarterCore.Core.Scenes.Board
 
         public void Show()
         {
-            ChapterInfoBundle bundle = new ChapterInfoBundle("", "");
+            ChapterInfoBundle bundle = new ChapterInfoBundle("", "", "");
             _navService.GetMainBundle(out bundle);
+            _username.text = _gameState.Username;
+
             Debug.Log(string.Format("Bundle values {0} / {1}", bundle._chapterTitle, bundle._scenarioTitle));
             _leftCard.OnCardClicked += (CardDisplayer c, TickDisplayer t) => OnCardDisplayerClicked(c, t);
             _rightCard.OnCardClicked += (CardDisplayer c, TickDisplayer t) => OnCardDisplayerClicked(c, t);

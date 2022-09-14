@@ -78,9 +78,9 @@ namespace StarterCore.Core.Scenes.ResetPassword
             }
         }
 
-        private async UniTask<EmailValidationDown> CheckEmail(string email)
+        private async UniTask<ExistValidationDown> CheckEmail(string email)
         {
-            EmailValidationDown result = await _net.CheckEmail(email);
+            ExistValidationDown result = await _net.CheckEmail(email);
             return result;
         }
 

@@ -7,11 +7,13 @@ namespace StarterCore.Core.Scenes.DeckTest
     {
         public string _scenarioTitle;
         public string _chapterTitle;
+        public string _username;
 
-        public ChapterInfoBundle(string stitle, string ctitle)
+        public ChapterInfoBundle(string stitle, string ctitle, string username)
         {
             _scenarioTitle = stitle;
             _chapterTitle = ctitle;
+            _username = username;
         }
     }
 }

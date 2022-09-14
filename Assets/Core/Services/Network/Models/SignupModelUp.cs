@@ -4,6 +4,9 @@ namespace StarterCore.Core.Services.Network.Models
 {
     public class SignupModelUp
     {
+        [JsonProperty("username")]
+        public string Username;
+
         [JsonProperty("email")]
         public string Email;
 

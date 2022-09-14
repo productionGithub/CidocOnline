@@ -32,40 +32,56 @@ namespace StarterCore.Core.Scenes.Signup
         private async void SubmitClicked(SignupEventData signupData)
         {
             //Test load of game data
-            TestLoadGame().Forget();
+            //TestLoadGame().Forget();
 
+            //Check Username
+            string username = signupData.Username;
+            var resultUsername = await CheckUsername(username);
 
-            //Check Email
-            string email = signupData.Email;
-
-            var result = await CheckEmail(email);
-
-            if (result.DoesExist == false)//False = Did not find the email in DB
+            if (resultUsername.DoesExist == false)
             {
-                //Register user
-                SignupModelUp netModel = new SignupModelUp
-                {
-                    Email = signupData.Email,
-                    Password = signupData.Password,
-                    Country = signupData.Country,
-                    CountryCode = signupData.CountryCode,
-                    Optin = signupData.Optin,
-                    Lang = _gameState.Locale//Locale of the game when account created
-                };
+                //Check Email
+                string email = signupData.Email;
+                var result = await CheckEmail(email);
 
-                RegisterUser(netModel).Forget();
-            } else
+                if (result.DoesExist == false)//False = Did not find the email in DB
+                {
+                    //Register user
+                    SignupModelUp netModel = new SignupModelUp
+                    {
+                        Username = signupData.Username,
+                        Email = signupData.Email,
+                        Password = signupData.Password,
+                        Country = signupData.Country,
+                        CountryCode = signupData.CountryCode,
+                        Optin = signupData.Optin,
+                        Lang = _gameState.Locale//Locale of the game when account created
+                    };
+
+                    RegisterUser(netModel).Forget();
+                }
+                else
+                {
+                    _controller.HideAllAlerts();
+                    _controller.EmailAlreadyExists();
+                }
+            }
+            else
             {
                 _controller.HideAllAlerts();
-                _controller.EmailAlreadyExists();
+                _controller.UsernameAlreadyExists();
             }
-
-
         }
 
-        private async UniTask<EmailValidationDown> CheckEmail(string email)
+        private async UniTask<ExistValidationDown> CheckUsername(string username)
         {
-            EmailValidationDown result =  await _net.CheckEmail(email);
+            ExistValidationDown result = await _net.CheckUsername(username);
+            return result;
+        }
+
+        private async UniTask<ExistValidationDown> CheckEmail(string email)
+        {
+            ExistValidationDown result =  await _net.CheckEmail(email);
             return result;
         }
 
@@ -86,15 +102,15 @@ namespace StarterCore.Core.Scenes.Signup
             }
         }
 
-        private async UniTaskVoid TestLoadGame()
-        {
-            GameModelDown game = await _net.LoadGame();
-            Debug.Log("Game loaded game title : " + game.Title);
-            Debug.Log("Game loaded is : " + game.DomainTags[1]);
-            Debug.Log("Game loaded is : " + game.OntologyTags[0]);
-            Debug.Log("Game loaded is in language : " + game.LanguageTags[0]);
-            Debug.Log("Game loaded first challenge title is : " + game.ChallengeList[0].Title);
-        }
+        //private async UniTaskVoid TestLoadGame()
+        //{
+        //    GameModelDown game = await _net.LoadGame();
+        //    Debug.Log("Game loaded game title : " + game.Title);
+        //    Debug.Log("Game loaded is : " + game.DomainTags[1]);
+        //    Debug.Log("Game loaded is : " + game.OntologyTags[0]);
+        //    Debug.Log("Game loaded is in language : " + game.LanguageTags[0]);
+        //    Debug.Log("Game loaded first challenge title is : " + game.ChallengeList[0].Title);
+        //}
 
         private void BackEventClicked()
         {

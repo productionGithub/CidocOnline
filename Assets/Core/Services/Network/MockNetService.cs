@@ -19,6 +19,8 @@ namespace StarterCore.Core.Services.Network
 
         //Signin & Signup process
         private string URL_CREATE_USER = Path.Combine(HomeUrl, "php/userSave.php");
+        private string URL_CHECK_USERNAME = Path.Combine(HomeUrl, "php/checkusername.php?username={0}");
+        private string URL_GET_USERNAME = Path.Combine(HomeUrl, "php/getusername.php?email={0}");
         private string URL_CHECK_EMAIL = Path.Combine(HomeUrl, "php/checkemail.php?email={0}");
         private string URL_CHECK_STATUS = Path.Combine(HomeUrl, "php/checkstatus.php?email={0}");
         private string URL_LOGIN = Path.Combine(HomeUrl, "php/login.php");
@@ -91,11 +93,30 @@ namespace StarterCore.Core.Services.Network
             return result;
         }
 
-        //CHECK EMAIL
-        public async UniTask<EmailValidationDown> CheckEmail(string email)
+        //CHECK USERNAME
+        public async UniTask<ExistValidationDown> CheckUsername(string username)
         {
+            string url = string.Format(URL_CHECK_USERNAME, username);
+            ExistValidationDown result = await _net.GetAsync<ExistValidationDown>(url);
+            return result;
+        }
+
+        //GET USERNAME
+        public async UniTask<UsernameModelDown> GetUsername(string email)
+        {
+            Debug.Log("[MockNetService] GetUsername param email" + email);
+            string url = string.Format(URL_GET_USERNAME, email);
+            Debug.Log("[MockNetService] GetUsername param url" + url);
+            UsernameModelDown result = await _net.GetAsync<UsernameModelDown>(url);
+            return result;
+        }
+
+        //CHECK EMAIL
+        public async UniTask<ExistValidationDown> CheckEmail(string email)
+        {
+            Debug.Log("[MockNetService] CheckEmail");
             string url = string.Format(URL_CHECK_EMAIL, email);
-            EmailValidationDown result = await _net.GetAsync<EmailValidationDown>(url);
+            ExistValidationDown result = await _net.GetAsync<ExistValidationDown>(url);
             return result;
         }
 
@@ -112,9 +133,12 @@ namespace StarterCore.Core.Services.Network
             GameModelDown result = await _net.GetAsync<GameModelDown>(URL_GET_GAMES);
             return result;
         }
+
+
         //LOGIN
         public async UniTask<SigninModelDown> Login(SigninModelUp formData)
         {
+            Debug.Log("[MockNetService] Login");
             SigninModelDown result = await _net.PostAsync<SigninModelDown>(URL_LOGIN, formData);
             return result;
         }

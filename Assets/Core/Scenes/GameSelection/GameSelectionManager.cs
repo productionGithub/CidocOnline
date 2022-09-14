@@ -35,7 +35,7 @@ namespace StarterCore.Core.Scenes.GameSelection
 
         private void LoadChapter(string scenarioTitle, string chapterTitle)
         {
-            ChapterInfoBundle bundle = new ChapterInfoBundle(scenarioTitle, chapterTitle);
+            ChapterInfoBundle bundle = new ChapterInfoBundle(scenarioTitle, chapterTitle, "Περιγραφή");
             _navService.Push("DeckTest", bundle);
             Debug.Log(string.Format("[GameSelectionManager] Load chapter{0} of scenario {1}", chapterTitle, scenarioTitle));
         }

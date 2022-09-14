@@ -4,7 +4,7 @@ using System;
 namespace StarterCore.Core.Services.Network.Models
 {
     [Serializable]
-    public class EmailValidationDown
+    public class ExistValidationDown
     {
         [JsonProperty("doesExist")]
         public bool DoesExist;

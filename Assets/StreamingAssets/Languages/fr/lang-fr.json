@@ -26,6 +26,13 @@
       "signup-scene-email-placeholder-text" : "Entrez un email valide",
       "signup-scene-emailnotvalid-text" : "Format d'email invalide.\nDevrait ressembler à 'martin@dupont.fr'",
       "signup-scene-emailalreadyexists-text" : "Email déjà enregistré\nEssayez un autre ou réinitialisez le mot de passe",
+
+      "signup-scene-username-label": "Nom d'utilisateur",
+      "signup-scene-username-placeholder-text" : "Choisissez un nom d'utilisateur",
+      "signup-scene-usernamenotvalid-text" : "Nom d'utilisateur non valide\nDevrait ressembler à 'Arcturus75'",
+      "signup-scene-usernamealreadyexists-text" : "Ce nom d'utilisateur existe déjà\nChoisissez-en un autre",
+
+
       "signup-scene-password-label": "Votre mot de passe",
       "signup-scene-password-placeholder-text":"minimum 6 caractères",
       "signup-scene-passwordnotvalid-text" : "Mot de passe : minimum 6 caractères", 

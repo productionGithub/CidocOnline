@@ -43,7 +43,6 @@ namespace StarterCore.Core.Scenes.Signin
             //TEST
             _controller.OnTestEvent += LoadTestScene;
 
-            
             //var cards = await _state.LoadCards();
             //_controller._cardName.GetComponent<TextMeshProUGUI>().text = cards[8].imageName;
         }
@@ -55,16 +54,8 @@ namespace StarterCore.Core.Scenes.Signin
 
         private void SetLocalization(string locale)
         {
-            _gameState.SetLocale(locale);
-            //_navService.RefreshCurrentScene();
-            //_ = _localizationController.ChangeLocale(locale);
+            _gameState.DefaultLocale = locale;
         }
-
-        //private void SceneIsLoaded(string name)
-        //{
-
-        //    Debug.Log("Scene is loaded, let's translate it -> " + name);
-        //}
 
         //SUBMIT FORM
         private async void SubmitClicked(SigninEventData signinData)
@@ -109,9 +100,9 @@ namespace StarterCore.Core.Scenes.Signin
         }
 
         //CHECK EMAIL
-        private async UniTask<EmailValidationDown> CheckEmail(string email)
+        private async UniTask<ExistValidationDown> CheckEmail(string email)
         {
-            EmailValidationDown result = await _net.CheckEmail(email);
+            ExistValidationDown result = await _net.CheckEmail(email);
             return result;
         }
 
@@ -123,20 +114,30 @@ namespace StarterCore.Core.Scenes.Signin
         }
 
         //LOGIN PROCESS
-        private async UniTaskVoid Login(SigninModelUp formData)
+        private async UniTaskVoid Login(SigninModelUp credentials)
         {
-            SigninModelDown result = await _net.Login(formData);
+            Debug.Log("[SigninManager] Login param email : " + credentials.Email);
+            SigninModelDown result = await _net.Login(credentials);
 
             if (result.LoginResult == true)
             {
                 _controller.HideAllAlerts();
                 _controller.AlertRightCombination.SetActive(true);
+                InitGame(credentials.Email);
             }
             else
             {
                 _controller.HideAllAlerts();
                 _controller.AlertWrongCombination.SetActive(true);
             }
+        }
+
+        private async void InitGame(string playerEmail)
+        {
+            Debug.Log("[SigninManager] InitGame param email : " + playerEmail);
+            UsernameModelDown result = await _net.GetUsername(playerEmail);
+            _gameState.Username = result.Username;
+            Debug.Log("Login with username : " + _gameState.Username);
         }
 
         //CLICK ON RESET PASSWORD LINK
