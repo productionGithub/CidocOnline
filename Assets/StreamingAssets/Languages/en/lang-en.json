@@ -24,7 +24,7 @@
       "signup-scene-title-text": "CREATE ACCOUNT",
       "signup-scene-username-label": "Username",
       "signup-scene-username-placeholder-text" : "Choose a username",
-      "signup-scene-usernamenotvalid-text" : "Username not valid\nShould be something like 'Arcturus75'",
+      "signup-scene-usernamenotvalid-text" : "Username not valid\nShould only contains printable characters",
       "signup-scene-usernamealreadyexists-text" : "This username already exists\nPlease choose another one",
       "signup-scene-email-label": "Email address",
       "signup-scene-email-placeholder-text" : "Enter a valid email address",

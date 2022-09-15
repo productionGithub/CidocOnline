@@ -1,0 +1,40 @@
+{
+      "scenario-title": "MarmoutierFR",
+      "ontologyTags": [
+        "CidocCRM",
+        "ric-O"
+      ],
+      "domainTags": [
+        "History",
+        "Archeology"
+      ],
+    "authorTags": [
+      "Masa",
+      "Huma-num"
+      ],
+      "languageTag": "Français",
+      "scenario-description": "Ceci est une description en Français du scénario Abbaye de Marmoutier situé à Tours.",
+      "chapters": [
+        {
+          "chapter-title": "Les bases de l'ontologie",
+          "chapter-description": "Description du chapitre..."
+        },
+        {
+          "chapter-title": "Les entités",
+          "chapter-description": "Description du chapitre..."
+        },
+        {
+          "chapter-title": "Les propriétés",
+          "chapter-description": "Description du chapitre..."
+        },
+        {
+          "chapter-title": "Créer des relations",
+          "chapter-description": "Description du chapitre..."
+        },
+        {
+          "chapter-title": "Relations complexes",
+          "chapter-description": "Description du chapitre..."
+        }
+      ]
+    }
+

@@ -29,7 +29,7 @@
 
       "signup-scene-username-label": "Nom d'utilisateur",
       "signup-scene-username-placeholder-text" : "Choisissez un nom d'utilisateur",
-      "signup-scene-usernamenotvalid-text" : "Nom d'utilisateur non valide\nDevrait ressembler à 'Arcturus75'",
+      "signup-scene-usernamenotvalid-text" : "Nom d'utilisateur non valide\nEvitez les caractères non-imprimables",
       "signup-scene-usernamealreadyexists-text" : "Ce nom d'utilisateur existe déjà\nChoisissez-en un autre",
 
 

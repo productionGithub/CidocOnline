@@ -1,7 +1,7 @@
 {
   "scenarii": [
     {
-      "scenario-title": "Abbaye de Marmoutier",
+      "scenario-title": "MarmoutierFR",
       "ontologyTags": [
         "CidocCRM",
         "ric-O"
@@ -42,7 +42,7 @@
 
 
     {
-      "scenario-title": "Abbay of Marmoutier",
+      "scenario-title": "MarmoutierEN",
       "ontologyTags": [
         "CidocCRM",
         "ric-O"
@@ -82,7 +82,7 @@
     },
 
 
-        {
+    {
       "scenario-title": "Αββαείο του Marmoutier",
       "ontologyTags": [
         "CidocCRM",

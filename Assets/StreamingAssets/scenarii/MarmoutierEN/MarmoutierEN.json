@@ -1,0 +1,40 @@
+{
+      "scenario-title": "MarmoutierEN",
+      "ontologyTags": [
+        "CidocCRM",
+        "ric-O"
+      ],
+      "domainTags": [
+        "History",
+        "Archeology"
+      ],
+    "authorTags": [
+      "Masa",
+      "Huma-num"
+      ],
+      "languageTag": "English",
+      "scenario-description": "This is an english description of the Marmoutier game, in english of course",
+      "chapters": [
+        {
+          "chapter-title": "Ontology basics",
+          "chapter-description": "This is the description this very chapter..."
+        },
+        {
+          "chapter-title": "Entities",
+          "chapter-description": "This is the description this very chapter..."
+        },
+        {
+          "chapter-title": "Properties",
+          "chapter-description": "This is the description this very chapter..."
+        },
+        {
+          "chapter-title": "Create relations",
+          "chapter-description": "This is the description this very chapter..."
+        },
+        {
+          "chapter-title": "Complex relations",
+          "chapter-description": "This is the description this very chapter..."
+        }
+      ]
+    }
+
