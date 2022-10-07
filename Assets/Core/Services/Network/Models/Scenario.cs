@@ -13,6 +13,8 @@ namespace StarterCore.Core.Services.Network.Models
         public List<string> OntologyTags;
         [JsonProperty("domainTags")]
         public List<string> DomainTags;
+        [JsonProperty("domainCodes")]
+        public List<string> DomainCodes;
         [JsonProperty("authorTags")]
         public List<string> AuthorTags;
         [JsonProperty("languageTag")]
@@ -21,12 +23,13 @@ namespace StarterCore.Core.Services.Network.Models
         public string ScenarioDescription;
         [JsonProperty("chapters")]
         public List<Chapter> Chapters;
-        //private Scenario scenario;
+
 
         public Scenario(
             string title,
             List<string> ontologyTags,
             List<string> domainTags,
+            List<string> domainCodes,
             List<string> authorTags,
             string languageTag,
             string scenarioDescription,
@@ -36,6 +39,7 @@ namespace StarterCore.Core.Services.Network.Models
             ScenarioTitle = title;
             OntologyTags = new List<string>(ontologyTags);
             DomainTags = new List<string>(domainTags);
+            DomainCodes = new List<string>(domainCodes);
             AuthorTags = new List<string>(authorTags);
             LanguageTag = languageTag;
             ScenarioDescription = scenarioDescription;

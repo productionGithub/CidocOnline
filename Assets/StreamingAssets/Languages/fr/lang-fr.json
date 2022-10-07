@@ -62,8 +62,7 @@
       "GameSelectionScene" :{
       "gameselection-scene-title-text": "SELECTION DES JEUX",
       "gameselection-scene-backbutton-text":"Retour au menu principal",
-      "gameselection-scene-searchplaceholder-text":"Entrez le nom d'un jeu",
-      "gameselection-scene-searchbutton-text":"Chercher",
+      "gameselection-scene-listofscenarii-label":"Liste des scenario",
       "gameselection-scene-domain-label":"Domaine",
       "gameselection-scene-domain1-text":"Archéologie",
       "gameselection-scene-domain2-text":"Histoire",

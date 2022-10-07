@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 using StarterCore.Core.Services.Navigation;
+using StarterCore.Core.Services.GameState;
 
 namespace StarterCore.Core.Scenes.ResetPassword
 {
@@ -19,10 +20,12 @@ namespace StarterCore.Core.Scenes.ResetPassword
         [Inject] private MockNetService _net;
         [Inject] private ResetPasswordController _controller;
         [Inject] private NavigationService _navService;
+        [Inject] private GameStateManager _gameState;
 
         public void Initialize()
         {
             Debug.Log("ResetPassword Manager initialized!");
+            Debug.Log("Manager Default locale is : " + _gameState.DefaultLocale);
             _controller.Show();
             _controller.OnResetPasswordEvent += CreateNewPassword;
             _controller.OnBackEvent += BackEventClicked;

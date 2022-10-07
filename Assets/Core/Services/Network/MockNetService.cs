@@ -14,6 +14,37 @@ namespace StarterCore.Core.Services.Network
     {
         [Inject] private NetworkService _net;
 
+
+        /*
+        //const string HomeUrl = "https://ontomatchgame.huma-num.fr/";
+        const string HomeUrl = "";//offline
+        const string LanguagesFolder = "StreamingAssets/Languages/";
+
+        //Signin & Signup process
+        private string URL_CREATE_USER = Path.Combine(HomeUrl, "php/userSave.php");
+        private string URL_CHECK_USERNAME = Path.Combine(HomeUrl, "php/checkusername.php?username={0}");
+        private string URL_GET_USERNAME = Path.Combine(HomeUrl, "php/getusername.php?email={0}");
+        private string URL_CHECK_EMAIL = Path.Combine(HomeUrl, "php/checkemail.php?email={0}");
+        private string URL_CHECK_STATUS = Path.Combine(HomeUrl, "php/checkstatus.php?email={0}");
+        private string URL_LOGIN = Path.Combine(HomeUrl, "php/login.php");
+        private string URL_GET_ACTIVATION_CODE = Path.Combine(HomeUrl, "php/getactivationcode.php");
+        private string URL_SEND_RESET_EMAIL = Path.Combine(HomeUrl, "php/sendresetlink.php");
+        private string URL_GET_LOCALES_MANIFEST = "StreamingAssets/Languages/manifest.json";
+        //private string URL_GET_LOCALES_MANIFEST = "/Users/Fix/IndytionProd/OntoMatchGame/Assets/StreamingAssets/Languages/manifest.json";//offline
+
+        private string URL_GET_COUNTRIES = "StreamingAssets/Games/Marmoutier/marmoutier.json";
+        //private string URL_GET_COUNTRIES = "";
+
+        private string URL_SCENARII_CATALOG = "StreamingAssets/scenarii/scenariiCatalog.json";
+        //private string URL_SCENARII_CATALOG = "/Users/Fix/IndytionProd/OntoMatchGame/Assets/StreamingAssets/scenarii/scenariiCatalog.json";//offline
+
+
+        //Test load games
+        private string URL_GET_GAMES = "http://ontomatchgame.huma-num.fr/StreamingAssets/Games/Marmoutier/marmoutier.json";
+
+
+        */
+
         const string HomeUrl = "https://ontomatchgame.huma-num.fr/";
         const string LanguagesFolder = "StreamingAssets/Languages/";
 
@@ -35,11 +66,13 @@ namespace StarterCore.Core.Services.Network
         private string URL_GET_GAMES = "http://ontomatchgame.huma-num.fr/StreamingAssets/Games/Marmoutier/marmoutier.json";
 
 
+
         //TODO Refactor GetCountriesJson with URL_GET_COUNTRIES
 
         //FETCH SCENARII CATALOG
         public async UniTask<ScenariiModelDown> GetCatalog()
         {
+            //string url = Path.Combine(HomeUrl, URL_SCENARII_CATALOG);
             string url = Path.Combine(HomeUrl, URL_SCENARII_CATALOG);
 
             ScenariiModelDown result = await _net.GetAsync<ScenariiModelDown>(url);
@@ -52,6 +85,7 @@ namespace StarterCore.Core.Services.Network
         public async UniTask<LocalesManifestModel> GetLocalesManifestFile()
         {
             string url = Path.Combine(HomeUrl, URL_GET_LOCALES_MANIFEST);
+            //string url = URL_GET_LOCALES_MANIFEST;//offline
 
             LocalesManifestModel result = await _net.GetAsync<LocalesManifestModel>(url);
 

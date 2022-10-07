@@ -11,5 +11,11 @@ namespace StarterCore.Core.Services.Network.Models
         public string ChapterTitle;
         [JsonProperty("chapter-description")]
         public string ChapterDescription;
+
+        public Chapter(string cTitle, string cDescription)
+        {
+            ChapterTitle = cTitle;
+            ChapterDescription = cDescription;
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace StarterCore.Core.Scenes.GameSelection
     public class GameSelectionManager : IInitializable
     {
         [Inject] private MockNetService _net;
-        [Inject] private GameSelectionController _controller;
+        [Inject] private GameSelectionController _gameSelectioncontroller;
         [Inject] private NavigationService _navService;
 
         ScenariiModelDown _catalog;
@@ -26,11 +26,11 @@ namespace StarterCore.Core.Scenes.GameSelection
             Debug.Log("[GameSelectionManager] Initialized!");
             List<Scenario> scenarioList = new List<Scenario>();
 
-            //Get scenarii catalog
+            //Get scenarii catalog and Show Game selection panel
             FetchCatalog().Forget();
 
-            _controller.OnBackEvent += BackEventClicked;
-            _controller.OnGameSelectionControllerPlayChapterEvent += LoadChapter;
+            _gameSelectioncontroller.OnBackEvent += BackEventClicked;
+            _gameSelectioncontroller.OnGameSelectionControllerPlayChapterEvent += LoadChapter;
         }
 
         private void LoadChapter(string scenarioTitle, string chapterTitle)
@@ -40,13 +40,14 @@ namespace StarterCore.Core.Scenes.GameSelection
             Debug.Log(string.Format("[GameSelectionManager] Load chapter{0} of scenario {1}", chapterTitle, scenarioTitle));
         }
 
+        //private async UniTaskVoid FetchCatalog()
         private async UniTaskVoid FetchCatalog()
         {
             _catalog = await GetScenariiCatalog();
 
             if(_catalog != null)
             {
-                _controller.Show(_catalog.Scenarii);
+                _gameSelectioncontroller.Show(_catalog.Scenarii);
                 //DebugScenarii();
             }
         }

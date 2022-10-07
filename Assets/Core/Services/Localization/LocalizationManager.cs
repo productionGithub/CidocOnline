@@ -15,6 +15,7 @@ using StarterCore.Core.Services.Network.Models;
 
 
 using Cysharp.Threading.Tasks;
+using Mono.Collections.Generic;
 
 namespace StarterCore.Core.Services.Localization
 {
@@ -26,6 +27,8 @@ namespace StarterCore.Core.Services.Localization
 
         public event Action OnTranslateEvent;
         TranslationsModel _languageDictionary;
+
+        /* STRUCT */
 
         public void Initialize()
         {
@@ -53,7 +56,8 @@ namespace StarterCore.Core.Services.Localization
             else
             {
                 Debug.Log("[Localization Manager] Locale not found in language file, falling back to default language : " + _gamestate.DefaultLocale);
-                _gamestate.Locale = _gamestate.DefaultLocale;
+                //_gamestate.Locale = _gamestate.DefaultLocale;
+                _gamestate.SetLocale(_gamestate.DefaultLocale);
                 _languageDictionary = await GetLocaleDictionary(_gamestate.Locale);
             }
 

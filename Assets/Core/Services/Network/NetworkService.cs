@@ -88,7 +88,7 @@ namespace StarterCore.Core.Services.Network
 
                 if (JSON.TryDeserialize<T>(content, out T parsed))
                 {
-                    //Debug.Log("Parsed Json response -> " + parsed.ToString());
+                    Debug.Log("Parsed Json response -> " + parsed.ToString());
                     return parsed;
                 }
                 else

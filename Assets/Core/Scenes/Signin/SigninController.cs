@@ -65,10 +65,10 @@ namespace StarterCore.Core.Scenes.Signin
             _frenchFlagButton.onClick.AddListener(() => OnLocalizationFlagClicked("fr"));//=> OnLocalizationFlagClickedEvent?.Invoke("fr"));
 
             //Test
-            _test.onClick.AddListener(Couille);// () => OnTestClickedEvent?.Invoke());
+            _test.onClick.AddListener(TestGameSelection);// () => OnTestClickedEvent?.Invoke());
         }
 
-        private void Couille()
+        private void TestGameSelection()
         {
             OnTestEvent?.Invoke();
         }

@@ -1,10 +1,6 @@
 using UnityEngine;
 using System;
-using System.Net.Mail;
 using System.Text.RegularExpressions;
-using System.Globalization;
-using System.Collections;
-using UnityEngine.SceneManagement;
 using Zenject;
 using System.Collections.Generic;
 using TMPro;
@@ -12,7 +8,6 @@ using StarterCore.Core.Services.Network;
 using StarterCore.Core.Services.Network.Models;
 using StarterCore.Core.Services.GameState;
 
-using Newtonsoft.Json;
 using Cysharp.Threading.Tasks;
 using UnityEngine.UI;
 
@@ -73,11 +68,11 @@ namespace StarterCore.Core.Scenes.Signup
             List<string> countryNames = new List<string>();
 
             _countriesDic = await _MockNetService.GetCountriesJson(_gameState.Locale);
-            //var countriesDic = await _networkService.GetCountriesJson();
+
             for (int i = 0; i < _countriesDic.Countries.Count; i++)
             {
                 countryNames.Add(_countriesDic.Countries[i].Name);
-                Debug.Log("[Signup Manager] Adding country ->" + _countriesDic.Countries[i].Name);
+                //Debug.Log("[Signup Manager] Adding country ->" + _countriesDic.Countries[i].Name);
             }
 
             //Populate item DropDown list with strings

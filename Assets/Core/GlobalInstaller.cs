@@ -24,6 +24,8 @@ namespace StarterCore.Core
 
             Container.Bind<NavigationSetup>().FromInstance(_navSetup);
             Container.BindInterfacesAndSelfTo<NavigationService>().AsSingle().NonLazy();
+
+            //Container.Bind<DiContainer>().FromInstance(Container).AsSingle();
         }
     }
 }

@@ -1,16 +1,9 @@
 using UnityEngine;
 using System;
-using Zenject;
-
-using System.Net.Mail;
-using System.Text.RegularExpressions;
-using System.Globalization;
-using System.Collections;
-using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using StarterCore.Core.Services.Network.Models;
+using System.Linq;
 
 namespace StarterCore.Core.Scenes.GameSelection
 {
@@ -19,16 +12,67 @@ namespace StarterCore.Core.Scenes.GameSelection
         [Header("Static")]
         [SerializeField] private Button _BackButton;
         [SerializeField] private PanelController _panelController;
-        [SerializeField] private DetailEntryController _detailController;
+        [SerializeField] private LanguageEntryController _languageEntryController;
+        [SerializeField] private DomainEntryController _domainEntryController;
 
         public event Action<string, string> OnGameSelectionControllerPlayChapterEvent;
         public event Action OnBackEvent;
 
+        List<Scenario> _scenarioList = new List<Scenario>();
+
+        List<string> _languageCriterias = new List<string>();
+        List<string> _domainCriterias = new List<string>();
+
+
         public void Show(List<Scenario> entries)
         {
-            _panelController.Show(entries);
+            _scenarioList = entries;
+
+            _panelController.Show(entries);//Show game panels
             _panelController.OnPanelControllerPlayChapterEvent += OnPlayChapter;
+
+            _languageEntryController.Show(entries);//update Language zone (list of language Toggles)
+            _languageEntryController.OnLanguageUpdateEvent += OnFilterLanguagePanel;
+            _languageCriterias = _languageEntryController.SelectedLanguages;
+
+            _domainEntryController.Show();
+            _domainEntryController.OnDomainUpdateEvent += OnFilterDomainPanel;
+            _domainCriterias = _domainEntryController.SelectedDomains;
+
             _BackButton.onClick.AddListener(BackClickedEvent);
+        }
+
+        private void OnFilterDomainPanel(List<string> domains)
+        {
+            _domainCriterias = domains;
+            Debug.Log("");
+            FilterScenarii();
+        }
+
+        public void OnFilterLanguagePanel(List<string> languages)
+        {
+            _languageCriterias = languages;
+            FilterScenarii();
+        }
+
+
+        //TODO Refactor to have a list scenario object?
+        private void FilterScenarii()
+        {
+            List<Scenario> filteredScenarioList = new List<Scenario>();
+
+            filteredScenarioList.AddRange(
+                _scenarioList.Where(
+                    p => p.DomainCodes.Intersect(_domainCriterias).Count() > 0 &&
+                    _languageCriterias.Contains(p.LanguageTag))
+            );
+
+            foreach (var Scenario in filteredScenarioList)
+            {
+                Debug.Log("Filtered scenarioList : " + Scenario.ScenarioTitle);
+            }
+
+            _panelController.Show(filteredScenarioList);
         }
 
         private void OnPlayChapter(string scenarioTitle, string chapterTitle)

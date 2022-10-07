@@ -54,7 +54,7 @@ namespace StarterCore.Core.Scenes.Signin
 
         private void SetLocalization(string locale)
         {
-            _gameState.DefaultLocale = locale;
+            _gameState.SetLocale(locale);
         }
 
         //SUBMIT FORM

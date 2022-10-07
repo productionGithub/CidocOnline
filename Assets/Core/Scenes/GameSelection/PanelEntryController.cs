@@ -18,9 +18,9 @@ namespace StarterCore.Core.Scenes.GameSelection
         [SerializeField] private bool _detailToggleState = false;
 
         [SerializeField] private TagsGroupController _tagsGroup;
-
+        
         public event Action<string, string> OnPanelEntryControllerPlayEvent; 
-
+        
         public event Action OnDetailClickEvent;
 
         //Scenario title needed when Play chapter is clicked. See OnPlayClicked().
@@ -35,6 +35,7 @@ namespace StarterCore.Core.Scenes.GameSelection
 
             _scenarioTitleTxt.text = $"{scenario.ScenarioTitle}" + " - [" + $"{scenario.LanguageTag}" + "]";
             _descriptionTxt.text = $"{scenario.ScenarioDescription}";
+
 
             //Detail panel
             _detailPanel.Show(scenario.Chapters);

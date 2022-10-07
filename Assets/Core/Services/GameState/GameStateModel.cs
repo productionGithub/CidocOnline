@@ -14,5 +14,17 @@ namespace StarterCore.Core.Services.GameState
 
         [JsonProperty("username")]
         public string Username;
+
+        [JsonProperty("currentScenario")]
+        public string CurrentScenario;
+
+        [JsonProperty("currentChapter")]
+        public string CurrentChapter;
+
+        [JsonProperty("currentChallenge")]
+        public int CurrentChallenge;
+
+        [JsonProperty("currentScore")]
+        public int CurrentScore;
     }
 }
