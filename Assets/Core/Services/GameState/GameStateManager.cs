@@ -26,7 +26,7 @@ namespace StarterCore.Core.Services.GameState
         public GameStateModel GameState { get { return gameState; } }
 
         public string Locale { get { return gameState.Locale; } set { gameState.Locale = value; } }
-        public string DefaultLocale { get { return gameState.DefaultLocale; } }//set { gameState.DefaultLocale = value; }
+        public string DefaultLocale { get { return gameState.DefaultLocale; } }
         public string Username { get { return gameState.Username; } set { gameState.Username = value;  } }
 
         public void Initialize()

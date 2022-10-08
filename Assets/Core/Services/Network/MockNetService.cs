@@ -57,9 +57,13 @@ namespace StarterCore.Core.Services.Network
         private string URL_LOGIN = Path.Combine(HomeUrl, "php/login.php");
         private string URL_GET_ACTIVATION_CODE = Path.Combine(HomeUrl, "php/getactivationcode.php");
         private string URL_SEND_RESET_EMAIL = Path.Combine(HomeUrl, "php/sendresetlink.php");
+        private string URL_GET_HISTORY = Path.Combine(HomeUrl, "php/gethistory.php?userId={0}");
+        private string URL_GET_USERID = Path.Combine(HomeUrl, "php/getuserid.php?email={0}");
+
         private string URL_GET_LOCALES_MANIFEST = "StreamingAssets/Languages/manifest.json";
         private string URL_GET_COUNTRIES = "StreamingAssets/Games/Marmoutier/marmoutier.json";
         private string URL_SCENARII_CATALOG = "StreamingAssets/scenarii/scenariiCatalog.json";
+
 
 
         //Test load games
@@ -105,6 +109,17 @@ namespace StarterCore.Core.Services.Network
             return result;
         }
 
+        //FETCH PLAYER HISTORY
+        public async UniTask<HistoryModelDown> GetHistory(string id)
+        {
+            //UserIdModelDown userId = await GetUserId(id);
+            string url = string.Format(URL_GET_HISTORY, id);
+
+            HistoryModelDown history = await _net.GetAsync<HistoryModelDown>(url);
+            Debug.Log("Returned from getHistory script ===> " + history.ScenarioName);
+            return history;
+        }
+
         //FETCH LANGUAGE DICTIONARY FOR LOCALIZATION
         public async UniTask<TranslationsModel> GetLocaleDictionary(string locale)
         {
@@ -142,6 +157,16 @@ namespace StarterCore.Core.Services.Network
             string url = string.Format(URL_GET_USERNAME, email);
             Debug.Log("[MockNetService] GetUsername param url" + url);
             UsernameModelDown result = await _net.GetAsync<UsernameModelDown>(url);
+            return result;
+        }
+
+        //GET USERID
+        public async UniTask<UserIdModelDown> GetUserId(string email)
+        {
+            string url = string.Format(URL_GET_USERID, email);
+            Debug.Log("[MockNetService] GetUsername param url" + url);
+            UserIdModelDown result = await _net.GetAsync<UserIdModelDown>(url);
+            Debug.Log("[MockNetService] Got username" + result.UserId);
             return result;
         }
 
@@ -191,6 +216,8 @@ namespace StarterCore.Core.Services.Network
             Debug.Log("Returned from reset.php script ===> " + emailSent.EmailSent);
             return emailSent;
         }
+
+
     }
 }
 

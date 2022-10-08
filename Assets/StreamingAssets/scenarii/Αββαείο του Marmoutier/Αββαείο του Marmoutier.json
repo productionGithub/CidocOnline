@@ -1,51 +1,44 @@
+[
 {
-  "title" : "Αββαείο του Marmoutier",
-  "locale" : "gr",
-  "description" : "Lorem ipsum",
-  "domainTags" : ["History", "Archeology"],
-  "ontologyTags" : ["CidocCRM", "ric-O"],
-  "languageTags" : ["hellenica"],
-  "challengeList" :
-  [
-   {
-   "ChallengeID": 0,
-   "Title": "Ontology Basics",
-   "Statement": "",
-   "ILeftInit": "",
-   "IMiddleInit": "",
-   "IRightInit": "",
-   "ELeftInit": "*",
-   "PLeftInit": "",
-   "EMiddleInit": "*",
-   "PRightInit": "",
-   "ERightInit": "*",
-   "Explanation": "What is an ontology?",
-   "ELeftAnswer": "*",
-   "PLeftAnswer": "",
-   "EMiddleAnswer": "*",
-   "PRightAnswer": "",
-   "ERightAnswer": "*",
-   "Score": 20
- },
- {
-   "ChallengeID": 1,
-   "Title": "Classes",
-   "Statement": "Ontologies offer to describe a part of the world with a set of classes and properties. A class describes a set of real world things. In the CRM game, classes are represented by poker style playing cards. \n\n Come on and try it : Play with the 3 classes decks by using the sliders and choose any card you want. You’ll get a 20 points discovering bonus!",
-   "ILeftInit": "",
-   "IMiddleInit": "",
-   "IRightInit": "",
-   "ELeftInit": "*",
-   "PLeftInit": "",
-   "EMiddleInit": "*",
-   "PRightInit": "",
-   "ERightInit": "*",
-   "Explanation": "",
-   "ELeftAnswer": "*",
-   "PLeftAnswer": "",
-   "EMiddleAnswer": "*",
-   "PRightAnswer": "",
-   "ERightAnswer": "*",
-   "Score": 20
- }
+      "scenario-title": "Αββαείο του Marmoutier",
+      "ontologyTags": [
+        "CidocCRM",
+        "ric-O"
+      ],
+      "domainTags": [
+        "ιστορία",
+        "αρχαιολογία"
+      ],
+      "domainCodes" : [
+        "ARC",
+      ],
+    "authorTags": [
+      "Masa",
+      "Huma-num"
+      ],
+      "languageTag": "Ελληνική",
+      "scenario-description": "Στο πλαίσιο των ανασκαφών που οργανώνονται στην Τουρ, στο αβαείο Marmoutier, το σενάριο αυτό σας διδάσκει να μοντελοποιείτε σύνθετες καταστάσεις.",
+      "chapters": [
+        {
+          "chapter-title": "Παιχνίδι 1",
+          "chapter-description": "Περιγραφή του κεφαλαίου..."
+        },
+        {
+          "chapter-title": "Παιχνίδι 2",
+          "chapter-description": "Περιγραφή του κεφαλαίου..."
+        },
+        {
+          "chapter-title": "Παιχνίδι 3",
+          "chapter-description": "Περιγραφή του κεφαλαίου..."
+        },
+        {
+          "chapter-title": "Παιχνίδι 4",
+          "chapter-description": "Περιγραφή του κεφαλαίου..."
+        },
+        {
+          "chapter-title": "Παιχνίδι 5",
+          "chapter-description": "Περιγραφή του κεφαλαίου..."
+        }
+      ]
+    }
 ]
-}

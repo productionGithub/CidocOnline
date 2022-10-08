@@ -7,10 +7,14 @@
         "ric-O"
       ],
       "domainTags": [
-        "History",
-        "Archeology"
+        "histoire",
+        "archéologie"
       ],
-    "authorTags": [
+      "domainCodes" : [
+        "HIS",
+        "ARC",
+      ],
+      "authorTags": [
       "Masa",
       "Huma-num"
       ],
@@ -48,8 +52,10 @@
         "ric-O"
       ],
       "domainTags": [
-        "History",
-        "Archeology"
+        "Cultural heritage"
+      ],
+      "domainCodes" : [
+        "CUL"
       ],
     "authorTags": [
       "Masa",
@@ -89,8 +95,10 @@
         "ric-O"
       ],
       "domainTags": [
-        "History",
-        "Archeology"
+        "αρχαιολογία"
+      ],
+      "domainCodes" : [
+        "ARC",
       ],
     "authorTags": [
       "Masa",
@@ -129,8 +137,10 @@
         "ric-O"
       ],
       "domainTags": [
-        "Cultur. heritage",
-        "Archeology"
+        "ιστορία"
+      ],
+      "domainCodes" : [
+        "HIS"
       ],
     "authorTags": [
       "Greek corp."

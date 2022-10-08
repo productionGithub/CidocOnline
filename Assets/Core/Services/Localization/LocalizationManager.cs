@@ -28,8 +28,6 @@ namespace StarterCore.Core.Services.Localization
         public event Action OnTranslateEvent;
         TranslationsModel _languageDictionary;
 
-        /* STRUCT */
-
         public void Initialize()
         {
             _gamestate.OnLocaleChanged += () => SetLocaleDictionary();
@@ -39,24 +37,18 @@ namespace StarterCore.Core.Services.Localization
 
         private async void SetLocaleDictionary()
         {
-            //Debug.Log("[LocalizationManager : Set locale Dictionary");
-
             //Set the new locale from remote language files
             LocalesManifestModel manifestModel = await GetLocaleManifest();//Contains languages file paths
-
-            //Debug.Log("MANIFEST MODEL IS " + manifestModel.Locales);
 
             //Test if game locale exists in manifestModel
             if (SearchLocaleMatch(manifestModel))
             {
-                //Debug.Log("[Localization Manager] Locale found : " + _gamestate.Locale);
                 //If yes, get the corresponding language file
                 _languageDictionary = await GetLocaleDictionary(_gamestate.Locale);
             }
             else
             {
                 Debug.Log("[Localization Manager] Locale not found in language file, falling back to default language : " + _gamestate.DefaultLocale);
-                //_gamestate.Locale = _gamestate.DefaultLocale;
                 _gamestate.SetLocale(_gamestate.DefaultLocale);
                 _languageDictionary = await GetLocaleDictionary(_gamestate.Locale);
             }
@@ -66,8 +58,6 @@ namespace StarterCore.Core.Services.Localization
 
         public string GetTranslation(string key)
         {
-            //Debug.Log("[LocalizationManager] GetTranslation() called with key " + key);
-           
             string text=string.Empty;
             if(_languageDictionary != null)
             {

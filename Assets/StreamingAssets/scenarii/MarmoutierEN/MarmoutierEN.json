@@ -5,8 +5,10 @@
         "ric-O"
       ],
       "domainTags": [
-        "History",
-        "Archeology"
+        "Cultural heritage"
+      ],
+    "domainCodes" : [
+        "CUL",
       ],
     "authorTags": [
       "Masa",

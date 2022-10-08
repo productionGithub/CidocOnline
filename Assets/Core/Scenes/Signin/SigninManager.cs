@@ -1,24 +1,13 @@
 using Cysharp.Threading.Tasks;
 using StarterCore.Core.Services.Network;
 using StarterCore.Core.Services.Network.Models;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 using StarterCore.Core.Services.Navigation;
 using StarterCore.Core.Services.GameState;
-using StarterCore.Core.Services.Localization;
-
-using TMPro;
-using UnityEngine.SceneManagement;
 
 namespace StarterCore.Core.Scenes.Signin
 {
-    // IInitializable : Zenject Start() equivalent
-    // ITickable : Zenject Update() equivalent
-    // IDisposable : C# OnDestroy() equivalent
-
     public class SigninManager : IInitializable
     {
         [Inject] private MockNetService _net;
@@ -28,9 +17,6 @@ namespace StarterCore.Core.Scenes.Signin
 
         public void Initialize()
         {
-            //Set language
-            //SetLocalization(_gameState.Locale);
-
             _controller.Show();
             _controller.OnSigninFormSubmittedEvent += SubmitClicked;
             _controller.OnForgotPasswordClickedEvent += ForgotPassword;
@@ -38,13 +24,9 @@ namespace StarterCore.Core.Scenes.Signin
 
             //Localization
             _controller.OnLocalizationEvent += SetLocalization;
-            //_navService.OnSceneChangeEvent += SceneIsLoaded;
 
             //TEST
             _controller.OnTestEvent += LoadTestScene;
-
-            //var cards = await _state.LoadCards();
-            //_controller._cardName.GetComponent<TextMeshProUGUI>().text = cards[8].imageName;
         }
 
         private void LoadTestScene()
@@ -63,12 +45,6 @@ namespace StarterCore.Core.Scenes.Signin
             string email = signinData.Email;
 
             var result = await CheckEmail(email);
-
-            //TEST
-            //var cards = await _net.GetJsonFile();
-            //_controller._cardName.GetComponent<TextMeshProUGUI>().text = cards[8].ImageName;
-            //Debug.Log("Fetched JSON is : " + cards);
-
             if (result.DoesExist == false)//False = Did not find the email in DB
             {
                 Debug.Log("No account !");
@@ -77,11 +53,8 @@ namespace StarterCore.Core.Scenes.Signin
             else
             {
                 var status = await CheckStatus(email);
-                Debug.Log("Check status result is ------> " + status.IsActive);
-
                 if (status.IsActive == true)
                 {
-                    Debug.Log("Account activated, checking credentials");
                     //Found email, check credentials
                     SigninModelUp credentials = new SigninModelUp
                     {
@@ -116,7 +89,7 @@ namespace StarterCore.Core.Scenes.Signin
         //LOGIN PROCESS
         private async UniTaskVoid Login(SigninModelUp credentials)
         {
-            Debug.Log("[SigninManager] Login param email : " + credentials.Email);
+            //Debug.Log("[SigninManager] Login param email : " + credentials.Email);
             SigninModelDown result = await _net.Login(credentials);
 
             if (result.LoginResult == true)
@@ -134,10 +107,20 @@ namespace StarterCore.Core.Scenes.Signin
 
         private async void InitGame(string playerEmail)
         {
-            Debug.Log("[SigninManager] InitGame param email : " + playerEmail);
-            UsernameModelDown result = await _net.GetUsername(playerEmail);
-            _gameState.Username = result.Username;
+            //Login OK, get progression and load main menu screen
+            UsernameModelDown userName = await _net.GetUsername(playerEmail);
+            _gameState.Username = userName.Username;
             Debug.Log("Login with username : " + _gameState.Username);
+
+            //Get User Id
+            UserIdModelDown userId = await _net.GetUserId(playerEmail);
+            Debug.Log("[SignIn Manager] From GetUserId, userId is : " + userId.UserId);
+
+            //Get player history
+            HistoryModelDown history = await _net.GetHistory(userId.UserId);
+            Debug.Log("[SignIn Manager] From gethistory, scenario is : " + history.ScenarioName);
+
+            _navService.Push("MainMenuScene", history);
         }
 
         //CLICK ON RESET PASSWORD LINK
@@ -153,5 +136,12 @@ namespace StarterCore.Core.Scenes.Signin
             //Load SignUp scene
             _navService.Push("SignupScene");
         }
+
+        //private async UniTask<HistoryModelDown> GetHistory(string id)
+        //{
+        //    HistoryModelDown result = await _net.GetHistory(id);
+        //    return result;
+        //}
+
     }
 }

@@ -8,6 +8,10 @@
         "Histoire",
         "Archéologisse"
       ],
+    "domainCodes" : [
+        "HIS",
+        "ARC",
+      ],
     "authorTags": [
       "Masa",
       "Huma-num"
