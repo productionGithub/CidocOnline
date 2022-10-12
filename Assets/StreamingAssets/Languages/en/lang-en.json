@@ -2,8 +2,8 @@
    "locale": "en",
    "static-text" : {
    "SigninScene": {
-      "signin-scene-title-text": "Welcome to OntoMatchGame!",
-      "signin-scene-intro-text": "Semantic Data Representation [...]Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi et mattis neque. Cras non fermentum dui. Donec vel tellus augue. Morbi pharetra sit amet ipsum in ullamcorper. Integer quis egestas dui, sed auctor ipsum. Nunc eu bibendum neque. Phasellus eu purus et eros ornare ullamcorper sed non nunc. Duis ac massa ultrices ligula tristique facilisis.  Nunc eu bibendum neque. Phasellus eu purus et eros ornare ullamcorper sed non nunc",
+      "signin-scene-title-text": "WELCOME TO ONTOMATCHGAME!",
+      "signin-scene-intro-text": "Semantic Data Representation should let you generate, share and consume Cultural Heritage data with colleagues around the world, to ask and answer questions against more data and more integrated knowledge nets.\n\nBut to get there, you need to learn how to read and write semantic data in the first place. That’s where CIDOC CRM the game comes in. If you are interested in learning about ontology, semantics and how to apply them to real cultural heritage data, then the CIDOC CRM Game has been designed for you.",
       "signin-scene-email-label": "Your Email",
       "signin-scene-wrongemail-text" : "This email is not link to any account",
       "signin-scene-email-placeholder-text" : "Enter a valid email address",
@@ -58,7 +58,7 @@
     },
       "GameSelectionScene" :{
       "gameselection-scene-title-text": "GAME SELECTION",
-      "gameselection-scene-backbutton-text":"Back to main menu",
+      "gameselection-scene-backbutton-text":"Back",
       "gameselection-scene-listofscenarii-label":"List of scenarii",
       "gameselection-scene-domain-label":"Domain",
       "gameselection-scene-domain1-text":"Archeology",
@@ -72,6 +72,19 @@
       "gameselection-scene-language-label":"Language",
       "gameselection-scene-language1-text":"English",
       "gameselection-scene-language2-text":"French"
+    },
+      "MainMenuScene" :{
+      "mainmenu-scene-welcometitle-text": "Hello",
+      "mainmenu-scene-continue-text": "Last played:",
+      "mainmenu-scene-continuebutton-text": "Continue",
+      "mainmenu-scene-choosebutton-text": "Choose",
+      "mainmenu-scene-choosebutton-label": "Chose another scenario",
+      "mainmenu-scene-statisticsbutton-text": "See stats",
+      "mainmenu-scene-statistics-label": "See my statistics",
+      "mainmenu-scene-reset-label": "Reset game data and start over",
+       "mainmenu-scene-resetbutton-text": "Reset",
+       "mainmenu-scene-quit-text": "Quit game",
+      "mainmenu-scene-quitbutton-text": "Quit"
     }
     }
 }

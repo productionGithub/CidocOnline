@@ -1,8 +1,12 @@
 using UnityEngine;
+using UnityEngine.UI;
 using StarterCore.Core.Services.Network.Models;
 using StarterCore.Core.Services.Navigation;
-using Zenject;
+using StarterCore.Core.Services.Localization;
 using StarterCore.Core.Services.GameState;
+using Zenject;
+using TMPro;
+using System;
 
 namespace StarterCore.Core.Scenes.MainMenu
 {
@@ -11,15 +15,40 @@ namespace StarterCore.Core.Scenes.MainMenu
     {
         [Inject] private NavigationService _navService;
         [Inject] private GameStateManager _gameState;
+        [Inject] private LocalizationManager _localizationManager;
+
+        [SerializeField] TMP_Text _welcomeTitle;
+        [SerializeField] TMP_Text _continueText;
+
+        [SerializeField] Button _chooseScenario;
+
+        public event Action OnChooseScenarioEvent;
+
+        HistoryModelDown bundle;
 
         public void Show()
         {
-            Debug.Log("[MainMenuController] Show !");
-            HistoryModelDown bundle = new HistoryModelDown("", "", "", "", "");
+            //Get data passed from SignIn scene
+            bundle = new HistoryModelDown("", "", "", "", "");
             _navService.GetMainBundle(out bundle);
-            
-            Debug.Log(string.Format("Progression of player {5} is {0} / {1} / {2} / {3} / {4}",
-                bundle.HistoryId, bundle.ScenarioName, bundle.ChapterName, bundle.ChallengeId, bundle.Score, _gameState.Username));
+            TranslateUI();
+
+            _chooseScenario.onClick.AddListener(OnChooseScenarioButtonClicked);
+
+        }
+
+        private void TranslateUI()
+        {
+            _welcomeTitle.text = _localizationManager.GetTranslation("mainmenu-scene-welcometitle-text") + " " + _gameState.Username + " !";
+            _continueText.text = _localizationManager.GetTranslation("mainmenu-scene-continue-text") + " " +
+                bundle.ScenarioName + " / " +
+                bundle.ChapterName + " / " +
+                bundle.ChallengeId;
+        }
+
+        private void OnChooseScenarioButtonClicked()
+        {
+            OnChooseScenarioEvent?.Invoke();
         }
     }
 }

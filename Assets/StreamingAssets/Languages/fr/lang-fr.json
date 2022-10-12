@@ -2,8 +2,8 @@
    "locale": "fr",
    "static-text" : {
    "SigninScene": {
-      "signin-scene-title-text": "Bienvenu.e sur OntoMatchGame!",
-      "signin-scene-intro-text": "Les données sémantiques [...]Vestibulum suscipit tortor at lectus malesuada, sodales sodales felis efficitur. Nullam id dolor et erat dapibus hendrerit eu a nibh. Etiam nisl libero, elementum sed varius at, aliquet ut tellus. Aliquam ut sem dolor. Suspendisse condimentum ut mauris ut aliquam. Morbi sodales massa sit amet metus pretium lacinia",
+      "signin-scene-title-text": "BIENVENUE SUR ONTOMATCHGAME!",
+      "signin-scene-intro-text": "La représentation des données sémantiques [...] should let you generate, share and consume Cultural Heritage data with colleagues around the world, to ask and answer questions against more data and more integrated knowledge nets.\n\nBut to get there, you need to learn how to read and write semantic data in the first place. That’s where CIDOC CRM the game comes in. If you are interested in learning about ontology, semantics and how to apply them to real cultural heritage data, then the CIDOC CRM Game has been designed for you.",
       "signin-scene-email-label": "Votre email",
       "signin-scene-wrongemail-text" : "Email associé à aucun compte",
       "signin-scene-email-placeholder-text" : "Entrez un email valide...",
@@ -61,7 +61,7 @@
     },
       "GameSelectionScene" :{
       "gameselection-scene-title-text": "SELECTION DES JEUX",
-      "gameselection-scene-backbutton-text":"Retour au menu principal",
+      "gameselection-scene-backbutton-text":"Retour",
       "gameselection-scene-listofscenarii-label":"Liste des scenario",
       "gameselection-scene-domain-label":"Domaine",
       "gameselection-scene-domain1-text":"Archéologie",
@@ -74,6 +74,19 @@
       "gameselection-scene-language-label":"Langage",
       "gameselection-scene-language1-text":"Anglais",
       "gameselection-scene-language2-text":"Français"
+    },
+      "MainMenuScene" :{
+      "mainmenu-scene-welcometitle-text": "Salut",
+      "mainmenu-scene-continue-text": "Dernier challenge :",
+      "mainmenu-scene-continuebutton-text": "Reprendre",
+      "mainmenu-scene-choosebutton-text" : "Choisir",
+      "mainmenu-scene-choosebutton-label": "Choisir un autre scenario",
+      "mainmenu-scene-statisticsbutton-text": "Voir stats",
+      "mainmenu-scene-statistics-label": "Voir mes statistiques",
+      "mainmenu-scene-reset-label": "Effacer les données de jeu et recommencer",
+      "mainmenu-scene-resetbutton-text": "Reset",
+      "mainmenu-scene-quit-label": "Quitter le jeu",
+      "mainmenu-scene-quitbutton-text": "Quitter"
     }
     }
 }
