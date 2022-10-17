@@ -9,7 +9,7 @@ using Zenject;
 using StarterCore.Core.Services.Navigation;
 using StarterCore.Core.Services.GameState;
 using StarterCore.Core.Services.Localization;
-using StarterCore.Core.Scenes.DeckTest;
+using StarterCore.Core.Scenes.GameSelection;
 
 namespace StarterCore.Core.Scenes.GameSelection
 {
@@ -24,7 +24,7 @@ namespace StarterCore.Core.Scenes.GameSelection
         public void Initialize()
         {
             Debug.Log("[GameSelectionManager] Initialized!");
-            List<Scenario> scenarioList = new List<Scenario>();
+            //List<Scenario> scenarioList = new List<Scenario>();
 
             //Get scenarii catalog and Show Game selection panel
             FetchCatalog().Forget();
@@ -35,8 +35,10 @@ namespace StarterCore.Core.Scenes.GameSelection
 
         private void LoadChapter(string scenarioTitle, string chapterTitle)
         {
-            ChapterInfoBundle bundle = new ChapterInfoBundle(scenarioTitle, chapterTitle, "Περιγραφή");
-            _navService.Push("DeckTest", bundle);
+            //Update GameState with current Scenario / Chapter
+
+            ChapterInfoBundle bundle = new ChapterInfoBundle(scenarioTitle, chapterTitle);
+            _navService.Push("Board", bundle);
             Debug.Log(string.Format("[GameSelectionManager] Load chapter{0} of scenario {1}", chapterTitle, scenarioTitle));
         }
 
@@ -52,6 +54,18 @@ namespace StarterCore.Core.Scenes.GameSelection
             }
         }
 
+        private async UniTask<ScenariiModelDown> GetScenariiCatalog()
+        {
+            ScenariiModelDown catalog = await _net.GetCatalog();
+            return catalog;
+        }
+
+        private void BackEventClicked()
+        {
+            _navService.Pop();
+        }
+
+        //Debug
         private void DebugScenarii()
         {
             foreach (Scenario s in _catalog.Scenarii)
@@ -77,15 +91,5 @@ namespace StarterCore.Core.Scenes.GameSelection
             }
         }
 
-        private async UniTask<ScenariiModelDown> GetScenariiCatalog()
-        {
-            ScenariiModelDown catalog = await _net.GetCatalog();
-            return catalog;
-        }
-
-        private void BackEventClicked()
-        {
-            _navService.Pop();
-        }
     }
 }

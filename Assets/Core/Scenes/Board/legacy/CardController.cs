@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using Zenject;
 using StarterCore.Core.Services.Navigation;
-using StarterCore.Core.Scenes.DeckTest;
+using StarterCore.Core.Scenes.GameSelection;
 using TMPro;
 
 using StarterCore.Core.Services.GameState;
@@ -11,6 +11,7 @@ namespace StarterCore.Core.Scenes.Board
 {
     public class CardController : MonoBehaviour
     {
+        /*
         [Inject] private NavigationService _navService;
         [Inject] private GameStateManager _gameState;
 
@@ -22,7 +23,7 @@ namespace StarterCore.Core.Scenes.Board
 
         public void Show()
         {
-            ChapterInfoBundle bundle = new ChapterInfoBundle("", "", "");
+            ChapterInfoBundle bundle = new ChapterInfoBundle("", "");
             _navService.GetMainBundle(out bundle);
             _username.text = _gameState.Username;
 
@@ -37,5 +38,6 @@ namespace StarterCore.Core.Scenes.Board
             Debug.Log("[CardController] Card clicked : " + card.name + "--->" + tick.name);
             OnCardBubbleUp?.Invoke(card, tick);
         }
+        */
     }
 }

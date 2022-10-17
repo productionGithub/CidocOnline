@@ -4486,7 +4486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 955159e208a8449f98a4c39f53e33f91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <LocalizeKey>k__BackingField: mainmenu-scene-statisticsbutton-text
+  <LocalizeKey>k__BackingField: mainmenu-scene-hallbutton-text
   <LocalizedText>k__BackingField: {fileID: 1275233750}
 --- !u!114 &1275233750
 MonoBehaviour:
@@ -6976,7 +6976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 955159e208a8449f98a4c39f53e33f91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <LocalizeKey>k__BackingField: mainmenu-scene-statistics-label
+  <LocalizeKey>k__BackingField: mainmenu-scene-hallbutton-label
   <LocalizedText>k__BackingField: {fileID: 2032134835}
 --- !u!114 &2032134835
 MonoBehaviour:

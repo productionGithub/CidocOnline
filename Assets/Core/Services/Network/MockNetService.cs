@@ -187,9 +187,9 @@ namespace StarterCore.Core.Services.Network
         }
 
 
-        public async UniTask<GameModelDown> LoadGame()
+        public async UniTask<ChapterModelDown> LoadGame()
         {
-            GameModelDown result = await _net.GetAsync<GameModelDown>(URL_GET_GAMES);
+            ChapterModelDown result = await _net.GetAsync<ChapterModelDown>(URL_GET_GAMES);
             return result;
         }
 

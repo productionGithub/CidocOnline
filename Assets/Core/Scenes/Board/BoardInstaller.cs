@@ -8,12 +8,12 @@ namespace StarterCore.Core.Scenes.Board
     public class BoardInstaller : MonoInstaller
     {
 
-        [SerializeField] private CardController _cardController;
+        [SerializeField] private BoardController _boardController;
 
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<BoardManager>().AsSingle();
-            Container.Bind<CardController>().FromInstance(_cardController);
+            Container.Bind<BoardController>().FromInstance(_boardController);
         }
     }
 }

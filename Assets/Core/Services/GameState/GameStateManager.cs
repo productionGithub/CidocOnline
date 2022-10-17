@@ -22,16 +22,16 @@ namespace StarterCore.Core.Services.GameState
         //[Inject] private LocalizationController _localizationController;
         public event Action OnLocaleChanged;
 
-        private GameStateModel gameState;
-        public GameStateModel GameState { get { return gameState; } }
+        private GameStateModel gameStateModel;
+        public GameStateModel GameStateModel { get { return gameStateModel; } }
 
-        public string Locale { get { return gameState.Locale; } set { gameState.Locale = value; } }
-        public string DefaultLocale { get { return gameState.DefaultLocale; } }
-        public string Username { get { return gameState.Username; } set { gameState.Username = value;  } }
+        public string Locale { get { return gameStateModel.Locale; } set { gameStateModel.Locale = value; } }
+        public string DefaultLocale { get { return gameStateModel.DefaultLocale; } }
+        public string Username { get { return gameStateModel.Username; } set { gameStateModel.Username = value;  } }
 
         public void Initialize()
         {
-            gameState = new GameStateModel
+            gameStateModel = new GameStateModel
             {
                 Locale = "fr",
                 DefaultLocale = "en",
@@ -43,7 +43,7 @@ namespace StarterCore.Core.Services.GameState
 
         public void SetLocale(string locale)
         {
-            gameState.Locale = locale;
+            gameStateModel.Locale = locale;
             OnLocaleChanged?.Invoke();
             Debug.Log("[GameStateManager] GameState set to language : " + Locale);
         }

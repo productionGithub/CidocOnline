@@ -45,7 +45,6 @@ namespace StarterCore.Core.Scenes.GameSelection
         private void OnFilterDomainPanel(List<string> domains)
         {
             _domainCriterias = domains;
-            Debug.Log("");
             FilterScenarii();
         }
 
@@ -67,10 +66,10 @@ namespace StarterCore.Core.Scenes.GameSelection
                     _languageCriterias.Contains(p.LanguageTag))
             );
 
-            foreach (var Scenario in filteredScenarioList)
-            {
-                Debug.Log("Filtered scenarioList : " + Scenario.ScenarioTitle);
-            }
+            //foreach (var Scenario in filteredScenarioList)
+            //{
+            //    Debug.Log("Filtered scenarioList : " + Scenario.ScenarioTitle);
+            //}
 
             _panelController.Show(filteredScenarioList);
         }

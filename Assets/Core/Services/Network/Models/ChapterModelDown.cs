@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace StarterCore.Core.Services.Network.Models
 {
     [Serializable]
-    public class GameModelDown
+    public class ChapterModelDown
     {
         [JsonProperty("title")]
         public string Title { get; set; }
