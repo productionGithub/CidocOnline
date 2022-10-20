@@ -7,7 +7,7 @@ using StarterCore.Core.Services.GameState;
 using System.Collections.Generic;
 using Zenject;
 using System;
-
+using StarterCore.Core.Scenes.Board.Card.Cards;
 
 namespace StarterCore.Core.Scenes.Board
 {
@@ -30,34 +30,15 @@ namespace StarterCore.Core.Scenes.Board
 
         public void Show(List<ChallengeData> challengeList)
         {
-            Debug.Log("[Board controller] Init OK");
-            _challengeController.Show();//On lui passe tous les challenges (from Manager)
+            //ChallengeCtrl will not ne a mono. Data management only.
+            //_challengeController.Show();//On lui passe tous les challenges (from Manager)
 
             int currentChallengeId = _gameStateManager.GameStateModel.CurrentChallengeIndex;
 
-            Debug.Log("Challenge list 0 / EleftInit is : " + challengeList[currentChallengeId].ELeftInit);
-
-
             //Get init string for ELeft of this challenge
-            List<int> initialDeckContent = _entityDeckService.GetInitialDeck(challengeList[12].ELeftInit);
-
+            List<EntityCard> initialDeckContent = _entityDeckService.GetInitialDeck(challengeList[currentChallengeId].ELeftInit);
             _leftEntityDeckController.Show(initialDeckContent);
-
-            //1. Pass left deck init value to challenge
-            //Init deckController with init value
-
-            //_entityCardsController.Show();
-            //_propertyCardsController.Show();
-            //_instanceCardsController.Show();
-            //_challengeController.Show();//Manage UI events + Evaluation
         }
-
-        //private void OnFilterDomainPanel(List<string> domains)
-        //{
-        //    _domainCriterias = domains;
-        //    Debug.Log("");
-        //    FilterScenarii();
-        //}
 
         private void OnGamePaused()
         {

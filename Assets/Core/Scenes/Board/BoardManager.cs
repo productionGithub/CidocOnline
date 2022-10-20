@@ -43,7 +43,7 @@ namespace StarterCore.Core.Scenes.Board
             //Get chapter filename from catalog
             string chapterFilename = GetChapterFilename();
 
-            //Fetch challenge file content (all challenges of this chapter)
+            //Fetch & Deserialize challenge file content (all challenges of this chapter)
             List<ChallengeData> chapterChallenges = await GetKurrentChapter(chapterFilename);
 
             //Show boardController with challenges data

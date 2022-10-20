@@ -16,7 +16,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
         /// </summary>
         /// 
         [Inject] EntityDeckService _entityDeckService;
-        public Dictionary<string, EntityCard> _currentDeckContent = new Dictionary<string, EntityCard>();
+        public List<EntityCard> _currentDeckContent;
 
         [SerializeField] EntityCardController _entityCardsController;
         [SerializeField] CardSliderController _sliderController;
@@ -25,31 +25,22 @@ namespace StarterCore.Core.Scenes.Board.Deck
         public event Action<EntityDeckController, float> OnSliderValueChangeDeckController;
         public event Action<float> OnTickFilterDeckController;
 
-        public void Show(List<int> listOfEntityCardIndex)
+        public void Show(List<EntityCard> initialDeck)
         {
-            InitCurrentDeck(listOfEntityCardIndex);
-            var first = _currentDeckContent.OrderBy(kvp => kvp.Key).First();
-            string firstKey = first.Key;
-            _entityCardsController.Show(_currentDeckContent[firstKey]);
+            _currentDeckContent = new List<EntityCard>(initialDeck);
+            _entityCardsController.Show(_currentDeckContent[0]);
 
-            _sliderController.Show(_entityDeckService.EntityCards.Count);
+            _sliderController.Show(_currentDeckContent.Count);
             _sliderController.OnSliderValueChangedUI += OnSliderValueChanged;
         }
 
-        private void InitCurrentDeck(List<int> indexOfCards)
-        {
-            foreach (int index in indexOfCards)
-            {
-                _currentDeckContent.Add(index.ToString(), _entityDeckService.EntityCards[index]);
-            }
-        }
         private void OnSliderValueChanged(float value)
         {
             //UI deck logic is managed at this controller level
             Debug.Log("[EntityCardController] Slider value is : " + (int)value);
-            if (value < _entityDeckService.EntityCards.Count)//Will be currentDeckContent
+            if (value < _currentDeckContent.Count)//Will be currentDeckContent
             {
-                _entityCardsController.Refresh(_entityDeckService.EntityCards[(int)value]);
+                _entityCardsController.Refresh(_currentDeckContent[(int)value]);
             }
 
             OnSliderValueChangeDeckController?.Invoke(this, value);

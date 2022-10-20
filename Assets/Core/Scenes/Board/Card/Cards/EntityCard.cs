@@ -9,7 +9,7 @@ namespace StarterCore.Core.Scenes.Board.Card.Cards
 {
     public class EntityCard
     {
-        public int index;
+        //public int index;
         public List<string> icons = new List<string>();
         public string id;
         public string about;

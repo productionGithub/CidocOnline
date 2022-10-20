@@ -18,7 +18,8 @@ public class EntityDeckService : IInitializable
 
     [Inject] MockNetService _netservice;
 
-    public Dictionary<int, EntityCard> EntityCards;
+    //public Dictionary<int, EntityCard> EntityCards;
+    public List<EntityCard> EntityCards;
 
     //Temporary dictionary for superClass deduction
     private Dictionary<string, List<string>> allSuperClassDic;
@@ -55,12 +56,54 @@ public class EntityDeckService : IInitializable
         Debug.Log("THIS IS DECKSCONTROLLER!");
 
         ////Instanciation of decks
-        EntityCards = new Dictionary<int, EntityCard>();
+        EntityCards = new List<EntityCard>();
         iconsDictionary = new Dictionary<string, int>();
 
         InitColors();
         InitIcons();
         BuildEntityDeck();
+    }
+
+    // <*************************** public methods ************************************>
+    public List<EntityCard> GetInitialDeck(string initString)
+    {
+        List<EntityCard> partialDeck = new List<EntityCard>();
+        partialDeck.Clear();
+
+        switch (initString[0])//string should starts with '*' or '-' to initiliaze with all ids or a partial list
+        {
+            case '*'://All cards
+                partialDeck = EntityCards;
+                break;
+
+            case '-'://Partial list of cards
+                string wString = initString.Substring(1);
+                string[] arrayOfIds = wString.Split(',').Select(id => id.Trim()).ToArray();
+                List<string> listOfIds = arrayOfIds.ToList();
+                partialDeck = EntityCards.Where(c => listOfIds.Contains(c.id)).ToList();
+                break;
+
+            default:
+                break;
+        }
+
+        return partialDeck;
+    }
+
+
+    // <********************            Init of deck from CirdocCRM file         *********************>
+    private async void BuildEntityDeck()
+    {
+        //Fetch Cidoc Xml file
+        _cidocXmlString = await _netservice.GetXmlCidocFile();
+        //Debug.Log("Got XML CIDOC string : " + _cidocXmlString);
+
+        //Fetch EntityIconsColorMapping Xml file
+        _entityXmlString = await _netservice.GetXmlEntityIconsColorsFile();
+        //Debug.Log("Got XML ENTITY COLORS ICONS string : " + _entityXmlString);
+
+        InitXpathNavigators();
+        InitEntityDeck();
     }
 
     private void InitXpathNavigators()
@@ -84,63 +127,6 @@ public class EntityDeckService : IInitializable
         entityColorsIconsFileNavigator = entityXpathDocument.CreateNavigator();
     }
 
-
-    private async void BuildEntityDeck()
-    {
-        //Fetch Cidoc Xml file
-        _cidocXmlString = await _netservice.GetXmlCidocFile();
-        //Debug.Log("Got XML CIDOC string : " + _cidocXmlString);
-
-        //Fetch EntityIconsColorMapping Xml file
-        _entityXmlString = await _netservice.GetXmlEntityIconsColorsFile();
-        //Debug.Log("Got XML ENTITY COLORS ICONS string : " + _entityXmlString);
-
-        InitXpathNavigators();
-        InitEntityDeck();
-    }
-
-    //Not dry, same code as ProcessPropertyInitString, refactor.
-    public List<int> GetInitialDeck(string initString)
-    {
-        List<int> idList = new List<int>();
-
-        Debug.Log("[EntityDeckService] Init string is : " + initString);
-
-        switch (initString[0])//string should starts with '*' or '-' to initiliaze with all ids or a partial list
-        {
-            case '*'://All cards
-                idList = new List<int>(EntityCards.Keys);
-                Debug.Log("In DECK SERVICE, idList =>");
-                foreach(int i in idList)
-                {
-                    Debug.Log("Index of Entity card is : " + i);
-                }
-                break;
-
-            case '-'://Partial list of cards
-                Debug.Log("GOT A INIT STRING WITH '-'" + initString);
-                //string[] listOfIds = challenges[currentChallengeId].GetArrayOfValues(initString);
-                //foreach (string idSplit in listOfIds)
-                //{
-                //    foreach (KeyValuePair<int, EntityCard> item in EntityCards)
-                //    {
-                //        if (item.Value.id == idSplit)
-                //        {
-                //            idList.Add(item.Key);
-                //        }
-                //    }
-                //}
-                break;
-
-            default:
-                break;
-        }
-
-        return idList;
-    }
-
-
-    //Init of deck from CirdocCRM file
     private void InitEntityDeck()
     {
         int index;
@@ -174,9 +160,9 @@ public class EntityDeckService : IInitializable
                 //Debug.Log("Got resource: " + sub?.GetAttribute("resource", rdfNamespace));
             }
 
-            EntityCards.Add(index, new EntityCard()
+            EntityCards.Add(new EntityCard()
             {
-                index = index,
+                //index = index,
                 id = entity.GetAttribute("about", rdfNamespace).Split('_')[0],
                 about = entity.GetAttribute("about", rdfNamespace),
                 label = entity.SelectSingleNode("./rdfs:label[@xml:lang='en']", CidocCrmNamespaceManager).ToString(),

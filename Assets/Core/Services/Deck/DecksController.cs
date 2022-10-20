@@ -9,8 +9,9 @@ using Zenject;
 using StarterCore.Core.Scenes.Board.Card.Cards;
 using Cysharp.Threading.Tasks;
 
-public class DecksController : IInitializable
+public class DecksController// : IInitializable
 {
+    /*
     /// <summary>
     /// Initialize List of Entity and property cards, based on Cidoc rdf file parsing (.xml).
     /// Provides public reference to decks' instances.
@@ -85,21 +86,21 @@ public class DecksController : IInitializable
     string _propertyXmlString;
 
 
-    public async void Initialize()
-    {
-        Debug.Log("THIS IS DECKSCONTROLLER!");
-        InitColors();
+    //public async void Initialize()
+    //{
+    //    Debug.Log("THIS IS DECKSCONTROLLER!");
+    //    InitColors();
 
-        ////Instanciation of decks
-        entityCards = new Dictionary<int, EntityCard>();
-        propertyCards = new Dictionary<int, PropertyCard>();
-        iconsDictionary = new Dictionary<string, int>();
-        instanceCards = new List<InstanceCard>();
+    //    ////Instanciation of decks
+    //    entityCards = new Dictionary<int, EntityCard>();
+    //    propertyCards = new Dictionary<int, PropertyCard>();
+    //    iconsDictionary = new Dictionary<string, int>();
+    //    instanceCards = new List<InstanceCard>();
 
-        InitIcons();
-        FetchXmlString();
-        Debug.Log("[DecksController] FIN INITIALIZE");
-    }
+    //    InitIcons();
+    //    FetchXmlString();
+    //    Debug.Log("[DecksController] FIN INITIALIZE");
+    //}
 
     private void InitXpathNavigators()
     {
