@@ -64,7 +64,9 @@ namespace StarterCore.Core.Services.Network
         private string URL_GET_COUNTRIES = "StreamingAssets/Games/Marmoutier/marmoutier.json";
         private string URL_SCENARII_CATALOG = "StreamingAssets/scenarii/scenariiCatalog.json";
 
-
+        private string URL_GET_CIDOC_XML = "StreamingAssets/Ontologies/CidocCRM/01-Referential-CidocRDF_Bootleg_GB_3_7_21.xml";
+        private string URL_GET_ENTITY_ICONS_COLORS_XML = "StreamingAssets/Ontologies/CidocCRM/01-Referential_Entity_Colour_Mapping.xml";
+        private string URL_GET_PROPERTY_ICONS_COLORS_XML = "StreamingAssets/Ontologies/CidocCRM/01-Referential-Property_Colour_mapping.xml";
 
         //Test load games
         private string URL_GET_GAMES = "http://ontomatchgame.huma-num.fr/StreamingAssets/Games/Marmoutier/marmoutier.json";
@@ -187,12 +189,20 @@ namespace StarterCore.Core.Services.Network
         }
 
 
-        public async UniTask<ChapterModelDown> LoadGame()
+        //public async UniTask<ChapterModelDown> LoadGame()
+        //{
+        //    ChapterModelDown result = await _net.GetAsync<ChapterModelDown>(URL_GET_GAMES);
+        //    return result;
+        //}
+
+        public async UniTask<List<ChallengeData>> LoadChapter(string scenarioName, string chapterName, string fileName)
         {
-            ChapterModelDown result = await _net.GetAsync<ChapterModelDown>(URL_GET_GAMES);
+            string chapterUrl = HomeUrl + "StreamingAssets/scenarii" + "/" + scenarioName + "/" + fileName;
+            Debug.Log("URL CHAPTER IS : " + chapterUrl);
+
+            List<ChallengeData> result = await _net.GetAsync<List<ChallengeData>>(chapterUrl);
             return result;
         }
-
 
         //LOGIN
         public async UniTask<SigninModelDown> Login(SigninModelUp formData)
@@ -217,6 +227,29 @@ namespace StarterCore.Core.Services.Network
             return emailSent;
         }
 
+        //Get CIDOC XML files from server
+        public async UniTask<string> GetXmlCidocFile()
+        {
+            string url = Path.Combine(HomeUrl, URL_GET_CIDOC_XML);
+            string result = await _net.GetRawStringAsync<XmlStringModelDown>(url);
+            return result;
+        }
+
+        //Get ENTITY COLOR MAPPING XML files from server
+        public async UniTask<string> GetXmlEntityIconsColorsFile()
+        {
+            string url = Path.Combine(HomeUrl, URL_GET_ENTITY_ICONS_COLORS_XML);
+            string result = await _net.GetRawStringAsync<XmlStringModelDown>(url);
+            return result;
+        }
+
+        //Get ENTITY COLOR MAPPING XML files from server
+        public async UniTask<string> GetXmlPropertyColorsFile()
+        {
+            string url = Path.Combine(HomeUrl, URL_GET_PROPERTY_ICONS_COLORS_XML);
+            string result = await _net.GetRawStringAsync<XmlStringModelDown>(url);
+            return result;
+        }
 
     }
 }

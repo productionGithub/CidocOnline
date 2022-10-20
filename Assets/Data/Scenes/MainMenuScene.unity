@@ -4432,7 +4432,6 @@ GameObject:
   - component: {fileID: 1275233751}
   - component: {fileID: 1275233750}
   - component: {fileID: 1275233749}
-  - component: {fileID: 1275233748}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -4460,20 +4459,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1275233748
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1275233746}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 955159e208a8449f98a4c39f53e33f91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <LocalizeKey>k__BackingField: mainmenu-scene-hallbutton-text
-  <LocalizedText>k__BackingField: {fileID: 1275233750}
 --- !u!114 &1275233749
 MonoBehaviour:
   m_ObjectHideFlags: 0

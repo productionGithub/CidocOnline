@@ -11,17 +11,25 @@ public class CardSliderController : MonoBehaviour
     [SerializeField]
     Slider _slider;
 
-    GameObject o;
-
-    public void Show(GameObject obj)
+    public void Show(int maxValue)
     {
-        o = obj;
-
-        _slider.onValueChanged.AddListener(OnSliderValuerChanged);
+        Debug.Log("[CardSliderController] Init OK");
+        SetSliderRange(maxValue);
+        _slider.onValueChanged.AddListener(OnSliderValueChanged);
     }
 
-    private void OnSliderValuerChanged(float value)
+    private void OnSliderValueChanged(float value)
     {
+        //Debug.Log("[CardSliderController] Value : " + (int) value);
         OnSliderValueChangedUI?.Invoke(value);
+    }
+
+    //Deck size in Model.Controller is updated after a deck is filtered by the colored Ticks.
+    //We refresh the slider's range according to the new size of the filtered deck
+    public void SetSliderRange(int value)
+    {
+        _slider.maxValue = value;
+        _slider.maxValue = value;
+        _slider.value = 0;
     }
 }

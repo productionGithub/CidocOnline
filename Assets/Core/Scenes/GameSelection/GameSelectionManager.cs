@@ -1,15 +1,10 @@
 using Cysharp.Threading.Tasks;
 using StarterCore.Core.Services.Network;
 using StarterCore.Core.Services.Network.Models;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 using StarterCore.Core.Services.Navigation;
-using StarterCore.Core.Services.GameState;
-using StarterCore.Core.Services.Localization;
-using StarterCore.Core.Scenes.GameSelection;
+using StarterCore.Core.Scenes.Board.Challenge;
 
 namespace StarterCore.Core.Scenes.GameSelection
 {
@@ -24,8 +19,6 @@ namespace StarterCore.Core.Scenes.GameSelection
         public void Initialize()
         {
             Debug.Log("[GameSelectionManager] Initialized!");
-            //List<Scenario> scenarioList = new List<Scenario>();
-
             //Get scenarii catalog and Show Game selection panel
             FetchCatalog().Forget();
 
@@ -35,11 +28,8 @@ namespace StarterCore.Core.Scenes.GameSelection
 
         private void LoadChapter(string scenarioTitle, string chapterTitle)
         {
-            //Update GameState with current Scenario / Chapter
-
-            ChapterInfoBundle bundle = new ChapterInfoBundle(scenarioTitle, chapterTitle);
+            ChallengeInfoBundle bundle = new ChallengeInfoBundle(scenarioTitle, chapterTitle, 1);
             _navService.Push("Board", bundle);
-            Debug.Log(string.Format("[GameSelectionManager] Load chapter{0} of scenario {1}", chapterTitle, scenarioTitle));
         }
 
         //private async UniTaskVoid FetchCatalog()

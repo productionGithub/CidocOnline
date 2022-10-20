@@ -83,6 +83,8 @@
       "mainmenu-scene-choosebutton-label": "Choisir un autre scenario",
       "mainmenu-scene-statisticsbutton-text": "Voir stats",
       "mainmenu-scene-statistics-label": "Voir mes statistiques",
+      "mainmenu-scene-hallbutton-text": "Voir mon classement",
+      "mainmenu-scene-hallbutton-label": "Leaderboard",
       "mainmenu-scene-reset-label": "Effacer les données de jeu et recommencer",
       "mainmenu-scene-resetbutton-text": "Reset",
       "mainmenu-scene-quit-label": "Quitter le jeu",

@@ -2,11 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using StarterCore.Core.Scenes.Board.Displayer;
+using StarterCore.Core.Scenes.Board.Challenge;
+using StarterCore.Core.Scenes.Board.Card.Cards;
+using Zenject;
+using StarterCore.Core.Services.GameState;
 
 namespace StarterCore.Core.Scenes.Board.Controller
 {
     public class EntityCardsController : MonoBehaviour
     {
+        [Inject] private GameStateManager _gameStateManager;
+
         // This is the level DECK DATA
         // Init + Current deck content
 
@@ -17,35 +23,34 @@ namespace StarterCore.Core.Scenes.Board.Controller
 
 
         // Reference to every deck of the board
-        [SerializeField] private EntityCardDisplayer _leftEntityCardDisplayer;
-        [SerializeField] private EntityCardDisplayer _middleEntityCardDisplayer;
+        [SerializeField] private EntityCardController _leftEntityCardController;
+        //[SerializeField] private EntityCardController _middleEntityCardController;
 
 
         //Events of Interactables
 
-
         public void Show()
         {
             Debug.Log("[EntityCardController] EntityCard controller initialized");
-            _leftEntityCardDisplayer.Show();
-            _middleEntityCardDisplayer.Show();
 
-            //Displayer events
-            _leftEntityCardDisplayer.OnSliderValueChangedDisplayer += OnLeftSliderValueChangedController;
-            _middleEntityCardDisplayer.OnSliderValueChangedDisplayer += OnMiddleSliderValueChangedController;
+            Debug.Log(string.Format("[EntityCardController] Init cEntityCards with challenge data {0} / {1} / {2}",
+                _gameStateManager.GameStateModel.CurrentScenario, _gameStateManager.GameStateModel.CurrentChapter, _gameStateManager.GameStateModel.CurrentChallengeIndex));
+
+
+            //_leftEntityCardController.Show();
+            //_middleEntityCardController.Show();
+
+            //_leftEntityCardController.OnSliderValueChangeController += OnLeftSliderValueChangedController;
+            ////_middleEntityCardController.OnSliderValueChangeController += OnMiddleSliderValueChangedController;
         }
 
         private void OnLeftSliderValueChangedController(float value)
         {
-            _leftEntityCardDisplayer.Id.text = value.ToString();
-            Debug.Log("[EntityController] Deck slided is : " + _leftEntityCardDisplayer.transform.parent.name);
-            Debug.Log("[EntityController] Slider value of slider is : " + value);
+            //_leftEntityCardController.Refresh(new EntityCard());
         }
 
         private void OnMiddleSliderValueChangedController(float value)
         {
-            Debug.Log("[EntityController] Deck slided is : " + _middleEntityCardDisplayer.transform.parent.name);
-            Debug.Log("[EntityController] Slider value of slider is : " + value);
         }
     }
 }

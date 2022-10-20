@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 namespace StarterCore.Core.Scenes.Board.Card.Cards
 {
-    public class EntityCard
+    public class InstanceCard
     {
         public int index;
         public List<string> icons = new List<string>();

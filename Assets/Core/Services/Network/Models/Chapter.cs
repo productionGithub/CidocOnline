@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace StarterCore.Core.Services.Network.Models
 {
+    /// <summary>
+    /// This class is used by GameSelection to display the catalog in Panels.
+    /// </summary>
     [Serializable]
     public class Chapter
     {
@@ -11,11 +14,13 @@ namespace StarterCore.Core.Services.Network.Models
         public string ChapterTitle;
         [JsonProperty("chapter-description")]
         public string ChapterDescription;
-
-        public Chapter(string cTitle, string cDescription)
-        {
-            ChapterTitle = cTitle;
-            ChapterDescription = cDescription;
-        }
+        [JsonProperty("chapter-filename")]
+        public string ChapterFilename;
+        //public Chapter(string cTitle, string cDescription)
+        //{
+        //    ChapterTitle = cTitle;
+        //    ChapterDescription = cDescription;
+        //    ChapterFilename = "";
+        //}
     }
 }

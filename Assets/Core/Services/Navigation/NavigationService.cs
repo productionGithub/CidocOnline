@@ -27,6 +27,7 @@ namespace StarterCore.Core.Services.Navigation
 
         public void Initialize()
         {
+            Debug.Log("NAVIGATION LOG !!!");
             if (SceneManager.sceneCount == 1)
             {
                 CurrentSceneName = SceneManager.GetActiveScene().name;

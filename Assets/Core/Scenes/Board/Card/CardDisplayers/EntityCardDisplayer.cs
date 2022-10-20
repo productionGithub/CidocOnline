@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using StarterCore.Core.Scenes.Board.Card.Cards;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
+using Zenject;
 
 namespace StarterCore.Core.Scenes.Board.Displayer
 {
@@ -13,57 +13,102 @@ namespace StarterCore.Core.Scenes.Board.Displayer
         /// Contains a list of CARD_INTERACTABLE (Hierarchy, Ticks, Slider)
         /// </summary>
 
+        [Inject] EntityDeckService _entityDeckService;
+
         //Card fields
-        //[SerializeField]
-        //private GameObject icon1 = null;
-        //[SerializeField]
-        //private GameObject icon2;
-        public TextMeshProUGUI Id;
-        //[SerializeField]
-        //private GameObject label;
-        //[SerializeField]
-        //private GameObject scrollView;
-        //[SerializeField]
-        //private GameObject classHierachyContent;
-        //[SerializeField]
-        //private GameObject colorBarLeftTop;
-        //[SerializeField]
-        //private GameObject colorBarLeftBottom;
-        //[SerializeField]
-        //private GameObject colorBarRightTop;
-        //[SerializeField]
-        //private GameObject colorBarRightBottom;
-        //[SerializeField]
-        //private GameObject comment;
+        [SerializeField]
+        private GameObject icon1;
+        [SerializeField]
+        private GameObject icon2;
+        [SerializeField]
+        private TextMeshProUGUI Id;
+        [SerializeField]
+        private TextMeshProUGUI label;
+        [SerializeField]
+        private GameObject scrollView;
+        [SerializeField]
+        private GameObject classHierachyContent;
+        [SerializeField]
+        private GameObject colorBarLeftTop;
+        [SerializeField]
+        private GameObject colorBarLeftBottom;
+        [SerializeField]
+        private GameObject colorBarRightTop;
+        [SerializeField]
+        private GameObject colorBarRightBottom;
+        [SerializeField]
+        private GameObject comment;
 
-        //Slider
-        [SerializeField] public CardSliderController _sliderController;
-
-        public event Action<float> OnSliderValueChangedDisplayer; // Bubble up event
-        //public event Action<EntityCardDisplayer, TickDisplayer> OnCardClicked;
-
-
-        //private void Start()
-        //{
-        //    Show();
-        //}
-
-        public void Show()
+        public void Show(EntityCard card)
         {
-            _sliderController.OnSliderValueChangedUI += OnSliderValueChanged;
-            _sliderController.Show(gameObject);
+            Debug.Log("[EntityCardDisplayer] Init OK");
+            Refresh(card);
         }
 
-        private void OnSliderValueChanged(float value)
+        public void Refresh(EntityCard card)
         {
-            //Id.text = value.ToString();
-            OnSliderValueChangedDisplayer?.Invoke(value);
-        }
+            icon1.SetActive(false);
+            icon2.SetActive(false);
 
-        private void OnClick(TickDisplayer tick)
-        {
-            //tick.Show();
-            //OnCardClicked?.Invoke(this, tick);
+            //Icons
+            if (card.icons[0] != "")
+            {
+                //Debug.Log("Icon1 name is : " + card.icons[0]);
+                icon1.SetActive(true);
+                icon1.GetComponent<Image>().sprite = _entityDeckService.iconsSprites[_entityDeckService.iconsDictionary[card.icons[0]]];
+            }
+            if(card.icons[1] != "")
+            {
+                //Debug.Log("Icon2 name is : " + card.icons[1]);
+                icon2.SetActive(true);
+                icon2.GetComponent<Image>().sprite = _entityDeckService.iconsSprites[_entityDeckService.iconsDictionary[card.icons[1]]];
+            }
+
+            Id.text = card.id;
+            label.text = card.label;
+
+            //Hierarchy
+            if (classHierachyContent.transform.childCount > 0)
+            {
+                //Empty list of children
+                foreach (Transform child in classHierachyContent.transform)
+                {
+                    Destroy(child.gameObject);
+                }
+            }
+
+            if (card.parentsClassList.Count > 0 || card.ChildrenClassList.Count > 0)
+            {
+                var ss = scrollView.GetComponent<SubSupContentList>();
+                ss.UpdateSubSupClass(card.parentsClassList, card.about, card.ChildrenClassList);
+            }
+
+            //Colors
+            //Colors
+            int nbColors = card.colors.Count;
+            switch (nbColors)
+            {
+                case 0:
+                    Debug.LogError("[DeckCtrl] Card has no color: " + card.label);
+                    break;
+                case 1:
+                    colorBarLeftTop.GetComponent<Image>().color = card.colors[0];
+                    colorBarLeftBottom.GetComponent<Image>().color = card.colors[0];
+                    colorBarRightTop.GetComponent<Image>().color = card.colors[0];
+                    colorBarRightBottom.GetComponent<Image>().color = card.colors[0];
+                    break;
+                case 2:
+                    colorBarLeftTop.GetComponent<Image>().color = card.colors[0];
+                    colorBarLeftBottom.GetComponent<Image>().color = card.colors[1];
+                    colorBarRightTop.GetComponent<Image>().color = card.colors[0];
+                    colorBarRightBottom.GetComponent<Image>().color = card.colors[1];
+                    break;
+                default:
+                    break;
+            }
+
+            //Comment
+            comment.GetComponent<TextMeshProUGUI>().text = card.comment;
         }
     }
 }

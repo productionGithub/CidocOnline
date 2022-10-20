@@ -7,6 +7,7 @@ using StarterCore.Core.Services.Network.Models;
 
 public class TBD_TESTLINQ : MonoBehaviour
 {
+    /*
     // Start is called before the first frame update
     void Start()
     {
@@ -68,4 +69,5 @@ public class TBD_TESTLINQ : MonoBehaviour
         //Debug.Log("");
 
     }
+    */
 }

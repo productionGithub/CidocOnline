@@ -81,6 +81,8 @@
       "mainmenu-scene-choosebutton-label": "Chose another scenario",
       "mainmenu-scene-statisticsbutton-text": "See stats",
       "mainmenu-scene-statistics-label": "See my statistics",
+      "mainmenu-scene-hallbutton-text": "View my ranking",
+      "mainmenu-scene-hallbutton-label": "Leaderboard",
       "mainmenu-scene-reset-label": "Reset game data and start over",
        "mainmenu-scene-resetbutton-text": "Reset",
        "mainmenu-scene-quit-text": "Quit game",

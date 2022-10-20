@@ -24,8 +24,8 @@ namespace StarterCore.Core.Services.GameState
         [JsonProperty("currentChapter")]
         public string CurrentChapter;
 
-        [JsonProperty("currentChallenge")]
-        public int CurrentChallenge;
+        [JsonProperty("currentChallengeIndex")]
+        public int CurrentChallengeIndex;
 
         [JsonProperty("currentScore")]
         public int CurrentScore;

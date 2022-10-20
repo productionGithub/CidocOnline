@@ -7,14 +7,14 @@
         "ric-O"
       ],
       "domainTags": [
-        "histoire",
-        "archéologie"
+        "Histoire",
+        "Archéologisse"
       ],
-      "domainCodes" : [
+    "domainCodes" : [
         "HIS",
         "ARC",
       ],
-      "authorTags": [
+    "authorTags": [
       "Masa",
       "Huma-num"
       ],
@@ -23,23 +23,28 @@
       "chapters": [
         {
           "chapter-title": "Les bases de l'ontologie",
-          "chapter-description": "Description du chapitre..."
+          "chapter-description": "Description du chapitre...",
+          "chapter-filename":"GameZ.json"
         },
         {
           "chapter-title": "Les entités",
-          "chapter-description": "Description du chapitre..."
+          "chapter-description": "Description du chapitre...",
+          "chapter-filename":"Game2.json"
         },
         {
           "chapter-title": "Les propriétés",
-          "chapter-description": "Description du chapitre..."
+          "chapter-description": "Description du chapitre...",
+          "chapter-filename":"Game3.json"
         },
         {
           "chapter-title": "Créer des relations",
-          "chapter-description": "Description du chapitre..."
+          "chapter-description": "Description du chapitre...",
+          "chapter-filename":"Game4.json"
         },
         {
           "chapter-title": "Relations complexes",
-          "chapter-description": "Description du chapitre..."
+          "chapter-description": "Description du chapitre...",
+          "chapter-filename":"Game5.json"
         }
       ]
     },
