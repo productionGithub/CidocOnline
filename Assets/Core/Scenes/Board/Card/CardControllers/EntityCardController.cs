@@ -1,8 +1,10 @@
 using System;
+using Cysharp.Threading.Tasks;
 using StarterCore.Core.Scenes.Board;
 using StarterCore.Core.Scenes.Board.Card.Cards;
 using StarterCore.Core.Scenes.Board.Displayer;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 public class EntityCardController : MonoBehaviour
@@ -21,18 +23,24 @@ public class EntityCardController : MonoBehaviour
     public void Show(EntityCard card)
     {
         Debug.Log("[EntityCardController] Init OK");
+        Debug.Log("[EntityCardController] id " + card.id);
 
-        //Cards
+        //Card
         _cardDisplayer.Show(card);
-        //_cardDisplayer.Refresh(_entityDeckService.EntityCards[0]);
-        //Ticks
+    }
+
+    public void GhostBackground()
+    {
+        _cardDisplayer.GhostBackground();
+    }
+
+    public void ReinitBackground()
+    {
+        _cardDisplayer.ReinitBackground();
     }
 
     public void Refresh(EntityCard card)
     {
         _cardDisplayer.Refresh(card);
     }
-
-    //Ticks here ?
-
 }

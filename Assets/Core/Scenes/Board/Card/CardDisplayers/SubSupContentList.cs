@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Text;
+using System;
 
 
 /// <summary>
@@ -23,6 +25,13 @@ public class SubSupContentList : MonoBehaviour
     //when a card is refresh.
     public void UpdateSubSupClass(List<string> parent, string current, List<string> children)
     {
+        //char[] chars = { '\u0061', '\u0308' };
+        //string strng = new String(chars);
+        //Debug.Log("Char bizarre : " + strng);
+
+        string arrowUp = "\u02C4";
+        string arrowDown = "\u02C5";
+
         //Parent classes
         if (parent.Count > 0)
         {
@@ -30,7 +39,7 @@ public class SubSupContentList : MonoBehaviour
             {
                 GameObject parentButton = Instantiate(subSupButtonPrefab);
                 parentButton.SetActive(true);
-                parentButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = name;
+                parentButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = arrowUp + name;
                 parentButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.MidlineLeft;
                 parentButton.transform.SetParent(contentList.transform, false);
             }
@@ -50,7 +59,7 @@ public class SubSupContentList : MonoBehaviour
             {
                 GameObject childrenButton = Instantiate(subSupButtonPrefab);
                 childrenButton.SetActive(true);
-                childrenButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = name;
+                childrenButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = arrowDown + name;
                 childrenButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.MidlineLeft;
                 childrenButton.transform.SetParent(contentList.transform, false);
             }

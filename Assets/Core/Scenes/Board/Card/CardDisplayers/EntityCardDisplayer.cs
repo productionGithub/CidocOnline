@@ -17,6 +17,8 @@ namespace StarterCore.Core.Scenes.Board.Displayer
 
         //Card fields
         [SerializeField]
+        private GameObject bkg;
+        [SerializeField]
         private GameObject icon1;
         [SerializeField]
         private GameObject icon2;
@@ -41,7 +43,7 @@ namespace StarterCore.Core.Scenes.Board.Displayer
 
         public void Show(EntityCard card)
         {
-            Debug.Log("[EntityCardDisplayer] Init OK");
+            Debug.Log("[EntityCardService] Init OK");
             Refresh(card);
         }
 
@@ -109,6 +111,17 @@ namespace StarterCore.Core.Scenes.Board.Displayer
 
             //Comment
             comment.GetComponent<TextMeshProUGUI>().text = card.comment;
+        }
+
+        public void GhostBackground()
+        {
+            Debug.Log("CHANGE COLOR");
+            bkg.GetComponent<Image>().color = new Color(255, 0, 0, 45);
+        }
+
+        public void ReinitBackground()
+        {
+            bkg.GetComponent<Image>().color = new Color(255, 255, 255, 255);
         }
     }
 }
