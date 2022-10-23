@@ -9,7 +9,7 @@
       "signin-scene-email-placeholder-text" : "Entrez un email valide...",
       "signin-scene-emailnotvalid-text" : "Format d'email invalide.\nDevrait ressembler à 'martin@dupont.fr",
       "signin-scene-wrongcombination-text" : "Email ou mot de passe incorrect\nVeuillez réessayer",
-      "signin-scene-rightcombination-text" : "Login valide!",
+      "signin-scene-rightcombination-text" : "Login OK. Fetching player data.\nPlease wait...",
       "signin-scene-password-label" : "Votre mot de passe",
       "signin-scene-password-placeholder-text" : "Mot de passe associé au compte",
       "signin-scene-forgotpassword-text" : "Mot de passe oublié ?",

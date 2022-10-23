@@ -116,12 +116,12 @@ namespace StarterCore.Core.Scenes.Board.Displayer
         public void GhostBackground()
         {
             Debug.Log("CHANGE COLOR");
-            bkg.GetComponent<Image>().color = new Color(255, 0, 0, 45);
+            bkg.GetComponent<Image>().color = new Color32(204, 204, 204, 255);
         }
 
         public void ReinitBackground()
         {
-            bkg.GetComponent<Image>().color = new Color(255, 255, 255, 255);
+            bkg.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
         }
     }
 }

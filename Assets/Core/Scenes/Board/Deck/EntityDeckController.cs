@@ -27,7 +27,6 @@ namespace StarterCore.Core.Scenes.Board.Deck
         [SerializeField] Button _nextStepper;
 
         [SerializeField] TBDAddCard _adder;
-        [SerializeField] Image _marker;
 
         //[SerializeField] TickController _tickController;
 
@@ -51,7 +50,6 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
             _adder.Show();
             _adder.OnAddCard += AddCardToDeck;
-            _marker.gameObject.SetActive(false);
         }
 
         private void AddCardToDeck()
@@ -82,12 +80,10 @@ namespace StarterCore.Core.Scenes.Board.Deck
                 {
                     Debug.Log("Added card !");
                    _entityCardController.GhostBackground();
-                   // _marker.gameObject.SetActive(true);
                 }
                 else
                 {
                     _entityCardController.ReinitBackground();
-                    //_marker.gameObject.SetActive(false);
                 }
                     
             }
@@ -100,8 +96,6 @@ namespace StarterCore.Core.Scenes.Board.Deck
             if (_sliderController.GetComponent<Slider>().value > 0)
             {
                 float previousCardIndex = _sliderController.GetComponent<Slider>().value - 1;
-                //Debug.Log("[NextCardClicked] nextCardIndex float value is " + _sliderController.GetComponent<Slider>().value);
-                //Debug.Log("[NextCardClicked] nextCardIndex int value is " + (int)previousCardIndex);
                 _entityCardController.Refresh(_currentDeckContent[(int)previousCardIndex]);
                 //Set new slider position
                 _sliderController.SetSliderValue(previousCardIndex);
@@ -112,25 +106,18 @@ namespace StarterCore.Core.Scenes.Board.Deck
         {
             if (_sliderController.GetComponent<Slider>().value < _currentDeckContent.Count - 1)
             {
-                //Debug.Log("[NextCardClicked] Slider value is " + _sliderController.GetComponent<Slider>().value);
                 float nextCardIndex = _sliderController.GetComponent<Slider>().value + 1;
-                //Debug.Log("[NextCardClicked] nextCardIndex float value is " + _sliderController.GetComponent<Slider>().value);
-                //Debug.Log("[NextCardClicked] nextCardIndex int value is " + (int) nextCardIndex);
                 _entityCardController.Refresh(_currentDeckContent[(int)nextCardIndex]);
 
                 if (_AddedCard.Exists(x => x.id.Equals(_currentDeckContent[(int)nextCardIndex].id)))
                 {
                     Debug.Log("Added card !");
                     _entityCardController.GhostBackground();
-                    //_marker.gameObject.SetActive(true);
                 }
                 else
                 {
                     _entityCardController.ReinitBackground();
-                    //_marker.gameObject.SetActive(false);
                 }
-
-
                 //Set new slider position
                 _sliderController.SetSliderValue(nextCardIndex);
             }

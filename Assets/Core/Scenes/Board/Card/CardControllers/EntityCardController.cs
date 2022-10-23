@@ -22,10 +22,6 @@ public class EntityCardController : MonoBehaviour
 
     public void Show(EntityCard card)
     {
-        Debug.Log("[EntityCardController] Init OK");
-        Debug.Log("[EntityCardController] id " + card.id);
-
-        //Card
         _cardDisplayer.Show(card);
     }
 

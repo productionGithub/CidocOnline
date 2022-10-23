@@ -9,7 +9,7 @@
       "signin-scene-email-placeholder-text" : "Enter a valid email address",
       "signin-scene-emailnotvalid-text" : "Invalid email format\nShould be something like 'john@doe.com'",
       "signin-scene-wrongcombination-text" : "Wrong email or password combination.\nTry again",
-      "signin-scene-rightcombination-text" : "Login successful",
+      "signin-scene-rightcombination-text" : "Login OK. Fetching player data.\nPlease wait...",
       "signin-scene-password-label" : "Your password",
       "signin-scene-password-placeholder-text" : "Password linked to email address",
       "signin-scene-forgotpassword-text" : "Forgot your password?",
