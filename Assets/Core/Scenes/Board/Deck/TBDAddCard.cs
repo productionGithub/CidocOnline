@@ -1,8 +1,9 @@
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using StarterCore.Core.Scenes.Board.Card.Cards;
 
-namespace StarterCore.Core.Scenes.Board.Card.CardInteractables
+namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables
 {
     public class TBDAddCard : MonoBehaviour
     {

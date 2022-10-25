@@ -40,11 +40,6 @@ namespace StarterCore.Core.Scenes.Board
             _leftEntityDeckController.Show(initialDeckContent);
         }
 
-        private void OnPreviousCardClicked()
-        {
-            Debug.Log("PREVIOUS FOR LEFT ENTITI DECK");
-        }
-
         private void OnGamePaused()
         {
         }

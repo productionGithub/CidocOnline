@@ -17,29 +17,27 @@ namespace StarterCore.Core.Scenes.Board.Displayer
 
         //Card fields
         [SerializeField]
-        private GameObject bkg;
+        private GameObject _bkg;
         [SerializeField]
-        private GameObject icon1;
+        private GameObject _icon1;
         [SerializeField]
-        private GameObject icon2;
+        private GameObject _icon2;
         [SerializeField]
-        private TextMeshProUGUI Id;
+        private TextMeshProUGUI _id;
         [SerializeField]
-        private TextMeshProUGUI label;
+        private TextMeshProUGUI _label;
+
         [SerializeField]
-        private GameObject scrollView;
+        private GameObject _colorBarLeftTop;
         [SerializeField]
-        private GameObject classHierachyContent;
+        private GameObject _colorBarLeftBottom;
         [SerializeField]
-        private GameObject colorBarLeftTop;
+        private GameObject _colorBarRightTop;
         [SerializeField]
-        private GameObject colorBarLeftBottom;
+        private GameObject _colorBarRightBottom;
         [SerializeField]
-        private GameObject colorBarRightTop;
-        [SerializeField]
-        private GameObject colorBarRightBottom;
-        [SerializeField]
-        private GameObject comment;
+
+        private GameObject _comment;
 
         public void Show(EntityCard card)
         {
@@ -49,43 +47,24 @@ namespace StarterCore.Core.Scenes.Board.Displayer
 
         public void Refresh(EntityCard card)
         {
-            icon1.SetActive(false);
-            icon2.SetActive(false);
+            _icon1.SetActive(false);
+            _icon2.SetActive(false);
 
             //Icons
             if (card.icons[0] != "")
             {
-                //Debug.Log("Icon1 name is : " + card.icons[0]);
-                icon1.SetActive(true);
-                icon1.GetComponent<Image>().sprite = _entityDeckService.iconsSprites[_entityDeckService.iconsDictionary[card.icons[0]]];
+                _icon1.SetActive(true);
+                _icon1.GetComponent<Image>().sprite = _entityDeckService.iconsSprites[_entityDeckService.iconsDictionary[card.icons[0]]];
             }
             if(card.icons[1] != "")
             {
-                //Debug.Log("Icon2 name is : " + card.icons[1]);
-                icon2.SetActive(true);
-                icon2.GetComponent<Image>().sprite = _entityDeckService.iconsSprites[_entityDeckService.iconsDictionary[card.icons[1]]];
+                _icon2.SetActive(true);
+                _icon2.GetComponent<Image>().sprite = _entityDeckService.iconsSprites[_entityDeckService.iconsDictionary[card.icons[1]]];
             }
 
-            Id.text = card.id;
-            label.text = card.label;
+            _id.text = card.id;
+            _label.text = card.label;
 
-            //Hierarchy
-            if (classHierachyContent.transform.childCount > 0)
-            {
-                //Empty list of children
-                foreach (Transform child in classHierachyContent.transform)
-                {
-                    Destroy(child.gameObject);
-                }
-            }
-
-            if (card.parentsClassList.Count > 0 || card.ChildrenClassList.Count > 0)
-            {
-                var ss = scrollView.GetComponent<SubSupContentList>();
-                ss.UpdateSubSupClass(card.parentsClassList, card.about, card.ChildrenClassList);
-            }
-
-            //Colors
             //Colors
             int nbColors = card.colors.Count;
             switch (nbColors)
@@ -94,34 +73,33 @@ namespace StarterCore.Core.Scenes.Board.Displayer
                     Debug.LogError("[DeckCtrl] Card has no color: " + card.label);
                     break;
                 case 1:
-                    colorBarLeftTop.GetComponent<Image>().color = card.colors[0];
-                    colorBarLeftBottom.GetComponent<Image>().color = card.colors[0];
-                    colorBarRightTop.GetComponent<Image>().color = card.colors[0];
-                    colorBarRightBottom.GetComponent<Image>().color = card.colors[0];
+                    _colorBarLeftTop.GetComponent<Image>().color = card.colors[0];
+                    _colorBarLeftBottom.GetComponent<Image>().color = card.colors[0];
+                    _colorBarRightTop.GetComponent<Image>().color = card.colors[0];
+                    _colorBarRightBottom.GetComponent<Image>().color = card.colors[0];
                     break;
                 case 2:
-                    colorBarLeftTop.GetComponent<Image>().color = card.colors[0];
-                    colorBarLeftBottom.GetComponent<Image>().color = card.colors[1];
-                    colorBarRightTop.GetComponent<Image>().color = card.colors[0];
-                    colorBarRightBottom.GetComponent<Image>().color = card.colors[1];
+                    _colorBarLeftTop.GetComponent<Image>().color = card.colors[0];
+                    _colorBarLeftBottom.GetComponent<Image>().color = card.colors[1];
+                    _colorBarRightTop.GetComponent<Image>().color = card.colors[0];
+                    _colorBarRightBottom.GetComponent<Image>().color = card.colors[1];
                     break;
                 default:
                     break;
             }
 
             //Comment
-            comment.GetComponent<TextMeshProUGUI>().text = card.comment;
+            _comment.GetComponent<TextMeshProUGUI>().text = card.comment;
         }
 
         public void GhostBackground()
         {
-            Debug.Log("CHANGE COLOR");
-            bkg.GetComponent<Image>().color = new Color32(204, 204, 204, 255);
+            _bkg.GetComponent<Image>().color = new Color32(204, 204, 204, 255);
         }
 
         public void ReinitBackground()
         {
-            bkg.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+            _bkg.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
         }
     }
 }
