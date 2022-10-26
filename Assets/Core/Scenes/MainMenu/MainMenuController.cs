@@ -19,6 +19,7 @@ namespace StarterCore.Core.Scenes.MainMenu
 
         [SerializeField] TMP_Text _welcomeTitle;
         [SerializeField] TMP_Text _continueText;
+        [SerializeField] GameObject _continueZone;//Disabled if no history
 
         [SerializeField] Button _chooseScenario;
 
@@ -31,19 +32,30 @@ namespace StarterCore.Core.Scenes.MainMenu
             //Get data passed from SignIn scene
             bundle = new HistoryModelDown("", "", "", "", "");
             _navService.GetMainBundle(out bundle);
+
             TranslateUI();
 
             _chooseScenario.onClick.AddListener(OnChooseScenarioButtonClicked);
-
         }
 
         private void TranslateUI()
         {
             _welcomeTitle.text = _localizationManager.GetTranslation("mainmenu-scene-welcometitle-text") + " " + _gameState.Username + " !";
-            _continueText.text = _localizationManager.GetTranslation("mainmenu-scene-continue-text") + " " +
+            Debug.Log("WE BUNDLE ID: " + bundle.HistoryId);
+            if (bundle.HistoryId.Equals(string.Empty))
+            {
+                Debug.Log("Disable continue zone !");
+                _continueZone.SetActive(false);
+
+            }
+            else
+            {
+                _continueZone.SetActive(true);
+                _continueText.text = _localizationManager.GetTranslation("mainmenu-scene-continue-text") + " " +
                 bundle.ScenarioName + " / " +
                 bundle.ChapterName + " / " +
                 bundle.ChallengeId;
+            }
         }
 
         private void OnChooseScenarioButtonClicked()

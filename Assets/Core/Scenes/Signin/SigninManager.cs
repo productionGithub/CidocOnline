@@ -47,7 +47,6 @@ namespace StarterCore.Core.Scenes.Signin
             var result = await CheckEmail(email);
             if (result.DoesExist == false)//False = Did not find the email in DB
             {
-                Debug.Log("No account !");
                 _controller.NoAccount();
             }
             else

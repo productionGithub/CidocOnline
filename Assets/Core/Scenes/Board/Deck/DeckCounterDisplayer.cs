@@ -8,14 +8,14 @@ namespace StarterCore.Core.Scenes.Board.Deck
     public class DeckCounterDisplayer : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _currentSize;
-        [SerializeField] private TextMeshProUGUI _maxSize;
+        [SerializeField] private TextMeshProUGUI _initialSize;
 
         public event Action<string> OnDetailEntryPlayEvent;
 
-        public void Show(string curSize, string maxSize)
+        public void Show(int curSize, int initSize)
         {
-            _currentSize.GetComponent<TextMeshProUGUI>().text = curSize;
-            _currentSize.GetComponent<TextMeshProUGUI>().text = maxSize;
+            _currentSize.GetComponent<TextMeshProUGUI>().text = curSize.ToString();
+            _initialSize.GetComponent<TextMeshProUGUI>().text = initSize.ToString();
         }
     }
 }

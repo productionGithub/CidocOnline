@@ -35,7 +35,7 @@ namespace StarterCore.Core.Scenes.Board
 
             int currentChallengeId = _gameStateManager.GameStateModel.CurrentChallengeIndex;
 
-            //Get init string for ELeft of this challenge
+            //Initialization of Left Entity Deck
             List<EntityCard> initialDeckContent = _entityDeckService.GetInitialDeck(challengeList[currentChallengeId].ELeftInit);
             _leftEntityDeckController.Show(initialDeckContent);
         }

@@ -18,145 +18,101 @@ public class HierarchyEntityDisplayer : MonoBehaviour
     public event Action<string> HierarchyEntDisp_HierarchyClickEvent;
 
     [SerializeField]
-    HierarchyEntityEntry _entryTemplate;
+    HierarchyEntityEntry _entryEntityTemplate;
     [SerializeField]
-    HierarchyCurrentEntry _currentEntry;
+    HierarchyCurrentEntry _currentEntryEntityTemplate;
 
-    public Transform _hierarchyContainer;//Parent object of scrollView
+    public Transform _hierarchyEntityContainer;//Parent object of scrollView
 
-    private List<HierarchyEntityEntry> entries;//Keeps track of hierarchy instanciated prefabs
+    private List<HierarchyEntityEntry> _entriesEntity;//Keeps track of hierarchy instanciated prefabs
+    private List<HierarchyCurrentEntry> _currentEntityEntry;//Keeps track of hierarchy instanciated prefabs
 
     public void Show(EntityCard card)// List<EntityCard> parents, string current, List<EntityCard> children)
     {
-        Debug.Log("[HierarchyDisplayer] SHOW...");
-        CleanHierarchy();
-        DisplayHierarchy(card);
+        CleanEntityHierarchy();
+        DisplayEntityHierarchy(card);
     }
 
-    private void DisplayHierarchy(EntityCard card)
+    private void DisplayEntityHierarchy(EntityCard card)
     {
         string arrowUp = "\u02C4";
+        string arrowDown = "\u02C5";
 
         //Parents
         if (card.parentsClassList.Count > 0)
         {
             foreach (string label in card.parentsClassList)
             {
-                HierarchyEntityEntry entry = Instantiate(_entryTemplate, _hierarchyContainer);
+                HierarchyEntityEntry entry = Instantiate(_entryEntityTemplate, _hierarchyEntityContainer);
                 //entry.EntryLabel.text = arrowUp + label;
                 entry.Show(arrowUp, label);
-                entry.OnHierarchyEntityClickEvent += HierarchyEntryClicked;
+                entry.OnHierarchyEntityClickEvent += HierarchyEntityEntryClicked;
 
-                entries.Add(entry);
+                _entriesEntity.Add(entry);
                 Debug.Log("");
             }
         }
+
+        //Current card
+        HierarchyCurrentEntry currentEntry = Instantiate(_currentEntryEntityTemplate, _hierarchyEntityContainer);
+        currentEntry.Show(card.about);
+        _currentEntityEntry.Add(currentEntry);
+
+        //Children
+        if (card.ChildrenClassList.Count > 0)
+        {
+            foreach (string label in card.ChildrenClassList)
+            {
+                HierarchyEntityEntry entry = Instantiate(_entryEntityTemplate, _hierarchyEntityContainer);
+                //entry.EntryLabel.text = arrowUp + label;
+                entry.Show(arrowDown, label);
+                entry.OnHierarchyEntityClickEvent += HierarchyEntityEntryClicked;
+
+                _entriesEntity.Add(entry);
+            }
+        }
+
     }
 
-    private void HierarchyEntryClicked(string label)
+    private void HierarchyEntityEntryClicked(string label)
     {
         string id = label.Substring(0, label.IndexOf("_")).Trim();//Fetch the sub string before first '_'
         HierarchyEntDisp_HierarchyClickEvent?.Invoke(id);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*
-    public void Show(EntityCard card)// List<EntityCard> parents, string current, List<EntityCard> children)
+    public void CleanEntityHierarchy()
     {
-        CleanHierarchy();
-
-        string arrowUp = "\u02C4";
-        string arrowDown = "\u02C5";
-
-        //Parent classes
-        if (card.parentsClassList.Count > 0)
-        {
-            foreach (string label in card.parentsClassList)
-            {
-                HierarchyEntityDisplayer parentEntry = Instantiate(_entryTemplate);
-                var compo = parentEntry.GetComponent<HierarchyEntityEntry>();
-                compo.Show(arrowUp, label);
-                compo.OnHierarchyEntityClickEvent += AddEntry;
-                parentEntry.transform.SetParent(_hierarchyContainer);
-
-                entries.Add(compo);
-            }
-        }
-
-        //Current
-        HierarchyCurrentEntry currentButton = Instantiate(_currentEntry);
-        currentButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = card.about;
-        currentButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
-        currentButton.transform.SetParent(_hierarchyContainer);
-
-        //Children
-        if (card.ChildrenClassList.Count > 0)
-        {
-            foreach(string label in card.ChildrenClassList)
-            {
-                HierarchyEntityDisplayer childrenEntry = Instantiate(_entryTemplate);
-                var compo = childrenEntry.GetComponent<HierarchyEntityEntry>();
-                compo.Show(arrowDown,label);
-                compo.OnHierarchyEntityClickEvent += AddEntry;
-                childrenEntry.transform.SetParent(_hierarchyContainer);
-
-                entries.Add(compo);
-            }
-        }
-    }
-    */
-
-    public void CleanHierarchy()
-    {
-        if (entries == null)
+        if (_entriesEntity == null)
         {
             Debug.Log("[HierarchyDisplayer] Entries list is null, create new one.");
-            entries = new List<HierarchyEntityEntry>();
+            _entriesEntity = new List<HierarchyEntityEntry>();
         }
         else
         {
             Debug.Log("[HierarchyDisplayer] Entries list not null, cleaning it.");
-            foreach (HierarchyEntityEntry e in entries)
+            foreach (HierarchyEntityEntry e in _entriesEntity)
             {
                 Debug.Log("[HierarchyDisplayer] Cleaning : found object : " + e.GetComponent<HierarchyEntityEntry>().EntryLabel.text);
-                e.OnHierarchyEntityClickEvent -= HierarchyEntryClicked;
+                e.OnHierarchyEntityClickEvent -= HierarchyEntityEntryClicked;
                 Destroy(e.gameObject);
             }
-            entries.Clear();
+            _entriesEntity.Clear();
         }
 
-    }
-}
-
-
-/*
-static class Helper
-{
-    public static string GetUntilOrEmpty(this string text, string stopAt = "-")
-    {
-        if (!String.IsNullOrWhiteSpace(text))
+        if (_currentEntityEntry == null)
         {
-            int charLocation = text.IndexOf(stopAt, StringComparison.Ordinal);
-
-            if (charLocation > 0)
-            {
-                return text.Substring(0, charLocation);
-            }
+            Debug.Log("[HierarchyCURRENTDisplayer] Entries list is null, create new one.");
+            _currentEntityEntry = new List<HierarchyCurrentEntry>();
         }
-
-        return String.Empty;
+        else
+        {
+            Debug.Log("[HierarchyCURRENTDisplayer] Entries list not null, cleaning it.");
+            foreach (HierarchyCurrentEntry e in _currentEntityEntry)
+            {
+                Debug.Log("[HierarchyDisplayer] Cleaning : found object : " + e.GetComponent<HierarchyCurrentEntry>().EntryLabel.text);
+                Destroy(e.gameObject);
+            }
+            _currentEntityEntry.Clear();
+        }
     }
 }
-*/

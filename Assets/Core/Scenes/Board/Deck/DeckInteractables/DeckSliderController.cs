@@ -34,5 +34,10 @@ namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables
         {
             _slider.value = value;
         }
+
+        public void SetSliderActive(bool value)
+        {
+            gameObject.SetActive(value);
+        }
     }
 }

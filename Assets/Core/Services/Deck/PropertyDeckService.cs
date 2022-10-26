@@ -9,7 +9,7 @@ using Zenject;
 using StarterCore.Core.Scenes.Board.Card.Cards;
 using Cysharp.Threading.Tasks;
 
-public class EntityDeckService : IInitializable
+public class PropertyDeckService : IInitializable
 {
     /// <summary>
     /// Initialize List of Entity and property cards, based on Cidoc rdf file parsing (.xml).
@@ -18,12 +18,8 @@ public class EntityDeckService : IInitializable
 
     [Inject] MockNetService _netservice;
 
-    //public Dictionary<int, EntityCard> EntityCards;
-    public List<EntityCard> EntityCards;
-
-    //Icon sprites
-    public Sprite[] IconsSprites;
-    public Dictionary<string, int> IconsDictionary;//Get reference index in spriteSheet by name of icon (more readable)
+    //public Dictionary<int, PropertyCard> PropertyCards;
+    public List<PropertyCard> PropertyCards;
 
     //Colors
     public Dictionary<string, Color32> ColorsDictionary;
@@ -43,42 +39,40 @@ public class EntityDeckService : IInitializable
 
     //Navigators allows to parse in memory XML file mapping
     XPathNavigator cidocRdfFileNavigator;//Source file for generating Entity and Property decks
-    XPathNavigator entityColorsIconsFileNavigator;//Source file for updating Entity instances with ad-hoc icons and colors;
-    //XPathNavigator propertyColorsFileNavigator;//Source file for updating Entity instances with ad-hoc icons and colors;
+    XPathNavigator propertyColorsFileNavigator;//Source file for updating Entity instances with ad-hoc icons and colors;
 
     //Raw xml string for Cidoc
     string _cidocXmlString;
-    string _entityXmlString;
+    string _propertyXmlString;
+
 
     public void Initialize()
     {
-        Debug.Log("THIS IS DECKSCONTROLLER!");
+        Debug.Log("THIS IS PropertyDeckService!");
 
-        EntityCards = new List<EntityCard>();
-        IconsDictionary = new Dictionary<string, int>();
+        PropertyCards = new List<PropertyCard>();
 
         InitColors();
-        InitIcons();
-        BuildEntityDeck();
+        BuildPropertyDeck();
     }
-
+    
     // <*************************** public methods ************************************>
-    public List<EntityCard> GetInitialDeck(string initString)
+    public List<PropertyCard> GetInitialDeck(string initString)
     {
-        List<EntityCard> partialDeck = new List<EntityCard>();
+        List<PropertyCard> partialDeck = new List<PropertyCard>();
         partialDeck.Clear();
 
         switch (initString[0])//string should starts with '*' or '-' to initiliaze with all ids or a partial list
         {
             case '*'://All cards
-                partialDeck = EntityCards;
+                partialDeck = PropertyCards;
                 break;
 
             case '-'://Partial list of cards
                 string wString = initString.Substring(1);
                 string[] arrayOfIds = wString.Split(',').Select(id => id.Trim()).ToArray();
                 List<string> listOfIds = arrayOfIds.ToList();
-                partialDeck = EntityCards.Where(c => listOfIds.Contains(c.id)).ToList();
+                partialDeck = PropertyCards.Where(c => listOfIds.Contains(c.id)).ToList();
                 break;
 
             default:
@@ -90,18 +84,18 @@ public class EntityDeckService : IInitializable
 
 
     // <********************            init of deck from CirdocCRM file         *********************>
-    private async void BuildEntityDeck()
+    private async void BuildPropertyDeck()
     {
         //Fetch Cidoc Xml file
         _cidocXmlString = await _netservice.GetXmlCidocFile();
         //Debug.Log("Got XML CIDOC string : " + _cidocXmlString);
 
         //Fetch EntityIconsColorMapping Xml file
-        _entityXmlString = await _netservice.GetXmlEntityIconsColorsFile();
-        //Debug.Log("Got XML ENTITY COLORS ICONS string : " + _entityXmlString);
+        _propertyXmlString = await _netservice.GetXmlPropertyColorsFile();
+        Debug.Log("Got XML ENTITY COLORS ICONS string : " + _propertyXmlString);
 
-        InitXpathNavigators();
-        InitEntityDeck();
+        //InitXpathNavigators();
+        //InitPropertyDeck();
     }
 
     private void InitXpathNavigators()
@@ -119,14 +113,15 @@ public class EntityDeckService : IInitializable
         XPathDocument cidocXpathDocument = new XPathDocument(ms);
         cidocRdfFileNavigator = cidocXpathDocument.CreateNavigator();
 
-        //EntityIconsColorsMapping
-        MemoryStream msE = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(_entityXmlString));
-        XPathDocument entityXpathDocument = new XPathDocument(msE);
-        entityColorsIconsFileNavigator = entityXpathDocument.CreateNavigator();
+        ////EntityIconsColorsMapping
+        //MemoryStream msE = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(_entityXmlString));
+        //XPathDocument entityXpathDocument = new XPathDocument(msE);
+        //entityColorsIconsFileNavigator = entityXpathDocument.CreateNavigator();
     }
 
-    private void InitEntityDeck()
+    private void InitPropertyDeck()
     {
+        /*
         int index;
 
         //Get all 'Class' nodes
@@ -158,7 +153,7 @@ public class EntityDeckService : IInitializable
                 //Debug.Log("Got resource: " + sub?.GetAttribute("resource", rdfNamespace));
             }
 
-            EntityCards.Add(new EntityCard()
+            PropertyCards.Add(new PropertyCard()
             {
                 //index = index,
                 id = entity.GetAttribute("about", rdfNamespace).Split('_')[0],
@@ -169,9 +164,9 @@ public class EntityDeckService : IInitializable
             }); ;
 
             //Add this entity as a sub Class in the Parent dictionary
-            foreach (string superClassName in EntityCards[index].parentsClassList)
+            foreach (string superClassName in PropertyCards[index].parentsClassList)
             {
-                allSuperClassDic[superClassName].Add(EntityCards[index].about);
+                allSuperClassDic[superClassName].Add(PropertyCards[index].about);
             }
             index++;
         }
@@ -183,7 +178,7 @@ public class EntityDeckService : IInitializable
         {
             foreach (string name in kvp.Value)
             {
-                EntityCards[index].ChildrenClassList.Add(name);
+                PropertyCards[index].ChildrenClassList.Add(name);
             }
             index++;
         }
@@ -199,8 +194,8 @@ public class EntityDeckService : IInitializable
             XPathItem icon1 = row.SelectSingleNode("./Icon_1");
             XPathItem icon2 = row.SelectSingleNode("./Icon_2");
 
-            EntityCards[index].icons.Add(icon1.ToString());
-            EntityCards[index].icons.Add(icon2.ToString());
+            PropertyCards[index].icons.Add(icon1.ToString());
+            PropertyCards[index].icons.Add(icon2.ToString());
 
             XPathItem color1 = row.SelectSingleNode("./Colour_1");
             XPathItem color2 = row.SelectSingleNode("./Colour_2");
@@ -208,22 +203,23 @@ public class EntityDeckService : IInitializable
 
             if (color1.ToString() != "")
             {
-                EntityCards[index].colors.Add(ColorsDictionary[color1.ToString()]);
+                PropertyCards[index].colors.Add(ColorsDictionary[color1.ToString()]);
             }
             if (color2.ToString() != "")
             {
-                EntityCards[index].colors.Add(ColorsDictionary[color2.ToString()]);
+                PropertyCards[index].colors.Add(ColorsDictionary[color2.ToString()]);
             }
 
             if (color3.ToString() != "")
             {
-                EntityCards[index].colors.Add(ColorsDictionary[color3.ToString()]);
+                PropertyCards[index].colors.Add(ColorsDictionary[color3.ToString()]);
             }
 
             index++;
         }
+        */
     }
-
+        
     //Mapping Color32 / Name of colors
     private void InitColors()
     {
@@ -239,23 +235,5 @@ public class EntityDeckService : IInitializable
             {"Grey", new Color32(230, 228, 236, 255) },
             {"Purple", new Color32(215, 177, 255, 255) }
         };
-    }
-
-    private void InitIcons()
-    {
-        IconsSprites = Resources.LoadAll<Sprite>("Graphics/CIDOC - SpriteSheet");
-
-        if (IconsSprites != null)
-        {
-            for (int i = 9; i <= 18; i++)//Icons are from index 9 TO 18
-            {
-                IconsDictionary.Add(IconsSprites[i].name, i);
-                Debug.Log("Icon sprite names : " + IconsSprites[i].name);
-            }
-        }
-        else
-        {
-            Debug.LogError("[DecksController] Could not load sprites from Resources folder.");
-        }
     }
 }

@@ -2729,6 +2729,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _welcomeTitle: {fileID: 1688121449}
   _continueText: {fileID: 1277595600}
+  _continueZone: {fileID: 1471531549}
   _chooseScenario: {fileID: 1206805625}
 --- !u!1 &930461001
 GameObject:

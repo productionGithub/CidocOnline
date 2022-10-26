@@ -16,7 +16,6 @@ namespace StarterCore.Core.Scenes.Board
             //Container.BindInterfacesAndSelfTo<DecksController>().AsSingle().NonLazy();
             Container.Bind<BoardController>().FromInstance(_boardController).AsSingle();
             Container.BindInterfacesAndSelfTo<BoardManager>().AsSingle();
-
         }
     }
 }

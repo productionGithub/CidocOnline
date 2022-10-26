@@ -17,7 +17,7 @@ namespace StarterCore.Core
         {
             //TODO : Put it in scene installer
             Container.BindInterfacesAndSelfTo<EntityDeckService>().AsSingle().NonLazy();
-
+            Container.BindInterfacesAndSelfTo<PropertyDeckService>().AsSingle().NonLazy();
 
             Container.BindInterfacesAndSelfTo<GameStateManager>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<LocalizationManager>().AsSingle().NonLazy();

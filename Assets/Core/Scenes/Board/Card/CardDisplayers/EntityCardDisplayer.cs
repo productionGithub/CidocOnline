@@ -1,4 +1,5 @@
-﻿using StarterCore.Core.Scenes.Board.Card.Cards;
+﻿using System;
+using StarterCore.Core.Scenes.Board.Card.Cards;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,14 +36,44 @@ namespace StarterCore.Core.Scenes.Board.Displayer
         private GameObject _colorBarRightTop;
         [SerializeField]
         private GameObject _colorBarRightBottom;
-        [SerializeField]
 
-        private GameObject _comment;
+        //Scope note
+        [SerializeField]
+        private TextMeshProUGUI _comment;
+        [SerializeField]
+        private Button _fullTextButton;
+        [SerializeField]
+        private GameObject _fullTextScrollView;
+        [SerializeField]
+        private TextMeshProUGUI _fullTextContent;
+
+        private bool _fullTextButtonState = false;//False not clicked (hence scroll view disabled)
 
         public void Show(EntityCard card)
         {
-            Debug.Log("[EntityCardService] Init OK");
+            _fullTextButton.onClick.AddListener(FullTextClicked);
+            InitScopeNoteScrollView();
             Refresh(card);
+        }
+
+        private void FullTextClicked()
+        {
+            if(!_fullTextButtonState)
+            {
+                //False -> We want the scrollview to be visible
+                _fullTextScrollView.SetActive(true);
+                _fullTextContent.text = _comment.text;
+                _fullTextButton.GetComponentInChildren<TextMeshProUGUI>().text = "close";
+            }
+            else
+            {
+                //Invisible
+                _fullTextScrollView.SetActive(false);
+                _fullTextButton.GetComponentInChildren<TextMeshProUGUI>().text = "full text";
+            }
+
+
+            _fullTextButtonState = !_fullTextButtonState;
         }
 
         public void Refresh(EntityCard card)
@@ -54,12 +85,12 @@ namespace StarterCore.Core.Scenes.Board.Displayer
             if (card.icons[0] != "")
             {
                 _icon1.SetActive(true);
-                _icon1.GetComponent<Image>().sprite = _entityDeckService.iconsSprites[_entityDeckService.iconsDictionary[card.icons[0]]];
+                _icon1.GetComponent<Image>().sprite = _entityDeckService.IconsSprites[_entityDeckService.IconsDictionary[card.icons[0]]];
             }
             if(card.icons[1] != "")
             {
                 _icon2.SetActive(true);
-                _icon2.GetComponent<Image>().sprite = _entityDeckService.iconsSprites[_entityDeckService.iconsDictionary[card.icons[1]]];
+                _icon2.GetComponent<Image>().sprite = _entityDeckService.IconsSprites[_entityDeckService.IconsDictionary[card.icons[1]]];
             }
 
             _id.text = card.id;
@@ -89,7 +120,17 @@ namespace StarterCore.Core.Scenes.Board.Displayer
             }
 
             //Comment
-            _comment.GetComponent<TextMeshProUGUI>().text = card.comment;
+            _comment.text = card.comment;
+
+            InitScopeNoteScrollView();
+        }
+
+        private void InitScopeNoteScrollView()
+        {
+            _fullTextScrollView.SetActive(false);
+            //_fullTextContent.text = _comment.text;
+            _fullTextButtonState = false;
+            _fullTextButton.GetComponentInChildren<TextMeshProUGUI>().text = "full text";
         }
 
         public void GhostBackground()
