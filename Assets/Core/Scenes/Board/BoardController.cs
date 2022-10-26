@@ -23,10 +23,11 @@ namespace StarterCore.Core.Scenes.Board
         [Inject] NavigationService _netService;
         [Inject] GameStateManager _gameStateManager;
         [Inject] EntityDeckService _entityDeckService;
+        [Inject] PropertyDeckService _propertyDeckService;
 
-        [SerializeField] ChallengeController _challengeController;// SHould be at challenge level?
-        [SerializeField] EntityDeckController _leftEntityDeckController;// SHould be at challenge level?
-
+        [SerializeField] ChallengeController _challengeController;
+        [SerializeField] EntityDeckController _leftEntityDeckController;
+        [SerializeField] PropertyDeckController _leftPropertyDeckController;
 
         public void Show(List<ChallengeData> challengeList)
         {
@@ -36,8 +37,12 @@ namespace StarterCore.Core.Scenes.Board
             int currentChallengeId = _gameStateManager.GameStateModel.CurrentChallengeIndex;
 
             //Initialization of Left Entity Deck
-            List<EntityCard> initialDeckContent = _entityDeckService.GetInitialDeck(challengeList[currentChallengeId].ELeftInit);
-            _leftEntityDeckController.Show(initialDeckContent);
+            List<EntityCard> initialLeftEntityDeckContent = _entityDeckService.GetInitialDeck(challengeList[currentChallengeId].ELeftInit);
+            _leftEntityDeckController.Show(initialLeftEntityDeckContent);
+
+            //Initialization of Left Property Deck
+            List<PropertyCard> initialLeftPropertyDeckContent = _propertyDeckService.GetInitialDeck(challengeList[currentChallengeId].PLeftInit);
+            _leftPropertyDeckController.Show(initialLeftPropertyDeckContent);
         }
 
         private void OnGamePaused()

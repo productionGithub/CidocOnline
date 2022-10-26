@@ -45,6 +45,8 @@ public class PropertyDeckService : IInitializable
     string _cidocXmlString;
     string _propertyXmlString;
 
+    private Dictionary<string, List<string>> allSuperPropertyDic;
+
 
     public void Initialize()
     {
@@ -88,14 +90,15 @@ public class PropertyDeckService : IInitializable
     {
         //Fetch Cidoc Xml file
         _cidocXmlString = await _netservice.GetXmlCidocFile();
-        //Debug.Log("Got XML CIDOC string : " + _cidocXmlString);
+        Debug.Log("[PropertyDeckService] Got XML CIDOC string : " + _cidocXmlString);
 
         //Fetch EntityIconsColorMapping Xml file
         _propertyXmlString = await _netservice.GetXmlPropertyColorsFile();
-        Debug.Log("Got XML ENTITY COLORS ICONS string : " + _propertyXmlString);
+        Debug.Log("[PropertyDeckService] Got XML PROPERTY Colors : " + _propertyXmlString);
 
-        //InitXpathNavigators();
-        //InitPropertyDeck();
+        InitXpathNavigators();
+        InitPropertyDeck();//Is it necessary to await? To be tested.
+        Debug.Log("");
     }
 
     private void InitXpathNavigators()
@@ -113,113 +116,140 @@ public class PropertyDeckService : IInitializable
         XPathDocument cidocXpathDocument = new XPathDocument(ms);
         cidocRdfFileNavigator = cidocXpathDocument.CreateNavigator();
 
-        ////EntityIconsColorsMapping
-        //MemoryStream msE = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(_entityXmlString));
-        //XPathDocument entityXpathDocument = new XPathDocument(msE);
-        //entityColorsIconsFileNavigator = entityXpathDocument.CreateNavigator();
+        //PropertyColorsMapping
+        MemoryStream msP = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(_propertyXmlString));
+        XPathDocument propertyXpathDocument = new XPathDocument(msP);
+        propertyColorsFileNavigator = propertyXpathDocument.CreateNavigator();
     }
 
     private void InitPropertyDeck()
     {
-        /*
-        int index;
+        //Colors
+        //Create the list of colors with property.about as search key
+        string rowExpression = "//row";
+        XPathNodeIterator rows = (XPathNodeIterator)propertyColorsFileNavigator.Evaluate(rowExpression);
 
-        //Get all 'Class' nodes
-        string entityExpression = "/rdf:RDF/rdfs:Class";//Entity xpath query
-        XPathExpression entityQuery = cidocRdfFileNavigator.Compile(entityExpression);
-        entityQuery.SetContext(CidocCrmNamespaceManager);
-        XPathNodeIterator entities = cidocRdfFileNavigator.Select(entityQuery);
+        int index = 0;
 
-        //Initialize potentialSuperClassOf dictionary with entity names and empty list of potential subclasses for THAT entity
-        //Subclasses will be populated on the next loop at entity creation time
-        allSuperClassDic = new Dictionary<string, List<string>>();
-        foreach (XPathNavigator entity in entities)
+        //Get all 'Property' nodes
+        string propertyExpression = "/rdf:RDF/rdf:Property";//Property xpath query
+        XPathExpression propertyQuery = cidocRdfFileNavigator.Compile(propertyExpression);
+        propertyQuery.SetContext(CidocCrmNamespaceManager);
+        XPathNodeIterator properties = cidocRdfFileNavigator.Select(propertyQuery);
+
+        //Initialize potentialSuperProperties dictionary with property names and empty list of potential subproperties for THAT property
+        //Subprops will be populated on the next loop at property object creation time
+        allSuperPropertyDic = new Dictionary<string, List<string>>();
+        foreach (XPathNavigator property in properties)
         {
-            allSuperClassDic.Add(entity.GetAttribute("about", rdfNamespace), new List<string>());
+            allSuperPropertyDic.Add(property.GetAttribute("about", rdfNamespace), new List<string>());
         }
 
-        //Populate entities
-        index = 0;
-        foreach (XPathNavigator entity in entities)
+        foreach (XPathNavigator property in properties)
         {
-            //Each entity might be a subclass of one or more parent entity (Ex: E4 has 2 direct parents)
-            //We create a list of these Parents classes
-            List<string> entityParents = new List<string>();
+            //Each property might be a subproperty of one or more super properties ('Parents')
+            //We create a list of these potential 'Parents' properties
+            List<string> superPropertiesList = new List<string>();
 
-            XPathNodeIterator subClasses = entity.Select("./rdfs:subClassOf", CidocCrmNamespaceManager);
-            foreach (XPathNavigator sub in subClasses)
+            XPathNodeIterator subProperties = property.Select("./rdfs:subPropertyOf", CidocCrmNamespaceManager);
+            foreach (XPathNavigator sub in subProperties)
             {
-                entityParents.Add(sub?.GetAttribute("resource", rdfNamespace));//Build list of direct parents
-                //Debug.Log("Got resource: " + sub?.GetAttribute("resource", rdfNamespace));
+                superPropertiesList.Add(sub?.GetAttribute("resource", rdfNamespace));//Build list of direct super property
             }
 
-            PropertyCards.Add(new PropertyCard()
+            PropertyCards.Add(new PropertyCard
             {
-                //index = index,
-                id = entity.GetAttribute("about", rdfNamespace).Split('_')[0],
-                about = entity.GetAttribute("about", rdfNamespace),
-                label = entity.SelectSingleNode("./rdfs:label[@xml:lang='en']", CidocCrmNamespaceManager).ToString(),
-                comment = entity.SelectSingleNode("./rdfs:comment", CidocCrmNamespaceManager).ToString(),
-                parentsClassList = entityParents,//List of direct parents
-            }); ;
+                index = index,
+                id = property.GetAttribute("about", rdfNamespace).Split('_')[0],
+                about = property.GetAttribute("about", rdfNamespace),
+                label = property.SelectSingleNode("./rdfs:label[@xml:lang='en']", CidocCrmNamespaceManager).ToString(),
+                comment = property.SelectSingleNode("./rdfs:comment", CidocCrmNamespaceManager)?.ToString(),
+                domain = property.SelectSingleNode("./rdfs:domain", CidocCrmNamespaceManager)?.GetAttribute("resource", rdfNamespace).ToString(),
+                range = property.SelectSingleNode("./rdfs:range", CidocCrmNamespaceManager)?.GetAttribute("resource", rdfNamespace),
+                inverseOf = property.SelectSingleNode("./owl:inverseOf", CidocCrmNamespaceManager)?.GetAttribute("resource", rdfNamespace),
+                domainColors = new List<string>(),
+                rangeColors = new List<string>(),
+                superProperties = superPropertiesList
+            });
 
-            //Add this entity as a sub Class in the Parent dictionary
-            foreach (string superClassName in PropertyCards[index].parentsClassList)
+
+            ////Add this property as a sub property in the 'Parents' dictionary
+            foreach (string supPropName in PropertyCards[index].superProperties)
             {
-                allSuperClassDic[superClassName].Add(PropertyCards[index].about);
+                if (PropertyCards[index].superProperties.Count > 0)
+                {
+                    if (allSuperPropertyDic.Keys.Contains(supPropName))
+                    {
+                        allSuperPropertyDic[supPropName].Add(PropertyCards[index].about);
+                    }
+                }
             }
+
+            //about field
+            string propAbout = property.GetAttribute("about", rdfNamespace);
+
+            //Colors
+            List<string> dColors = new List<string>();//domainColors
+            List<string> rColors = new List<string>();//rangeColors
+
+            foreach (XPathNavigator row in rows)
+            {
+                string about = row.SelectSingleNode("./Property_About").ToString();
+                if (propAbout == about)
+                {
+                    XPathItem domainColor1 = row.SelectSingleNode("./Domain_Colour_1");
+                    XPathItem domainColor2 = row.SelectSingleNode("./Domain_Colour_2");
+                    XPathItem domainColor3 = row.SelectSingleNode("./Domain_Colour_3");
+
+                    XPathItem rangeColor1 = row.SelectSingleNode("./Range_Colour_1");
+                    XPathItem rangeColor2 = row.SelectSingleNode("./Range_Colour_2");
+                    XPathItem rangeColor3 = row.SelectSingleNode("./Range_Colour_3");
+
+                    if (domainColor1.ToString() != "")
+                    {
+                        dColors.Add((string)domainColor1.ToString());
+                    }
+                    if (domainColor2.ToString() != "")
+                    {
+                        dColors.Add((string)domainColor2.ToString());
+                    }
+                    if (domainColor3.ToString() != "")
+                    {
+                        dColors.Add((string)domainColor3.ToString());
+                    }
+
+                    if (rangeColor1.ToString() != "") rColors.Add((string)rangeColor1.ToString());
+                    if (rangeColor2.ToString() != "") rColors.Add((string)rangeColor2.ToString());
+                    if (rangeColor3.ToString() != "") rColors.Add((string)rangeColor3.ToString());
+
+                    PropertyCards[index].domainColors = new List<string>(dColors);
+                    PropertyCards[index].rangeColors = new List<string>(rColors);
+
+                    Debug.Log("PROPERTY TEST ID ***" + PropertyCards[index].id);
+                    Debug.Log("PROPERTY TEST Color 0 ***" + PropertyCards[index].domainColors[0]);
+
+                    break;
+                }
+            }
+
+            dColors.Clear();
+            rColors.Clear();
             index++;
         }
 
-        //All entities 'subClassOf' has been parsed and stored in the allSuperClassDic
-        //Updating childrenClassList entity field with allSuperClassDic entries previously set
+        //All properties 'subPropertyOf' has been parsed and stored in the allSuperPropertyDic
+        //Updating subProperties field with allSuperPropertyDic entries previously set
         index = 0;
-        foreach (KeyValuePair<string, List<string>> kvp in allSuperClassDic)
+        foreach (KeyValuePair<string, List<string>> kvp in allSuperPropertyDic)
         {
             foreach (string name in kvp.Value)
             {
-                PropertyCards[index].ChildrenClassList.Add(name);
+                PropertyCards[index].subProperties.Add(name);
             }
             index++;
         }
-
-        //Populate icons names and colors
-        //Get all 'row' nodes
-        string rowExpression = "//row";
-        XPathNodeIterator rows = (XPathNodeIterator)entityColorsIconsFileNavigator.Evaluate(rowExpression);
-
-        index = 0;
-        foreach (XPathNavigator row in rows)
-        {
-            XPathItem icon1 = row.SelectSingleNode("./Icon_1");
-            XPathItem icon2 = row.SelectSingleNode("./Icon_2");
-
-            PropertyCards[index].icons.Add(icon1.ToString());
-            PropertyCards[index].icons.Add(icon2.ToString());
-
-            XPathItem color1 = row.SelectSingleNode("./Colour_1");
-            XPathItem color2 = row.SelectSingleNode("./Colour_2");
-            XPathItem color3 = row.SelectSingleNode("./Colour_3");
-
-            if (color1.ToString() != "")
-            {
-                PropertyCards[index].colors.Add(ColorsDictionary[color1.ToString()]);
-            }
-            if (color2.ToString() != "")
-            {
-                PropertyCards[index].colors.Add(ColorsDictionary[color2.ToString()]);
-            }
-
-            if (color3.ToString() != "")
-            {
-                PropertyCards[index].colors.Add(ColorsDictionary[color3.ToString()]);
-            }
-
-            index++;
-        }
-        */
     }
-        
+
     //Mapping Color32 / Name of colors
     private void InitColors()
     {

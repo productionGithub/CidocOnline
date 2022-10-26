@@ -21,6 +21,8 @@ namespace StarterCore.Core.Scenes.Board.Deck
         /// 
         [Inject] PropertyDeckService _propertyDeckService;
 
+        public event Action<float> OnTickFilterDeckController;
+
         public List<PropertyCard> _initialDeckContent;
         public List<PropertyCard> _currentDeckContent;
         public List<PropertyCard> _addedCard;//Keeps track of cards that does not belong to initial deck
@@ -36,35 +38,15 @@ namespace StarterCore.Core.Scenes.Board.Deck
         [SerializeField]
         Button _nextStepper;// Stepper +
         [SerializeField]
+        TicksCtrl _domainTickController;
+        [SerializeField]
+        TicksCtrl _rangeTickController;
+        [SerializeField]
+        GameObject _noMatchCard;
+        [SerializeField]
         DeckCounterDisplayer _deckCounterDisplayer;//Deck counter
 
-        //[SerializeField] TickController _tickController;
-
-        public event Action<float> OnTickFilterDeckController;
-
-
-
-
-
-        /**********************/
         private bool isListFiltered = false;
-        [SerializeField] TicksCtrl _tickController;
-        [SerializeField] GameObject _noMatchCard;
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /***************************/
-
 
         public void Show(List<PropertyCard> initialDeck)
         {
@@ -203,7 +185,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
                 {
                     FilterRemoveColor(e);
                     isListFiltered = true;
-                    if (_tickController.TickCount <= 0)
+                    if (_domainTickController.TickCount <= 0)
                     {
                         _currentDeckContent.Clear();
                         _addedCard.Clear();

@@ -18,16 +18,16 @@ public class HierarchyPropertyDisplayer : MonoBehaviour
     public event Action<string> HierarchyPropDisp_HierarchyClickEvent;
 
     [SerializeField]
-    HierarchyEntityEntry _entryTemplate;
+    HierarchyPropertyEntry _entryTemplate;
     [SerializeField]
     HierarchyCurrentEntry _currentEntryTemplate;
 
     public Transform _hierarchyContainer;//Parent object of scrollView
 
-    private List<HierarchyEntityEntry> _entries;//Keeps track of hierarchy instanciated prefabs
+    private List<HierarchyPropertyEntry> _entries;//Keeps track of hierarchy instanciated prefabs
     private List<HierarchyCurrentEntry> _currentEntry;//Keeps track of hierarchy instanciated prefabs
 
-    public void Show(PropertyCard card)// List<EntityCard> parents, string current, List<EntityCard> children)
+    public void Show(PropertyCard card)
     {
         Debug.Log("[HierarchyDisplayer] SHOW...");
         CleanHierarchy();
@@ -44,10 +44,10 @@ public class HierarchyPropertyDisplayer : MonoBehaviour
         {
             foreach (string label in card.superProperties)
             {
-                HierarchyEntityEntry entry = Instantiate(_entryTemplate, _hierarchyContainer);
+                HierarchyPropertyEntry entry = Instantiate(_entryTemplate, _hierarchyContainer);
                 //entry.EntryLabel.text = arrowUp + label;
                 entry.Show(arrowUp, label);
-                entry.OnHierarchyEntityClickEvent += HierarchyEntryClicked;
+                entry.OnHierarchyPropertyClickEvent += HierarchyEntryClicked;
 
                 _entries.Add(entry);
                 Debug.Log("");
@@ -64,10 +64,10 @@ public class HierarchyPropertyDisplayer : MonoBehaviour
         {
             foreach (string label in card.subProperties)
             {
-                HierarchyEntityEntry entry = Instantiate(_entryTemplate, _hierarchyContainer);
+                HierarchyPropertyEntry entry = Instantiate(_entryTemplate, _hierarchyContainer);
                 //entry.EntryLabel.text = arrowUp + label;
                 entry.Show(arrowDown, label);
-                entry.OnHierarchyEntityClickEvent += HierarchyEntryClicked;
+                entry.OnHierarchyPropertyClickEvent += HierarchyEntryClicked;
 
                 _entries.Add(entry);
             }
@@ -86,15 +86,15 @@ public class HierarchyPropertyDisplayer : MonoBehaviour
         if (_entries == null)
         {
             Debug.Log("[HierarchyDisplayer] Entries list is null, create new one.");
-            _entries = new List<HierarchyEntityEntry>();
+            _entries = new List<HierarchyPropertyEntry>();
         }
         else
         {
             Debug.Log("[HierarchyDisplayer] Entries list not null, cleaning it.");
-            foreach (HierarchyEntityEntry e in _entries)
+            foreach (HierarchyPropertyEntry e in _entries)
             {
-                Debug.Log("[HierarchyDisplayer] Cleaning : found object : " + e.GetComponent<HierarchyEntityEntry>().EntryLabel.text);
-                e.OnHierarchyEntityClickEvent -= HierarchyEntryClicked;
+                Debug.Log("[HierarchyDisplayer] Cleaning : found object : " + e.GetComponent<HierarchyPropertyEntry>().EntryLabel.text);
+                e.OnHierarchyPropertyClickEvent -= HierarchyEntryClicked;
                 Destroy(e.gameObject);
             }
             _entries.Clear();
