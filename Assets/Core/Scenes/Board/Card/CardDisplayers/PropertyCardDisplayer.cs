@@ -16,6 +16,9 @@ namespace StarterCore.Core.Scenes.Board.Displayer
 
         [Inject] PropertyDeckService _entityDeckService;
 
+        public event Action<string> OnDomainButtonClick;
+        public event Action<string> OnRangeButtonClick;
+
         //Card fields
         [SerializeField]
         private GameObject _bkg;
@@ -44,6 +47,15 @@ namespace StarterCore.Core.Scenes.Board.Displayer
         [SerializeField]
         private GameObject _colorBarRightBottom;
 
+        //DomainButton
+        [SerializeField]
+        private Button _domainButton;
+        //RangeButton
+        [SerializeField]
+        private Button _rangeButton;
+
+
+
 
         //Scope note
         [SerializeField]
@@ -60,35 +72,12 @@ namespace StarterCore.Core.Scenes.Board.Displayer
         public void Show(PropertyCard card)
         {
             _fullTextButton.onClick.AddListener(FullTextClicked);
+
+            _domainButton.onClick.AddListener(DomainButtonClicked);
+            _rangeButton.onClick.AddListener(RangeButtonClicked);
+
             Refresh(card);
-            InitScopeNoteScrollView();
-        }
-
-        private void InitScopeNoteScrollView()
-        {
-            _fullTextScrollView.SetActive(false);
-            //_fullTextContent.text = _comment.text;
-            _fullTextButtonState = false;
-            _fullTextButton.GetComponentInChildren<TextMeshProUGUI>().text = "full text";
-        }
-
-        private void FullTextClicked()
-        {
-            if (!_fullTextButtonState)
-            {
-                //False -> We want the scrollview to be visible
-                _fullTextScrollView.SetActive(true);
-                _fullTextContent.text = _comment.text;
-                _fullTextButton.GetComponentInChildren<TextMeshProUGUI>().text = "close";
-            }
-            else
-            {
-                //Invisible
-                _fullTextScrollView.SetActive(false);
-                _fullTextButton.GetComponentInChildren<TextMeshProUGUI>().text = "full text";
-            }
-
-            _fullTextButtonState = !_fullTextButtonState;
+            InitScopeNoteScrollView(card);
         }
 
         public void Refresh(PropertyCard card)
@@ -96,7 +85,6 @@ namespace StarterCore.Core.Scenes.Board.Displayer
             _id.text = card.id;
             _label.text = card.label;
 
-            /*********************************************************/
             //Domain colors
             int nbDomainColors = card.domainColors.Count;
             switch (nbDomainColors)
@@ -169,45 +157,63 @@ namespace StarterCore.Core.Scenes.Board.Displayer
                 default:
                     break;
             }
-            /*******************************************************************/
 
+            //Domain and range buttons
+            _domainButton.GetComponentInChildren<TextMeshProUGUI>().text = card.domain;
+            _rangeButton.GetComponentInChildren<TextMeshProUGUI>().text = card.range;
 
-
-
-
-
-
-
-
-
-            /*
-            //Colors
-            int nbColors = card.colors.Count;
-            switch (nbColors)
-            {
-                case 0:
-                    Debug.LogError("[DeckCtrl] Card has no color: " + card.label);
-                    break;
-                case 1:
-                    __colorBarLeftTop.GetComponent<Image>().color = card.colors[0];
-                    _colorBarLeftBottom.GetComponent<Image>().color = card.colors[0];
-                    __colorBarRightTop.GetComponent<Image>().color = card.colors[0];
-                    _colorBarRightBottom.GetComponent<Image>().color = card.colors[0];
-                    break;
-                case 2:
-                    __colorBarLeftTop.GetComponent<Image>().color = card.colors[0];
-                    _colorBarLeftBottom.GetComponent<Image>().color = card.colors[1];
-                    __colorBarRightTop.GetComponent<Image>().color = card.colors[0];
-                    _colorBarRightBottom.GetComponent<Image>().color = card.colors[1];
-                    break;
-                default:
-                    break;
-            }
-
-            */
             //Comment
             _comment.text = card.comment;
-            InitScopeNoteScrollView();
+
+            //Full text button
+            InitScopeNoteScrollView(card);
+        }
+
+        private void InitScopeNoteScrollView(PropertyCard card)
+        {
+            //If card is an inverse property, do not show the Full text button
+            if (card.id.Substring(card.id.Length - 1).ToLower().Equals("i"))
+            {
+                _fullTextScrollView.SetActive(false);
+                _fullTextButton.gameObject.SetActive(false);
+            }
+            else
+            {
+                Debug.Log("[PropertyCardDisplayer] GOT AN PROPERTY ONE");
+                _fullTextButton.gameObject.SetActive(true);
+                _fullTextButtonState = false;
+                _fullTextButton.GetComponentInChildren<TextMeshProUGUI>().text = "full text";
+            }
+        }
+
+        private void FullTextClicked()
+        {
+            if (!_fullTextButtonState)
+            {
+                //False -> We want the scrollview to be visible
+                _fullTextScrollView.SetActive(true);
+                _fullTextContent.text = _comment.text;
+                _fullTextButton.GetComponentInChildren<TextMeshProUGUI>().text = "close";
+            }
+            else
+            {
+                //Invisible
+                _fullTextScrollView.SetActive(false);
+                _fullTextButton.GetComponentInChildren<TextMeshProUGUI>().text = "full text";
+            }
+
+            _fullTextButtonState = !_fullTextButtonState;
+        }
+
+        private void DomainButtonClicked()
+        {
+
+            OnDomainButtonClick?.Invoke(_domainButton.GetComponentInChildren<TextMeshProUGUI>().text);
+        }
+
+        private void RangeButtonClicked()
+        {
+            OnRangeButtonClick?.Invoke(_rangeButton.GetComponentInChildren<TextMeshProUGUI>().text);
         }
 
         public void GhostBackground()

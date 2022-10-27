@@ -31,6 +31,8 @@ namespace StarterCore.Core.Scenes.Board
 
         public void Show(List<ChallengeData> challengeList)
         {
+            Debug.Log("zChapter challenge is count : " + challengeList.Count);
+
             //ChallengeCtrl will not ne a mono. Data management only.
             //_challengeController.Show();//On lui passe tous les challenges (from Manager)
 
@@ -38,6 +40,9 @@ namespace StarterCore.Core.Scenes.Board
 
             //Initialization of Left Entity Deck
             List<EntityCard> initialLeftEntityDeckContent = _entityDeckService.GetInitialDeck(challengeList[currentChallengeId].ELeftInit);
+
+            Debug.Log("Initial deck content count" + initialLeftEntityDeckContent.Count);
+
             _leftEntityDeckController.Show(initialLeftEntityDeckContent);
 
             //Initialization of Left Property Deck

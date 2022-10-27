@@ -50,8 +50,6 @@ public class PropertyDeckService : IInitializable
 
     public void Initialize()
     {
-        Debug.Log("THIS IS PropertyDeckService!");
-
         PropertyCards = new List<PropertyCard>();
 
         InitColors();
@@ -90,15 +88,14 @@ public class PropertyDeckService : IInitializable
     {
         //Fetch Cidoc Xml file
         _cidocXmlString = await _netservice.GetXmlCidocFile();
-        Debug.Log("[PropertyDeckService] Got XML CIDOC string : " + _cidocXmlString);
+        //Debug.Log("[PropertyDeckService] Got XML CIDOC string : " + _cidocXmlString);
 
         //Fetch EntityIconsColorMapping Xml file
         _propertyXmlString = await _netservice.GetXmlPropertyColorsFile();
-        Debug.Log("[PropertyDeckService] Got XML PROPERTY Colors : " + _propertyXmlString);
+        //Debug.Log("[PropertyDeckService] Got XML PROPERTY Colors : " + _propertyXmlString);
 
         InitXpathNavigators();
         InitPropertyDeck();//Is it necessary to await? To be tested.
-        Debug.Log("");
     }
 
     private void InitXpathNavigators()
@@ -225,8 +222,8 @@ public class PropertyDeckService : IInitializable
                     PropertyCards[index].domainColors = new List<string>(dColors);
                     PropertyCards[index].rangeColors = new List<string>(rColors);
 
-                    Debug.Log("PROPERTY TEST ID ***" + PropertyCards[index].id);
-                    Debug.Log("PROPERTY TEST Color 0 ***" + PropertyCards[index].domainColors[0]);
+                    //Debug.Log("PROPERTY TEST ID ***" + PropertyCards[index].id);
+                    //Debug.Log("PROPERTY TEST Color 0 ***" + PropertyCards[index].domainColors[0]);
 
                     break;
                 }

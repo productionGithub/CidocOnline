@@ -18,7 +18,8 @@ namespace StarterCore.Core.Scenes.Board.Deck
         /// Controls deck interactables (Slider + Ticks)
         /// Note : UI deck logic is managed at this controller level, not the manager
         /// </summary>
-        /// 
+        ///
+        [Inject] EntityDeckService _entityDeckService;
         [Inject] PropertyDeckService _propertyDeckService;
 
         public event Action<float> OnTickFilterDeckController;
@@ -46,6 +47,12 @@ namespace StarterCore.Core.Scenes.Board.Deck
         [SerializeField]
         DeckCounterDisplayer _deckCounterDisplayer;//Deck counter
 
+        //Ref to decks controllers for Domain and Range buttons
+        [SerializeField]
+        EntityDeckController _leftDeckController;
+        [SerializeField]
+        EntityDeckController _rightDeckController;
+
         private bool isListFiltered = false;
 
         public void Show(List<PropertyCard> initialDeck)
@@ -58,6 +65,9 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
             _hierarchyDisplayer.Show(initialDeck[0]);
             _hierarchyDisplayer.HierarchyPropDisp_HierarchyClickEvent += OnHierarchyEntityClick;
+
+            _propertyCardDisplayer.OnDomainButtonClick += OnDomainButtonClicked;
+            _propertyCardDisplayer.OnRangeButtonClick += OnRangeButtonClicked;
 
             _sliderController.Show(_currentDeckContent.Count - 1);
             _sliderController.OnSliderValueChangedUI += OnSliderValueChanged;
@@ -128,6 +138,22 @@ namespace StarterCore.Core.Scenes.Board.Deck
                 float nextCardIndex = _sliderController.GetComponent<Slider>().value + 1;
                 _sliderController.SetSliderValue(nextCardIndex);//Will refresh and ghost card if needed
             }
+        }
+
+        private void OnDomainButtonClicked(string cardAbout)
+        {
+            Debug.Log("[PropertyDeckDisplayer] Domain Butt clicked ");
+            string id = cardAbout.Substring(0, cardAbout.IndexOf("_")).Trim();//Fetch the sub string before first '_'
+            EntityCard card = _entityDeckService.EntityCards.Single(c => c.id == id);
+            _leftDeckController.DisplayCardFromHierarchy(card);
+        }
+
+        private void OnRangeButtonClicked(string cardAbout)
+        {
+            Debug.Log("[PropertyDeckDisplayer] Range Butt clicked ");
+            string id = cardAbout.Substring(0, cardAbout.IndexOf("_")).Trim();//Fetch the sub string before first '_'
+            EntityCard card = _entityDeckService.EntityCards.Single(c => c.id == id);
+            _rightDeckController.DisplayCardFromHierarchy(card);
         }
 
         private void GhostCardIfExists(int index)
@@ -203,16 +229,6 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
                 _sliderController.SetSliderActive(true);
                 _sliderController.SetSliderRange(_currentDeckContent.Count - 1);
-
-                if (_currentDeckContent.Count > 1)
-                {
-                    //ShowDeckAnimation();
-                }
-                else
-                {
-                    //HideDeckAnimation();
-                }
-
                 _sliderController.SetSliderValue(0);
             }
             else

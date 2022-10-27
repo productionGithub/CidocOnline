@@ -1,13 +1,9 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using StarterCore.Core.Services.GameState;
 using StarterCore.Core.Services.Network;
 using UnityEngine;
 using Zenject;
-using StarterCore.Core.Scenes.Board.Controller;
 using StarterCore.Core.Scenes.Board.Challenge;
-using StarterCore.Core.Scenes.GameSelection;
 using StarterCore.Core.Services.Navigation;
 using Cysharp.Threading.Tasks;
 using StarterCore.Core.Services.Network.Models;
@@ -38,7 +34,6 @@ namespace StarterCore.Core.Scenes.Board
 
             //Get catalog
             _katalog = await GetScenariiCatalog(); 
-            Debug.Log("Got katalog : ooo" + _katalog.Scenarii[0].Chapters[0].ChapterFilename);
 
             //Get chapter filename from catalog
             string chapterFilename = GetChapterFilename();
@@ -115,23 +110,3 @@ namespace StarterCore.Core.Scenes.Board
 
     }
 }
-
-
-/*
- * 
- * 
- *         ///
-
-        //[Inject] CardController cardCtrl;
-
-        public void Initialize()
-        {
-            //cardCtrl.Show();
-            //cardCtrl.OnCardBubbleUp += (CardDisplayer c, TickDisplayer t) => DoSomethingWithIt(c, t);
-        }
-
-        private void DoSomethingWithIt(CardDisplayer c, TickDisplayer t)
-        {
-            Debug.Log(string.Format("[Board Manager] Evaluate Board with {0} and {1}", c.name, t.name));
-        }
-*/

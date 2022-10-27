@@ -21,6 +21,8 @@ namespace StarterCore.Core.Scenes.Board.Deck
         /// 
         [Inject] EntityDeckService _entityDeckService;
 
+        public event Action<float> OnTickFilterDeckController;
+
         public List<EntityCard> _initialDeckContent;
         public List<EntityCard> _currentDeckContent;
         public List<EntityCard> _addedCard;//Keeps track of cards that does not belong to initial deck
@@ -37,34 +39,10 @@ namespace StarterCore.Core.Scenes.Board.Deck
         Button _nextStepper;// Stepper +
         [SerializeField]
         DeckCounterDisplayer _deckCounterDisplayer;//Deck counter
-
-        //[SerializeField] TickController _tickController;
-
-        public event Action<float> OnTickFilterDeckController;
-
-
-
-
-
-        /**********************/
-        private bool isListFiltered = false;
         [SerializeField] TicksCtrl _tickController;
         [SerializeField] GameObject _noMatchCard;
 
-
-
-
-
-
-
-
-
-
-
-
-
-        /***************************/
-
+        private bool isListFiltered = false;
 
         public void Show(List<EntityCard> initialDeck)
         {
@@ -94,7 +72,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
             DisplayCardFromHierarchy(card);
         }
 
-        private void DisplayCardFromHierarchy(EntityCard card)
+        public void DisplayCardFromHierarchy(EntityCard card)
         {
             //If newCard exists, just Refresh the card displayer with it
             if (_currentDeckContent.Exists(x => x.id.Equals(card.id)))
@@ -244,7 +222,6 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
         private void FilterAddColor(TickCtrl.TickColor e)//From current deckContent
         {
-            Debug.Log(string.Format("[EntityDeckController] FilterAdd with color : {0}", e));
             foreach (EntityCard curCard in _initialDeckContent)
             {
                 if (curCard.colors[0].Equals((Color32)_entityDeckService.ColorsDictionary[e.ToString()]))
@@ -267,7 +244,6 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
         private void FilterRemoveColor(TickCtrl.TickColor e)
         {
-            Debug.Log(string.Format("[EntityDeckController] FilterRemove with color : {0}", e));
             foreach (EntityCard curCard in _initialDeckContent)
             {
                 //EntityCard curCard = decksCtrl.entityCards[id];
