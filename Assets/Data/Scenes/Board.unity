@@ -7057,6 +7057,8 @@ MonoBehaviour:
   _deckCounterDisplayer: {fileID: 1447629284}
   _leftDeckController: {fileID: 4722974956951875066}
   _rightDeckController: {fileID: 4722974956905926923}
+  domainTicksContainer: {fileID: 1550037638}
+  rangeTicksContainer: {fileID: 384086568}
 --- !u!1 &473295463
 GameObject:
   m_ObjectHideFlags: 0
@@ -46101,8 +46103,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 487bbeb035cd24dacb6c55f4d85a844b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  whiteTick: {fileID: 0}
-  deckContainer: {fileID: 0}
+  whiteTick: {fileID: 7214372508932529448}
+  deckContainer: {fileID: 4722974956905926921}
 --- !u!1 &7214372507971871671
 GameObject:
   m_ObjectHideFlags: 0

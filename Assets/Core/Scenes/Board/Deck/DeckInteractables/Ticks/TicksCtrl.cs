@@ -39,13 +39,14 @@ public class TicksCtrl : MonoBehaviour
         {
             deckContainer.GetComponent<EntityDeckController>().UpdateColorFilters(sender, e);
         }
-        //else
-        //{
-        //    if (deckContainer.GetComponent<PropertyDeckCtrl>() != null)
-        //    {
-        //        deckContainer.GetComponent<PropertyDeckCtrl>().UpdateColorFilters(sender, e);
-        //    }
-        //}
+        else
+        {
+            Debug.Log("PROPERTY TICK CONTROLLER EVENT DECTECTED");
+            if (deckContainer.GetComponent<PropertyDeckController>() != null)
+            {
+                deckContainer.GetComponent<PropertyDeckController>().UpdateColorFilters(sender, e);
+            }
+        }
     }
 
 

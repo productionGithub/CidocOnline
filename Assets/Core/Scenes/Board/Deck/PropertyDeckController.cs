@@ -7,6 +7,7 @@ using System.Linq;
 using UnityEngine.UI;
 using StarterCore.Core.Scenes.Board.Deck.DeckInteractables;
 using StarterCore.Core.Scenes.Board.Displayer;
+using TMPro;
 
 namespace StarterCore.Core.Scenes.Board.Deck
 {
@@ -55,8 +56,23 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
         private bool isListFiltered = false;
 
+        //Update color filter
+        private List<string> domainColorFilter;
+        private List<string> rangeColorFilter;
+        private bool isDomainColorListWhite = false;
+        private bool isRangeColorListWhite = false;
+
+        public GameObject domainTicksContainer;
+        public GameObject rangeTicksContainer;
+
+
         public void Show(List<PropertyCard> initialDeck)
         {
+            domainColorFilter = new List<string>();
+            rangeColorFilter = new List<string>();
+            InitColorList(ref domainColorFilter);
+            InitColorList(ref rangeColorFilter);
+
             _initialDeckContent = initialDeck;
             _addedCard = new List<PropertyCard>();
             _currentDeckContent = new List<PropertyCard>(initialDeck);
@@ -168,9 +184,176 @@ namespace StarterCore.Core.Scenes.Board.Deck
             }
         }
 
+
+
+        /********* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*********************/
+        //Update domain and range colors list based on tick type
+        public void UpdateColorFilters(GameObject sender, TickCtrl.TickColor e)
+        {
+            Debug.Log("PROPERTY UPDATE COLOR FILTER");
+            //In case the previous matching failed:
+            //Hide the 'NoMatchCard' and re-activate the slider
+            _noMatchCard.SetActive(false);
+            _sliderController.SetSliderActive(true);
+
+            switch (sender.GetComponent<TickCtrl>().typeOfTick)
+            {
+                case (TickCtrl.TickType.Domain):
+                    if (e == TickCtrl.TickColor.White)
+                    {
+                        //White has a special behavior:
+                        //If not ticked, this means that at least one other color is ticked.
+                        //See TicksCtrl.RefreshTick() for detail.
+                        if (sender.GetComponent<TickCtrl>().IsTicked == true)//Tick just passed to 'On'
+                        {
+                            //Remove all previous selected colors
+                            InitColorList(ref domainColorFilter);
+                            isDomainColorListWhite = true;
+                        }
+                    }
+                    else
+                    {
+                        if (sender.GetComponent<TickCtrl>().IsTicked == true)
+                        {
+                            //If color list is not already filtered, clear it.
+                            //If already filtered, color filtering is cumulative
+                            if (isDomainColorListWhite == true)
+                            {
+                                domainColorFilter.Clear();
+                            }
+                            domainColorFilter.Add((string)e.ToString());
+                            isDomainColorListWhite = false;
+                        }
+                        else
+                        //Tick is Off => Remove color
+                        {
+                            domainColorFilter.Remove(e.ToString());
+                            //If no color anymore in the list, re-init to white (All colors)
+                            if (domainTicksContainer.GetComponent<TicksCtrl>().TickCount == 0)
+                            {
+                                InitColorList(ref domainColorFilter);
+                                isDomainColorListWhite = true;
+                            }
+                        }
+                    }
+                    break;
+
+                case (TickCtrl.TickType.Range):
+                    if (e == TickCtrl.TickColor.White)
+                    {
+                        //White has a special behavior:
+                        //If not ticked, this means that at least one other color is ticked.
+                        //See TicksCtrl.RefreshTick() for detail.
+                        if (sender.GetComponent<TickCtrl>().IsTicked == true)//Tick just passed to 'On'
+                        {
+                            //Remove all previous color
+                            InitColorList(ref rangeColorFilter);
+                            isRangeColorListWhite = true;
+                        }
+                    }
+                    else
+                        if (sender.GetComponent<TickCtrl>().IsTicked == true)
+                    {
+                        //If color list is not already filtered, clear it.
+                        //If already filtered, color filtering is cumulative
+                        if (isRangeColorListWhite == true)
+                        {
+                            rangeColorFilter.Clear();
+                        }
+                        rangeColorFilter.Add(e.ToString());
+                        isRangeColorListWhite = false;
+                    }
+                    else
+                    //Tick is Off => Remove color
+                    {
+                        rangeColorFilter.Remove(e.ToString());
+                        //If no color anymore in the list, re-init to white (All colors)
+                        if (rangeTicksContainer.GetComponent<TicksCtrl>().TickCount == 0)
+                        {
+                            InitColorList(ref rangeColorFilter);
+                            isRangeColorListWhite = true;
+                        }
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+            UpdateDeck();
+        }
+
+        private void UpdateDeck()
+        {
+            Debug.Log("PROPERTY UPDATE DECK !");
+            _currentDeckContent.Clear();
+            var dcf = domainColorFilter;
+            var rcf = rangeColorFilter;
+
+            IEnumerable<PropertyCard> cards =
+                        from card in _initialDeckContent
+                        let dc = card.domainColors
+                        let rc = card.rangeColors
+                        where dc.Intersect(dcf).Any() && rc.Intersect(rcf).Any()
+                        select card;
+
+            if (cards.Count() > 0)
+            {
+                Debug.Log("YES CARDS AFTER FILTERING !!");
+                foreach (PropertyCard card in cards)
+                {
+                    _currentDeckContent.Add(card);
+                }
+                _sliderController.SetSliderRange(_currentDeckContent.Count - 1);
+
+                //Update deck content info
+                _deckCounterDisplayer.Show(_currentDeckContent.Count, _initialDeckContent.Count);
+                _propertyCardDisplayer.Refresh(_propertyDeckService.PropertyCards[0]);
+            }
+            else
+            {
+                Debug.Log("NO NOCARDS AFTER FILTERING !!");
+                _noMatchCard.SetActive(true);
+                _sliderController.SetSliderActive(false);
+                _deckCounterDisplayer.Show(0, _initialDeckContent.Count);
+            }
+        }
+
+
+
+        private void InitColorList(ref List<string> list)
+        {
+            //Remove all previous colors
+            list.Clear();
+            //White = All colors => Add all colors to domain color list
+            foreach (KeyValuePair<string, Color32> color in _propertyDeckService.ColorsDictionary)
+            {
+                list.Add(color.Key.ToString());
+            }
+        }
+
+        /**************************%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%***********************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         /*************************************/
 
-        
+        /*
         public void UpdateColorFilters(GameObject sender, TickCtrl.TickColor e)
         {
             Debug.Log(string.Format("[EntityDeckController] Receive tick event from {0} with color {1}", sender.name, e));
@@ -262,9 +445,9 @@ namespace StarterCore.Core.Scenes.Board.Deck
                     }
                 }
             }
-            */
-        }
 
+        }
+    */
 
         private void FilterRemoveColor(TickCtrl.TickColor e)
         {
