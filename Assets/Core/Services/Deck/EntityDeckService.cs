@@ -52,7 +52,7 @@ public class EntityDeckService : IInitializable
 
     public void Initialize()
     {
-        Debug.Log("THIS IS DECKSCONTROLLER!");
+        Debug.Log("THIS IS ENTITYDECKSERVICE!");
 
         EntityCards = new List<EntityCard>();
         IconsDictionary = new Dictionary<string, int>();

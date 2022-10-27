@@ -49,7 +49,6 @@ public class HierarchyEntityDisplayer : MonoBehaviour
                 entry.OnHierarchyEntityClickEvent += HierarchyEntityEntryClicked;
 
                 _entriesEntity.Add(entry);
-                Debug.Log("");
             }
         }
 
@@ -84,15 +83,12 @@ public class HierarchyEntityDisplayer : MonoBehaviour
     {
         if (_entriesEntity == null)
         {
-            Debug.Log("[HierarchyDisplayer] Entries list is null, create new one.");
             _entriesEntity = new List<HierarchyEntityEntry>();
         }
         else
         {
-            Debug.Log("[HierarchyDisplayer] Entries list not null, cleaning it.");
             foreach (HierarchyEntityEntry e in _entriesEntity)
             {
-                Debug.Log("[HierarchyDisplayer] Cleaning : found object : " + e.GetComponent<HierarchyEntityEntry>().EntryLabel.text);
                 e.OnHierarchyEntityClickEvent -= HierarchyEntityEntryClicked;
                 Destroy(e.gameObject);
             }
@@ -101,15 +97,12 @@ public class HierarchyEntityDisplayer : MonoBehaviour
 
         if (_currentEntityEntry == null)
         {
-            Debug.Log("[HierarchyCURRENTDisplayer] Entries list is null, create new one.");
             _currentEntityEntry = new List<HierarchyCurrentEntry>();
         }
         else
         {
-            Debug.Log("[HierarchyCURRENTDisplayer] Entries list not null, cleaning it.");
             foreach (HierarchyCurrentEntry e in _currentEntityEntry)
             {
-                Debug.Log("[HierarchyDisplayer] Cleaning : found object : " + e.GetComponent<HierarchyCurrentEntry>().EntryLabel.text);
                 Destroy(e.gameObject);
             }
             _currentEntityEntry.Clear();

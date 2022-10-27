@@ -40,8 +40,10 @@ namespace StarterCore.Core.Scenes.Board
 
             //Fetch & Deserialize challenge file content (all challenges of this chapter)
             List<ChallengeData> chapterChallenges = await GetKurrentChapter(chapterFilename);
+            Debug.Log("Challenges are : " + chapterChallenges);
 
             //Show boardController with challenges data
+            Debug.Log("[BoardManager] chapters are : " + chapterChallenges.Count);
             _boardController.Show(chapterChallenges);
         }
 

@@ -31,23 +31,32 @@ namespace StarterCore.Core.Scenes.Board
 
         public void Show(List<ChallengeData> challengeList)
         {
-            Debug.Log("zChapter challenge is count : " + challengeList.Count);
-
-            //ChallengeCtrl will not ne a mono. Data management only.
-            //_challengeController.Show();//On lui passe tous les challenges (from Manager)
-
             int currentChallengeId = _gameStateManager.GameStateModel.CurrentChallengeIndex;
 
-            //Initialization of Left Entity Deck
-            List<EntityCard> initialLeftEntityDeckContent = _entityDeckService.GetInitialDeck(challengeList[currentChallengeId].ELeftInit);
-
-            Debug.Log("Initial deck content count" + initialLeftEntityDeckContent.Count);
-
-            _leftEntityDeckController.Show(initialLeftEntityDeckContent);
-
             //Initialization of Left Property Deck
-            List<PropertyCard> initialLeftPropertyDeckContent = _propertyDeckService.GetInitialDeck(challengeList[currentChallengeId].PLeftInit);
-            _leftPropertyDeckController.Show(initialLeftPropertyDeckContent);
+            string initStringEL = challengeList[currentChallengeId].ELeftInit;
+            if (!initStringEL.Equals(string.Empty))
+            {
+                List<EntityCard> initialLeftEntityDeckContent = _entityDeckService.GetInitialDeck(initStringEL);
+                _leftEntityDeckController.Show(initialLeftEntityDeckContent);
+            }
+
+            string initStringPL = challengeList[currentChallengeId].PLeftInit;
+            if (!initStringPL.Equals(string.Empty))
+            {
+                List<PropertyCard> initialLeftPropertyDeckContent = _propertyDeckService.GetInitialDeck(initStringPL);
+                _leftPropertyDeckController.Show(initialLeftPropertyDeckContent);
+            }
+
+            //string initStringEM = challengeList[currentChallengeId].EMiddleInit;
+            //if (!initStringEM.Equals(string.Empty))
+            //{
+            //    List<PropertyCard> initialLeftPropertyDeckContent = _propertyDeckService.GetInitialDeck(initStringEM);
+            //    _middlePropertyDeckController.Show(initialLeftPropertyDeckContent);
+            //}
+
+
+            _challengeController.Show(challengeList);//On lui passe tous les challenges (from Manager)
         }
 
         private void OnGamePaused()
