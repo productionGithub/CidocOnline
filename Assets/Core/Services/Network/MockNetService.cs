@@ -251,6 +251,15 @@ namespace StarterCore.Core.Services.Network
             return result;
         }
 
+        //Get INSTANCE file from scenario folder
+        public async UniTask<List<InstanceCardModelDown>> GetInstanceFile(string scenarioName)
+        {
+            string url = HomeUrl + "StreamingAssets/scenarii/" + scenarioName + "/Instances/Instances.json";
+            Debug.Log("URL -> " + url);
+            List<InstanceCardModelDown> result = await _net.GetAsync<List<InstanceCardModelDown>>(url);
+            return result;
+        }
+
     }
 }
 

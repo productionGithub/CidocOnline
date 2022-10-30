@@ -13,7 +13,7 @@ namespace StarterCore.Core.Scenes.MainMenu
 
         public void Initialize()
         {
-            Debug.Log("[MainMenuManager] Initialized!");
+            Trace.Log("[MainMenuManager] Initialized!");
             _mainMenuController.Show();
 
             _mainMenuController.OnChooseScenarioEvent += LoadGameSelectionScreen;

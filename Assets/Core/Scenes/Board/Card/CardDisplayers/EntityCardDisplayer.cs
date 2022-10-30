@@ -142,5 +142,11 @@ namespace StarterCore.Core.Scenes.Board.Displayer
         {
             _bkg.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
         }
+
+        public void ResetCard()
+        {
+            Refresh(_entityDeckService.EntityCards[0]);
+            InitScopeNoteScrollView();
+        }
     }
 }

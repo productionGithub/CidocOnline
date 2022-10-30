@@ -13,7 +13,7 @@ namespace StarterCore.Core.Scenes.Board
         public override void InstallBindings()
         {
             Debug.Log("Installer is called");
-            //Container.BindInterfacesAndSelfTo<DecksController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<InstanceDeckService>().AsSingle().NonLazy();
             Container.Bind<BoardController>().FromInstance(_boardController).AsSingle();
             Container.BindInterfacesAndSelfTo<BoardManager>().AsSingle();
         }

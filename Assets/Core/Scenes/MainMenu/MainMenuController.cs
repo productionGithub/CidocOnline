@@ -41,10 +41,10 @@ namespace StarterCore.Core.Scenes.MainMenu
         private void TranslateUI()
         {
             _welcomeTitle.text = _localizationManager.GetTranslation("mainmenu-scene-welcometitle-text") + " " + _gameState.Username + " !";
-            Debug.Log("WE BUNDLE ID: " + bundle.HistoryId);
+            Trace.Log("WE BUNDLE ID: " + bundle.HistoryId);
             if (bundle.HistoryId.Equals(string.Empty))
             {
-                Debug.Log("Disable continue zone !");
+                Trace.Log("Disable continue zone !");
                 _continueZone.SetActive(false);
 
             }

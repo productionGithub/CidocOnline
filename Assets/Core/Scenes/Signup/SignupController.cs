@@ -72,7 +72,7 @@ namespace StarterCore.Core.Scenes.Signup
             for (int i = 0; i < _countriesDic.Countries.Count; i++)
             {
                 countryNames.Add(_countriesDic.Countries[i].Name);
-                //Debug.Log("[Signup Manager] Adding country ->" + _countriesDic.Countries[i].Name);
+                //Trace.Log("[Signup Manager] Adding country ->" + _countriesDic.Countries[i].Name);
             }
 
             //Populate item DropDown list with strings
@@ -91,10 +91,10 @@ namespace StarterCore.Core.Scenes.Signup
         {
             if (ValidateForm())
             {
-                //Debug.Log("Form validated");
+                //Trace.Log("Form validated");
 
                 string code ="";
-                //Debug.Log("_countriesDic.Countries.Count" + _countriesDic.Countries.Count);
+                //Trace.Log("_countriesDic.Countries.Count" + _countriesDic.Countries.Count);
 
                 for (int i=0; i < _countriesDic.Countries.Count; i++)
                 {

@@ -1,12 +1,9 @@
-using System;
 using System.Collections.Generic;
-using StarterCore.Core.Scenes.Board.Card.Cards;
 using StarterCore.Core.Services.GameState;
 using StarterCore.Core.Services.Navigation;
 using StarterCore.Core.Services.Network.Models;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 namespace StarterCore.Core.Scenes.Board.Challenge

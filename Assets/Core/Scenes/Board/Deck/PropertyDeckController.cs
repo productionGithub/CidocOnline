@@ -40,9 +40,9 @@ namespace StarterCore.Core.Scenes.Board.Deck
         [SerializeField]
         Button _nextStepper;// Stepper +
         [SerializeField]
-        TicksCtrl _domainTickController;
+        TicksController _domainTickController;
         [SerializeField]
-        TicksCtrl _rangeTickController;
+        TicksController _rangeTickController;
         [SerializeField]
         GameObject _noMatchCard;
         [SerializeField]
@@ -131,7 +131,6 @@ namespace StarterCore.Core.Scenes.Board.Deck
             {
                 //Refresh card
                 _propertyCardDisplayer.Refresh(_currentDeckContent[(int)value]);
-                //_entityCardController.Refresh(_currentDeckContent[(int)value]);
                 GhostCardIfExists((int)value);
                 //Refresh hierarchy
                 _hierarchyDisplayer.Show(_currentDeckContent[(int)value]);
@@ -158,7 +157,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
         private void OnDomainButtonClicked(string cardAbout)
         {
-            Debug.Log("[PropertyDeckDisplayer] Domain Butt clicked ");
+            Trace.Log("[PropertyDeckDisplayer] Domain Butt clicked ");
             string id = cardAbout.Substring(0, cardAbout.IndexOf("_")).Trim();//Fetch the sub string before first '_'
             EntityCard card = _entityDeckService.EntityCards.Single(c => c.id == id);
             _leftDeckController.DisplayCardFromHierarchy(card);
@@ -166,7 +165,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
         private void OnRangeButtonClicked(string cardAbout)
         {
-            Debug.Log("[PropertyDeckDisplayer] Range Butt clicked ");
+            Trace.Log("[PropertyDeckDisplayer] Range Butt clicked ");
             string id = cardAbout.Substring(0, cardAbout.IndexOf("_")).Trim();//Fetch the sub string before first '_'
             EntityCard card = _entityDeckService.EntityCards.Single(c => c.id == id);
             _rightDeckController.DisplayCardFromHierarchy(card);
@@ -184,13 +183,10 @@ namespace StarterCore.Core.Scenes.Board.Deck
             }
         }
 
-
-
-        /********* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*********************/
         //Update domain and range colors list based on tick type
         public void UpdateColorFilters(GameObject sender, TickCtrl.TickColor e)
         {
-            Debug.Log("PROPERTY UPDATE COLOR FILTER");
+            Trace.Log("PROPERTY UPDATE COLOR FILTER");
             //In case the previous matching failed:
             //Hide the 'NoMatchCard' and re-activate the slider
             _noMatchCard.SetActive(false);
@@ -207,8 +203,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
                         if (sender.GetComponent<TickCtrl>().IsTicked == true)//Tick just passed to 'On'
                         {
                             //Remove all previous selected colors
-                            InitColorList(ref domainColorFilter);
-                            isDomainColorListWhite = true;
+                            InitDomainColors();
                         }
                     }
                     else
@@ -229,7 +224,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
                         {
                             domainColorFilter.Remove(e.ToString());
                             //If no color anymore in the list, re-init to white (All colors)
-                            if (domainTicksContainer.GetComponent<TicksCtrl>().TickCount == 0)
+                            if (domainTicksContainer.GetComponent<TicksController>().TickCount == 0)
                             {
                                 InitColorList(ref domainColorFilter);
                                 isDomainColorListWhite = true;
@@ -247,8 +242,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
                         if (sender.GetComponent<TickCtrl>().IsTicked == true)//Tick just passed to 'On'
                         {
                             //Remove all previous color
-                            InitColorList(ref rangeColorFilter);
-                            isRangeColorListWhite = true;
+                            InitRangeColors();
                         }
                     }
                     else
@@ -268,7 +262,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
                     {
                         rangeColorFilter.Remove(e.ToString());
                         //If no color anymore in the list, re-init to white (All colors)
-                        if (rangeTicksContainer.GetComponent<TicksCtrl>().TickCount == 0)
+                        if (rangeTicksContainer.GetComponent<TicksController>().TickCount == 0)
                         {
                             InitColorList(ref rangeColorFilter);
                             isRangeColorListWhite = true;
@@ -282,9 +276,30 @@ namespace StarterCore.Core.Scenes.Board.Deck
             UpdateDeck();
         }
 
+        private void InitDomainColors()
+        {
+            InitColorList(ref domainColorFilter);
+            isDomainColorListWhite = true;
+        }
+
+        private void InitRangeColors()
+        {
+            InitColorList(ref rangeColorFilter);
+            isRangeColorListWhite = true;
+        }
+
+        public void ResetDeck()
+        {
+            InitDomainColors();
+            InitRangeColors();
+            UpdateDeck();
+            domainTicksContainer.GetComponent<TicksController>().ResetTicks();
+            rangeTicksContainer.GetComponent<TicksController>().ResetTicks();
+        }
+
         private void UpdateDeck()
         {
-            Debug.Log("PROPERTY UPDATE DECK !");
+            Trace.Log("PROPERTY UPDATE DECK !");
             _currentDeckContent.Clear();
             var dcf = domainColorFilter;
             var rcf = rangeColorFilter;
@@ -298,7 +313,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
             if (cards.Count() > 0)
             {
-                Debug.Log("YES CARDS AFTER FILTERING !!");
+                _noMatchCard.SetActive(false);
                 foreach (PropertyCard card in cards)
                 {
                     _currentDeckContent.Add(card);
@@ -311,14 +326,11 @@ namespace StarterCore.Core.Scenes.Board.Deck
             }
             else
             {
-                Debug.Log("NO NOCARDS AFTER FILTERING !!");
                 _noMatchCard.SetActive(true);
                 _sliderController.SetSliderActive(false);
                 _deckCounterDisplayer.Show(0, _initialDeckContent.Count);
             }
         }
-
-
 
         private void InitColorList(ref List<string> list)
         {
@@ -329,175 +341,6 @@ namespace StarterCore.Core.Scenes.Board.Deck
             {
                 list.Add(color.Key.ToString());
             }
-        }
-
-        /**************************%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%***********************/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /*************************************/
-
-        /*
-        public void UpdateColorFilters(GameObject sender, TickCtrl.TickColor e)
-        {
-            Debug.Log(string.Format("[EntityDeckController] Receive tick event from {0} with color {1}", sender.name, e));
-
-            _noMatchCard.SetActive(false);
-            _sliderController.SetSliderActive(true);
-
-            //If white selected, re-init with initial deck
-            if (e == TickCtrl.TickColor.White)
-            {
-                _currentDeckContent.Clear();
-                _addedCard.Clear();//Maybe will be remove depending on chosen logic
-                _currentDeckContent = new List<PropertyCard>(_initialDeckContent);
-                _addedCard = new List<PropertyCard>();
-
-                isListFiltered = false;
-            }
-            else
-            {
-                //If deck is not already filtered, clear it.
-                //If already filtered, color filtering is cumulative
-                if (isListFiltered == false)
-                {
-                    _currentDeckContent.Clear();
-                }
-
-                //Add corresponding tick color to filter
-                if (sender.GetComponent<TickCtrl>().IsTicked == true)
-                {
-                    FilterAddColor(e);
-                    if (_currentDeckContent.Count > 0)
-                    {
-                        isListFiltered = true;
-                    }
-                }
-                else
-                //Remove corresponding tick color to filter
-                {
-                    FilterRemoveColor(e);
-                    isListFiltered = true;
-                    if (_domainTickController.TickCount <= 0)
-                    {
-                        _currentDeckContent.Clear();
-                        _addedCard.Clear();
-                        _currentDeckContent = new List<PropertyCard>(_initialDeckContent);
-                        _addedCard = new List<PropertyCard>();
-                        isListFiltered = false;
-                    }
-                }
-            }
-
-            if (_currentDeckContent.Count > 0)
-            {
-                //Update deck content info
-                _deckCounterDisplayer.Show(_currentDeckContent.Count, _initialDeckContent.Count);
-
-                _sliderController.SetSliderActive(true);
-                _sliderController.SetSliderRange(_currentDeckContent.Count - 1);
-                _sliderController.SetSliderValue(0);
-            }
-            else
-            {
-                //HideDeckAnimation();
-                _noMatchCard.SetActive(true);
-                _sliderController.SetSliderActive(false);
-                _deckCounterDisplayer.Show(0, _initialDeckContent.Count);
-            }
-        }
-
-
-        private void FilterAddColor(TickCtrl.TickColor e)//From current deckContent
-        {
-            /*
-            Debug.Log(string.Format("[EntityDeckController] FilterAdd with color : {0}", e));
-            foreach (PropertyCard curCard in _initialDeckContent)
-            {
-                if (curCard.colors[0].Equals((Color32)_propertyDeckService.ColorsDictionary[e.ToString()]))
-                {
-                    _currentDeckContent.Add(curCard);
-                }
-                else
-                {
-                    if (curCard.colors.Count > 1)
-                    {
-                        if (curCard.colors[1].Equals((Color32)_propertyDeckService.ColorsDictionary[e.ToString()]))
-                        {
-                            _currentDeckContent.Add(curCard);
-                        }
-                    }
-                }
-            }
-
-        }
-    */
-
-        private void FilterRemoveColor(TickCtrl.TickColor e)
-        {
-            /*
-            Debug.Log(string.Format("[EntityDeckController] FilterRemove with color : {0}", e));
-            foreach (PropertyCard curCard in _initialDeckContent)
-            {
-                //EntityCard curCard = decksCtrl.entityCards[id];
-                if (curCard.colors[0].Equals((Color32)_propertyDeckService.ColorsDictionary[e.ToString()]))
-                {
-                    _currentDeckContent.Remove(curCard);
-                }
-                else
-                {
-                    if (curCard.colors.Count > 1)
-                    {
-                        if (curCard.colors[1].Equals((Color32)_propertyDeckService.ColorsDictionary[e.ToString()]))
-                        {
-                            _currentDeckContent.Remove(curCard);
-                        }
-                    }
-                }
-            }
-            */
-        }
-
-
-
-
-
-        /******************************************************/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        private void OnClick(TickDisplayer tick)
-        {
-            //Forward event to Board controller
-            //tick.Show();
-            //OnCardClicked?.Invoke(this, tick);
         }
     }
 }

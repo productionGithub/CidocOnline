@@ -1,13 +1,16 @@
+//#define TRACE_ON
+using UnityEngine;
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.XPath;
-using UnityEngine;
 using System.IO;
 using System.Linq;
 using StarterCore.Core.Services.Network;
 using Zenject;
 using StarterCore.Core.Scenes.Board.Card.Cards;
 using Cysharp.Threading.Tasks;
+using System.Diagnostics;
+using Debug = UnityEngine.Debug;
 
 public class EntityDeckService : IInitializable
 {
@@ -52,8 +55,7 @@ public class EntityDeckService : IInitializable
 
     public void Initialize()
     {
-        Debug.Log("THIS IS ENTITYDECKSERVICE!");
-
+        Trace.Log("EntitdeckService initialized !");
         EntityCards = new List<EntityCard>();
         IconsDictionary = new Dictionary<string, int>();
 
@@ -94,11 +96,11 @@ public class EntityDeckService : IInitializable
     {
         //Fetch Cidoc Xml file
         _cidocXmlString = await _netservice.GetXmlCidocFile();
-        //Debug.Log("Got XML CIDOC string : " + _cidocXmlString);
+        Trace.Log("Got XML CIDOC string : " + _cidocXmlString);
 
         //Fetch EntityIconsColorMapping Xml file
         _entityXmlString = await _netservice.GetXmlEntityIconsColorsFile();
-        //Debug.Log("Got XML ENTITY COLORS ICONS string : " + _entityXmlString);
+        Trace.Log("Got XML ENTITY COLORS ICONS string : " + _entityXmlString);
 
         InitXpathNavigators();
         InitEntityDeck();
@@ -155,7 +157,7 @@ public class EntityDeckService : IInitializable
             foreach (XPathNavigator sub in subClasses)
             {
                 entityParents.Add(sub?.GetAttribute("resource", rdfNamespace));//Build list of direct parents
-                //Debug.Log("Got resource: " + sub?.GetAttribute("resource", rdfNamespace));
+                Trace.Log("Got resource: " + sub?.GetAttribute("resource", rdfNamespace));
             }
 
             EntityCards.Add(new EntityCard()
@@ -250,7 +252,7 @@ public class EntityDeckService : IInitializable
             for (int i = 9; i <= 18; i++)//Icons are from index 9 TO 18
             {
                 IconsDictionary.Add(IconsSprites[i].name, i);
-                Debug.Log("Icon sprite names : " + IconsSprites[i].name);
+                Trace.Log("Icon sprite names : " + IconsSprites[i].name);
             }
         }
         else
@@ -259,3 +261,4 @@ public class EntityDeckService : IInitializable
         }
     }
 }
+

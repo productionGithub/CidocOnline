@@ -23,7 +23,7 @@ namespace StarterCore.Core.Scenes.Signup
 
         public void Initialize()
         {
-            Debug.Log("SignupManager initialized!");
+            Trace.Log("SignupManager initialized!");
             _controller.Show();
             _controller.OnFormSubmittedEvent += SubmitClicked;
             _controller.OnBackEvent += BackEventClicked;
@@ -92,7 +92,7 @@ namespace StarterCore.Core.Scenes.Signup
             {
                 _controller.HideAllAlerts();
                 _controller.AccountCreated();
-                //Debug.Log("Activation code is :" + code.Code);
+                //Trace.Log("Activation code is :" + code.Code);
             }
             else
             {
@@ -105,11 +105,11 @@ namespace StarterCore.Core.Scenes.Signup
         //private async UniTaskVoid TestLoadGame()
         //{
         //    GameModelDown game = await _net.LoadGame();
-        //    Debug.Log("Game loaded game title : " + game.Title);
-        //    Debug.Log("Game loaded is : " + game.DomainTags[1]);
-        //    Debug.Log("Game loaded is : " + game.OntologyTags[0]);
-        //    Debug.Log("Game loaded is in language : " + game.LanguageTags[0]);
-        //    Debug.Log("Game loaded first challenge title is : " + game.ChallengeList[0].Title);
+        //    Trace.Log("Game loaded game title : " + game.Title);
+        //    Trace.Log("Game loaded is : " + game.DomainTags[1]);
+        //    Trace.Log("Game loaded is : " + game.OntologyTags[0]);
+        //    Trace.Log("Game loaded is in language : " + game.LanguageTags[0]);
+        //    Trace.Log("Game loaded first challenge title is : " + game.ChallengeList[0].Title);
         //}
 
         private void BackEventClicked()

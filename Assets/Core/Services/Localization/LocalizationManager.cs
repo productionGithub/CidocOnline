@@ -31,7 +31,7 @@ namespace StarterCore.Core.Services.Localization
         public void Initialize()
         {
             _gamestate.OnLocaleChanged += () => SetLocaleDictionary();
-            //Debug.Log("[Localization Manager] Initialized.");
+            //Trace.Log("[Localization Manager] Initialized.");
             SetLocaleDictionary();
         }
 
@@ -48,7 +48,7 @@ namespace StarterCore.Core.Services.Localization
             }
             else
             {
-                Debug.Log("[Localization Manager] Locale not found in language file, falling back to default language : " + _gamestate.DefaultLocale);
+                Trace.Log("[Localization Manager] Locale not found in language file, falling back to default language : " + _gamestate.DefaultLocale);
                 _gamestate.SetLocale(_gamestate.DefaultLocale);
                 _languageDictionary = await GetLocaleDictionary(_gamestate.Locale);
             }

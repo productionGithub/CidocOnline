@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using StarterCore.Core.Scenes.Board.Deck;
 
 /// <summary>
 /// Manage the UI of Ticks.
@@ -98,7 +99,7 @@ public class TickCtrl : MonoBehaviour
         //    }
         //}
 
-        ticksContainer.GetComponent<TicksCtrl>().TickClicked(gameObject, colorOfTick);
+        ticksContainer.GetComponent<TicksController>().TickClicked(gameObject, colorOfTick);
     }
 
 

@@ -1,7 +1,6 @@
 using Cysharp.Threading.Tasks;
 using StarterCore.Core.Services.Network;
 using StarterCore.Core.Services.Network.Models;
-using UnityEngine;
 using Zenject;
 using StarterCore.Core.Services.Navigation;
 using StarterCore.Core.Services.GameState;
@@ -88,7 +87,7 @@ namespace StarterCore.Core.Scenes.Signin
         //LOGIN PROCESS
         private async UniTaskVoid Login(SigninModelUp credentials)
         {
-            //Debug.Log("[SigninManager] Login param email : " + credentials.Email);
+            //Trace.Log("[SigninManager] Login param email : " + credentials.Email);
             SigninModelDown result = await _net.Login(credentials);
 
             if (result.LoginResult == true)
@@ -109,15 +108,15 @@ namespace StarterCore.Core.Scenes.Signin
             //Login OK, get progression and load main menu screen
             UsernameModelDown userName = await _net.GetUsername(playerEmail);
             _gameState.Username = userName.Username;
-            Debug.Log("Login with username : " + _gameState.Username);
+            Trace.Log("Login with username : " + _gameState.Username);
 
             //Get User Id
             UserIdModelDown userId = await _net.GetUserId(playerEmail);
-            Debug.Log("[SignIn Manager] From GetUserId, userId is : " + userId.UserId);
+            Trace.Log("[SignIn Manager] From GetUserId, userId is : " + userId.UserId);
 
             //Get player history
             HistoryModelDown history = await _net.GetHistory(userId.UserId);
-            Debug.Log("[SignIn Manager] From gethistory, scenario is : " + history.ScenarioName);
+            Trace.Log("[SignIn Manager] From gethistory, scenario is : " + history.ScenarioName);
 
             _navService.Push("MainMenuScene", history);
         }

@@ -7,44 +7,47 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-public class EntityCardController : MonoBehaviour
+namespace StarterCore.Core.Scenes.Board.Deck
 {
-    /// <summary>
-    /// Manage events from a EntityCardDisplayer
-    /// Manage deck content depending on filtering event (initial / current)
-    /// Manage card to be displayed depending on Slider event
-    /// </summary>
-    // Start is called before the first frame update
-
-    [SerializeField] EntityCardDisplayer _cardDisplayer;
-
-    public int currentCard;//Utilepour le Board controller qui va la passer au Challenge (-> Challenge evaluator)
-
-    public event Action<string> OnHierarchyEntityClickedCardController;
-
-    public void Show(EntityCard card)
+    public class EntityCardController : MonoBehaviour
     {
-        _cardDisplayer.Show(card);
-        //_cardDisplayer.EntityCardDispl_HierarchyClickEvent += _cardDisplayer_OnHierarchyEntityClickedCardDisplayer;
-    }
+        /// <summary>
+        /// Manage events from a EntityCardDisplayer
+        /// Manage deck content depending on filtering event (initial / current)
+        /// Manage card to be displayed depending on Slider event
+        /// </summary>
+        // Start is called before the first frame update
 
-    private void _cardDisplayer_OnHierarchyEntityClickedCardDisplayer(string id)
-    {
-        OnHierarchyEntityClickedCardController?.Invoke(id);
-    }
+        [SerializeField] EntityCardDisplayer _cardDisplayer;
 
-    public void GhostBackground()
-    {
-        _cardDisplayer.GhostBackground();
-    }
+        public int currentCard;//Utilepour le Board controller qui va la passer au Challenge (-> Challenge evaluator)
 
-    public void ReinitBackground()
-    {
-        _cardDisplayer.ReinitBackground();
-    }
+        public event Action<string> OnHierarchyEntityClickedCardController;
 
-    public void Refresh(EntityCard card)
-    {
-        _cardDisplayer.Refresh(card);
+        public void Show(EntityCard card)
+        {
+            _cardDisplayer.Show(card);
+            //_cardDisplayer.EntityCardDispl_HierarchyClickEvent += _cardDisplayer_OnHierarchyEntityClickedCardDisplayer;
+        }
+
+        private void _cardDisplayer_OnHierarchyEntityClickedCardDisplayer(string id)
+        {
+            OnHierarchyEntityClickedCardController?.Invoke(id);
+        }
+
+        public void GhostBackground()
+        {
+            _cardDisplayer.GhostBackground();
+        }
+
+        public void ReinitBackground()
+        {
+            _cardDisplayer.ReinitBackground();
+        }
+
+        public void Refresh(EntityCard card)
+        {
+            _cardDisplayer.Refresh(card);
+        }
     }
 }

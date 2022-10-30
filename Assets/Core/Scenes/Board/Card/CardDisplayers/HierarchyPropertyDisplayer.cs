@@ -12,108 +12,110 @@ using Cysharp.Threading.Tasks;
 /// <summary>
 /// Instantiate super and sub classes of a card (Buttons)
 /// </summary>
-
-public class HierarchyPropertyDisplayer : MonoBehaviour
+namespace StarterCore.Core.Scenes.Board.Displayer
 {
-    public event Action<string> HierarchyPropDisp_HierarchyClickEvent;
-
-    [SerializeField]
-    HierarchyPropertyEntry _entryTemplate;
-    [SerializeField]
-    HierarchyCurrentEntry _currentEntryTemplate;
-
-    public Transform _hierarchyContainer;//Parent object of scrollView
-
-    private List<HierarchyPropertyEntry> _entries;//Keeps track of hierarchy instanciated prefabs
-    private List<HierarchyCurrentEntry> _currentEntry;//Keeps track of hierarchy instanciated prefabs
-
-    public void Show(PropertyCard card)
+    public class HierarchyPropertyDisplayer : MonoBehaviour
     {
-        Debug.Log("[HierarchyDisplayer] SHOW...");
-        CleanHierarchy();
-        DisplayHierarchy(card);
-    }
+        public event Action<string> HierarchyPropDisp_HierarchyClickEvent;
 
-    private void DisplayHierarchy(PropertyCard card)
-    {
-        string arrowUp = "\u02C4";
-        string arrowDown = "\u02C5";
+        [SerializeField]
+        HierarchyPropertyEntry _entryTemplate;
+        [SerializeField]
+        HierarchyCurrentEntry _currentEntryTemplate;
 
-        //Parents
-        if (card.superProperties.Count > 0)
+        public Transform _hierarchyContainer;//Parent object of scrollView
+
+        private List<HierarchyPropertyEntry> _entries;//Keeps track of hierarchy instanciated prefabs
+        private List<HierarchyCurrentEntry> _currentEntry;//Keeps track of hierarchy instanciated prefabs
+
+        public void Show(PropertyCard card)
         {
-            foreach (string label in card.superProperties)
+            Trace.Log("[HierarchyDisplayer] SHOW...");
+            CleanHierarchy();
+            DisplayHierarchy(card);
+        }
+
+        private void DisplayHierarchy(PropertyCard card)
+        {
+            string arrowUp = "\u02C4";
+            string arrowDown = "\u02C5";
+
+            //Parents
+            if (card.superProperties.Count > 0)
             {
-                HierarchyPropertyEntry entry = Instantiate(_entryTemplate, _hierarchyContainer);
-                //entry.EntryLabel.text = arrowUp + label;
-                entry.Show(arrowUp, label);
-                entry.OnHierarchyPropertyClickEvent += HierarchyEntryClicked;
+                foreach (string label in card.superProperties)
+                {
+                    HierarchyPropertyEntry entry = Instantiate(_entryTemplate, _hierarchyContainer);
+                    //entry.EntryLabel.text = arrowUp + label;
+                    entry.Show(arrowUp, label);
+                    entry.OnHierarchyPropertyClickEvent += HierarchyEntryClicked;
 
-                _entries.Add(entry);
-                Debug.Log("");
+                    _entries.Add(entry);
+                    Trace.Log("");
+                }
             }
-        }
 
-        //Current card
-        HierarchyCurrentEntry currentEntry = Instantiate(_currentEntryTemplate, _hierarchyContainer);
-        currentEntry.Show(card.about);
-        _currentEntry.Add(currentEntry);
+            //Current card
+            HierarchyCurrentEntry currentEntry = Instantiate(_currentEntryTemplate, _hierarchyContainer);
+            currentEntry.Show(card.about);
+            _currentEntry.Add(currentEntry);
 
-        //Children
-        if (card.subProperties.Count > 0)
-        {
-            foreach (string label in card.subProperties)
+            //Children
+            if (card.subProperties.Count > 0)
             {
-                HierarchyPropertyEntry entry = Instantiate(_entryTemplate, _hierarchyContainer);
-                //entry.EntryLabel.text = arrowUp + label;
-                entry.Show(arrowDown, label);
-                entry.OnHierarchyPropertyClickEvent += HierarchyEntryClicked;
+                foreach (string label in card.subProperties)
+                {
+                    HierarchyPropertyEntry entry = Instantiate(_entryTemplate, _hierarchyContainer);
+                    //entry.EntryLabel.text = arrowUp + label;
+                    entry.Show(arrowDown, label);
+                    entry.OnHierarchyPropertyClickEvent += HierarchyEntryClicked;
 
-                _entries.Add(entry);
+                    _entries.Add(entry);
+                }
             }
+
         }
 
-    }
-
-    private void HierarchyEntryClicked(string label)
-    {
-        string id = label.Substring(0, label.IndexOf("_")).Trim();//Fetch the sub string before first '_'
-        HierarchyPropDisp_HierarchyClickEvent?.Invoke(id);
-    }
-
-    public void CleanHierarchy()
-    {
-        if (_entries == null)
+        private void HierarchyEntryClicked(string label)
         {
-            Debug.Log("[HierarchyDisplayer] Entries list is null, create new one.");
-            _entries = new List<HierarchyPropertyEntry>();
+            string id = label.Substring(0, label.IndexOf("_")).Trim();//Fetch the sub string before first '_'
+            HierarchyPropDisp_HierarchyClickEvent?.Invoke(id);
         }
-        else
+
+        public void CleanHierarchy()
         {
-            Debug.Log("[HierarchyDisplayer] Entries list not null, cleaning it.");
-            foreach (HierarchyPropertyEntry e in _entries)
+            if (_entries == null)
             {
-                Debug.Log("[HierarchyDisplayer] Cleaning : found object : " + e.GetComponent<HierarchyPropertyEntry>().EntryLabel.text);
-                e.OnHierarchyPropertyClickEvent -= HierarchyEntryClicked;
-                Destroy(e.gameObject);
+                Trace.Log("[HierarchyDisplayer] Entries list is null, create new one.");
+                _entries = new List<HierarchyPropertyEntry>();
             }
-            _entries.Clear();
-        }
-
-        if (_currentEntry == null)
-        {
-            Debug.Log("[HierarchyCURRENTDisplayer] Entries list is null, create new one.");
-            _currentEntry = new List<HierarchyCurrentEntry>();
-        }
-        else
-        {
-            Debug.Log("[HierarchyCURRENTDisplayer] Entries list not null, cleaning it.");
-            foreach (HierarchyCurrentEntry e in _currentEntry)
+            else
             {
-                Debug.Log("[HierarchyDisplayer] Cleaning : found object : " + e.GetComponent<HierarchyCurrentEntry>().EntryLabel.text);
-                Destroy(e.gameObject);
+                Trace.Log("[HierarchyDisplayer] Entries list not null, cleaning it.");
+                foreach (HierarchyPropertyEntry e in _entries)
+                {
+                    Trace.Log("[HierarchyDisplayer] Cleaning : found object : " + e.GetComponent<HierarchyPropertyEntry>().EntryLabel.text);
+                    e.OnHierarchyPropertyClickEvent -= HierarchyEntryClicked;
+                    Destroy(e.gameObject);
+                }
+                _entries.Clear();
             }
-            _currentEntry.Clear();
+
+            if (_currentEntry == null)
+            {
+                Trace.Log("[HierarchyCURRENTDisplayer] Entries list is null, create new one.");
+                _currentEntry = new List<HierarchyCurrentEntry>();
+            }
+            else
+            {
+                Trace.Log("[HierarchyCURRENTDisplayer] Entries list not null, cleaning it.");
+                foreach (HierarchyCurrentEntry e in _currentEntry)
+                {
+                    Trace.Log("[HierarchyDisplayer] Cleaning : found object : " + e.GetComponent<HierarchyCurrentEntry>().EntryLabel.text);
+                    Destroy(e.gameObject);
+                }
+                _currentEntry.Clear();
+            }
         }
     }
 }

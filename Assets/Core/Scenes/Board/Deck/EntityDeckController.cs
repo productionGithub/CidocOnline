@@ -30,7 +30,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
         [SerializeField]
         EntityCardDisplayer _entityCardDisplayer;//Card
         [SerializeField]
-        HierarchyEntityDisplayer _leftHierarchyDisplayer;//Class hierarchy of card
+        HierarchyEntityDisplayer _hierarchyDisplayer;//Class hierarchy of card
         [SerializeField]
         DeckSliderController _sliderController;//Slider
         [SerializeField]
@@ -39,8 +39,10 @@ namespace StarterCore.Core.Scenes.Board.Deck
         Button _nextStepper;// Stepper +
         [SerializeField]
         DeckCounterDisplayer _deckCounterDisplayer;//Deck counter
-        [SerializeField] TicksCtrl _tickController;
+        [SerializeField] TicksController _tickController;
         [SerializeField] GameObject _noMatchCard;
+
+        //[SerializeField] TicksController _ticksContainer;
 
         private bool isListFiltered = false;
 
@@ -52,8 +54,8 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
             _entityCardDisplayer.Show(initialDeck[0]);
 
-            _leftHierarchyDisplayer.Show(initialDeck[0]);
-            _leftHierarchyDisplayer.HierarchyEntDisp_HierarchyClickEvent += OnHierarchyEntityClick;
+            _hierarchyDisplayer.Show(initialDeck[0]);
+            _hierarchyDisplayer.HierarchyEntDisp_HierarchyClickEvent += OnHierarchyEntityClick;
 
             _sliderController.Show(_currentDeckContent.Count - 1);
             _sliderController.OnSliderValueChangedUI += OnSliderValueChanged;
@@ -108,7 +110,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
                 //_entityCardController.Refresh(_currentDeckContent[(int)value]);
                 GhostCardIfExists((int)value);
                 //Refresh hierarchy
-                _leftHierarchyDisplayer.Show(_currentDeckContent[(int)value]);
+                _hierarchyDisplayer.Show(_currentDeckContent[(int)value]);
             }
         }
 
@@ -146,21 +148,13 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
         public void UpdateColorFilters(GameObject sender, TickCtrl.TickColor e)
         {
-            Debug.Log(string.Format("[EntityDeckController] Receive tick event from {0} with color {1}", sender.name, e));
-
             _noMatchCard.SetActive(false);
             _sliderController.SetSliderActive(true);
 
             //If white selected, re-init with initial deck
             if (e == TickCtrl.TickColor.White)
             {
-                //Show(_initialDeckContent);//Reinit initial deck
-                _currentDeckContent.Clear();
-                _addedCard.Clear();//Maybe will be remove depending on chosen logic
-                _currentDeckContent = new List<EntityCard>(_initialDeckContent);
-                _addedCard = new List<EntityCard>();
-
-                isListFiltered = false;
+                ReinitDeck();
             }
             else
             {
@@ -198,25 +192,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
                 }
             }
 
-            if (_currentDeckContent.Count > 0)//If deckcontains at least one card after filtering,
-            {
-                _entityCardDisplayer.Refresh(_currentDeckContent[0]);
-                _entityCardDisplayer.ReinitBackground();
-
-                _leftHierarchyDisplayer.Show(_currentDeckContent[0]);
-
-                _sliderController.SetSliderActive(true);
-                _sliderController.SetSliderRange(_currentDeckContent.Count - 1);
-                _sliderController.SetSliderValue(0);
-
-                _deckCounterDisplayer.Show(_currentDeckContent.Count, _initialDeckContent.Count);
-            }
-            else//If not, display 'No match' card and update deck counter
-            {
-                _noMatchCard.SetActive(true);
-                _sliderController.SetSliderActive(false);
-                _deckCounterDisplayer.Show(0, _initialDeckContent.Count);
-            }
+            DisplayDeck();
         }
 
 
@@ -264,30 +240,47 @@ namespace StarterCore.Core.Scenes.Board.Deck
             }
         }
 
-
-
-
-
-        /******************************************************/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        private void OnClick(TickDisplayer tick)
+        private void ReinitDeck()
         {
-            //Forward event to Board controller
-            //tick.Show();
-            //OnCardClicked?.Invoke(this, tick);
+            //Show(_initialDeckContent);//Reinit initial deck
+            _currentDeckContent.Clear();
+            _addedCard.Clear();//Maybe will be remove depending on chosen logic
+            _currentDeckContent = new List<EntityCard>(_initialDeckContent);
+            _addedCard = new List<EntityCard>();
+
+            isListFiltered = false;
+        }
+
+        private void DisplayDeck()
+        {
+            if (_currentDeckContent.Count > 0)//If deckcontains at least one card after filtering,
+            {
+                _noMatchCard.SetActive(false);
+                _entityCardDisplayer.Refresh(_currentDeckContent[0]);
+                _entityCardDisplayer.ReinitBackground();
+
+                _hierarchyDisplayer.Show(_currentDeckContent[0]);
+
+                _sliderController.SetSliderActive(true);
+                _sliderController.SetSliderRange(_currentDeckContent.Count - 1);
+                _sliderController.SetSliderValue(0);
+
+                _deckCounterDisplayer.Show(_currentDeckContent.Count, _initialDeckContent.Count);
+            }
+            else//If not, display 'No match' card and update deck counter
+            {
+                _noMatchCard.SetActive(true);
+                _sliderController.SetSliderActive(false);
+                _deckCounterDisplayer.Show(0, _initialDeckContent.Count);
+            }
+        }
+
+        public void ResetDeck()
+        {
+            ReinitDeck();
+            DisplayDeck();
+            _entityCardDisplayer.ResetCard();
+            _tickController.ResetTicks();
         }
     }
 }
