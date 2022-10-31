@@ -10,8 +10,6 @@ namespace StarterCore.Core.Scenes.Board.Deck
         [SerializeField] private TextMeshProUGUI _currentSize;
         [SerializeField] private TextMeshProUGUI _initialSize;
 
-        public event Action<string> OnDetailEntryPlayEvent;
-
         public void Show(int curSize, int initSize)
         {
             _currentSize.GetComponent<TextMeshProUGUI>().text = curSize.ToString();

@@ -14,8 +14,8 @@ namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables
         public void Show(int maxValue)
         {
             Debug.Log("[CardSliderController] Init OK");
-            SetSliderRange(maxValue);
             _slider.onValueChanged.AddListener(OnSliderValueChanged);
+            SetSliderRange(maxValue);
         }
 
         private void OnSliderValueChanged(float value)

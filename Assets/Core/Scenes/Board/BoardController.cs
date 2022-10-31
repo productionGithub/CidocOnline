@@ -55,26 +55,28 @@ namespace StarterCore.Core.Scenes.Board
         private readonly string  _iconUrl = "https://ontomatchgame.huma-num.fr/StreamingAssets/scenarii";
 
         private List<ChallengeData> _challengeList;
+        private List<InstanceCardModelDown> _instances;
 
-        public void Show(List<ChallengeData> challengeList)
+        public async void Show(List<ChallengeData> challengeList)
         {
             _challengeList = challengeList;
+            _instances = await _networkService.GetInstanceFile(_gameStateManager.GameStateModel.CurrentScenario);
 
             _refreshBoard.onClick.AddListener(OnRefreshBoard);
             _validateBoard.onClick.AddListener(OnValidateBoard);
 
-            InstanciateDecks(challengeList);
-            _challengeController.Show(challengeList);
+            _challengeController.Show(_challengeList);
+
+            InstanciateDecks();
         }
 
-        private async void InstanciateDecks(List<ChallengeData> challengeList)
+        private async void InstanciateDecks()
         {
-            List<InstanceCardModelDown> instances = await _networkService.GetInstanceFile("MarmoutierFR");
 
             int currentChallengeId = _gameStateManager.GameStateModel.CurrentChallengeIndex;
 
             //Initialization of Left Entity Deck
-            string initStringEL = challengeList[currentChallengeId].ELeftInit;
+            string initStringEL = _challengeList[currentChallengeId].ELeftInit;
             if (!initStringEL.Equals(string.Empty))
             {
                 _leftEntityDeckController.gameObject.SetActive(true);
@@ -83,7 +85,7 @@ namespace StarterCore.Core.Scenes.Board
             }
 
             //Initialization of Left Property Deck
-            string initStringPL = challengeList[currentChallengeId].PLeftInit;
+            string initStringPL = _challengeList[currentChallengeId].PLeftInit;
             if (!initStringPL.Equals(string.Empty))
             {
                 _leftPropertyDeckController.gameObject.SetActive(true);
@@ -92,7 +94,7 @@ namespace StarterCore.Core.Scenes.Board
             }
 
             //Initialization of Middle Entity Deck
-            string initStringEM = challengeList[currentChallengeId].EMiddleInit;
+            string initStringEM = _challengeList[currentChallengeId].EMiddleInit;
             if (!initStringEM.Equals(string.Empty))
             {
                 _middleEntityDeckController.gameObject.SetActive(true);
@@ -101,7 +103,7 @@ namespace StarterCore.Core.Scenes.Board
             }
 
             //Initialization of Right Property Deck
-            string initStringPR = challengeList[currentChallengeId].PRightInit;
+            string initStringPR = _challengeList[currentChallengeId].PRightInit;
             if (!initStringPR.Equals(string.Empty))
             {
                 _rightPropertyDeckController.gameObject.SetActive(true);
@@ -110,7 +112,7 @@ namespace StarterCore.Core.Scenes.Board
             }
 
             //Initialization of Right Entity Deck
-            string initStringER = challengeList[currentChallengeId].ERightInit;
+            string initStringER = _challengeList[currentChallengeId].ERightInit;
             if (!initStringER.Equals(string.Empty))
             {
                 _rightEntityDeckController.gameObject.SetActive(true);
@@ -120,13 +122,13 @@ namespace StarterCore.Core.Scenes.Board
 
             //INSTANCES
             //Left instance
-            string initStringLI = challengeList[currentChallengeId].ILeftInit;
+            string initStringLI = _challengeList[currentChallengeId].ILeftInit;
             if (!initStringLI.Equals(string.Empty))
             {
                 _leftInstanceDisplayer.gameObject.SetActive(true);
 
                 //<--- THIS BLOC GOES TO THE DISPLAYER
-                InstanceCardModelDown leftInstance = instances.Single(c => c.Id == initStringLI[1..].Trim());
+                InstanceCardModelDown leftInstance = _instances.Single(c => c.Id == initStringLI[1..].Trim());
 
                 string iconName = leftInstance.ImageName;
                 string url = _iconUrl + "/" + _gameStateManager.GameStateModel.CurrentScenario + "/Instances/Images/" + iconName;
@@ -138,13 +140,13 @@ namespace StarterCore.Core.Scenes.Board
 
                 _leftInstanceDisplayer.Show(leftInstance, iconSprite);
             }
-
+            
             ////Middle instance
-            string initStringMI = challengeList[currentChallengeId].IMiddleInit;
+            string initStringMI = _challengeList[currentChallengeId].IMiddleInit;
             if (!initStringMI.Equals(string.Empty))
             {
                 _middleInstanceDisplayer.gameObject.SetActive(true);
-                InstanceCardModelDown middleInstance = instances.Single(c => c.Id == initStringMI[1..].Trim());
+                InstanceCardModelDown middleInstance = _instances.Single(c => c.Id == initStringMI[1..].Trim());
 
                 string iconName = middleInstance.ImageName;
                 string url = _iconUrl + "/" + _gameStateManager.GameStateModel.CurrentScenario + "/Instances/Images/" + iconName;
@@ -156,11 +158,11 @@ namespace StarterCore.Core.Scenes.Board
             }
 
             ////Right instance
-            string initStringRI = challengeList[currentChallengeId].IRightInit;
+            string initStringRI = _challengeList[currentChallengeId].IRightInit;
             if (!initStringRI.Equals(string.Empty))
             {
                 _rightInstanceDisplayer.gameObject.SetActive(true);
-                InstanceCardModelDown rightInstance = instances.Single(c => c.Id == initStringRI[1..].Trim());
+                InstanceCardModelDown rightInstance = _instances.Single(c => c.Id == initStringRI[1..].Trim());
 
                 string iconName = rightInstance.ImageName;
                 string url = _iconUrl + "/" + _gameStateManager.GameStateModel.CurrentScenario + "/Instances/Images/" + iconName;
@@ -174,8 +176,19 @@ namespace StarterCore.Core.Scenes.Board
 
         private void OnValidateBoard()
         {
-            Trace.Log("We call validation class !");
-            Debug.Log("We call validation class !");
+            if(_gameStateManager.GameStateModel.CurrentChallengeIndex < _challengeList.Count - 1)//Challenge 0 does not count
+            {
+                //Evaluate
+                //Display ad-hoc message
+                //Animate icon continue
+                //Wait for click on continue or retry
+                _gameStateManager.GameStateModel.CurrentChallengeIndex++;
+                InstanciateDecks();
+            }
+            else
+            {
+                Debug.Log("Last challenge played, go to stats... or somethign else");
+            }
         }
 
         private void OnRefreshBoard()

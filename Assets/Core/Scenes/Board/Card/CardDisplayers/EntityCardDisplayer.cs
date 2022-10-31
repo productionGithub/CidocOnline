@@ -71,8 +71,6 @@ namespace StarterCore.Core.Scenes.Board.Displayer
                 _fullTextScrollView.SetActive(false);
                 _fullTextButton.GetComponentInChildren<TextMeshProUGUI>().text = "full text";
             }
-
-
             _fullTextButtonState = !_fullTextButtonState;
         }
 
@@ -128,7 +126,6 @@ namespace StarterCore.Core.Scenes.Board.Displayer
         private void InitScopeNoteScrollView()
         {
             _fullTextScrollView.SetActive(false);
-            //_fullTextContent.text = _comment.text;
             _fullTextButtonState = false;
             _fullTextButton.GetComponentInChildren<TextMeshProUGUI>().text = "full text";
         }
@@ -143,7 +140,7 @@ namespace StarterCore.Core.Scenes.Board.Displayer
             _bkg.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
         }
 
-        public void ResetCard()
+        public void ResetToFirstCard()
         {
             Refresh(_entityDeckService.EntityCards[0]);
             InitScopeNoteScrollView();

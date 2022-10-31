@@ -77,7 +77,7 @@ namespace StarterCore.Core.Scenes.Board.Displayer
             _rangeButton.onClick.AddListener(RangeButtonClicked);
 
             Refresh(card);
-            InitScopeNoteScrollView(card);
+            SetFullTextButton(card);
         }
 
         public void Refresh(PropertyCard card)
@@ -166,22 +166,22 @@ namespace StarterCore.Core.Scenes.Board.Displayer
             _comment.text = card.comment;
 
             //Full text button
-            InitScopeNoteScrollView(card);
+            SetFullTextButton(card);
         }
 
-        private void InitScopeNoteScrollView(PropertyCard card)
+        private void SetFullTextButton(PropertyCard card)
         {
             //If card is an inverse property, do not show the Full text button
             if (card.id.Substring(card.id.Length - 1).ToLower().Equals("i"))
             {
-                _fullTextScrollView.SetActive(false);
+                _fullTextScrollView.SetActive(false);//In case it was already activated by last click
                 _fullTextButton.gameObject.SetActive(false);
             }
             else
             {
-                Debug.Log("[PropertyCardDisplayer] GOT AN PROPERTY ONE");
-                _fullTextButton.gameObject.SetActive(true);
-                _fullTextButtonState = false;
+                _fullTextScrollView.SetActive(false);//In case it was already activated by last click
+                _fullTextButton.gameObject.SetActive(true);//Initial state : shows 'full text" label
+                _fullTextButtonState = false;//not already clicked
                 _fullTextButton.GetComponentInChildren<TextMeshProUGUI>().text = "full text";
             }
         }

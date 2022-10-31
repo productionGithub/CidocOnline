@@ -1,3 +1,5 @@
+
+#define TRACE_OFF
 using StarterCore.Core.Scenes.Board.Card.Cards;
 using System;
 using System.Collections.Generic;
@@ -54,7 +56,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
         [SerializeField]
         EntityDeckController _rightDeckController;
 
-        private bool isListFiltered = false;
+        //private bool isListFiltered = false;
 
         //Update color filter
         private List<string> domainColorFilter;
@@ -72,6 +74,8 @@ namespace StarterCore.Core.Scenes.Board.Deck
             rangeColorFilter = new List<string>();
             InitColorList(ref domainColorFilter);
             InitColorList(ref rangeColorFilter);
+
+            isDomainColorListWhite = true;//By default, white tick / all colors is enabled
 
             _initialDeckContent = initialDeck;
             _addedCard = new List<PropertyCard>();
@@ -186,7 +190,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
         //Update domain and range colors list based on tick type
         public void UpdateColorFilters(GameObject sender, TickCtrl.TickColor e)
         {
-            Trace.Log("PROPERTY UPDATE COLOR FILTER");
+            Trace.Log("PROPERTY UPDATE COLOR FILTER with : " + sender.name + " " + e.ToString());
             //In case the previous matching failed:
             //Hide the 'NoMatchCard' and re-activate the slider
             _noMatchCard.SetActive(false);
@@ -210,6 +214,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
                     {
                         if (sender.GetComponent<TickCtrl>().IsTicked == true)
                         {
+                            Trace.Log("PROPERTY UPDATE COLOR FILTER ISTICKED = TRUE");
                             //If color list is not already filtered, clear it.
                             //If already filtered, color filtering is cumulative
                             if (isDomainColorListWhite == true)
@@ -217,6 +222,8 @@ namespace StarterCore.Core.Scenes.Board.Deck
                                 domainColorFilter.Clear();
                             }
                             domainColorFilter.Add((string)e.ToString());
+                            Trace.Log("PROPERTY UPDATE COLOR FILTER ADDED COLOR TO LIST : " + domainColorFilter.Count);
+                            Debug.Log("");
                             isDomainColorListWhite = false;
                         }
                         else
@@ -292,7 +299,16 @@ namespace StarterCore.Core.Scenes.Board.Deck
         {
             InitDomainColors();
             InitRangeColors();
+
+            _currentDeckContent.Clear();
+            _addedCard.Clear();
+            _currentDeckContent = new List<PropertyCard>(_initialDeckContent);
+            _addedCard = new List<PropertyCard>();
+
             UpdateDeck();
+
+            _propertyCardDisplayer.Refresh(_propertyDeckService.PropertyCards[0]);
+
             domainTicksContainer.GetComponent<TicksController>().ResetTicks();
             rangeTicksContainer.GetComponent<TicksController>().ResetTicks();
         }
@@ -301,6 +317,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
         {
             Trace.Log("PROPERTY UPDATE DECK !");
             _currentDeckContent.Clear();
+
             var dcf = domainColorFilter;
             var rcf = rangeColorFilter;
 
@@ -313,6 +330,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
             if (cards.Count() > 0)
             {
+                Trace.Log("MATCH AT LEST ONE CARD");
                 _noMatchCard.SetActive(false);
                 foreach (PropertyCard card in cards)
                 {
@@ -326,6 +344,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
             }
             else
             {
+                Trace.Log("MATCH NO CARD");
                 _noMatchCard.SetActive(true);
                 _sliderController.SetSliderActive(false);
                 _deckCounterDisplayer.Show(0, _initialDeckContent.Count);

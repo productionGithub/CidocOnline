@@ -1,4 +1,4 @@
-using StarterCore.Core.Scenes.Board.Deck;
+#define TRACE_OFF
 using UnityEngine;
 
 /// <summary>
@@ -21,31 +21,30 @@ namespace StarterCore.Core.Scenes.Board.Deck
         private int tickCount;
         public int TickCount { get => tickCount; }
 
-
-
         void Start()
         {
             //Set White tick to ON (all others by default are OFF)
             whiteTick.GetComponent<TickCtrl>().TickOn();
         }
 
-
-
         //Call for color filtering depending on type of decks.
         public void TickClicked(GameObject sender, TickCtrl.TickColor e)
         {
+            Trace.Log("TICKS CONTROLLER - TICK CLICKED !");
             //Update tick state and UI
             RefreshTicks(sender);
 
             //Calls ad-hoc filtering method depending on type of deck managed by Ticks
             if (deckContainer.GetComponent<EntityDeckController>() != null)
             {
+                Trace.Log("TICKS CONTROLLER - TICK CLICKED IS FROM ENTITY CARD!");
                 deckContainer.GetComponent<EntityDeckController>().UpdateColorFilters(sender, e);
             }
             else
             {
                 if (deckContainer.GetComponent<PropertyDeckController>() != null)
                 {
+                    Trace.Log("TICKS CONTROLLER - TICK CLICKED IS FROM PROPERTY CARD!");
                     deckContainer.GetComponent<PropertyDeckController>().UpdateColorFilters(sender, e);
                 }
             }

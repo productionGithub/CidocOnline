@@ -46,27 +46,48 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
         private bool isListFiltered = false;
 
+
+        //TODO CALL it from parent!
+        public void InitListeners()
+        {
+            //EntityCardDisplayer
+            //_entityCardDisplayer.InitListeners();
+
+
+            //Slider
+            //_sliderController.InitSliderListener();
+            //_sliderController.OnSliderValueChangedUI += OnSliderValueChanged;
+
+            //HierarchyDisplayer
+            _hierarchyDisplayer.HierarchyEntDisp_HierarchyClickEvent += OnHierarchyEntityClick;
+        }
+
         public void Show(List<EntityCard> initialDeck)
         {
             _initialDeckContent = initialDeck;
             _addedCard = new List<EntityCard>();
             _currentDeckContent = new List<EntityCard>(initialDeck);
 
+
             _entityCardDisplayer.Show(initialDeck[0]);
 
             _hierarchyDisplayer.Show(initialDeck[0]);
             _hierarchyDisplayer.HierarchyEntDisp_HierarchyClickEvent += OnHierarchyEntityClick;
 
-            _sliderController.Show(_currentDeckContent.Count - 1);
-            _sliderController.OnSliderValueChangedUI += OnSliderValueChanged;
-
+            //Steppers
             _previousStepper.onClick.AddListener(OnPreviousCardClicked);
             _nextStepper.onClick.AddListener(OnNextCardClicked);
+
+            //Slider
+            _sliderController.Show(_currentDeckContent.Count - 1);
+            _sliderController.OnSliderValueChangedUI += OnSliderValueChanged;
 
             _deckCounterDisplayer.Show(_currentDeckContent.Count, _initialDeckContent.Count);
 
             _noMatchCard.SetActive(false);
         }
+
+
 
         private void OnHierarchyEntityClick(string cardId)
         {
@@ -279,7 +300,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
         {
             ReinitDeck();
             DisplayDeck();
-            _entityCardDisplayer.ResetCard();
+            _entityCardDisplayer.ResetToFirstCard();
             _tickController.ResetTicks();
         }
     }
