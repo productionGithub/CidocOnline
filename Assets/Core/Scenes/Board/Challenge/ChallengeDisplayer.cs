@@ -5,6 +5,7 @@ using StarterCore.Core.Services.Network.Models;
 using TMPro;
 using UnityEngine;
 using Zenject;
+using System.Linq;
 
 namespace StarterCore.Core.Scenes.Board.Challenge
 {
@@ -86,8 +87,9 @@ namespace StarterCore.Core.Scenes.Board.Challenge
 
             _statementText.text = currentChallenge.Statement;
 
-            _currentScore.text = "999";
-            _maxScore.text = "999";
+            _currentScore.text = _gameStateManager.GameStateModel.CurrentScore.ToString();
+            int maximumScore = challengeList.Sum(c => c.Score);
+            _maxScore.text = maximumScore.ToString();
 
             _defaultMessage.SetActive(true);
             _defaultMessage.GetComponentInChildren<TextMeshProUGUI>().text = defaultTopTextZone;

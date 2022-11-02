@@ -58,38 +58,31 @@ namespace StarterCore.Core.Scenes.Board
         private List<ChallengeData> _challengeList;
         private List<InstanceCardModelDown> _instances;
 
-        private bool _leftEntityDeckControllerBool = false;
-
-        public async void Show(List<ChallengeData> challengeList)
+        public void Init(List<ChallengeData> challengeList, List<InstanceCardModelDown> instances)
         {
+            _instances = instances;
             _challengeList = challengeList;
-            _instances = await _networkService.GetInstanceFile(_gameStateManager.GameStateModel.CurrentScenario);
 
             _refreshBoard.onClick.AddListener(OnRefreshBoard);
             _validateBoard.onClick.AddListener(OnValidateBoard);
+        }
 
+        public void Show()
+        {
             _challengeController.Show(_challengeList);
-
             InstanciateDecks();
         }
 
         private async void InstanciateDecks()
         {
-
-            int currentChallengeId = _gameStateManager.GameStateModel.CurrentChallengeIndex;
-
             //Initialization of Left Entity Deck
-            string initStringEL = _challengeList[currentChallengeId].ELeftInit;
+            string initStringEL = _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].ELeftInit;
             if (!initStringEL.Equals(string.Empty))
             {
                 _leftEntityDeckController.gameObject.SetActive(true);
                 List<EntityCard> initialLeftEntityDeckContent = _entityDeckService.GetInitialDeck(initStringEL);
-                Trace.Log("[BoardCOntroller] Call EntityDeckController Init()!");
-                if (_leftEntityDeckControllerBool == false)//A refactor
-                {
-                    _leftEntityDeckController.Init();
-                    _leftEntityDeckControllerBool = true;
-                }
+
+                _leftEntityDeckController.Init();
                 _leftEntityDeckController.Show(initialLeftEntityDeckContent);
             }
 
@@ -102,16 +95,20 @@ namespace StarterCore.Core.Scenes.Board
                 List<PropertyCard> initialLeftPropertyDeckContent = _propertyDeckService.GetInitialDeck(initStringPL);
                 _leftPropertyDeckController.Show(initialLeftPropertyDeckContent);
             }
+            */
 
             //Initialization of Middle Entity Deck
-            string initStringEM = _challengeList[currentChallengeId].EMiddleInit;
+            string initStringEM = _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].EMiddleInit;
             if (!initStringEM.Equals(string.Empty))
             {
                 _middleEntityDeckController.gameObject.SetActive(true);
                 List<EntityCard> initialMiddleEntityDeckContent = _entityDeckService.GetInitialDeck(initStringEM);
+
+                _middleEntityDeckController.Init();
                 _middleEntityDeckController.Show(initialMiddleEntityDeckContent);
             }
 
+            /*
             //Initialization of Right Property Deck
             string initStringPR = _challengeList[currentChallengeId].PRightInit;
             if (!initStringPR.Equals(string.Empty))
@@ -120,25 +117,26 @@ namespace StarterCore.Core.Scenes.Board
                 List<PropertyCard> initialRightPropertyDeckContent = _propertyDeckService.GetInitialDeck(initStringPR);
                 _rightPropertyDeckController.Show(initialRightPropertyDeckContent);
             }
+            */
 
             //Initialization of Right Entity Deck
-            string initStringER = _challengeList[currentChallengeId].ERightInit;
+            string initStringER = _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].ERightInit;
             if (!initStringER.Equals(string.Empty))
             {
                 _rightEntityDeckController.gameObject.SetActive(true);
                 List<EntityCard> initialRightEntityDeckContent = _entityDeckService.GetInitialDeck(initStringER);
+                _rightEntityDeckController.Init();
                 _rightEntityDeckController.Show(initialRightEntityDeckContent);
             }
 
-            */
+            
             //INSTANCES
             //Left instance
-            string initStringLI = _challengeList[currentChallengeId].ILeftInit;
+            string initStringLI = _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].ILeftInit;
             if (!initStringLI.Equals(string.Empty))
             {
                 _leftInstanceDisplayer.gameObject.SetActive(true);
 
-                //<--- THIS BLOC GOES TO THE DISPLAYER
                 InstanceCardModelDown leftInstance = _instances.Single(c => c.Id == initStringLI[1..].Trim());
 
                 string iconName = leftInstance.ImageName;
@@ -147,13 +145,12 @@ namespace StarterCore.Core.Scenes.Board
                 image = await DownloadJPGImage(url, "leftEntity");
 
                 Sprite iconSprite = Sprite.Create(image, new Rect(0, 0, 300, 300), new Vector2());
-                //--->
 
                 _leftInstanceDisplayer.Show(leftInstance, iconSprite);
             }
-            /*
+
             ////Middle instance
-            string initStringMI = _challengeList[currentChallengeId].IMiddleInit;
+            string initStringMI = _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].IMiddleInit;
             if (!initStringMI.Equals(string.Empty))
             {
                 _middleInstanceDisplayer.gameObject.SetActive(true);
@@ -169,7 +166,7 @@ namespace StarterCore.Core.Scenes.Board
             }
 
             ////Right instance
-            string initStringRI = _challengeList[currentChallengeId].IRightInit;
+            string initStringRI = _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].IRightInit;
             if (!initStringRI.Equals(string.Empty))
             {
                 _rightInstanceDisplayer.gameObject.SetActive(true);
@@ -183,7 +180,7 @@ namespace StarterCore.Core.Scenes.Board
                 Sprite iconSprite = Sprite.Create(image, new Rect(0, 0, 300, 300), new Vector2());
                 _rightInstanceDisplayer.Show(rightInstance, iconSprite);
             }
-            */
+
         }
 
         private void OnValidateBoard()
@@ -196,6 +193,7 @@ namespace StarterCore.Core.Scenes.Board
                 //Wait for click on continue or retry
                 _gameStateManager.GameStateModel.CurrentChallengeIndex++;
                 InstanciateDecks();
+                _challengeController.Show(_challengeList);
             }
             else
             {
@@ -239,14 +237,16 @@ namespace StarterCore.Core.Scenes.Board
         {
         }
 
-        private void OnDestroy()
-        {
-        }
-
         public async UniTask<Texture2D> DownloadJPGImage(string url, string name)
         {
             Texture2D img = await ImageDownloader.DownloadImage(url, name, FileFormat.JPG);
             return img;
+        }
+
+        private void OnDestroy()
+        {
+            _refreshBoard.onClick.RemoveListener(OnRefreshBoard);
+            _validateBoard.onClick.RemoveListener(OnValidateBoard);
         }
     }
 }

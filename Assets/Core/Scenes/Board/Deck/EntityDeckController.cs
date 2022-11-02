@@ -45,28 +45,35 @@ namespace StarterCore.Core.Scenes.Board.Deck
         [SerializeField]
         GameObject _noMatchCard;//Shows when no card matches filtering
 
-        private bool isListFiltered = false;
+        private bool _isListFiltered = false;
+        private bool _initDone = false;
 
         public void Init()
         {
-            //Card data
-            _entityCardController.Init();
+            //Initialization is made only once
+            if (_initDone == false)
+            {
+                //Card data
+                _entityCardController.Init();
 
-            //Ticks
-            _ticksController.Init();
-            _ticksController.OnEntityTickClicked_TicksCtrl += UpdateColorFilters;
+                //Ticks
+                _ticksController.Init();
+                _ticksController.OnEntityTickClicked_TicksCtrl += UpdateColorFilters;
 
-            //Steppers
-            _previousStepper.onClick.AddListener(OnPreviousCardClicked);
-            _nextStepper.onClick.AddListener(OnNextCardClicked);
+                //Steppers
+                _previousStepper.onClick.AddListener(OnPreviousCardClicked);
+                _nextStepper.onClick.AddListener(OnNextCardClicked);
 
-            //HierarchyDisplayer
-            _hierarchyDisplayer.Init();
-            _hierarchyDisplayer.HierarchyEntityEntryClickEvent += OnHierarchyEntityClick;
+                //HierarchyDisplayer
+                _hierarchyDisplayer.Init();
+                _hierarchyDisplayer.HierarchyEntityEntryClickEvent += OnHierarchyEntityClick;
 
-            //Slider
-            _sliderController.Init();
-            _sliderController.OnSliderValueChangedUI += OnSliderValueChanged;
+                //Slider
+                _sliderController.Init();
+                _sliderController.OnSliderValueChangedUI += OnSliderValueChanged;
+
+                _initDone = true;
+            }
         }
 
         public void Show(List<EntityCard> initialDeck)
@@ -76,13 +83,8 @@ namespace StarterCore.Core.Scenes.Board.Deck
             _currentDeckContent = new List<EntityCard>(initialDeck);
 
             _entityCardController.Show(initialDeck[0]);
-
             _hierarchyDisplayer.Show(initialDeck[0]);
-
-            //Slider
             _sliderController.Show(_currentDeckContent.Count - 1);
-
-            //Deck counter
             _deckCounterDisplayer.Show(_currentDeckContent.Count, _initialDeckContent.Count);
 
             _noMatchCard.SetActive(false);
@@ -171,7 +173,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
             {
                 //If deck is not already filtered, clear it.
                 //If already filtered, color filtering is cumulative
-                if (isListFiltered == false)
+                if (_isListFiltered == false)
                 {
                     _currentDeckContent.Clear();
                 }
@@ -182,14 +184,14 @@ namespace StarterCore.Core.Scenes.Board.Deck
                     FilterAddColor(color);
                     if (_currentDeckContent.Count > 0)
                     {
-                        isListFiltered = true;
+                        _isListFiltered = true;
                     }
                 }
                 else
                 //Remove corresponding tick color to filter
                 {
                     FilterRemoveColor(color);
-                    isListFiltered = true;
+                    _isListFiltered = true;
 
                     //If tick is the last one to be ticked, reset deck to initial
                     if (_ticksController.TickCount <= 0)
@@ -198,7 +200,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
                         _currentDeckContent = new List<EntityCard>(_initialDeckContent);
                         _addedCard.Clear();
                         _addedCard = new List<EntityCard>();
-                        isListFiltered = false;
+                        _isListFiltered = false;
                     }
                 }
             }
@@ -274,7 +276,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
         private void ReinitDeck()
         {
-            isListFiltered = false;
+            _isListFiltered = false;
 
             //Show(_initialDeckContent);//Reinit initial deck <----- SHOULD BE ENOUGH with isListFiltered = false;
             _currentDeckContent.Clear();

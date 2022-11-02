@@ -62,5 +62,10 @@ namespace StarterCore.Core.Scenes.MainMenu
         {
             OnChooseScenarioEvent?.Invoke();
         }
+
+        private void OnContinueChapterClicked()
+        {
+            //Fire event for continue with scenario/chapter/challenge
+        }
     }
 }

@@ -23,9 +23,11 @@ namespace StarterCore.Core.Scenes.Board
         [Inject] GameStateManager _gameStateManager;
         [Inject] NavigationService _navigationService;
         [Inject] BoardController _boardController;
-        [Inject] MockNetService _netService;
+        [Inject] MockNetService _networkService;
 
-        ScenariiModelDown _katalog;
+        ScenariiModelDown _catalog;
+
+
 
         public async void Initialize()
         {
@@ -33,23 +35,22 @@ namespace StarterCore.Core.Scenes.Board
             UpdateGameStateModelWithScenarioData();
 
             //Get catalog
-            _katalog = await GetScenariiCatalog(); 
+            _catalog = await GetScenariiCatalog(); 
 
             //Get chapter filename from catalog
             string chapterFilename = GetChapterFilename();
 
-            //Fetch & Deserialize challenge file content (all challenges of this chapter)
-            List<ChallengeData> chapterChallenges = await GetKurrentChapter(chapterFilename);
-            Trace.Log("Challenges are : " + chapterChallenges);
+            //Fetch & Deserialize challenge and instances files
+            List<ChallengeData> challenges = await GetCurrentChapter(chapterFilename);
+            List<InstanceCardModelDown> instances = await _networkService.GetInstanceFile(_gameStateManager.GameStateModel.CurrentScenario);
 
-            //Show boardController with challenges data
-            Trace.Log("[BoardManager] chapters are : " + chapterChallenges.Count);
-            _boardController.Show(chapterChallenges);
+            _boardController.Init(challenges, instances);
+            _boardController.Show();
         }
 
-        private async UniTask<List<ChallengeData>> GetKurrentChapter(string chapterName)
+        private async UniTask<List<ChallengeData>> GetCurrentChapter(string chapterName)
         {
-            List<ChallengeData> chapter = await _netService.LoadChapter(
+            List<ChallengeData> chapter = await _networkService.LoadChapter(
                 _gameStateManager.GameStateModel.CurrentScenario,
                 _gameStateManager.GameStateModel.CurrentChapter,
                 chapterName);
@@ -59,7 +60,7 @@ namespace StarterCore.Core.Scenes.Board
 
         private async UniTask<ScenariiModelDown> GetScenariiCatalog()
         {
-            ScenariiModelDown catalog = await _netService.GetCatalog();
+            ScenariiModelDown catalog = await _networkService.GetCatalog();
             return catalog;
         }
 
@@ -69,7 +70,7 @@ namespace StarterCore.Core.Scenes.Board
             string name = string.Empty;
 
             //Get filename from catalog
-            foreach (Scenario s in _katalog.Scenarii)
+            foreach (Scenario s in _catalog.Scenarii)
             {
                 foreach (Chapter c in s.Chapters)
                 {
@@ -91,6 +92,7 @@ namespace StarterCore.Core.Scenes.Board
             _gameStateManager.GameStateModel.CurrentScenario = bundle.ScenarioTitle;
             _gameStateManager.GameStateModel.CurrentChapter = bundle.ChapterTitle;
             _gameStateManager.GameStateModel.CurrentChallengeIndex = bundle.ChallengeIndex;
+            _gameStateManager.GameStateModel.CurrentScore = 0;//TODO : Update with score from Bundle
         }
 
         private void UpdateChallengeState()// A t this level?
