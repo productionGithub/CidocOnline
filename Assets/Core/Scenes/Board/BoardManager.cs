@@ -27,8 +27,6 @@ namespace StarterCore.Core.Scenes.Board
 
         ScenariiModelDown _catalog;
 
-
-
         public async void Initialize()
         {
             //Update GameState with current Scenario/Chapter/ChallengeId passed in via NavService bundle

@@ -24,7 +24,7 @@ public class HierarchyPropertyEntry : MonoBehaviour
     public void Show(string arrow, string label)
     {
         _label = label;
-        EntryLabel.text = arrow + label;
+        EntryLabel.text = arrow + " " + label;
         EntryButton.onClick.AddListener(HierarchyPropertyClicked);
     }
 

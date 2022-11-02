@@ -8,6 +8,7 @@ using System.Linq;
 using UnityEngine.UI;
 using StarterCore.Core.Scenes.Board.Deck.DeckInteractables;
 using StarterCore.Core.Scenes.Board.Displayer;
+using StarterCore.Core.Scenes.Board.Deck.DeckInteractables.Ticks;
 
 namespace StarterCore.Core.Scenes.Board.Deck
 {
@@ -65,7 +66,6 @@ namespace StarterCore.Core.Scenes.Board.Deck
                 _nextStepper.onClick.AddListener(OnNextCardClicked);
 
                 //HierarchyDisplayer
-                _hierarchyDisplayer.Init();
                 _hierarchyDisplayer.HierarchyEntityEntryClickEvent += OnHierarchyEntityClick;
 
                 //Slider
@@ -83,6 +83,9 @@ namespace StarterCore.Core.Scenes.Board.Deck
             _currentDeckContent = new List<EntityCard>(initialDeck);
 
             _entityCardController.Show(initialDeck[0]);
+            _ticksController.ResetTicks();
+
+            _hierarchyDisplayer.Init();//Hiearachy is destroyer and recreated for each card
             _hierarchyDisplayer.Show(initialDeck[0]);
             _sliderController.Show(_currentDeckContent.Count - 1);
             _deckCounterDisplayer.Show(_currentDeckContent.Count, _initialDeckContent.Count);

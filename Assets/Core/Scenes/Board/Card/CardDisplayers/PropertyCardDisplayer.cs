@@ -16,8 +16,8 @@ namespace StarterCore.Core.Scenes.Board.Displayer
 
         [Inject] PropertyDeckService _entityDeckService;
 
-        public event Action<string> OnDomainButtonClick;
-        public event Action<string> OnRangeButtonClick;
+        public event Action<string> OnDomainButtonClick_Displayer;
+        public event Action<string> OnRangeButtonClick_Displayer;
 
         //Card fields
         [SerializeField]
@@ -54,9 +54,6 @@ namespace StarterCore.Core.Scenes.Board.Displayer
         [SerializeField]
         private Button _rangeButton;
 
-
-
-
         //Scope note
         [SerializeField]
         private TextMeshProUGUI _comment;
@@ -68,14 +65,22 @@ namespace StarterCore.Core.Scenes.Board.Displayer
         private TextMeshProUGUI _fullTextContent;
 
         private bool _fullTextButtonState = false;//False not clicked (hence scroll view disabled)
+        private bool _initDone = false;
+
+        public void Init()
+        {
+            if (_initDone == false)
+            {
+                _fullTextButton.onClick.AddListener(FullTextClicked);
+                _domainButton.onClick.AddListener(DomainButtonClicked);
+                _rangeButton.onClick.AddListener(RangeButtonClicked);
+
+                _initDone = true;
+            }
+        }
 
         public void Show(PropertyCard card)
         {
-            _fullTextButton.onClick.AddListener(FullTextClicked);
-
-            _domainButton.onClick.AddListener(DomainButtonClicked);
-            _rangeButton.onClick.AddListener(RangeButtonClicked);
-
             Refresh(card);
             SetFullTextButton(card);
         }
@@ -164,9 +169,6 @@ namespace StarterCore.Core.Scenes.Board.Displayer
 
             //Comment
             _comment.text = card.comment;
-
-            //Full text button
-            SetFullTextButton(card);
         }
 
         private void SetFullTextButton(PropertyCard card)
@@ -207,13 +209,12 @@ namespace StarterCore.Core.Scenes.Board.Displayer
 
         private void DomainButtonClicked()
         {
-
-            OnDomainButtonClick?.Invoke(_domainButton.GetComponentInChildren<TextMeshProUGUI>().text);
+            OnDomainButtonClick_Displayer?.Invoke(_domainButton.GetComponentInChildren<TextMeshProUGUI>().text);
         }
 
         private void RangeButtonClicked()
         {
-            OnRangeButtonClick?.Invoke(_rangeButton.GetComponentInChildren<TextMeshProUGUI>().text);
+            OnRangeButtonClick_Displayer?.Invoke(_rangeButton.GetComponentInChildren<TextMeshProUGUI>().text);
         }
 
         public void GhostBackground()
@@ -224,6 +225,13 @@ namespace StarterCore.Core.Scenes.Board.Displayer
         public void ReinitBackground()
         {
             _bkg.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+        }
+
+        private void OnDestroy()
+        {
+            _fullTextButton.onClick.RemoveListener(FullTextClicked);
+            _domainButton.onClick.RemoveListener(DomainButtonClicked);
+            _rangeButton.onClick.RemoveListener(RangeButtonClicked);
         }
     }
 }

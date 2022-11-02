@@ -145,8 +145,6 @@ namespace StarterCore.Core.Scenes.Board.Displayer
         public void ResetToFirstCard()
         {
             Show(_entityDeckService.EntityCards[0]);
-            //Refresh(_entityDeckService.EntityCards[0]);
-            //InitScopeNoteScrollView();
         }
 
         private void OnDestroy()

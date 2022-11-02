@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-namespace StarterCore.Core.Scenes.Board.Deck
+namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables.Ticks
 {
     public class EntityTicksController : MonoBehaviour
     {
@@ -10,8 +10,8 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
         public EntityTick whiteTick;
 
-        private int tickCount; //Track number of tick set to On. If 0, set White tick to On
-        public int TickCount { get => tickCount; }
+        private int _tickCount; //Track number of tick set to On. If 0, set White tick to On
+        public int TickCount { get => _tickCount; }
 
         private EntityTick[] listOfTick;
 
@@ -49,15 +49,15 @@ namespace StarterCore.Core.Scenes.Board.Deck
                 if (tick.ColorOfTick == EntityTick.TickColor.White)
                 {
                     ResetTicks();//White On, all others Off
-                    tickCount = 0;
+                    _tickCount = 0;
                 }
                 else
                 {
                     if (tick.IsTicked)
                     {
                         tick.TickOff();
-                        tickCount--;
-                        if (tickCount == 0)
+                        _tickCount--;
+                        if (_tickCount == 0)
                         {
                             whiteTick.GetComponent<EntityTick>().TickOn();
                         }
@@ -65,7 +65,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
                     else
                     {
                         tick.TickOn();
-                        tickCount++;
+                        _tickCount++;
                         whiteTick.GetComponent<EntityTick>().TickOff();
                     }
                 }

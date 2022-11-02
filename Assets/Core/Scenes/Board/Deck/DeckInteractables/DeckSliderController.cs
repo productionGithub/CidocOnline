@@ -43,5 +43,10 @@ namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables
         {
             gameObject.SetActive(value);
         }
+
+        private void OnDestroy()
+        {
+            _slider.onValueChanged.RemoveListener(OnSliderValueChanged);
+        }
     }
 }

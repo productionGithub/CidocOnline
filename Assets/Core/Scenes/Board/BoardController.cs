@@ -86,16 +86,20 @@ namespace StarterCore.Core.Scenes.Board
                 _leftEntityDeckController.Show(initialLeftEntityDeckContent);
             }
 
-            /*
+
             //Initialization of Left Property Deck
-            string initStringPL = _challengeList[currentChallengeId].PLeftInit;
+            string initStringPL = _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].PLeftInit;
             if (!initStringPL.Equals(string.Empty))
             {
                 _leftPropertyDeckController.gameObject.SetActive(true);
                 List<PropertyCard> initialLeftPropertyDeckContent = _propertyDeckService.GetInitialDeck(initStringPL);
+
+                Trace.Log("[BoardController] _leftPropertyDeckController Init call");
+
+                _leftPropertyDeckController.Init();
                 _leftPropertyDeckController.Show(initialLeftPropertyDeckContent);
             }
-            */
+
 
             //Initialization of Middle Entity Deck
             string initStringEM = _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].EMiddleInit;
@@ -203,26 +207,28 @@ namespace StarterCore.Core.Scenes.Board
 
         private void OnRefreshBoard()
         {
-            if (_leftEntityDeckController.gameObject.activeSelf)
-            {
-                _leftEntityDeckController.ResetDeck();
-            }
-            if (_middleEntityDeckController.gameObject.activeSelf)
-            {
-                _middleEntityDeckController.ResetDeck();
-            }
-            if (_rightEntityDeckController.gameObject.activeSelf)
-            {
-                _rightEntityDeckController.ResetDeck();
-            }
-            if (_leftPropertyDeckController.gameObject.activeSelf)
-            {
-                _leftPropertyDeckController.ResetDeck();
-            }
-            if (_rightPropertyDeckController.gameObject.activeSelf)
-            {
-                _rightPropertyDeckController.ResetDeck();
-            }
+            Show();
+
+            //if (_leftEntityDeckController.gameObject.activeSelf)
+            //{
+            //    _leftEntityDeckController.ResetDeck();
+            //}
+            //if (_middleEntityDeckController.gameObject.activeSelf)
+            //{
+            //    _middleEntityDeckController.ResetDeck();
+            //}
+            //if (_rightEntityDeckController.gameObject.activeSelf)
+            //{
+            //    _rightEntityDeckController.ResetDeck();
+            //}
+            //if (_leftPropertyDeckController.gameObject.activeSelf)
+            //{
+            //    _leftPropertyDeckController.ResetDeck();
+            //}
+            //if (_rightPropertyDeckController.gameObject.activeSelf)
+            //{
+            //    _rightPropertyDeckController.ResetDeck();
+            //}
         }
 
         private void OnGamePaused()
