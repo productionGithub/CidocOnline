@@ -1,3 +1,4 @@
+#define TRACE_ON
 using System.Collections.Generic;
 using StarterCore.Core.Services.GameState;
 using StarterCore.Core.Services.Network;
@@ -24,7 +25,6 @@ namespace StarterCore.Core.Scenes.Board
         [Inject] BoardController _boardController;
         [Inject] MockNetService _netService;
 
-        ScenariiModelDown _catalog;
         ScenariiModelDown _katalog;
 
         public async void Initialize()
@@ -60,7 +60,6 @@ namespace StarterCore.Core.Scenes.Board
         private async UniTask<ScenariiModelDown> GetScenariiCatalog()
         {
             ScenariiModelDown catalog = await _netService.GetCatalog();
-            Debug.Log("[BoardManager] CATALGO ===> " + catalog.Scenarii[0].Chapters[0].ChapterFilename);
             return catalog;
         }
 

@@ -42,9 +42,9 @@ namespace StarterCore.Core.Scenes.Board.Deck
         [SerializeField]
         Button _nextStepper;// Stepper +
         [SerializeField]
-        TicksController _domainTickController;
+        EntityTicksController _domainTickController;
         [SerializeField]
-        TicksController _rangeTickController;
+        EntityTicksController _rangeTickController;
         [SerializeField]
         GameObject _noMatchCard;
         [SerializeField]
@@ -196,7 +196,9 @@ namespace StarterCore.Core.Scenes.Board.Deck
             _noMatchCard.SetActive(false);
             _sliderController.SetSliderActive(true);
 
-            switch (sender.GetComponent<TickCtrl>().typeOfTick)
+
+            /*
+            switch (sender.GetComponent<TickCtrl>().TypeOfTick)
             {
                 case (TickCtrl.TickType.Domain):
                     if (e == TickCtrl.TickColor.White)
@@ -231,7 +233,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
                         {
                             domainColorFilter.Remove(e.ToString());
                             //If no color anymore in the list, re-init to white (All colors)
-                            if (domainTicksContainer.GetComponent<TicksController>().TickCount == 0)
+                            if (domainTicksContainer.GetComponent<EntityTicksController>().TickCount == 0)
                             {
                                 InitColorList(ref domainColorFilter);
                                 isDomainColorListWhite = true;
@@ -269,7 +271,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
                     {
                         rangeColorFilter.Remove(e.ToString());
                         //If no color anymore in the list, re-init to white (All colors)
-                        if (rangeTicksContainer.GetComponent<TicksController>().TickCount == 0)
+                        if (rangeTicksContainer.GetComponent<EntityTicksController>().TickCount == 0)
                         {
                             InitColorList(ref rangeColorFilter);
                             isRangeColorListWhite = true;
@@ -280,6 +282,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
                 default:
                     break;
             }
+            */
             UpdateDeck();
         }
 
@@ -309,8 +312,8 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
             _propertyCardDisplayer.Refresh(_propertyDeckService.PropertyCards[0]);
 
-            domainTicksContainer.GetComponent<TicksController>().ResetTicks();
-            rangeTicksContainer.GetComponent<TicksController>().ResetTicks();
+            domainTicksContainer.GetComponent<EntityTicksController>().ResetTicks();
+            rangeTicksContainer.GetComponent<EntityTicksController>().ResetTicks();
         }
 
         private void UpdateDeck()

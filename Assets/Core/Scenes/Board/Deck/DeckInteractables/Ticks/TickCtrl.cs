@@ -20,7 +20,7 @@ public class TickCtrl : MonoBehaviour
     private TickType type;
 
     public bool IsTicked { get => ticked; }
-    public TickType typeOfTick { get => type; }
+    public TickType typeOfTick { get => type; }
     public TickColor colorOfTick { get => tickColor; }
 
     public enum TickColor

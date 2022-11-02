@@ -1,32 +1,38 @@
+#define TRACE_ON
 using System;
-using Cysharp.Threading.Tasks;
-using StarterCore.Core.Scenes.Board;
+using System.Collections.Generic;
 using StarterCore.Core.Scenes.Board.Card.Cards;
 using StarterCore.Core.Scenes.Board.Displayer;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
+using StarterCore.Core.Scenes.Board.Deck;
+using System.Linq;
 
 namespace StarterCore.Core.Scenes.Board.Deck
 {
     public class EntityCardController : MonoBehaviour
     {
         /// <summary>
-        /// Manage events from a EntityCardDisplayer
-        /// Manage deck content depending on filtering event (initial / current)
-        /// Manage card to be displayed depending on Slider event
+        /// Manage events from a EntityCardDisplayer (FullText button event for scope note)
+        /// Proxy methods to entity card displayer
         /// </summary>
-        // Start is called before the first frame update
+        
+        [SerializeField]
+        EntityCardDisplayer _entityCardDisplayer;
 
-        [SerializeField] EntityCardDisplayer _cardDisplayer;
 
         public int currentCard;//Utilepour le Board controller qui va la passer au Challenge (-> Challenge evaluator)
 
         public event Action<string> OnHierarchyEntityClickedCardController;
 
+        public void Init()
+        {
+            _entityCardDisplayer.Init();
+        }
+
         public void Show(EntityCard card)
         {
-            _cardDisplayer.Show(card);
+            _entityCardDisplayer.Show(card);
             //_cardDisplayer.EntityCardDispl_HierarchyClickEvent += _cardDisplayer_OnHierarchyEntityClickedCardDisplayer;
         }
 
@@ -37,17 +43,22 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
         public void GhostBackground()
         {
-            _cardDisplayer.GhostBackground();
+            _entityCardDisplayer.GhostBackground();
         }
 
         public void ReinitBackground()
         {
-            _cardDisplayer.ReinitBackground();
+            _entityCardDisplayer.ReinitBackground();
         }
 
         public void Refresh(EntityCard card)
         {
-            _cardDisplayer.Refresh(card);
+            _entityCardDisplayer.Show(card);
+        }
+
+        private void OnDestroy()
+        {
+            //Unsubscribe hierarchy event
         }
     }
 }

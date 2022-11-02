@@ -1,3 +1,4 @@
+#define TRACE_ON
 using UnityEngine;
 using StarterCore.Core.Services.Navigation;
 using StarterCore.Core.Services.Network.Models;
@@ -57,6 +58,8 @@ namespace StarterCore.Core.Scenes.Board
         private List<ChallengeData> _challengeList;
         private List<InstanceCardModelDown> _instances;
 
+        private bool _leftEntityDeckControllerBool = false;
+
         public async void Show(List<ChallengeData> challengeList)
         {
             _challengeList = challengeList;
@@ -81,9 +84,16 @@ namespace StarterCore.Core.Scenes.Board
             {
                 _leftEntityDeckController.gameObject.SetActive(true);
                 List<EntityCard> initialLeftEntityDeckContent = _entityDeckService.GetInitialDeck(initStringEL);
+                Trace.Log("[BoardCOntroller] Call EntityDeckController Init()!");
+                if (_leftEntityDeckControllerBool == false)//A refactor
+                {
+                    _leftEntityDeckController.Init();
+                    _leftEntityDeckControllerBool = true;
+                }
                 _leftEntityDeckController.Show(initialLeftEntityDeckContent);
             }
 
+            /*
             //Initialization of Left Property Deck
             string initStringPL = _challengeList[currentChallengeId].PLeftInit;
             if (!initStringPL.Equals(string.Empty))
@@ -120,6 +130,7 @@ namespace StarterCore.Core.Scenes.Board
                 _rightEntityDeckController.Show(initialRightEntityDeckContent);
             }
 
+            */
             //INSTANCES
             //Left instance
             string initStringLI = _challengeList[currentChallengeId].ILeftInit;
@@ -140,7 +151,7 @@ namespace StarterCore.Core.Scenes.Board
 
                 _leftInstanceDisplayer.Show(leftInstance, iconSprite);
             }
-            
+            /*
             ////Middle instance
             string initStringMI = _challengeList[currentChallengeId].IMiddleInit;
             if (!initStringMI.Equals(string.Empty))
@@ -172,6 +183,7 @@ namespace StarterCore.Core.Scenes.Board
                 Sprite iconSprite = Sprite.Create(image, new Rect(0, 0, 300, 300), new Vector2());
                 _rightInstanceDisplayer.Show(rightInstance, iconSprite);
             }
+            */
         }
 
         private void OnValidateBoard()

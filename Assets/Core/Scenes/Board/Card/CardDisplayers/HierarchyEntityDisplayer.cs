@@ -16,7 +16,7 @@ namespace StarterCore.Core.Scenes.Board.Displayer
 {
     public class HierarchyEntityDisplayer : MonoBehaviour
     {
-        public event Action<string> HierarchyEntDisp_HierarchyClickEvent;
+        public event Action<string> HierarchyEntityEntryClickEvent;
 
         [SerializeField]
         HierarchyEntityEntry _entryEntityTemplate;
@@ -28,14 +28,46 @@ namespace StarterCore.Core.Scenes.Board.Displayer
         private List<HierarchyEntityEntry> _entriesEntity;//Keeps track of hierarchy instanciated prefabs
         private List<HierarchyCurrentEntry> _currentEntityEntry;//Keeps track of hierarchy instanciated prefabs
 
-        public void Show(EntityCard card)// List<EntityCard> parents, string current, List<EntityCard> children)
+        //public void Show(EntityCard card)// List<EntityCard> parents, string current, List<EntityCard> children)
+        //{
+        //    CleanEntityHierarchy();
+        //    DisplayEntityHierarchy(card);
+        //}
+
+        public void Init()
         {
-            CleanEntityHierarchy();
-            DisplayEntityHierarchy(card);
+            if (_entriesEntity == null)
+            {
+                _entriesEntity = new List<HierarchyEntityEntry>();
+            }
+            else
+            {
+                foreach (HierarchyEntityEntry e in _entriesEntity)
+                {
+                    e.OnHierarchyEntityClickEvent -= HierarchyEntityEntryClicked;
+                    Destroy(e.gameObject);
+                }
+                _entriesEntity.Clear();
+            }
+
+            if (_currentEntityEntry == null)
+            {
+                _currentEntityEntry = new List<HierarchyCurrentEntry>();
+            }
+            else
+            {
+                foreach (HierarchyCurrentEntry e in _currentEntityEntry)
+                {
+                    Destroy(e.gameObject);
+                }
+                _currentEntityEntry.Clear();
+            }
         }
 
-        private void DisplayEntityHierarchy(EntityCard card)
+        public void Show(EntityCard card)
         {
+            Init(); //Clear list of instanciated prefabs, unsub to click events
+
             string arrowUp = "\u02C4";
             string arrowDown = "\u02C5";
 
@@ -77,37 +109,37 @@ namespace StarterCore.Core.Scenes.Board.Displayer
         private void HierarchyEntityEntryClicked(string label)
         {
             string id = label.Substring(0, label.IndexOf("_")).Trim();//Fetch the sub string before first '_'
-            HierarchyEntDisp_HierarchyClickEvent?.Invoke(id);
+            HierarchyEntityEntryClickEvent?.Invoke(id);
         }
 
         public void CleanEntityHierarchy()
         {
-            if (_entriesEntity == null)
-            {
-                _entriesEntity = new List<HierarchyEntityEntry>();
-            }
-            else
-            {
-                foreach (HierarchyEntityEntry e in _entriesEntity)
-                {
-                    e.OnHierarchyEntityClickEvent -= HierarchyEntityEntryClicked;
-                    Destroy(e.gameObject);
-                }
-                _entriesEntity.Clear();
-            }
+            //if (_entriesEntity == null)
+            //{
+            //    _entriesEntity = new List<HierarchyEntityEntry>();
+            //}
+            //else
+            //{
+            //    foreach (HierarchyEntityEntry e in _entriesEntity)
+            //    {
+            //        e.OnHierarchyEntityClickEvent -= HierarchyEntityEntryClicked;
+            //        Destroy(e.gameObject);
+            //    }
+            //    _entriesEntity.Clear();
+            //}
 
-            if (_currentEntityEntry == null)
-            {
-                _currentEntityEntry = new List<HierarchyCurrentEntry>();
-            }
-            else
-            {
-                foreach (HierarchyCurrentEntry e in _currentEntityEntry)
-                {
-                    Destroy(e.gameObject);
-                }
-                _currentEntityEntry.Clear();
-            }
+            //if (_currentEntityEntry == null)
+            //{
+            //    _currentEntityEntry = new List<HierarchyCurrentEntry>();
+            //}
+            //else
+            //{
+            //    foreach (HierarchyCurrentEntry e in _currentEntityEntry)
+            //    {
+            //        Destroy(e.gameObject);
+            //    }
+            //    _currentEntityEntry.Clear();
+            //}
         }
     }
 }

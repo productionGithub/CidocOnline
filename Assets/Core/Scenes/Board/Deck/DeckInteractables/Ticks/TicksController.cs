@@ -38,14 +38,14 @@ namespace StarterCore.Core.Scenes.Board.Deck
             if (deckContainer.GetComponent<EntityDeckController>() != null)
             {
                 Trace.Log("TICKS CONTROLLER - TICK CLICKED IS FROM ENTITY CARD!");
-                deckContainer.GetComponent<EntityDeckController>().UpdateColorFilters(sender, e);
+                //deckContainer.GetComponent<EntityDeckController>().UpdateColorFilters(sender, e);
             }
             else
             {
                 if (deckContainer.GetComponent<PropertyDeckController>() != null)
                 {
                     Trace.Log("TICKS CONTROLLER - TICK CLICKED IS FROM PROPERTY CARD!");
-                    deckContainer.GetComponent<PropertyDeckController>().UpdateColorFilters(sender, e);
+                    //deckContainer.GetComponent<PropertyDeckController>().UpdateColorFilters(sender, e);
                 }
             }
         }

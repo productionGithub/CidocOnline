@@ -1,5 +1,7 @@
-﻿using System;
+﻿#define TRACE_ON
+using System;
 using StarterCore.Core.Scenes.Board.Card.Cards;
+using StarterCore.Core.Scenes.Board.Deck;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,9 +14,12 @@ namespace StarterCore.Core.Scenes.Board.Displayer
         /// <summary>
         /// Display content of card
         /// Contains a list of CARD_INTERACTABLE (Hierarchy, Ticks, Slider)
+        /// Show conditional comment when full text button is clicked
         /// </summary>
 
         [Inject] EntityDeckService _entityDeckService;
+
+        public event Action OnFullTextClick;
 
         //Card fields
         [SerializeField]
@@ -49,33 +54,21 @@ namespace StarterCore.Core.Scenes.Board.Displayer
 
         private bool _fullTextButtonState = false;//False not clicked (hence scroll view disabled)
 
+        //init events
+        public void Init()
+        {
+            Trace.Log("[EntityCardDisplayer] Init!");
+            _fullTextButton.onClick.AddListener(FullTextClicked);
+        }
+
+        //Show UI
         public void Show(EntityCard card)
         {
-            _fullTextButton.onClick.AddListener(FullTextClicked);
-            InitScopeNoteScrollView();
-            Refresh(card);
-        }
+            //reset full text button and scope note view
+            _fullTextScrollView.SetActive(false);
+            _fullTextButtonState = false;
+            _fullTextButton.GetComponentInChildren<TextMeshProUGUI>().text = "full text";
 
-        private void FullTextClicked()
-        {
-            if(!_fullTextButtonState)
-            {
-                //False -> We want the scrollview to be visible
-                _fullTextScrollView.SetActive(true);
-                _fullTextContent.text = _comment.text;
-                _fullTextButton.GetComponentInChildren<TextMeshProUGUI>().text = "close";
-            }
-            else
-            {
-                //Invisible
-                _fullTextScrollView.SetActive(false);
-                _fullTextButton.GetComponentInChildren<TextMeshProUGUI>().text = "full text";
-            }
-            _fullTextButtonState = !_fullTextButtonState;
-        }
-
-        public void Refresh(EntityCard card)
-        {
             _icon1.SetActive(false);
             _icon2.SetActive(false);
 
@@ -85,7 +78,7 @@ namespace StarterCore.Core.Scenes.Board.Displayer
                 _icon1.SetActive(true);
                 _icon1.GetComponent<Image>().sprite = _entityDeckService.IconsSprites[_entityDeckService.IconsDictionary[card.icons[0]]];
             }
-            if(card.icons[1] != "")
+            if (card.icons[1] != "")
             {
                 _icon2.SetActive(true);
                 _icon2.GetComponent<Image>().sprite = _entityDeckService.IconsSprites[_entityDeckService.IconsDictionary[card.icons[1]]];
@@ -119,15 +112,24 @@ namespace StarterCore.Core.Scenes.Board.Displayer
 
             //Comment
             _comment.text = card.comment;
-
-            InitScopeNoteScrollView();
         }
 
-        private void InitScopeNoteScrollView()
+        private void FullTextClicked()
         {
-            _fullTextScrollView.SetActive(false);
-            _fullTextButtonState = false;
-            _fullTextButton.GetComponentInChildren<TextMeshProUGUI>().text = "full text";
+            if (!_fullTextButtonState)
+            {
+                //False -> We want the scrollview to be visible
+                _fullTextScrollView.SetActive(true);
+                _fullTextContent.text = _comment.text;
+                _fullTextButton.GetComponentInChildren<TextMeshProUGUI>().text = "close";
+            }
+            else
+            {
+                //Invisible
+                _fullTextScrollView.SetActive(false);
+                _fullTextButton.GetComponentInChildren<TextMeshProUGUI>().text = "full text";
+            }
+            _fullTextButtonState = !_fullTextButtonState;
         }
 
         public void GhostBackground()
@@ -142,8 +144,14 @@ namespace StarterCore.Core.Scenes.Board.Displayer
 
         public void ResetToFirstCard()
         {
-            Refresh(_entityDeckService.EntityCards[0]);
-            InitScopeNoteScrollView();
+            Show(_entityDeckService.EntityCards[0]);
+            //Refresh(_entityDeckService.EntityCards[0]);
+            //InitScopeNoteScrollView();
+        }
+
+        private void OnDestroy()
+        {
+            _fullTextButton.onClick.RemoveListener(FullTextClicked);
         }
     }
 }

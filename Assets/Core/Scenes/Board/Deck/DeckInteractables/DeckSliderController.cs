@@ -11,10 +11,14 @@ namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables
         [SerializeField]
         Slider _slider;
 
-        public void Show(int maxValue)
+        public void Init()
         {
             Debug.Log("[CardSliderController] Init OK");
             _slider.onValueChanged.AddListener(OnSliderValueChanged);
+        }
+
+        public void Show(int maxValue)
+        {
             SetSliderRange(maxValue);
         }
 
