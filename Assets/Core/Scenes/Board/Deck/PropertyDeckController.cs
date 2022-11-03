@@ -32,6 +32,8 @@ namespace StarterCore.Core.Scenes.Board.Deck
         public List<PropertyCard> _currentDeckContent;
         public List<PropertyCard> _addedCard;//Keeps track of cards that does not belong to initial deck
 
+        public PropertyCard CurrentCard;
+
         [SerializeField]
         PropertyCardController _propertyCardController;//Card
         [SerializeField]
@@ -104,6 +106,8 @@ namespace StarterCore.Core.Scenes.Board.Deck
                 isDomainColorListWhite = true;
                 isRangeColorListWhite = true;
 
+                CurrentCard = initialDeck[0];
+
                 _initDone = true;
             }
         }
@@ -171,14 +175,17 @@ namespace StarterCore.Core.Scenes.Board.Deck
         {
             if (value < _currentDeckContent.Count - 1 || value > 0)//Will be currentDeckContent
             {
+                PropertyCard currentCard = _currentDeckContent[(int)value];
                 //Refresh card
-                _propertyCardController.Show((_currentDeckContent[(int)value]));
+                _propertyCardController.Show(currentCard);
 
                 GhostCardIfExists((int)value);
 
                 //Refresh hierarchy
                 _hierarchyDisplayer.Init();
-                _hierarchyDisplayer.Show(_currentDeckContent[(int)value]);
+                _hierarchyDisplayer.Show(currentCard);
+
+                CurrentCard = currentCard;
             }
         }
 

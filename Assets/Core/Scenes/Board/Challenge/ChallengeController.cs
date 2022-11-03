@@ -1,26 +1,48 @@
+#define Trace_ON
 using UnityEngine;
 using Zenject;
 using StarterCore.Core.Services.Navigation;
 using System.Collections.Generic;
 using StarterCore.Core.Services.Network.Models;
 using StarterCore.Core.Scenes.Board.Challenge;
+using StarterCore.Core.Services.GameState;
 
 namespace StarterCore.Core.Scenes.Board
 {
     public class ChallengeController : MonoBehaviour
     {
+        [Inject] GameStateManager _gameStateManager;
         [Inject] NavigationService _navigationService;
+        [Inject] ChallengeEvaluator _evaluator;
 
         [SerializeField]
         private ChallengeDisplayer _displayer;
-        [SerializeField]
-        private ChallengeEvaluator _evaluator;
 
-        public void Show(List<ChallengeData> challengeList)
+        //Player's answers are stored in a copy of the challenges[currentChallengeId] 'ChallengeData' object
+        //'__Anwsers' properties of this copy are update with players answers
+        // This copy is then compared with expected results in the original ChallengeData object when the Validate button is pressed.
+        public ChallengeData playerChallengeAnswers;
+
+        private List<ChallengeData> _challengeList;
+
+        public void Init(List<ChallengeData> challengeList)
         {
-            Debug.Log("[ChallengeController] Init OK");
-            _displayer.Show(challengeList);//Statement
+            _challengeList = challengeList;
+            _evaluator.Init();
         }
 
+        public void Show()
+        {
+            Debug.Log("[ChallengeController] Init OK");
+            _displayer.Show(_challengeList);//Statement and other challenge related data
+        }
+
+        public bool EvaluateBoard(ChallengeData expectedAnswers, ChallengeData playerAnswers)
+        {
+            Trace.Log("GOT EVALUATOR : " + _evaluator.GetInstanceID());
+            bool isCorrect = _evaluator.CheckAnswers(expectedAnswers, playerAnswers);
+            Trace.Log(string.Format("Answer is correct : ", isCorrect));
+            return isCorrect;
+        }
     }
 }

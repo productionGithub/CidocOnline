@@ -8411,7 +8411,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _displayer: {fileID: 421701037}
-  _evaluator: {fileID: 421701038}
 --- !u!114 &421701036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11976,6 +11975,7 @@ GameObject:
   - component: {fileID: 587034465}
   - component: {fileID: 587034464}
   - component: {fileID: 587034467}
+  - component: {fileID: 587034468}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -12043,6 +12043,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _boardController: {fileID: 421701036}
+  _challengeEvaluator: {fileID: 587034468}
+--- !u!114 &587034468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587034463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 056f75c7a5e444379b2ab0ff04f3b38e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &587334384
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,9 +21,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
         EntityCardDisplayer _entityCardDisplayer;
 
 
-        public int currentCard;//Utilepour le Board controller qui va la passer au Challenge (-> Challenge evaluator ???
-
-        public event Action<string> OnHierarchyEntityClickedCardController;
+        public int CurrentCard;//Utile pour le Board controller qui va la passer au Challenge (-> Challenge evaluator ???
 
         public void Init()
         {
@@ -34,11 +32,6 @@ namespace StarterCore.Core.Scenes.Board.Deck
         {
             _entityCardDisplayer.Show(card);
         }
-
-        //private void _cardDisplayer_OnHierarchyEntityClickedCardDisplayer(string id)
-        //{
-        //    OnHierarchyEntityClickedCardController?.Invoke(id);
-        //}
 
         public void GhostBackground()
         {
@@ -53,11 +46,6 @@ namespace StarterCore.Core.Scenes.Board.Deck
         public void Refresh(EntityCard card)
         {
             _entityCardDisplayer.Show(card);
-        }
-
-        private void OnDestroy()
-        {
-            //Unsubscribe hierarchy event
         }
     }
 }

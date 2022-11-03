@@ -58,6 +58,8 @@ namespace StarterCore.Core.Scenes.Board
         private List<ChallengeData> _challengeList;
         private List<InstanceCardModelDown> _instances;
 
+        private ChallengeData _playerResults;
+
         public void Init(List<ChallengeData> challengeList, List<InstanceCardModelDown> instances)
         {
             Trace.Log("[BoardController] Init!");
@@ -66,11 +68,13 @@ namespace StarterCore.Core.Scenes.Board
 
             _refreshBoard.onClick.AddListener(Show);
             _validateBoard.onClick.AddListener(OnValidateBoard);
+
+            _challengeController.Init(challengeList);
         }
 
         public void Show()
         {
-            _challengeController.Show(_challengeList);
+            _challengeController.Show();
             InstanciateDecks();
         }
 
@@ -194,13 +198,38 @@ namespace StarterCore.Core.Scenes.Board
         {
             if(_gameStateManager.GameStateModel.CurrentChallengeIndex < _challengeList.Count - 1)//Challenge 0 does not count
             {
+                ChallengeData playerResults = new ChallengeData();
+                if(_leftEntityDeckController.isActiveAndEnabled)
+                {
+                    playerResults.ELeftAnswer = _leftEntityDeckController.CurrentCard.id;
+                }
+                if (_leftPropertyDeckController.isActiveAndEnabled)
+                {
+                    playerResults.PLeftAnswer = _leftPropertyDeckController.CurrentCard.id;
+                }
+                if(_middleEntityDeckController.isActiveAndEnabled)
+                {
+                    playerResults.EMiddleAnswer = _middleEntityDeckController.CurrentCard.id;
+                }
+                if(_rightPropertyDeckController.isActiveAndEnabled)
+                {
+                    playerResults.PRightAnswer = _rightPropertyDeckController.CurrentCard.id;
+                }
+                if(_rightEntityDeckController.isActiveAndEnabled)
+                {
+                playerResults.ERightAnswer = _rightEntityDeckController.CurrentCard.id;
+                }
+
                 //Evaluate
                 //Display ad-hoc message
                 //Animate icon continue
                 //Wait for click on continue or retry
+
+                bool isCorrect = _challengeController.EvaluateBoard(_challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex], playerResults);
+                Trace.Log("Player answer is correct ? " + isCorrect);
                 _gameStateManager.GameStateModel.CurrentChallengeIndex++;
-                InstanciateDecks();
-                _challengeController.Show(_challengeList);
+                Show();
+                //InstanciateDecks();
             }
             else
             {

@@ -52,18 +52,8 @@ namespace StarterCore.Core.Scenes.Board.Challenge
         [SerializeField]
         private TextMeshProUGUI _maxScore;
 
-
-
         public int currentChallengeId;
         public Chapter currentChapter;
-
-        //Player's answers are stored in a copy of the challenges[currentChallengeId] 'ChallengeData' object
-        //'__Anwsers' properties of this copy are update with players answers
-        // This copy is then compared with expected results in the original ChallengeData object when the Validate button is pressed.
-        public ChallengeData playerChallengeAnswers;
-
-        //Utility class for parsing ChallengeData fields 
-        //ParserTool parser = new ParserTool();
 
         readonly string defaultTopTextZone = "CIDOC-CRM GAME";
 

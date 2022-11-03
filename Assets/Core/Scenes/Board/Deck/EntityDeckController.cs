@@ -29,6 +29,8 @@ namespace StarterCore.Core.Scenes.Board.Deck
         public List<EntityCard> _currentDeckContent;
         public List<EntityCard> _addedCard;//Keeps track of cards that does not belong to initial deck
 
+        public EntityCard CurrentCard;
+
         [SerializeField]
         EntityCardController _entityCardController;//Card
         [SerializeField]
@@ -54,6 +56,8 @@ namespace StarterCore.Core.Scenes.Board.Deck
             //Initialization is made only once
             if (_initDone == false)
             {
+                CurrentCard = new EntityCard();
+
                 _initialDeckContent = initialDeck;
 
                 //Card data
@@ -73,6 +77,8 @@ namespace StarterCore.Core.Scenes.Board.Deck
                 //Slider
                 _sliderController.Init();
                 _sliderController.OnSliderValueChangedUI += OnSliderValueChanged;
+
+                CurrentCard = initialDeck[0];
 
                 _initDone = true;
             }
@@ -125,11 +131,18 @@ namespace StarterCore.Core.Scenes.Board.Deck
         {
             if (value < _currentDeckContent.Count - 1 || value > 0)
             {
+                EntityCard currentCard = _currentDeckContent[(int)value];
+
                 //Refresh card
-                _entityCardController.Show(_currentDeckContent[(int)value]);
+                _entityCardController.Show(currentCard);
                 GhostCardIfExists((int)value);
-                _hierarchyDisplayer.Init(); //?
-                _hierarchyDisplayer.Show(_currentDeckContent[(int)value]);
+
+                //Display hierarchy
+                _hierarchyDisplayer.Init();
+                _hierarchyDisplayer.Show(currentCard);
+
+                //Update player answer
+                CurrentCard = currentCard;
             }
         }
 

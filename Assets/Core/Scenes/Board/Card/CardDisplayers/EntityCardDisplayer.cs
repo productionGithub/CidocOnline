@@ -1,5 +1,6 @@
 ﻿#define TRACE_ON
 using System;
+using System.Linq;
 using StarterCore.Core.Scenes.Board.Card.Cards;
 using StarterCore.Core.Scenes.Board.Deck;
 using TMPro;
@@ -21,6 +22,7 @@ namespace StarterCore.Core.Scenes.Board.Displayer
 
         public event Action OnFullTextClick;
 
+        public EntityCard CurrentCard;
         //Card fields
         [SerializeField]
         private GameObject _bkg;
@@ -61,9 +63,12 @@ namespace StarterCore.Core.Scenes.Board.Displayer
             _fullTextButton.onClick.AddListener(FullTextClicked);
         }
 
+        
         //Show UI
         public void Show(EntityCard card)
         {
+            CurrentCard = card;
+
             //reset full text button and scope note view
             _fullTextScrollView.SetActive(false);
             _fullTextButtonState = false;
