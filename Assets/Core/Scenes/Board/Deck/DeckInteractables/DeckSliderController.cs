@@ -19,6 +19,7 @@ namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables
 
         public void Show(int maxValue)
         {
+            SetSliderActive(true);//In case last state was 'No card'
             SetSliderRange(maxValue);
         }
 

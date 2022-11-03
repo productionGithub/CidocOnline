@@ -52,7 +52,6 @@ namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables.Ticks
         //Range ticks -> 'Off' is on the left
         public void Init()
         {
-
             //Add listener to button of Tick object
             if (GetComponent<Button>() != null)
             {
@@ -60,7 +59,7 @@ namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables.Ticks
             }
             else
             {
-                throw new ArgumentNullException("SliderCtrl");
+                throw new ArgumentNullException("PropertyTick object not found.");
             }
 
             //Set offset for tick On/Off
@@ -76,7 +75,7 @@ namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables.Ticks
 
         private void Clicked()
         {
-            Trace.Log("[PropertyTick] PropertyTick cliked!");
+            Trace.Log(string.Format("[PropertyTick] PropertyTick cliked : {0}", _tickColor));
             OnPropertyTickClicked?.Invoke(_tick, _tickColor);
         }
 
@@ -87,6 +86,7 @@ namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables.Ticks
             {
                 transform.parent.Translate(0.0f, -_translateUnits, 0.0f);
                 _ticked = true;
+                Trace.Log(string.Format("[PropertyTick] Tick {0} is ON", _tickColor));
             }
         }
 
@@ -96,6 +96,7 @@ namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables.Ticks
             {
                 transform.parent.Translate(0.0f, _translateUnits, 0.0f);
                 _ticked = false;
+                Trace.Log(string.Format("[PropertyTick] Tick {0} is OFF", _tickColor));
             }
         }
     }

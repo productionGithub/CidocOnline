@@ -49,11 +49,13 @@ namespace StarterCore.Core.Scenes.Board.Deck
         private bool _isListFiltered = false;
         private bool _initDone = false;
 
-        public void Init()
+        public void Init(List<EntityCard> initialDeck)
         {
             //Initialization is made only once
             if (_initDone == false)
             {
+                _initialDeckContent = initialDeck;
+
                 //Card data
                 _entityCardController.Init();
 
@@ -76,17 +78,17 @@ namespace StarterCore.Core.Scenes.Board.Deck
             }
         }
 
-        public void Show(List<EntityCard> initialDeck)
+        public void Show()
         {
-            _initialDeckContent = initialDeck;
             _addedCard = new List<EntityCard>();
-            _currentDeckContent = new List<EntityCard>(initialDeck);
+            _currentDeckContent = new List<EntityCard>(_initialDeckContent);
 
-            _entityCardController.Show(initialDeck[0]);
+            _entityCardController.Show(_initialDeckContent[0]);
             _ticksController.ResetTicks();
 
             _hierarchyDisplayer.Init();//Hiearachy is destroyer and recreated for each card
-            _hierarchyDisplayer.Show(initialDeck[0]);
+            _hierarchyDisplayer.Show(_initialDeckContent[0]);
+
             _sliderController.Show(_currentDeckContent.Count - 1);
             _deckCounterDisplayer.Show(_currentDeckContent.Count, _initialDeckContent.Count);
 
@@ -258,6 +260,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
             if (_currentDeckContent.Count > 0)//If deckcontains at least one card, refresh it
             {
                 _noMatchCard.SetActive(false);
+
                 _entityCardController.Show(_currentDeckContent[0]);
                 _entityCardController.ReinitBackground();
 
@@ -283,15 +286,10 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
             //Show(_initialDeckContent);//Reinit initial deck <----- SHOULD BE ENOUGH with isListFiltered = false;
             _currentDeckContent.Clear();
-            _addedCard.Clear();//Maybe will be remove depending on chosen logic
             _currentDeckContent = new List<EntityCard>(_initialDeckContent);
+            _addedCard.Clear();//Maybe will be remove depending on chosen logic
             _addedCard = new List<EntityCard>();
-        }
-
-        public void ResetDeck()
-        {
-            ReinitDeck();
-            DisplayDeck();
+            _ticksController.ResetTicks();
         }
 
         private void OnDestroy()

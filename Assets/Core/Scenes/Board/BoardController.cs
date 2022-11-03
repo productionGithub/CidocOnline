@@ -60,10 +60,11 @@ namespace StarterCore.Core.Scenes.Board
 
         public void Init(List<ChallengeData> challengeList, List<InstanceCardModelDown> instances)
         {
+            Trace.Log("[BoardController] Init!");
             _instances = instances;
             _challengeList = challengeList;
 
-            _refreshBoard.onClick.AddListener(OnRefreshBoard);
+            _refreshBoard.onClick.AddListener(Show);
             _validateBoard.onClick.AddListener(OnValidateBoard);
         }
 
@@ -82,8 +83,8 @@ namespace StarterCore.Core.Scenes.Board
                 _leftEntityDeckController.gameObject.SetActive(true);
                 List<EntityCard> initialLeftEntityDeckContent = _entityDeckService.GetInitialDeck(initStringEL);
 
-                _leftEntityDeckController.Init();
-                _leftEntityDeckController.Show(initialLeftEntityDeckContent);
+                _leftEntityDeckController.Init(initialLeftEntityDeckContent);
+                _leftEntityDeckController.Show();
             }
 
 
@@ -96,8 +97,8 @@ namespace StarterCore.Core.Scenes.Board
 
                 Trace.Log("[BoardController] _leftPropertyDeckController Init call");
 
-                _leftPropertyDeckController.Init();
-                _leftPropertyDeckController.Show(initialLeftPropertyDeckContent);
+                _leftPropertyDeckController.Init(initialLeftPropertyDeckContent);
+                _leftPropertyDeckController.Show();
             }
 
 
@@ -108,20 +109,22 @@ namespace StarterCore.Core.Scenes.Board
                 _middleEntityDeckController.gameObject.SetActive(true);
                 List<EntityCard> initialMiddleEntityDeckContent = _entityDeckService.GetInitialDeck(initStringEM);
 
-                _middleEntityDeckController.Init();
-                _middleEntityDeckController.Show(initialMiddleEntityDeckContent);
+                _middleEntityDeckController.Init(initialMiddleEntityDeckContent);
+                _middleEntityDeckController.Show();
             }
 
-            /*
             //Initialization of Right Property Deck
-            string initStringPR = _challengeList[currentChallengeId].PRightInit;
+            string initStringPR = _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].PRightInit;
             if (!initStringPR.Equals(string.Empty))
             {
                 _rightPropertyDeckController.gameObject.SetActive(true);
                 List<PropertyCard> initialRightPropertyDeckContent = _propertyDeckService.GetInitialDeck(initStringPR);
-                _rightPropertyDeckController.Show(initialRightPropertyDeckContent);
+
+                Trace.Log("[BoardController] _rightPropertyDeckController Init call");
+
+                _rightPropertyDeckController.Init(initialRightPropertyDeckContent);
+                _rightPropertyDeckController.Show();
             }
-            */
 
             //Initialization of Right Entity Deck
             string initStringER = _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].ERightInit;
@@ -129,8 +132,8 @@ namespace StarterCore.Core.Scenes.Board
             {
                 _rightEntityDeckController.gameObject.SetActive(true);
                 List<EntityCard> initialRightEntityDeckContent = _entityDeckService.GetInitialDeck(initStringER);
-                _rightEntityDeckController.Init();
-                _rightEntityDeckController.Show(initialRightEntityDeckContent);
+                _rightEntityDeckController.Init(initialRightEntityDeckContent);
+                _rightEntityDeckController.Show();
             }
 
             
@@ -205,32 +208,6 @@ namespace StarterCore.Core.Scenes.Board
             }
         }
 
-        private void OnRefreshBoard()
-        {
-            Show();
-
-            //if (_leftEntityDeckController.gameObject.activeSelf)
-            //{
-            //    _leftEntityDeckController.ResetDeck();
-            //}
-            //if (_middleEntityDeckController.gameObject.activeSelf)
-            //{
-            //    _middleEntityDeckController.ResetDeck();
-            //}
-            //if (_rightEntityDeckController.gameObject.activeSelf)
-            //{
-            //    _rightEntityDeckController.ResetDeck();
-            //}
-            //if (_leftPropertyDeckController.gameObject.activeSelf)
-            //{
-            //    _leftPropertyDeckController.ResetDeck();
-            //}
-            //if (_rightPropertyDeckController.gameObject.activeSelf)
-            //{
-            //    _rightPropertyDeckController.ResetDeck();
-            //}
-        }
-
         private void OnGamePaused()
         {
         }
@@ -251,7 +228,7 @@ namespace StarterCore.Core.Scenes.Board
 
         private void OnDestroy()
         {
-            _refreshBoard.onClick.RemoveListener(OnRefreshBoard);
+            _refreshBoard.onClick.RemoveListener(Show);
             _validateBoard.onClick.RemoveListener(OnValidateBoard);
         }
     }

@@ -30,19 +30,14 @@ namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables.Ticks
             if (_initDone == false)
             {
                 Trace.Log("[PropertyTicksController] Init!");
-                WhiteTick.Init();
-                WhiteTick.GetComponent<PropertyTick>().TickOn();
 
                 //Add listeners to all ticks
                 listOfTick = transform.GetComponentsInChildren<PropertyTick>();
                 foreach (PropertyTick tick in listOfTick)
                 {
-                    Trace.Log(string.Format("[PropertyTicksController] Found PropertyTick : ", tick.ColorOfTick));
                     tick.Init();
                     tick.OnPropertyTickClicked += TickClicked;
                 }
-                Trace.Log("[PropertyTicksController] Added PropertyTick listeners !");
-
                 //Set White tick to ON (all others by default are OFF)
                 WhiteTick.GetComponent<PropertyTick>().TickOn();
 
@@ -72,7 +67,6 @@ namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables.Ticks
                 if (tick.ColorOfTick == PropertyTick.TickColor.White)
                 {
                     ResetTicks();//White On, all others Off
-                    _tickCount = 0;
                 }
                 else
                 {
@@ -82,7 +76,8 @@ namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables.Ticks
                         _tickCount--;
                         if (_tickCount == 0)
                         {
-                            WhiteTick.GetComponent<PropertyTick>().TickOn();
+                            ResetTicks();
+                            //WhiteTick.GetComponent<PropertyTick>().TickOn();
                         }
                     }
                     else
@@ -104,6 +99,7 @@ namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables.Ticks
             }
             //Set white tick to On
             WhiteTick.GetComponent<PropertyTick>().TickOn();
+            _tickCount = 0;
         }
 
         private void OnDestroy()
