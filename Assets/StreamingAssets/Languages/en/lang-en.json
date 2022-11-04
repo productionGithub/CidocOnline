@@ -87,6 +87,10 @@
        "mainmenu-scene-resetbutton-text": "Reset",
        "mainmenu-scene-quit-text": "Quit game",
       "mainmenu-scene-quitbutton-text": "Quit"
+    },
+      "BoardScene" :{
+      "boardscene-scene-winbanner-text": "BRAVO! Good answer.",
+      "boardscene-scene-explanationtitle-text": "Ooops! wrong answer."
     }
     }
 }

@@ -1,4 +1,4 @@
-#define Trace_ON
+#define TRACE_ON
 using UnityEngine;
 using Zenject;
 using StarterCore.Core.Services.Navigation;
@@ -14,6 +14,8 @@ namespace StarterCore.Core.Scenes.Board
         [Inject] GameStateManager _gameStateManager;
         [Inject] NavigationService _navigationService;
         [Inject] ChallengeEvaluator _evaluator;
+
+        private readonly string _success = "Bravo !";
 
         [SerializeField]
         private ChallengeDisplayer _displayer;
@@ -37,12 +39,11 @@ namespace StarterCore.Core.Scenes.Board
             _displayer.Show(_challengeList);//Statement and other challenge related data
         }
 
-        public bool EvaluateBoard(ChallengeData expectedAnswers, ChallengeData playerAnswers)
+        public void EvaluateBoard(ChallengeData expectedAnswers, ChallengeData playerAnswers)
         {
-            Trace.Log("GOT EVALUATOR : " + _evaluator.GetInstanceID());
             bool isCorrect = _evaluator.CheckAnswers(expectedAnswers, playerAnswers);
-            Trace.Log(string.Format("Answer is correct : ", isCorrect));
-            return isCorrect;
+            _displayer.DisplayResultMessage(isCorrect, expectedAnswers);
+
         }
     }
 }

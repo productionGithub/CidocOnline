@@ -12,8 +12,6 @@ using StarterCore.Core.Scenes.Board.Card.Cards;
 using StarterCore.Core.Scenes.Board.Displayer;
 using StarterCore.Core.Services.Network;
 using StarterCore.Core.Utils;
-using System.Collections;
-using UnityEngine.Networking;
 using Cysharp.Threading.Tasks;
 
 using static ImageUtilities;
@@ -48,6 +46,10 @@ namespace StarterCore.Core.Scenes.Board
 
         [SerializeField] Button _refreshBoard;
         [SerializeField] Button _validateBoard;
+        [SerializeField] Button _nextChallenge;
+        [SerializeField] Button _retryChallenge;
+
+        [SerializeField] Button _mainMenu;
 
         [SerializeField] ChallengeController _challengeController;
 
@@ -69,6 +71,10 @@ namespace StarterCore.Core.Scenes.Board
             _refreshBoard.onClick.AddListener(Show);
             _validateBoard.onClick.AddListener(OnValidateBoard);
 
+            _nextChallenge.onClick.AddListener(NextChallenge);
+            _retryChallenge.onClick.AddListener(RetryChallenge);
+
+            _mainMenu.onClick.AddListener(BackToMenu);
             _challengeController.Init(challengeList);
         }
 
@@ -196,8 +202,7 @@ namespace StarterCore.Core.Scenes.Board
 
         private void OnValidateBoard()
         {
-            if(_gameStateManager.GameStateModel.CurrentChallengeIndex < _challengeList.Count - 1)//Challenge 0 does not count
-            {
+            //Update ChallengeData answers fields.
                 ChallengeData playerResults = new ChallengeData();
                 if(_leftEntityDeckController.isActiveAndEnabled)
                 {
@@ -220,21 +225,14 @@ namespace StarterCore.Core.Scenes.Board
                 playerResults.ERightAnswer = _rightEntityDeckController.CurrentCard.id;
                 }
 
-                //Evaluate
-                //Display ad-hoc message
-                //Animate icon continue
-                //Wait for click on continue or retry
 
-                bool isCorrect = _challengeController.EvaluateBoard(_challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex], playerResults);
-                Trace.Log("Player answer is correct ? " + isCorrect);
-                _gameStateManager.GameStateModel.CurrentChallengeIndex++;
-                Show();
-                //InstanciateDecks();
-            }
-            else
-            {
-                Debug.Log("Last challenge played, go to stats... or somethign else");
-            }
+                //Evaluate
+                //Display ad-hoc message / Correct / Wrong
+                //If challenge index < challenge count -> Animate icon state for next challenge 
+                //Else, Animate icon state for continue to stats screen
+
+
+                _challengeController.EvaluateBoard(_challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex], playerResults);
         }
 
         private void OnGamePaused()
@@ -255,10 +253,29 @@ namespace StarterCore.Core.Scenes.Board
             return img;
         }
 
+        public void NextChallenge()
+        {
+            _gameStateManager.GameStateModel.CurrentChallengeIndex++;
+            Show();
+        }
+
+        private void RetryChallenge()
+        {
+            Show();
+        }
+
+        private void BackToMenu()
+        {
+            _navigationService.Push("GameSelectionScene");
+        }
+
         private void OnDestroy()
         {
             _refreshBoard.onClick.RemoveListener(Show);
             _validateBoard.onClick.RemoveListener(OnValidateBoard);
+            _retryChallenge.onClick.RemoveListener(RetryChallenge);
+            _nextChallenge.onClick.RemoveListener(NextChallenge);
+            _mainMenu.onClick.RemoveListener(BackToMenu);
         }
     }
 }
