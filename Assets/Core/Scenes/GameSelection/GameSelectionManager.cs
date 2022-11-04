@@ -28,8 +28,11 @@ namespace StarterCore.Core.Scenes.GameSelection
 
         private void LoadChapter(string scenarioTitle, string chapterTitle)
         {
-            ChallengeInfoBundle bundle = new ChallengeInfoBundle(scenarioTitle, chapterTitle, 1);
-            _navService.Push("BoardScene", bundle);
+            if(!scenarioTitle.Equals("YOUR GAME HERE!"))
+            {
+                ChallengeInfoBundle bundle = new ChallengeInfoBundle(scenarioTitle, chapterTitle, 1);
+                _navService.Push("BoardScene", bundle);
+            }
         }
 
         //private async UniTaskVoid FetchCatalog()

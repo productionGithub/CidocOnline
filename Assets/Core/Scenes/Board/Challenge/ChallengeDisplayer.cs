@@ -91,13 +91,14 @@ namespace StarterCore.Core.Scenes.Board.Challenge
             _explanationTitle.SetActive(false);
             _explanationDescription.SetActive(false);
 
+
             _winIcon.SetActive(false);
             _looseIcon.SetActive(false);
 
             _boardMask.SetActive(false);
         }
 
-        public void DisplayResultMessage(bool answerCorrect, ChallengeData expectedAnswers)
+        public void DisplayResult(bool answerCorrect, ChallengeData expectedAnswers)
         {
             _boardMask.SetActive(true);
             if (answerCorrect)
@@ -108,6 +109,8 @@ namespace StarterCore.Core.Scenes.Board.Challenge
                 //Display win message
                 _winBanner.SetActive(true);
                 _winIcon.SetActive(true);
+                //Uddate score
+                _currentScore.text = _gameStateManager.GameStateModel.CurrentScore.ToString();
             }
             else
             {

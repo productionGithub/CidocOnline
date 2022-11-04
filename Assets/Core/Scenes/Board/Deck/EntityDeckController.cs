@@ -59,6 +59,8 @@ namespace StarterCore.Core.Scenes.Board.Deck
                 CurrentCard = new EntityCard();
 
                 _initialDeckContent = initialDeck;
+                _currentDeckContent = new List<EntityCard>(_initialDeckContent);
+                _addedCard = new List<EntityCard>();
 
                 //Card data
                 _entityCardController.Init();
@@ -80,21 +82,19 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
                 CurrentCard = initialDeck[0];
 
+                ReinitDeck();
+
                 _initDone = true;
             }
         }
 
         public void Show()
         {
-            _addedCard = new List<EntityCard>();
-            _currentDeckContent = new List<EntityCard>(_initialDeckContent);
+            ReinitDeck();//No filtering + ticks are all off but the white one
 
             _entityCardController.Show(_initialDeckContent[0]);
-            _ticksController.ResetTicks();
-
-            _hierarchyDisplayer.Init();//Hiearachy is destroyer and recreated for each card
+            _hierarchyDisplayer.Init();//Hierarachy is destroyer and recreated for each card
             _hierarchyDisplayer.Show(_initialDeckContent[0]);
-
             _sliderController.Show(_currentDeckContent.Count - 1);
             _deckCounterDisplayer.Show(_currentDeckContent.Count, _initialDeckContent.Count);
 
@@ -297,11 +297,12 @@ namespace StarterCore.Core.Scenes.Board.Deck
         {
             _isListFiltered = false;
 
-            //Show(_initialDeckContent);//Reinit initial deck <----- SHOULD BE ENOUGH with isListFiltered = false;
             _currentDeckContent.Clear();
             _currentDeckContent = new List<EntityCard>(_initialDeckContent);
+
             _addedCard.Clear();//Maybe will be remove depending on chosen logic
             _addedCard = new List<EntityCard>();
+
             _ticksController.ResetTicks();
         }
 

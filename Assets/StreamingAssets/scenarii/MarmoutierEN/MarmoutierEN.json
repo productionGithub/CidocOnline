@@ -19,23 +19,28 @@
       "chapters": [
         {
           "chapter-title": "Ontology basics",
-          "chapter-description": "This is the description this very chapter..."
+          "chapter-description": "This is the description this very chapter...",
+          "chapter-filename": "GameZ.json"
         },
         {
           "chapter-title": "Entities",
-          "chapter-description": "This is the description this very chapter..."
+          "chapter-description": "This is the description this very chapter...",
+          "chapter-filename": "Game2.json"
         },
         {
           "chapter-title": "Properties",
-          "chapter-description": "This is the description this very chapter..."
+          "chapter-description": "This is the description this very chapter...",
+          "chapter-filename": "Game3.json"
         },
         {
           "chapter-title": "Create relations",
-          "chapter-description": "This is the description this very chapter..."
+          "chapter-description": "This is the description this very chapter...",
+          "chapter-filename": "Game4.json"
         },
         {
           "chapter-title": "Complex relations",
-          "chapter-description": "This is the description this very chapter..."
+          "chapter-description": "This is the description this very chapter...",
+          "chapter-filename": "Game5.json"
         }
       ]
     }

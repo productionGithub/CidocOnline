@@ -1,12 +1,11 @@
 {
       "scenario-title": "MarmoutierFR",
       "ontologyTags": [
-        "CidocCRM",
-        "ric-O"
+        "CidocCRM"
       ],
       "domainTags": [
         "Histoire",
-        "Archéologisse"
+        "Archéologie"
       ],
     "domainCodes" : [
         "HIS",
@@ -17,32 +16,12 @@
       "Huma-num"
       ],
       "languageTag": "Français",
-      "scenario-description": "Ceci est une description en Français du scénario Abbaye de Marmoutier situé à Tours.",
+      "scenario-description": "Apprenez les bases du Cidoc-CRM avec les fouilles de Marmoutier",
       "chapters": [
         {
-          "chapter-title": "Les bases de l'ontologie",
-          "chapter-description": "Description du chapitre...",
-          "chapter-filename":"GameZ.json"
-        },
-        {
-          "chapter-title": "Les entités",
-          "chapter-description": "Description du chapitre...",
-          "chapter-filename":"Game2.json"
-        },
-        {
-          "chapter-title": "Les propriétés",
-          "chapter-description": "Description du chapitre...",
-          "chapter-filename":"Game3.json"
-        },
-        {
-          "chapter-title": "Créer des relations",
-          "chapter-description": "Description du chapitre...",
-          "chapter-filename":"Game4.json"
-        },
-        {
-          "chapter-title": "Relations complexes",
-          "chapter-description": "Description du chapitre...",
-          "chapter-filename":"Game5.json"
+          "chapter-title": "Introduction douce aux ontologies",
+          "chapter-description": "Apprenez les principaux concepts",
+          "chapter-filename":"Chapter1.json"
         }
       ]
     }

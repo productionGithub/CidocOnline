@@ -16,6 +16,7 @@ using Cysharp.Threading.Tasks;
 
 using static ImageUtilities;
 using UnityEngine.UI;
+using TMPro;
 
 namespace StarterCore.Core.Scenes.Board
 {
@@ -48,6 +49,7 @@ namespace StarterCore.Core.Scenes.Board
         [SerializeField] Button _validateBoard;
         [SerializeField] Button _nextChallenge;
         [SerializeField] Button _retryChallenge;
+        [SerializeField] Button _quitChapter;
 
         [SerializeField] Button _mainMenu;
 
@@ -76,10 +78,36 @@ namespace StarterCore.Core.Scenes.Board
 
             _mainMenu.onClick.AddListener(BackToMenu);
             _challengeController.Init(challengeList);
+
+            _quitChapter.onClick.AddListener(QuitChapter);
+
+            _validateBoard.interactable = true;
+            _refreshBoard.interactable = true;
+            _retryChallenge.interactable = false;
+            _nextChallenge.interactable = false;
+            _quitChapter.gameObject.SetActive(false);
+        }
+
+        private void QuitChapter()
+        {
+            //Throw event
+            _navigationService.Push("MainMenuScene");
         }
 
         public void Show()
         {
+            _validateBoard.interactable = true;
+            _refreshBoard.interactable = true;
+            _retryChallenge.interactable = false;
+            _nextChallenge.interactable = false;
+
+            //Invalidate Retry button if last challenge
+            if(_gameStateManager.GameStateModel.CurrentChallengeIndex.Equals(_challengeList.Count - 1))
+            {
+                _nextChallenge.gameObject.SetActive(false);
+                _quitChapter.gameObject.SetActive(true);
+            }
+
             _challengeController.Show();
             InstanciateDecks();
         }
@@ -92,6 +120,7 @@ namespace StarterCore.Core.Scenes.Board
             {
                 _leftEntityDeckController.gameObject.SetActive(true);
                 List<EntityCard> initialLeftEntityDeckContent = _entityDeckService.GetInitialDeck(initStringEL);
+                Trace.Log("Initial entity deck size is " + initialLeftEntityDeckContent.Count);
 
                 _leftEntityDeckController.Init(initialLeftEntityDeckContent);
                 _leftEntityDeckController.Show();
@@ -203,36 +232,49 @@ namespace StarterCore.Core.Scenes.Board
         private void OnValidateBoard()
         {
             //Update ChallengeData answers fields.
-                ChallengeData playerResults = new ChallengeData();
-                if(_leftEntityDeckController.isActiveAndEnabled)
-                {
-                    playerResults.ELeftAnswer = _leftEntityDeckController.CurrentCard.id;
-                }
-                if (_leftPropertyDeckController.isActiveAndEnabled)
-                {
-                    playerResults.PLeftAnswer = _leftPropertyDeckController.CurrentCard.id;
-                }
-                if(_middleEntityDeckController.isActiveAndEnabled)
-                {
-                    playerResults.EMiddleAnswer = _middleEntityDeckController.CurrentCard.id;
-                }
-                if(_rightPropertyDeckController.isActiveAndEnabled)
-                {
-                    playerResults.PRightAnswer = _rightPropertyDeckController.CurrentCard.id;
-                }
-                if(_rightEntityDeckController.isActiveAndEnabled)
-                {
-                playerResults.ERightAnswer = _rightEntityDeckController.CurrentCard.id;
-                }
+            ChallengeData playerResults = new ChallengeData();
+            if(_leftEntityDeckController.isActiveAndEnabled)
+            {
+                playerResults.ELeftAnswer = _leftEntityDeckController.CurrentCard.id;
+            }
+            if (_leftPropertyDeckController.isActiveAndEnabled)
+            {
+                playerResults.PLeftAnswer = _leftPropertyDeckController.CurrentCard.id;
+            }
+            if(_middleEntityDeckController.isActiveAndEnabled)
+            {
+                playerResults.EMiddleAnswer = _middleEntityDeckController.CurrentCard.id;
+            }
+            if(_rightPropertyDeckController.isActiveAndEnabled)
+            {
+                playerResults.PRightAnswer = _rightPropertyDeckController.CurrentCard.id;
+            }
+            if(_rightEntityDeckController.isActiveAndEnabled)
+            {
+            playerResults.ERightAnswer = _rightEntityDeckController.CurrentCard.id;
+            }
 
 
-                //Evaluate
-                //Display ad-hoc message / Correct / Wrong
-                //If challenge index < challenge count -> Animate icon state for next challenge 
-                //Else, Animate icon state for continue to stats screen
+            //Evaluate
+            //Display ad-hoc message / Correct / Wrong
+            //If challenge index < challenge count -> Animate icon state for next challenge 
+            //Else, Animate icon state for continue to stats screen
 
-
-                _challengeController.EvaluateBoard(_challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex], playerResults);
+            bool isCorrect = _challengeController.EvaluateBoard(_challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex], playerResults);
+            if(isCorrect)
+            {
+                _validateBoard.interactable = false;
+                _refreshBoard.interactable = false;
+                _retryChallenge.interactable = false;
+                _nextChallenge.interactable = true;
+            }
+            else
+            {
+                _validateBoard.interactable = false;
+                _refreshBoard.interactable = false;
+                _retryChallenge.interactable = true;
+                _nextChallenge.interactable = true;
+            }
         }
 
         private void OnGamePaused()
@@ -276,6 +318,7 @@ namespace StarterCore.Core.Scenes.Board
             _retryChallenge.onClick.RemoveListener(RetryChallenge);
             _nextChallenge.onClick.RemoveListener(NextChallenge);
             _mainMenu.onClick.RemoveListener(BackToMenu);
+            _quitChapter.onClick.RemoveListener(QuitChapter);
         }
     }
 }

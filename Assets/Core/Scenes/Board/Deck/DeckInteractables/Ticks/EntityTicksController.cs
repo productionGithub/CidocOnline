@@ -18,7 +18,7 @@ namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables.Ticks
         public void Init()
         {
             Trace.Log("[EntityTicksController] Init!");
-            whiteTick.GetComponent<EntityTick>().TickOn();
+            ResetTicks();//Set all ticks to off but the white one
 
             //Add listeners to all ticks
             listOfTick = transform.GetComponentsInChildren<EntityTick>();
@@ -81,6 +81,7 @@ namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables.Ticks
             }
             //Set white tick to On
             whiteTick.GetComponent<EntityTick>().TickOn();
+            _tickCount = 0;
         }
 
         private void OnDestroy()

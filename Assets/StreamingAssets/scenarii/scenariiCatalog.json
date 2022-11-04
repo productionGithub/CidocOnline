@@ -1,14 +1,13 @@
 {
   "scenarii": [
-    {
+{
       "scenario-title": "MarmoutierFR",
       "ontologyTags": [
-        "CidocCRM",
-        "ric-O"
+        "CidocCRM"
       ],
       "domainTags": [
         "Histoire",
-        "Archéologisse"
+        "Archéologie"
       ],
     "domainCodes" : [
         "HIS",
@@ -19,151 +18,102 @@
       "Huma-num"
       ],
       "languageTag": "Français",
-      "scenario-description": "Ceci est une description en Français du scénario Abbaye de Marmoutier situé à Tours.",
+      "scenario-description": "Apprenez les bases du Cidoc-CRM avec les fouilles de Marmoutier",
       "chapters": [
         {
-          "chapter-title": "Les bases de l'ontologie",
-          "chapter-description": "Description du chapitre...",
-          "chapter-filename":"GameZ.json"
-        },
-        {
-          "chapter-title": "Les entités",
-          "chapter-description": "Description du chapitre...",
-          "chapter-filename":"Game2.json"
-        },
-        {
-          "chapter-title": "Les propriétés",
-          "chapter-description": "Description du chapitre...",
-          "chapter-filename":"Game3.json"
-        },
-        {
-          "chapter-title": "Créer des relations",
-          "chapter-description": "Description du chapitre...",
-          "chapter-filename":"Game4.json"
-        },
-        {
-          "chapter-title": "Relations complexes",
-          "chapter-description": "Description du chapitre...",
-          "chapter-filename":"Game5.json"
+          "chapter-title": "Introduction douce aux ontologies",
+          "chapter-description": "Apprenez les principaux concepts",
+          "chapter-filename":"Chapter1.json"
         }
       ]
     },
 
 
-    {
+{
       "scenario-title": "MarmoutierEN",
       "ontologyTags": [
-        "CidocCRM",
-        "ric-O"
+        "CidocCRM"
       ],
       "domainTags": [
-        "Cultural heritage"
+        "History",
+        "Archeology"
       ],
-      "domainCodes" : [
-        "CUL"
+    "domainCodes" : [
+        "HIS",
+        "ARC"
       ],
     "authorTags": [
       "Masa",
       "Huma-num"
       ],
       "languageTag": "English",
-      "scenario-description": "This is an English description of Marmoutier scenario that takes place in Tours.",
+      "scenario-description": "This is an english description of the Marmoutier game, in english of course",
       "chapters": [
         {
           "chapter-title": "Ontology basics",
-          "chapter-description": "Description of the chapter..."
+          "chapter-description": "This is the description this very chapter...",
+          "chapter-filename": "GameZ.json"
         },
         {
           "chapter-title": "Entities",
-          "chapter-description": "Description of the chapter..."
+          "chapter-description": "This is the description this very chapter...",
+          "chapter-filename": "Game2.json"
         },
         {
           "chapter-title": "Properties",
-          "chapter-description": "Description of the chapter..."
+          "chapter-description": "This is the description this very chapter...",
+          "chapter-filename": "Game3.json"
         },
         {
-          "chapter-title": "Build relations",
-          "chapter-description": "Description of the chapter..."
+          "chapter-title": "Create relations",
+          "chapter-description": "This is the description this very chapter...",
+          "chapter-filename": "Game4.json"
         },
         {
           "chapter-title": "Complex relations",
-          "chapter-description": "Description of the chapter..."
+          "chapter-description": "This is the description this very chapter...",
+          "chapter-filename": "Game5.json"
         }
       ]
     },
 
 
     {
-      "scenario-title": "Αββαείο του Marmoutier",
+      "scenario-title": "YOUR GAME HERE!",
       "ontologyTags": [
-        "CidocCRM",
-        "ric-O"
+        "CidocCRM"
       ],
       "domainTags": [
-        "αρχαιολογία"
+        "AnyDomain"
       ],
-      "domainCodes" : [
-        "ARC",
-      ],
-    "authorTags": [
-      "Masa",
-      "Huma-num"
-      ],
-      "languageTag": "Ελληνική",
-      "scenario-description": "Στο πλαίσιο των ανασκαφών που οργανώνονται στην Τουρ, στο αβαείο Marmoutier, το σενάριο αυτό σας διδάσκει να μοντελοποιείτε σύνθετες καταστάσεις.",
-      "chapters": [
-        {
-          "chapter-title": "Παιχνίδι 1",
-          "chapter-description": "Περιγραφή του κεφαλαίου..."
-        },
-        {
-          "chapter-title": "Παιχνίδι 2",
-          "chapter-description": "Περιγραφή του κεφαλαίου..."
-        },
-        {
-          "chapter-title": "Παιχνίδι 3",
-          "chapter-description": "Περιγραφή του κεφαλαίου..."
-        },
-        {
-          "chapter-title": "Παιχνίδι 4",
-          "chapter-description": "Περιγραφή του κεφαλαίου..."
-        },
-        {
-          "chapter-title": "Παιχνίδι 5",
-          "chapter-description": "Περιγραφή του κεφαλαίου..."
-        }
-      ]
-    },
-
-
-    {
-      "scenario-title": "Asinou",
-      "ontologyTags": [
-        "ric-O"
-      ],
-      "domainTags": [
-        "ιστορία"
-      ],
-      "domainCodes" : [
-        "HIS"
+    "domainCodes" : [
+        "FAK",
       ],
     "authorTags": [
-      "Greek corp."
+      "Your Org."
       ],
-      "languageTag": "Ελληνική",
-      "scenario-description": "Μια ελληνική περιγραφή του σεναρίου Asinou.",
+      "languageTag": "English",
+      "scenario-description": "You can create your own games very easily!",
       "chapters": [
         {
-          "chapter-title": "Παιχνίδι 1",
-          "chapter-description": "Περιγραφή του κεφαλαίου..."
+          "chapter-title": "Introduction",
+          "chapter-description": "This could be your Introduction chapter.",
+          "chapter-filename": ""
         },
         {
-          "chapter-title": "Παιχνίδι 2",
-          "chapter-description": "Περιγραφή του κεφαλαίου..."
+          "chapter-title": "Level1",
+          "chapter-description": "Explain here basic concepts",
+          "chapter-filename": ""
         },
         {
-          "chapter-title": "Παιχνίδι 3",
-          "chapter-description": "Περιγραφή του κεφαλαίου..."
+          "chapter-title": "Level2",
+          "chapter-description": "Bring your audience to a higher level.",
+          "chapter-filename": ""
+        },
+        {
+          "chapter-title": "Level3",
+          "chapter-description": "Get people involved in your work!",
+          "chapter-filename": ""
         }
       ]
     }

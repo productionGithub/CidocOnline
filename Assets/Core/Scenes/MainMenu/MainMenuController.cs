@@ -42,11 +42,11 @@ namespace StarterCore.Core.Scenes.MainMenu
         {
             _welcomeTitle.text = _localizationManager.GetTranslation("mainmenu-scene-welcometitle-text") + " " + _gameState.Username + " !";
             Trace.Log("WE BUNDLE ID: " + bundle.HistoryId);
-            if (bundle.HistoryId.Equals(string.Empty))
+
+            if (bundle == null || bundle.HistoryId.Equals(string.Empty))
             {
                 Trace.Log("Disable continue zone !");
                 _continueZone.SetActive(false);
-
             }
             else
             {
