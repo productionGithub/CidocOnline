@@ -7,6 +7,6 @@ namespace StarterCore.Core.Services.Network.Models
     public class UserIdModelDown
     {
         [JsonProperty("userId")]
-        public string UserId;
+        public int UserId;
     }
 }

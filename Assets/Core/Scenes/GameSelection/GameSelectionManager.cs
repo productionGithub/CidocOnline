@@ -1,3 +1,4 @@
+#define TRACE_ON
 using Cysharp.Threading.Tasks;
 using StarterCore.Core.Services.Network;
 using StarterCore.Core.Services.Network.Models;
@@ -5,52 +6,104 @@ using UnityEngine;
 using Zenject;
 using StarterCore.Core.Services.Navigation;
 using StarterCore.Core.Scenes.Board.Challenge;
+using StarterCore.Core.Services.GameState;
+using System.Collections.Generic;
 
 namespace StarterCore.Core.Scenes.GameSelection
 {
     public class GameSelectionManager : IInitializable
     {
-        [Inject] private MockNetService _net;
+        [Inject] private GameStateManager _gameStateManager;
+        [Inject] private MockNetService _networkService;
         [Inject] private GameSelectionController _gameSelectioncontroller;
         [Inject] private NavigationService _navService;
 
         ScenariiModelDown _catalog;
+        ScenarioCompletionModelDown _completion;
+        ProgressionModelDown _progression;
 
         public void Initialize()
         {
             Debug.Log("[GameSelectionManager] Initialized!");
             //Get scenarii catalog and Show Game selection panel
-            FetchCatalog().Forget();
+            FetchScenariiData().Forget();
 
             _gameSelectioncontroller.OnBackEvent += BackEventClicked;
             _gameSelectioncontroller.OnGameSelectionControllerPlayChapterEvent += LoadChapter;
         }
 
-        private void LoadChapter(string scenarioTitle, string chapterTitle)
+        private async void LoadChapter(string scenarioTitle, string chapterTitle)
         {
-            if(!scenarioTitle.Equals("YOUR GAME HERE!"))
+            //Update gamestate model with current game data
+            _gameStateManager.GameStateModel.CurrentScenario = scenarioTitle;
+            _gameStateManager.GameStateModel.CurrentChapter = chapterTitle;
+
+
+            if (!scenarioTitle.Equals("YOUR GAME HERE!"))
             {
-                ChallengeInfoBundle bundle = new ChallengeInfoBundle(scenarioTitle, chapterTitle, 1);
-                _navService.Push("BoardScene", bundle);
+                //Get progression for this scenario-chapter
+                _progression = await _networkService.GetChapterProgression(_gameStateManager.GameStateModel.UserId, scenarioTitle, GetChapterFilename());
+
+                if(_progression.LastChallengeId != -1)
+                {
+                    Trace.Log(string.Format("Progression for {0}-{1} is : challenge Id {2} / Score = {3}",
+                        scenarioTitle, chapterTitle, _progression.LastChallengeId, _progression.Score));
+                    //update GmaeModel with values of progression
+                    _gameStateManager.GameStateModel.CurrentChallengeIndex = _progression.LastChallengeId;
+                    _gameStateManager.GameStateModel.CurrentScore = _progression.Score;
+                }
+                else
+                {
+                    //update GmaeModel with default values for score and challende index
+                    Trace.Log("No progression, load with defaults");
+                    _gameStateManager.GameStateModel.CurrentChallengeIndex = 1;
+                    _gameStateManager.GameStateModel.CurrentScore = 0;
+                }
+
+                _navService.Push("BoardScene");
             }
         }
 
-        //private async UniTaskVoid FetchCatalog()
-        private async UniTaskVoid FetchCatalog()
+        private string GetChapterFilename()
         {
-            _catalog = await GetScenariiCatalog();
+            //Get chapter filename property from catalog
+            string name = string.Empty;
 
-            if(_catalog != null)
+            //Get filename from catalog
+            foreach (Scenario s in _catalog.Scenarii)
+            {
+                foreach (Chapter c in s.Chapters)
+                {
+                    if (c.ChapterTitle == _gameStateManager.GameStateModel.CurrentChapter)
+                    {
+                        name = c.ChapterFilename;
+                    }
+                }
+            }
+            return name;
+        }
+
+        private async UniTaskVoid FetchScenariiData()
+        {
+            _catalog = await _networkService.GetCatalog(); ;// await GetScenariiCatalog();
+                                                            //_completion = await _networkService.GetChapterProgression();
+
+            //if (_completion != null)
+            //{
+            //    Trace.Log("GOT C : " + _completion.Completions[0].Completions[0]);
+            //}
+
+            //if(_catalog != null)
+            //{
+            //    _gameSelectioncontroller.Show(_catalog.Scenarii, _completion);
+            //    //DebugScenarii();
+            //}
+
+            if (_catalog != null)
             {
                 _gameSelectioncontroller.Show(_catalog.Scenarii);
                 //DebugScenarii();
             }
-        }
-
-        private async UniTask<ScenariiModelDown> GetScenariiCatalog()
-        {
-            ScenariiModelDown catalog = await _net.GetCatalog();
-            return catalog;
         }
 
         private void BackEventClicked()

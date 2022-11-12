@@ -17,6 +17,9 @@ using Cysharp.Threading.Tasks;
 using static ImageUtilities;
 using UnityEngine.UI;
 using TMPro;
+using StarterCore.Core.Scenes.Board.Challenge;
+using System;
+using UnityEngine.Events;
 
 namespace StarterCore.Core.Scenes.Board
 {
@@ -29,11 +32,13 @@ namespace StarterCore.Core.Scenes.Board
         /// Has ref to Entity, Property and Instance cards.
         /// </summary>
 
-        [Inject] MockNetService _networkService;
+        //[Inject] MockNetService _networkService;
         [Inject] NavigationService _navigationService;
         [Inject] GameStateManager _gameStateManager;
         [Inject] EntityDeckService _entityDeckService;
         [Inject] PropertyDeckService _propertyDeckService;
+
+        public event Action OnCorrectAnswer_BoardCtrl;
 
         [SerializeField] EntityDeckController _leftEntityDeckController;
         [SerializeField] PropertyDeckController _leftPropertyDeckController;
@@ -63,20 +68,22 @@ namespace StarterCore.Core.Scenes.Board
         private List<InstanceCardModelDown> _instances;
 
         private ChallengeData _playerResults;
+        private bool _challengeAlreadyValidated;
 
         public void Init(List<ChallengeData> challengeList, List<InstanceCardModelDown> instances)
         {
             Trace.Log("[BoardController] Init!");
             _instances = instances;
             _challengeList = challengeList;
+            _challengeAlreadyValidated = false;
 
             _refreshBoard.onClick.AddListener(Show);
             _validateBoard.onClick.AddListener(OnValidateBoard);
 
             _nextChallenge.onClick.AddListener(NextChallenge);
-            _retryChallenge.onClick.AddListener(RetryChallenge);
+            _retryChallenge.onClick.AddListener(Show);
 
-            _mainMenu.onClick.AddListener(BackToMenu);
+            _mainMenu.onClick.AddListener(BackToMainMenu);
             _challengeController.Init(challengeList);
 
             _quitChapter.onClick.AddListener(QuitChapter);
@@ -86,12 +93,6 @@ namespace StarterCore.Core.Scenes.Board
             _retryChallenge.interactable = false;
             _nextChallenge.interactable = false;
             _quitChapter.gameObject.SetActive(false);
-        }
-
-        private void QuitChapter()
-        {
-            //Throw event
-            _navigationService.Push("MainMenuScene");
         }
 
         public void Show()
@@ -231,7 +232,11 @@ namespace StarterCore.Core.Scenes.Board
 
         private void OnValidateBoard()
         {
+
             //Update ChallengeData answers fields.
+            //Player's answers are stored in a copy of the challenges[currentChallengeId] 'ChallengeData' object
+            //'__Anwsers' properties of this copy are update with players answers
+            // This copy is then compared with expected results in the original ChallengeData object when the Validate button is pressed.
             ChallengeData playerResults = new ChallengeData();
             if(_leftEntityDeckController.isActiveAndEnabled)
             {
@@ -255,18 +260,18 @@ namespace StarterCore.Core.Scenes.Board
             }
 
 
-            //Evaluate
-            //Display ad-hoc message / Correct / Wrong
-            //If challenge index < challenge count -> Animate icon state for next challenge 
-            //Else, Animate icon state for continue to stats screen
-
+            //Evaluate board
             bool isCorrect = _challengeController.EvaluateBoard(_challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex], playerResults);
             if(isCorrect)
             {
+                //update button states
                 _validateBoard.interactable = false;
                 _refreshBoard.interactable = false;
                 _retryChallenge.interactable = false;
                 _nextChallenge.interactable = true;
+
+                //Fire event for DB update
+                OnCorrectAnswer_BoardCtrl?.Invoke();
             }
             else
             {
@@ -275,6 +280,18 @@ namespace StarterCore.Core.Scenes.Board
                 _retryChallenge.interactable = true;
                 _nextChallenge.interactable = true;
             }
+        }
+
+        private void NextChallenge()
+        {
+            _gameStateManager.GameStateModel.CurrentChallengeIndex++;
+            Trace.Log("CurrentChallengeIndex is : " + _gameStateManager.GameStateModel.CurrentChallengeIndex);
+            Show();
+        }
+
+        private void QuitChapter()
+        {
+            _navigationService.Push("MainMenuScene");
         }
 
         private void OnGamePaused()
@@ -295,29 +312,24 @@ namespace StarterCore.Core.Scenes.Board
             return img;
         }
 
-        public void NextChallenge()
+        private void BackToMainMenu()
         {
-            _gameStateManager.GameStateModel.CurrentChallengeIndex++;
-            Show();
-        }
-
-        private void RetryChallenge()
-        {
-            Show();
-        }
-
-        private void BackToMenu()
-        {
-            _navigationService.Push("GameSelectionScene");
+            
+            //ChallengeInfoBundle bundle = new ChallengeInfoBundle(
+            //    _gameStateManager.GameStateModel.CurrentScenario,
+            //    _gameStateManager.GameStateModel.CurrentChapter,
+            //    _gameStateManager.GameStateModel.CurrentChallengeIndex);
+            //_navigationService.GetMainBundle(out bundle);
+            _navigationService.Clear("MainMenuScene");
         }
 
         private void OnDestroy()
         {
             _refreshBoard.onClick.RemoveListener(Show);
             _validateBoard.onClick.RemoveListener(OnValidateBoard);
-            _retryChallenge.onClick.RemoveListener(RetryChallenge);
-            _nextChallenge.onClick.RemoveListener(NextChallenge);
-            _mainMenu.onClick.RemoveListener(BackToMenu);
+            _retryChallenge.onClick.RemoveListener(Show);
+            _nextChallenge.onClick.RemoveListener(Show);
+            _mainMenu.onClick.RemoveListener(BackToMainMenu);
             _quitChapter.onClick.RemoveListener(QuitChapter);
         }
     }

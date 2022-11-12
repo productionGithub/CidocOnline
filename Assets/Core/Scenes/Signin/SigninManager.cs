@@ -1,9 +1,11 @@
+#define TRACE_ON
 using Cysharp.Threading.Tasks;
 using StarterCore.Core.Services.Network;
 using StarterCore.Core.Services.Network.Models;
 using Zenject;
 using StarterCore.Core.Services.Navigation;
 using StarterCore.Core.Services.GameState;
+using System;
 
 namespace StarterCore.Core.Scenes.Signin
 {
@@ -112,13 +114,43 @@ namespace StarterCore.Core.Scenes.Signin
 
             //Get User Id
             UserIdModelDown userId = await _net.GetUserId(playerEmail);
-            Trace.Log("[SignIn Manager] From GetUserId, userId is : " + userId.UserId);
+            _gameState.GameStateModel.UserId = userId.UserId;
+
+            Trace.Log("[SignIn Manager] From GetUserId, userId is : " + _gameState.GameStateModel.UserId);
 
             //Get player history
             HistoryModelDown history = await _net.GetHistory(userId.UserId);
-            Trace.Log("[SignIn Manager] From gethistory, scenario is : " + history.ScenarioName);
 
-            _navService.Push("MainMenuScene", history);
+            if (history != null)
+            {
+
+                Trace.Log("[SignIn Manager] From gethistory, scenario is : " + history.ScenarioName);
+
+                //Update game state model
+                _gameState.GameStateModel.CurrentScenario = history.ScenarioName;
+                _gameState.GameStateModel.CurrentChapter = history.ChapterName;
+                if (history.ChallengeId != string.Empty)
+                {
+                    _gameState.GameStateModel.CurrentChallengeIndex = Int32.Parse(history.ChallengeId);
+                }
+                if (history.Score != null)
+                {
+                    Trace.Log("history score = " + "-" + history.Score + "-");
+                    //_gameState.GameStateModel.CurrentScore = Int32.Parse(history.Score.ToString());
+                }
+
+            }
+            else
+            {
+                Trace.Log("[SignInMgr] History is null");
+                _gameState.GameStateModel.CurrentScenario = string.Empty;
+                _gameState.GameStateModel.CurrentChapter = string.Empty;
+                _gameState.GameStateModel.CurrentChallengeIndex = 0;
+                _gameState.GameStateModel.CurrentScore = 0;
+            }
+
+            //_navService.Push("MainMenuScene", history);
+            _navService.Push("MainMenuScene");
         }
 
         //CLICK ON RESET PASSWORD LINK

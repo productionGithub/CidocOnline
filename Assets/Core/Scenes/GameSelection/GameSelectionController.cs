@@ -19,15 +19,19 @@ namespace StarterCore.Core.Scenes.GameSelection
         public event Action OnBackEvent;
 
         List<Scenario> _scenarioList = new List<Scenario>();
+        ScenarioCompletionModelDown _completions;
 
         List<string> _languageCriterias = new List<string>();
         List<string> _domainCriterias = new List<string>();
 
 
+        //public void Show(List<Scenario> entries, ScenarioCompletionModelDown c)
         public void Show(List<Scenario> entries)
         {
             _scenarioList = entries;
+            //_completions = c;
 
+            //_panelController.Show(entries, c.Completions);//Show game panels
             _panelController.Show(entries);//Show game panels
             _panelController.OnPanelControllerPlayChapterEvent += OnPlayChapter;
 
@@ -54,8 +58,6 @@ namespace StarterCore.Core.Scenes.GameSelection
             FilterScenarii();
         }
 
-
-        //TODO Refactor to have a list scenario object?
         private void FilterScenarii()
         {
             List<Scenario> filteredScenarioList = new List<Scenario>();
@@ -66,11 +68,7 @@ namespace StarterCore.Core.Scenes.GameSelection
                     _languageCriterias.Contains(p.LanguageTag))
             );
 
-            //foreach (var Scenario in filteredScenarioList)
-            //{
-            //    Debug.Log("Filtered scenarioList : " + Scenario.ScenarioTitle);
-            //}
-
+            //_panelController.Show(filteredScenarioList, _completions.Completions);
             _panelController.Show(filteredScenarioList);
         }
 

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using StarterCore.Core.Services.Network.Models;
 using StarterCore.Core.Scenes.Board.Challenge;
 using StarterCore.Core.Services.GameState;
+using System;
 
 namespace StarterCore.Core.Scenes.Board
 {
@@ -15,15 +16,10 @@ namespace StarterCore.Core.Scenes.Board
         [Inject] NavigationService _navigationService;
         [Inject] ChallengeEvaluator _evaluator;
 
-        private readonly string _success = "Bravo !";
+        public event Action OnCorrectAnswer_ChallengeCtrl;
 
         [SerializeField]
         private ChallengeDisplayer _displayer;
-
-        //Player's answers are stored in a copy of the challenges[currentChallengeId] 'ChallengeData' object
-        //'__Anwsers' properties of this copy are update with players answers
-        // This copy is then compared with expected results in the original ChallengeData object when the Validate button is pressed.
-        public ChallengeData playerChallengeAnswers;
 
         private List<ChallengeData> _challengeList;
 
@@ -35,21 +31,20 @@ namespace StarterCore.Core.Scenes.Board
 
         public void Show()
         {
-            Debug.Log("[ChallengeController] Init OK");
+            Trace.Log("[ChallengeController] Init OK");
             _displayer.Show(_challengeList);//Statement and other challenge related data
         }
 
         public bool EvaluateBoard(ChallengeData expectedAnswers, ChallengeData playerAnswers)
         {
             bool isCorrect = _evaluator.CheckAnswers(expectedAnswers, playerAnswers);
-            if(isCorrect)
+            // Update game model with score and next challenge id
+            if (isCorrect)
             {
-
-                _gameStateManager.GameStateModel.CurrentScore += expectedAnswers.Score;
+                _gameStateManager.GameStateModel.CurrentScore += _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].Score;
             }
             _displayer.DisplayResult(isCorrect, expectedAnswers);
             return isCorrect;
-
         }
     }
 }

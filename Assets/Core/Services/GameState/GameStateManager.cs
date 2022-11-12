@@ -25,6 +25,7 @@ namespace StarterCore.Core.Services.GameState
         public string Locale { get { return gameStateModel.Locale; } set { gameStateModel.Locale = value; } }
         public string DefaultLocale { get { return gameStateModel.DefaultLocale; } }
         public string Username { get { return gameStateModel.Username; } set { gameStateModel.Username = value;  } }
+        public int UserId { get { return gameStateModel.UserId; } set { gameStateModel.UserId = value; } }
 
         public void Initialize()
         {
@@ -46,29 +47,3 @@ namespace StarterCore.Core.Services.GameState
         }
     }
 }
-
-
-
-/*
- * 
- *         public async UniTask<List<InstanceCard>> LoadCards()
-        {
-            var cards = await InitInstancesDeck();
-            Debug.Log("We update something... : " + cards[0].imageName);
-            return cards;
-        }
-
-        private async UniTask<List<InstanceCard>> InitInstancesDeck()
-        {
-            jsonFilePath = Path.Combine(Application.streamingAssetsPath, jsonFileLocation);
-            string fullPathName = Path.Combine(jsonFilePath, jsonFileName);
-
-            var sr = new StreamReader(fullPathName);
-            var fileContent = await sr.ReadToEndAsync();
-            sr.Close();
-
-            instanceCards = JsonConvert.DeserializeObject<List<InstanceCard>>(fileContent);
-            return instanceCards;
-        }
-
-*/

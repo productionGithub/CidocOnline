@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿#define TRACE_ON
+using Cysharp.Threading.Tasks;
 using StarterCore.Core.Services.Network.Models;
 using System.Collections.Generic;
 using Zenject;
@@ -59,6 +60,8 @@ namespace StarterCore.Core.Services.Network
         private string URL_SEND_RESET_EMAIL = Path.Combine(HomeUrl, "php/sendresetlink.php");
         private string URL_GET_HISTORY = Path.Combine(HomeUrl, "php/gethistory.php?userId={0}");
         private string URL_GET_USERID = Path.Combine(HomeUrl, "php/getuserid.php?email={0}");
+        private string URL_GET_SESSION = Path.Combine(HomeUrl, "php/getsession.php?userId={0}?scenarioName={1}?chapterName={2}");
+        private string URL_GET_PROGRESSION = Path.Combine(HomeUrl, "php/getprogression.php?UserId={0}&ScenarioName={1}&ChapterName={2}");
 
         private string URL_GET_LOCALES_MANIFEST = "StreamingAssets/Languages/manifest.json";
         private string URL_GET_COUNTRIES = "StreamingAssets/Games/Marmoutier/marmoutier.json";
@@ -67,6 +70,7 @@ namespace StarterCore.Core.Services.Network
         private string URL_GET_CIDOC_XML = "StreamingAssets/Ontologies/CidocCRM/01-Referential-CidocRDF_Bootleg_GB_3_7_21.xml";
         private string URL_GET_ENTITY_ICONS_COLORS_XML = "StreamingAssets/Ontologies/CidocCRM/01-Referential_Entity_Colour_Mapping.xml";
         private string URL_GET_PROPERTY_ICONS_COLORS_XML = "StreamingAssets/Ontologies/CidocCRM/01-Referential-Property_Colour_mapping.xml";
+
 
         //Test load games
         private string URL_GET_GAMES = "http://ontomatchgame.huma-num.fr/StreamingAssets/Games/Marmoutier/marmoutier.json";
@@ -112,7 +116,7 @@ namespace StarterCore.Core.Services.Network
         }
 
         //FETCH PLAYER HISTORY
-        public async UniTask<HistoryModelDown> GetHistory(string id)
+        public async UniTask<HistoryModelDown> GetHistory(int id)
         {
             //UserIdModelDown userId = await GetUserId(id);
             string url = string.Format(URL_GET_HISTORY, id);
@@ -188,16 +192,10 @@ namespace StarterCore.Core.Services.Network
             return result;
         }
 
-
-        //public async UniTask<ChapterModelDown> LoadGame()
-        //{
-        //    ChapterModelDown result = await _net.GetAsync<ChapterModelDown>(URL_GET_GAMES);
-        //    return result;
-        //}
-
+        //TODO CHECK AND REMOVE ChapterName
         public async UniTask<List<ChallengeData>> LoadChapter(string scenarioName, string chapterName, string fileName)
         {
-            string chapterUrl = HomeUrl + "StreamingAssets/scenarii" + "/" + scenarioName + "/" + fileName;
+            string chapterUrl = HomeUrl + "StreamingAssets/scenarii" + "/" + scenarioName + "/Chapters/" + fileName;
             Debug.Log("URL CHAPTER IS : " + chapterUrl);
 
             List<ChallengeData> result = await _net.GetAsync<List<ChallengeData>>(chapterUrl);
@@ -258,6 +256,34 @@ namespace StarterCore.Core.Services.Network
             Debug.Log("URL -> " + url);
             List<InstanceCardModelDown> result = await _net.GetAsync<List<InstanceCardModelDown>>(url);
             return result;
+        }
+
+        public async UniTask<bool> GetSession(int UserId, string scenarioName, string chapterName)
+        {
+            string url = string.Format(URL_GET_SESSION, UserId, scenarioName, chapterName);
+            ExistValidationDown doesExist = await _net.GetAsync<ExistValidationDown>(url);
+            return doesExist.DoesExist;
+        }
+
+        //Get completion of a scenario
+        public async UniTask<ProgressionModelDown> GetChapterProgression(int UserId, string scenarioName, string chapterFileName)
+        {
+            Trace.Log("[MocNetService] GET PROGRESSION");
+            string url = string.Format(URL_GET_PROGRESSION, UserId, scenarioName, chapterFileName);
+            Trace.Log("[MocNetService] URL GET PROGRESSION = " + url);
+            ProgressionModelDown progression = await _net.GetAsync<ProgressionModelDown>(url);
+            return progression;
+        }
+
+
+        //////////////////////////                UPDATES                //////////////////////////////////
+        //Get INSTANCE file from scenario folder
+        public async UniTask<bool> UpdateDBChallenge(int historyId, string scenarioName, string challenge)
+        {
+            //string url = HomeUrl + "StreamingAssets/scenarii/" + scenarioName + "/Instances/Instances.json";
+            //Debug.Log("URL -> " + url);
+            //List<InstanceCardModelDown> result = await _net.GetAsync<List<InstanceCardModelDown>>(url);
+            return true;
         }
 
     }

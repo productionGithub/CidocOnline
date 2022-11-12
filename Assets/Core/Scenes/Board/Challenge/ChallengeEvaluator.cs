@@ -51,6 +51,10 @@ namespace StarterCore.Core.Scenes.Board.Challenge
         /// <returns></returns>
         public bool CheckAnswers(ChallengeData expectedResults, ChallengeData playerResults)
         {
+
+            //Trace.Log("[Challenge Evaluator] expectedResults : " + expectedResults.ELeftAnswer);
+            //Trace.Log("[Challenge Evaluator] playerResults : " + playerResults.ELeftAnswer);
+
             // We assume the proposition is correct.
             bool isCorrect = true; //Global challenge result returned: true = OK, false = wrong answer
             Trace.Log("PROPS = " + props.Count);
@@ -148,6 +152,7 @@ namespace StarterCore.Core.Scenes.Board.Challenge
                 }
                 if (isCorrect == false) break;//If one is false, the whole challenge is false
             }
+            Trace.Log("[Challenge Evaluator] Evaluation is : " + isCorrect);
             return isCorrect;
         }
 

@@ -6,8 +6,6 @@ namespace StarterCore.Core.Services.Network.Models
     [Serializable]
     public class HistoryModelDown
     {
-        [JsonProperty("historyId")]
-        public string HistoryId;
         [JsonProperty("scenarioName")]
         public string ScenarioName;
         [JsonProperty("chapterName")]
@@ -17,9 +15,12 @@ namespace StarterCore.Core.Services.Network.Models
         [JsonProperty("score")]
         public string Score;
 
-        public HistoryModelDown(string id, string scenarioName, string chapterName, string challengeId, string score)
+        public HistoryModelDown(
+            string scenarioName,
+            string chapterName,
+            string challengeId,
+            string score)
         {
-            HistoryId = id;
             ScenarioName = scenarioName;
             ChapterName = chapterName;
             ChallengeId = challengeId;

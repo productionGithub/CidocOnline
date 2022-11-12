@@ -1,4 +1,4 @@
-#define TRACE_ON
+#define TRACE_OFF
 using System.Collections.Generic;
 using StarterCore.Core.Services.GameState;
 using StarterCore.Core.Services.Network;
@@ -8,6 +8,7 @@ using StarterCore.Core.Scenes.Board.Challenge;
 using StarterCore.Core.Services.Navigation;
 using Cysharp.Threading.Tasks;
 using StarterCore.Core.Services.Network.Models;
+using System;
 
 namespace StarterCore.Core.Scenes.Board
 {
@@ -29,9 +30,6 @@ namespace StarterCore.Core.Scenes.Board
 
         public async void Initialize()
         {
-            //Update GameState with current Scenario/Chapter/ChallengeId passed in via NavService bundle
-            UpdateGameStateModelWithScenarioData();
-
             //Get catalog
             _catalog = await GetScenariiCatalog(); 
 
@@ -43,7 +41,21 @@ namespace StarterCore.Core.Scenes.Board
             List<InstanceCardModelDown> instances = await _networkService.GetInstanceFile(_gameStateManager.GameStateModel.CurrentScenario);
 
             _boardController.Init(challenges, instances);
+            _boardController.OnCorrectAnswer_BoardCtrl += UpdateDBChallenge;
+
             _boardController.Show();
+        }
+
+        private void UpdateDBChallenge() // Will be async
+        {
+            //Update score and current challenge in current progression table
+            //Fetch progression table
+            //Update lastChallengeId + Score fields + Creation_time
+
+           Trace.Log(string.Format("We update DB with current challenge data : challenge index {0} and score {1}",
+                _gameStateManager.GameStateModel.CurrentChallengeIndex, _gameStateManager.GameStateModel.CurrentScore));
+
+            //bool result = await _networkService.UpdateChallenge();
         }
 
         private async UniTask<List<ChallengeData>> GetCurrentChapter(string chapterName)
@@ -81,20 +93,9 @@ namespace StarterCore.Core.Scenes.Board
             return name;
         }
 
-        private void UpdateGameStateModelWithScenarioData()
+        private void UpdateChallengeState()
         {
-            //Get scenario/chapter/challenge index info from NavigationService bundle
-            ChallengeInfoBundle bundle = new ChallengeInfoBundle("", "", 1);
-            _navigationService.GetMainBundle(out bundle);
-
-            _gameStateManager.GameStateModel.CurrentScenario = bundle.ScenarioTitle;
-            _gameStateManager.GameStateModel.CurrentChapter = bundle.ChapterTitle;
-            _gameStateManager.GameStateModel.CurrentChallengeIndex = bundle.ChallengeIndex;
-            _gameStateManager.GameStateModel.CurrentScore = 0;//TODO : Update with score from Bundle
-        }
-
-        private void UpdateChallengeState()// A t this level?
-        {
+            //Update BDD with current challenge and score
         }
 
         private void OnGamePaused()

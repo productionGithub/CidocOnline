@@ -77,7 +77,7 @@
     },
       "MainMenuScene" :{
       "mainmenu-scene-welcometitle-text": "Salut",
-      "mainmenu-scene-continue-text": "Dernier challenge :",
+      "mainmenu-scene-continue-text": "Dernier challenge en cours:",
       "mainmenu-scene-continuebutton-text": "Reprendre",
       "mainmenu-scene-choosebutton-text" : "Choisir",
       "mainmenu-scene-choosebutton-label": "Choisir un scenario",

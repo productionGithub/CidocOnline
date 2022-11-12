@@ -1,3 +1,4 @@
+#define TRACE_ON
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,15 +22,18 @@ namespace StarterCore.Core.Scenes.GameSelection
 
         public event Action<string, string> OnPanelControllerPlayChapterEvent;
 
+        //public void Show(List<Scenario> scenariiPanels, List<ChapterCompletionModelDown> c)
         public void Show(List<Scenario> scenariiPanels)
         {
-
             Clear();//Clear panel list _entries
 
+            int i = 0;
             foreach(Scenario scenario in scenariiPanels)
             {
                 PanelEntryController instance = Instantiate(_panelTemplate, _templateContainer);
-                instance.Show(scenario);
+                //instance.Init(scenario, c[i++]);
+                instance.Init(scenario);
+                instance.Show();
                 instance.OnPanelEntryControllerPlayEvent += OnPlayChapterClicked;
                 instance.gameObject.SetActive(true);
                 _entries.Add(instance);

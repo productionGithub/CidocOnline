@@ -1,4 +1,5 @@
-﻿using System;
+﻿#define TRACE_ON
+using System;
 using Cysharp.Threading.Tasks;
 using StarterCore.Core.Utils;
 using UnityEngine;
@@ -84,7 +85,7 @@ namespace StarterCore.Core.Services.Network
             {
                 //Trace.Log("Request is done ? -> " + webRequest.isDone); // True.
                 string content = webRequest.downloadHandler.text;
-                //Trace.Log("WebRequest content iii: " + webRequest.downloadHandler.text);
+                Trace.Log("WebRequest content: " + webRequest.downloadHandler.text);
 
                 if (JSON.TryDeserialize<T>(content, out T parsed))
                 {

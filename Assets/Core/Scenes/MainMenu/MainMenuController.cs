@@ -30,8 +30,8 @@ namespace StarterCore.Core.Scenes.MainMenu
         public void Show()
         {
             //Get data passed from SignIn scene
-            bundle = new HistoryModelDown("", "", "", "", "");
-            _navService.GetMainBundle(out bundle);
+            //bundle = new HistoryModelDown("", "", "", "", "");
+            //_navService.GetMainBundle(out bundle);
 
             TranslateUI();
 
@@ -41,9 +41,9 @@ namespace StarterCore.Core.Scenes.MainMenu
         private void TranslateUI()
         {
             _welcomeTitle.text = _localizationManager.GetTranslation("mainmenu-scene-welcometitle-text") + " " + _gameState.Username + " !";
-            Trace.Log("WE BUNDLE ID: " + bundle.HistoryId);
+            //Trace.Log("WE BUNDLE ID: " + bundle.HistoryId);
 
-            if (bundle == null || bundle.HistoryId.Equals(string.Empty))
+            if(_gameState.GameStateModel.CurrentScenario == string.Empty)
             {
                 Trace.Log("Disable continue zone !");
                 _continueZone.SetActive(false);
@@ -52,9 +52,9 @@ namespace StarterCore.Core.Scenes.MainMenu
             {
                 _continueZone.SetActive(true);
                 _continueText.text = _localizationManager.GetTranslation("mainmenu-scene-continue-text") + " " +
-                bundle.ScenarioName + " / " +
-                bundle.ChapterName + " / " +
-                bundle.ChallengeId;
+                _gameState.GameStateModel.CurrentScenario + "/" +
+                _gameState.GameStateModel.CurrentChapter + "/" +
+                _gameState.GameStateModel.CurrentChallengeIndex.ToString();
             }
         }
 

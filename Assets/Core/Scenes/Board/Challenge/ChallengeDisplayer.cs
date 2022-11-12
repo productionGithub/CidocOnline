@@ -66,7 +66,8 @@ namespace StarterCore.Core.Scenes.Board.Challenge
         public void Show(List<ChallengeData> challengeList)
         {
             ChallengeData currentChallenge = challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex];
-
+            Trace.Log("[Challenge Displayer] Current challenge is : " + _gameStateManager.GameStateModel.CurrentChallengeIndex);
+            Trace.Log("[Challenge Displayer] ELeftAnswer expected answers is : " + currentChallenge.ELeftAnswer);
 
             //Hide message and explanation texts
             _explanationTitle.SetActive(false);

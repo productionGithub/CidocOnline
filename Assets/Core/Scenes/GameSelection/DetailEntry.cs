@@ -11,20 +11,24 @@ namespace StarterCore.Core.Scenes.GameSelection
     {
         [SerializeField] private TextMeshProUGUI _chapterTitleTxt;
         [SerializeField] private TextMeshProUGUI _chapterDescriptionTxt;
+        [SerializeField] private TextMeshProUGUI _chapterCompletionTxt;
 
         [SerializeField] private Button _playChapterButton;
 
         public event Action<string> OnDetailEntryPlayEvent;
 
+        //public void Show(Chapter chapter, int completionRate)
         public void Show(Chapter chapter)
         {
-            _playChapterButton.onClick.AddListener(LoadChapter);
+            _playChapterButton.onClick.AddListener(PlayChapter);
 
             _chapterTitleTxt.text = $"{chapter.ChapterTitle}";
             _chapterDescriptionTxt.text = $"{chapter.ChapterDescription}";
+
+            _chapterCompletionTxt.text = "TODO";// completionRate.ToString();
         }
 
-        private void LoadChapter()
+        private void PlayChapter()
         {
             OnDetailEntryPlayEvent?.Invoke(_chapterTitleTxt.text);
         }

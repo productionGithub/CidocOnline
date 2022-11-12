@@ -87,7 +87,9 @@
         "AnyDomain"
       ],
     "domainCodes" : [
-        "FAK",
+        "HIS",
+        "ARC",
+        "CUL",
       ],
     "authorTags": [
       "Your Org."
