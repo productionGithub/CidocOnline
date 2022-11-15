@@ -57,7 +57,6 @@ namespace StarterCore.Core.Scenes.Board.Challenge
 
             // We assume the proposition is correct.
             bool isCorrect = true; //Global challenge result returned: true = OK, false = wrong answer
-            Trace.Log("PROPS = " + props.Count);
 
             foreach (var prop in props)
             {
@@ -152,7 +151,6 @@ namespace StarterCore.Core.Scenes.Board.Challenge
                 }
                 if (isCorrect == false) break;//If one is false, the whole challenge is false
             }
-            Trace.Log("[Challenge Evaluator] Evaluation is : " + isCorrect);
             return isCorrect;
         }
 

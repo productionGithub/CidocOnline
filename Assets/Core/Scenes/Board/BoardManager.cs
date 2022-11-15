@@ -37,28 +37,39 @@ namespace StarterCore.Core.Scenes.Board
             string chapterFilename = GetChapterFilename();
 
             //Fetch & Deserialize challenge and instances files
-            List<ChallengeData> challenges = await GetCurrentChapter(chapterFilename);
+            List<ChallengeData> challenges = await GetCurrentChapters(chapterFilename);
+
+            Debug.Log("");
+
             List<InstanceCardModelDown> instances = await _networkService.GetInstanceFile(_gameStateManager.GameStateModel.CurrentScenario);
 
             _boardController.Init(challenges, instances);
-            _boardController.OnCorrectAnswer_BoardCtrl += UpdateDBChallenge;
+            _boardController.OnCorrectAnswer_BoardCtrl += UpdateSession;
 
             _boardController.Show();
         }
 
-        private void UpdateDBChallenge() // Will be async
+        private async void UpdateSession()
         {
             //Update score and current challenge in current progression table
             //Fetch progression table
             //Update lastChallengeId + Score fields + Creation_time
-
            Trace.Log(string.Format("We update DB with current challenge data : challenge index {0} and score {1}",
                 _gameStateManager.GameStateModel.CurrentChallengeIndex, _gameStateManager.GameStateModel.CurrentScore));
 
-            //bool result = await _networkService.UpdateChallenge();
+            UpdateSessionModelUp session = new UpdateSessionModelUp
+            {
+                UserId = _gameStateManager.GameStateModel.UserId,
+                CurrentScenario = _gameStateManager.GameStateModel.CurrentScenario,
+                CurrentChapter = GetChapterFilename(),
+                CurrentChallengeIndex = _gameStateManager.GameStateModel.CurrentChallengeIndex,
+                CurrentScore = _gameStateManager.GameStateModel.CurrentScore
+            };
+
+            bool result = await _networkService.UpdateSession(session);
         }
 
-        private async UniTask<List<ChallengeData>> GetCurrentChapter(string chapterName)
+        private async UniTask<List<ChallengeData>> GetCurrentChapters(string chapterName)
         {
             List<ChallengeData> chapter = await _networkService.LoadChapter(
                 _gameStateManager.GameStateModel.CurrentScenario,

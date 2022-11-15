@@ -32,7 +32,7 @@ namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables
         {
             _slider.maxValue = value;
             _slider.maxValue = value;
-            _slider.value = 0;
+            SetSliderValue(0);
         }
 
         public void SetSliderValue(float value)

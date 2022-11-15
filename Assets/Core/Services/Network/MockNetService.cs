@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 using System;
 using System.IO;
 using Newtonsoft.Json;
+using StarterCore.Core.Services.GameState;
 
 namespace StarterCore.Core.Services.Network
 {
     public class MockNetService
     {
         [Inject] private NetworkService _net;
-
+        [Inject] private GameStateManager _gameStateManager;
 
         /*
         //const string HomeUrl = "https://ontomatchgame.huma-num.fr/";
@@ -49,8 +50,7 @@ namespace StarterCore.Core.Services.Network
         const string HomeUrl = "https://ontomatchgame.huma-num.fr/";
         const string LanguagesFolder = "StreamingAssets/Languages/";
 
-        //Signin & Signup process
-        private string URL_CREATE_USER = Path.Combine(HomeUrl, "php/userSave.php");
+        //GET
         private string URL_CHECK_USERNAME = Path.Combine(HomeUrl, "php/checkusername.php?username={0}");
         private string URL_GET_USERNAME = Path.Combine(HomeUrl, "php/getusername.php?email={0}");
         private string URL_CHECK_EMAIL = Path.Combine(HomeUrl, "php/checkemail.php?email={0}");
@@ -61,6 +61,7 @@ namespace StarterCore.Core.Services.Network
         private string URL_GET_HISTORY = Path.Combine(HomeUrl, "php/gethistory.php?userId={0}");
         private string URL_GET_USERID = Path.Combine(HomeUrl, "php/getuserid.php?email={0}");
         private string URL_GET_SESSION = Path.Combine(HomeUrl, "php/getsession.php?userId={0}?scenarioName={1}?chapterName={2}");
+
         private string URL_GET_PROGRESSION = Path.Combine(HomeUrl, "php/getprogression.php?UserId={0}&ScenarioName={1}&ChapterName={2}");
 
         private string URL_GET_LOCALES_MANIFEST = "StreamingAssets/Languages/manifest.json";
@@ -71,6 +72,12 @@ namespace StarterCore.Core.Services.Network
         private string URL_GET_ENTITY_ICONS_COLORS_XML = "StreamingAssets/Ontologies/CidocCRM/01-Referential_Entity_Colour_Mapping.xml";
         private string URL_GET_PROPERTY_ICONS_COLORS_XML = "StreamingAssets/Ontologies/CidocCRM/01-Referential-Property_Colour_mapping.xml";
 
+        //CREATE
+        private string URL_CREATE_USER = Path.Combine(HomeUrl, "php/userSave.php");
+        private string URL_CREATE_SESSION = Path.Combine(HomeUrl, "php/createsession.php");
+
+        //UPDATE
+        private string URL_UPDATE_SESSION = Path.Combine(HomeUrl, "php/updatesession.php");
 
         //Test load games
         private string URL_GET_GAMES = "http://ontomatchgame.huma-num.fr/StreamingAssets/Games/Marmoutier/marmoutier.json";
@@ -277,48 +284,47 @@ namespace StarterCore.Core.Services.Network
 
 
         //////////////////////////                UPDATES                //////////////////////////////////
-        //Get INSTANCE file from scenario folder
-        public async UniTask<bool> UpdateDBChallenge(int historyId, string scenarioName, string challenge)
+
+        //Create new Session
+        public async UniTask<bool> CreateSession(int UserId, string scenarioName, string chapterName)
         {
-            //string url = HomeUrl + "StreamingAssets/scenarii/" + scenarioName + "/Instances/Instances.json";
-            //Debug.Log("URL -> " + url);
-            //List<InstanceCardModelDown> result = await _net.GetAsync<List<InstanceCardModelDown>>(url);
-            return true;
+            CreateSessionModelUp session = new CreateSessionModelUp {
+                UserId = UserId,
+                ScenarioTitle = scenarioName,
+                ChapterTitle = chapterName
+            };
+
+            ExistValidationDown doesExist = await _net.PostAsync<ExistValidationDown>(URL_CREATE_SESSION, session);
+            Trace.Log("[Mock Net] *** doesExist validation down => " + doesExist.DoesExist);
+            return doesExist.DoesExist;
         }
 
+
+        public async UniTask<bool> UpdateSession(UpdateSessionModelUp sessionData)
+        {
+            /*
+             {
+                "userId" : "223",
+                "currentScenario" : "MarmoutierEN",
+                "currentChapter" : "Chapter1.json",
+                "currentChallengeIndex" : "2",
+                "currentScore" : "20"
+             }
+            */
+            //UpdateSessionModelUp session = new UpdateSessionModelUp
+            //{
+            //    UserId = _gameStateManager.GameStateModel.UserId,
+            //    CurrentScenario = _gameStateManager.GameStateModel.CurrentScenario,
+            //    CurrentChapter = _gameStateManager.GameStateModel.CurrentChapter,
+            //    CurrentChallengeIndex = _gameStateManager.GameStateModel.CurrentChallengeIndex,
+            //    CurrentScore = _gameStateManager.GameStateModel.CurrentScore
+            //};
+
+            Debug.Log("");
+
+            ExistValidationDown doesExist = await _net.PostAsync<ExistValidationDown>(URL_UPDATE_SESSION, sessionData);
+            Trace.Log("[Mock Net] *** doesExist validation down => " + doesExist.DoesExist);
+            return doesExist.DoesExist;
+        }
     }
 }
-
-//Decks
-//private string URL_JSON_SA = Path.Combine(HomeUrl, "StreamingAssets/DecksFiles/Instances/Instances.json");
-//private string URL_JSON = Path.Combine(HomeUrl, "json/instance.json");
-//Localisation
-
-/*
-   //EXAMPLE OF DYNAMIC FETCH & DISPLAY
-        public async UniTask<List<User>> GetRandomUsersAsync(string name)
-        {
-            string url = string.Format(URL_FORMAT_User, name);
-            List<User> result = await _net.GetAsync<List<User>>(url);
-            return result;
-        }
-*/
-
-/*
-//Path to instances.json file
-readonly private string jsonFileLocation = "DecksFiles/Instances/";
-private string jsonFilePath;
-private readonly string jsonFileName = "Instances.json";
-
-//Instance cards
-public List<InstanceCard> instanceCards;
-
-//GET JSON FILE
-public async UniTask<List<InstanceCardModelDown>> GetJsonFile()
-{
-    //string url = string.Format(URL_RESET_PASSWORD, data);
-    //Debug.Log("String url is : " + url);
-    List<InstanceCardModelDown> jsonString = await _net.GetAsync<List<InstanceCardModelDown>>(URL_JSON_SA);
-    return jsonString;
-}
-*/

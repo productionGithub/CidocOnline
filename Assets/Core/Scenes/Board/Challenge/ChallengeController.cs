@@ -38,11 +38,7 @@ namespace StarterCore.Core.Scenes.Board
         public bool EvaluateBoard(ChallengeData expectedAnswers, ChallengeData playerAnswers)
         {
             bool isCorrect = _evaluator.CheckAnswers(expectedAnswers, playerAnswers);
-            // Update game model with score and next challenge id
-            if (isCorrect)
-            {
-                _gameStateManager.GameStateModel.CurrentScore += _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].Score;
-            }
+
             _displayer.DisplayResult(isCorrect, expectedAnswers);
             return isCorrect;
         }

@@ -34,10 +34,8 @@ namespace StarterCore.Core.Scenes.GameSelection
 
         private async void LoadChapter(string scenarioTitle, string chapterTitle)
         {
-            //Update gamestate model with current game data
             _gameStateManager.GameStateModel.CurrentScenario = scenarioTitle;
             _gameStateManager.GameStateModel.CurrentChapter = chapterTitle;
-
 
             if (!scenarioTitle.Equals("YOUR GAME HERE!"))
             {
@@ -48,14 +46,22 @@ namespace StarterCore.Core.Scenes.GameSelection
                 {
                     Trace.Log(string.Format("Progression for {0}-{1} is : challenge Id {2} / Score = {3}",
                         scenarioTitle, chapterTitle, _progression.LastChallengeId, _progression.Score));
+
                     //update GmaeModel with values of progression
                     _gameStateManager.GameStateModel.CurrentChallengeIndex = _progression.LastChallengeId;
                     _gameStateManager.GameStateModel.CurrentScore = _progression.Score;
                 }
                 else
                 {
-                    //update GmaeModel with default values for score and challende index
-                    Trace.Log("No progression, load with defaults");
+                    //Create Session + Default Progression in DB.
+                    //Update GameModel with default values for score and challende index.
+                    Trace.Log("No progression, create session and load with defaults");
+                    Trace.Log("BEFORE CREATING SESSION");
+                    bool _session = await _networkService.CreateSession(_gameStateManager.GameStateModel.UserId, scenarioTitle, GetChapterFilename());
+
+                    //TODO Debug _session value : always false (but sent is true => Output writtent in error_log).
+                    //TODO For now, I don't check and set default values as if _session == true;
+
                     _gameStateManager.GameStateModel.CurrentChallengeIndex = 1;
                     _gameStateManager.GameStateModel.CurrentScore = 0;
                 }

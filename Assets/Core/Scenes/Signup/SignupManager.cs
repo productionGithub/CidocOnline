@@ -98,7 +98,7 @@ namespace StarterCore.Core.Scenes.Signup
             {
                 _controller.HideAllAlerts();
                 _controller.AccountCreatedFailed();
-                Debug.LogError("Sorry. Coud not create account due to server issue.");
+                Debug.LogError("[Server Error] : Sorry, could not create account. Please retry or contact administrator.");
             }
         }
 

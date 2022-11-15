@@ -68,14 +68,14 @@ namespace StarterCore.Core.Scenes.Board
         private List<InstanceCardModelDown> _instances;
 
         private ChallengeData _playerResults;
-        private bool _challengeAlreadyValidated;
+        //private bool _challengeAlreadyValidated;
 
         public void Init(List<ChallengeData> challengeList, List<InstanceCardModelDown> instances)
         {
             Trace.Log("[BoardController] Init!");
             _instances = instances;
             _challengeList = challengeList;
-            _challengeAlreadyValidated = false;
+            //_challengeAlreadyValidated = false;
 
             _refreshBoard.onClick.AddListener(Show);
             _validateBoard.onClick.AddListener(OnValidateBoard);
@@ -270,7 +270,12 @@ namespace StarterCore.Core.Scenes.Board
                 _retryChallenge.interactable = false;
                 _nextChallenge.interactable = true;
 
-                //Fire event for DB update
+                //update score
+
+                // Update session with new score
+                _gameStateManager.GameStateModel.CurrentScore += _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].Score;
+                //_challengeController.Show();
+
                 OnCorrectAnswer_BoardCtrl?.Invoke();
             }
             else
@@ -284,7 +289,9 @@ namespace StarterCore.Core.Scenes.Board
 
         private void NextChallenge()
         {
+            // Update session with new challengeIndex
             _gameStateManager.GameStateModel.CurrentChallengeIndex++;
+            OnCorrectAnswer_BoardCtrl?.Invoke();
             Trace.Log("CurrentChallengeIndex is : " + _gameStateManager.GameStateModel.CurrentChallengeIndex);
             Show();
         }
