@@ -62,7 +62,8 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
         private void OnDestroy()
         {
-            //Unsubscribe hierarchy event
+            _propertyCardDisplayer.OnDomainButtonClick_Displayer -= DomainButtonClicked;
+            _propertyCardDisplayer.OnRangeButtonClick_Displayer -= RangeButtonClicked;
         }
     }
 }

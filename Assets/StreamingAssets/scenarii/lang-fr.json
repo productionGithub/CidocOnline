@@ -1,0 +1,105 @@
+{
+   "locale": "fr",
+   "static-text" : {
+   "SigninScene": {
+      "signin-scene-title-text": "BIENVENUE SUR ONTOMATCHGAME!",
+      "signin-scene-intro-text": "La représentation des données sémantiques [...] should let you generate, share and consume Cultural Heritage data with colleagues around the world, to ask and answer questions against more data and more integrated knowledge nets.\n\nBut to get there, you need to learn how to read and write semantic data in the first place. That’s where CIDOC CRM the game comes in. If you are interested in learning about ontology, semantics and how to apply them to real cultural heritage data, then the CIDOC CRM Game has been designed for you.",
+      "signin-scene-email-label": "Votre email",
+      "signin-scene-wrongemail-text" : "Email associé à aucun compte",
+      "signin-scene-email-placeholder-text" : "Entrez un email valide...",
+      "signin-scene-emailnotvalid-text" : "Format d'email invalide.\nDevrait ressembler à 'martin@dupont.fr",
+      "signin-scene-wrongcombination-text" : "Email ou mot de passe incorrect\nVeuillez réessayer",
+      "signin-scene-rightcombination-text" : "Login OK. Téléchargement de données.\nPlease wait...",
+      "signin-scene-password-label" : "Votre mot de passe",
+      "signin-scene-password-placeholder-text" : "Mot de passe associé au compte",
+      "signin-scene-forgotpassword-text" : "Mot de passe oublié ?",
+      "signin-scene-passwordnotvalid-text" : "Mot de passe : minimum 6 caractères",
+      "signin-scene-okbutton-text" : "OK",
+      "signin-scene-accountnotactivated-text" : "Compte non activé\nVérifiez vos email et suivez les instructions",
+      "signin-scene-waitingmessage-text" : "Vérification des données. Veuillez patienter...",
+      "signin-scene-noaccount-label" : "Pas encore de compte ?",
+      "signin-scene-createbutton-label" : "Créer un compte"
+   },
+      "SignupScene": {
+      "signup-scene-title-text": "CREER UN COMPTE",
+      "signup-scene-email-label": "Votre email",
+      "signup-scene-email-placeholder-text" : "Entrez un email valide",
+      "signup-scene-emailnotvalid-text" : "Format d'email invalide.\nDevrait ressembler à 'martin@dupont.fr'",
+      "signup-scene-emailalreadyexists-text" : "Email déjà enregistré\nEssayez un autre ou réinitialisez le mot de passe",
+
+      "signup-scene-username-label": "Nom d'utilisateur",
+      "signup-scene-username-placeholder-text" : "Choisissez un nom d'utilisateur",
+      "signup-scene-usernamenotvalid-text" : "Nom d'utilisateur non valide\nEvitez les caractères non-imprimables",
+      "signup-scene-usernamealreadyexists-text" : "Ce nom d'utilisateur existe déjà\nChoisissez-en un autre",
+
+
+      "signup-scene-password-label": "Votre mot de passe",
+      "signup-scene-password-placeholder-text":"minimum 6 caractères",
+      "signup-scene-passwordnotvalid-text" : "Mot de passe : minimum 6 caractères", 
+      "signup-scene-country-label" : "Pays",
+      "signup-scene-optin-text" : "Oui, je veux recevoir des informations sur OntoMatchGame",
+      "signup-scene-registerbutton-text" : "Créer",
+      "signup-scene-termsandconditions-text" : "Vos données personnelles ne seront jamais partagées avec des tiers",
+      "signup-scene-accountcreated-text" :"Votre compte a été créé !\nVérifiez vos emails pour l'activez",
+      "signup-scene-waitingmessage-text" : "Création du compte.\nPatientez...",
+      "signup-scene-accountcreatedfailed-text" : "Ooops! Une erreur est survenue\nVeuillez réessayer",
+      "signup-scene-backbutton-text" : "Retour"
+    },
+      "ResetPasswordScene" :{
+      "resetpassword-scene-title-text": "REINITIALISER LE MOT DE PASSE",
+      "resetpassword-scene-intro-text" : "Entrez votre email et cliquez sur 'Reset'\nNous vous enverrons un email avec un lien de réinitilisation.",
+      "resetpassword-scene-email-label" : "Entrez votre email",
+      "resetpassword-scene-placeholder-text" : "Email associé à votre compte",
+      "resetpassword-scene-noaccount-text" : "Email lié à aucun compte",
+      "resetpassword-scene-emailnotvalid-text" :  "Format d'email invalide.\nDevrait ressembler à 'martin@dupont.fr'",
+      "resetpassword-scene-waiting-text" : "Vérification de l'email\nPatientez...",
+      "resetpassword-scene-Resetbutton-text" : "Reset",
+      "resetpassword-scene-confirmationmessage-text" : "Un email vous a été envoyé !\nOuvrez le et suivez les instructions",
+      "resetpassword-scene-errormessage-text" : "Ooops! Une erreur est survenue\nVeuillez contacter l'administrateur",
+      "resetpassword-scene-notactivated-text" : "Compte non activé\nVérifiez votre email et suivez les instructions",
+      "resetpassword-scene-backbutton-text" : "Retour"
+    },
+      "GameSelectionScene" :{
+      "gameselection-scene-title-text": "SELECTION DES JEUX",
+      "gameselection-scene-backbutton-text":"Retour",
+      "gameselection-scene-listofscenarii-label":"Liste des scenario",
+      "gameselection-scene-domain-label":"Domaine",
+      "gameselection-scene-domain1-text":"Archéologie",
+      "gameselection-scene-domain2-text":"Histoire",
+      "gameselection-scene-domain3-text":"Science",
+      "gameselection-scene-domain4-text":"Civilisation",
+      "gameselection-scene-domain5-text":"Art",
+      "gameselection-scene-domain6-text":"Literature",
+      "gameselection-scene-ontology-label":"Ontologie",
+      "gameselection-scene-language-label":"Langage",
+      "gameselection-scene-language1-text":"Anglais",
+      "gameselection-scene-language2-text":"Français"
+    },
+      "MainMenuScene" :{
+      "mainmenu-scene-welcometitle-text": "Salut",
+      "mainmenu-scene-continue-text": "Dernier challenge en cours:",
+      "mainmenu-scene-continue-text": "Recherche de session précédente... Veuillez patienter.",
+      "mainmenu-scene-nocontinue-text": "Session précédente : aucune.",
+      "mainmenu-scene-emptycontinue-text": "",
+      "mainmenu-scene-continuebutton-text": "Reprendre",
+      "mainmenu-scene-choosebutton-text" : "Choisir",
+      "mainmenu-scene-choosebutton-label": "Choisir un scenario",
+      "mainmenu-scene-statisticsbutton-text": "Stats",
+      "mainmenu-scene-statistics-label": "Voir mes statistiques",
+      "mainmenu-scene-hallbutton-text": "Leaderboard",
+      "mainmenu-scene-hallbutton-label": "Voir mon classement",
+      "mainmenu-scene-reset-label": "Effacer les données de jeu et recommencer",
+      "mainmenu-scene-resetbutton-text": "Reset",
+      "mainmenu-scene-quit-label": "Quitter le jeu",
+      "mainmenu-scene-quitbutton-text": "Quitter"
+    },
+      "BoardScene" :{
+      "boardscene-scene-winbanner-text": "BRAVO !",
+      "boardscene-scene-explanationtitle-text": "Ooops! Mauvaise réponse.",
+      "boardscene-scene-validatebutton-text": "Valider",
+      "boardscene-scene-nextbutton-text": "Suivant",
+      "boardscene-scene-retrybutton-text": "Retenter",
+      "boardscene-scene-quitbutton-text": "Quitter"
+    }
+    }
+}

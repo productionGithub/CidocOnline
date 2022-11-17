@@ -104,18 +104,14 @@ namespace StarterCore.Core.Scenes.Board.Challenge
             _boardMask.SetActive(true);
             if (answerCorrect)
             {
-                //Hide explanation
+                _currentScore.text = _gameStateManager.GameStateModel.CurrentScore.ToString();
                 _explanationTitle.SetActive(false);
                 _explanationDescription.SetActive(false);
-                //Display win message
                 _winBanner.SetActive(true);
                 _winIcon.SetActive(true);
-                //Uddate score
-                _currentScore.text = _gameStateManager.GameStateModel.CurrentScore.ToString();
             }
             else
             {
-                //Hide WinBanner
                 _winBanner.SetActive(false);
                 //Display explanation message
                 _explanationTitle.GetComponentInChildren<TextMeshProUGUI>().text = _localizationManager.GetTranslation("boardscene-scene-explanationtitle-text");

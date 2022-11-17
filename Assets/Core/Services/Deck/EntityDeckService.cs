@@ -67,6 +67,8 @@ public class EntityDeckService : IInitializable
     // <*************************** public methods ************************************>
     public List<EntityCard> GetInitialDeck(string initString)
     {
+        Trace.Log("[EntityDeckService] GetInitialDeck...");
+
         List<EntityCard> partialDeck = new List<EntityCard>();
         partialDeck.Clear();
 
@@ -87,6 +89,7 @@ public class EntityDeckService : IInitializable
                 break;
         }
 
+        Trace.Log(string.Format("[EntityDeckService] NB card in deck for {0} is {1}", initString, partialDeck.Count));
         return partialDeck;
     }
 

@@ -30,7 +30,7 @@ public class HierarchyEntityEntry : MonoBehaviour
 
     private void HierarchyEntityClicked()
     {
-        Debug.Log(string.Format("[-EntityEntry (Prefab)] {0} clicked.", _label));
+        //Debug.Log(string.Format("[-EntityEntry (Prefab)] {0} clicked.", _label));
         OnHierarchyEntityClickEvent?.Invoke(_label);
     }
 }

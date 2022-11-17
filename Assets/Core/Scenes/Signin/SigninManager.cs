@@ -118,36 +118,36 @@ namespace StarterCore.Core.Scenes.Signin
 
             Trace.Log("[SignIn Manager] From GetUserId, userId is : " + _gameState.GameStateModel.UserId);
 
-            //Get player history
-            HistoryModelDown history = await _net.GetHistory(userId.UserId);
+            ////Get player history
+            //HistoryModelDown history = await _net.GetHistory(userId.UserId);
 
-            if (history != null)
-            {
+            //if (history != null)
+            //{
 
-                Trace.Log("[SignIn Manager] From gethistory, scenario is : " + history.ScenarioName);
+            //    Trace.Log("[SignIn Manager] From gethistory, scenario is : " + history.ScenarioName);
 
-                //Update game state model
-                _gameState.GameStateModel.CurrentScenario = history.ScenarioName;
-                _gameState.GameStateModel.CurrentChapter = history.ChapterName;
-                if (history.ChallengeId != string.Empty)
-                {
-                    _gameState.GameStateModel.CurrentChallengeIndex = Int32.Parse(history.ChallengeId);
-                }
-                if (history.Score != null)
-                {
-                    Trace.Log("history score = " + "-" + history.Score + "-");
-                    //_gameState.GameStateModel.CurrentScore = Int32.Parse(history.Score.ToString());
-                }
+            //    //Update game state model
+            //    _gameState.GameStateModel.CurrentScenario = history.ScenarioName;
+            //    _gameState.GameStateModel.CurrentChapter = history.ChapterName;
+            //    if (history.ChallengeId != string.Empty)
+            //    {
+            //        _gameState.GameStateModel.CurrentChallengeIndex = Int32.Parse(history.ChallengeId);
+            //    }
+            //    if (history.Score != null)
+            //    {
+            //        Trace.Log("history score = " + "-" + history.Score + "-");
+            //        //_gameState.GameStateModel.CurrentScore = Int32.Parse(history.Score.ToString());
+            //    }
 
-            }
-            else
-            {
-                Trace.Log("[SignInMgr] History is null");
-                _gameState.GameStateModel.CurrentScenario = string.Empty;
-                _gameState.GameStateModel.CurrentChapter = string.Empty;
-                _gameState.GameStateModel.CurrentChallengeIndex = 0;
-                _gameState.GameStateModel.CurrentScore = 0;
-            }
+            //}
+            //else
+            //{
+            //    Trace.Log("[SignInMgr] History is null");
+            //    _gameState.GameStateModel.CurrentScenario = string.Empty;
+            //    _gameState.GameStateModel.CurrentChapter = string.Empty;
+            //    _gameState.GameStateModel.CurrentChallengeIndex = 0;
+            //    _gameState.GameStateModel.CurrentScore = 0;
+            //}
 
             //_navService.Push("MainMenuScene", history);
             _navService.Push("MainMenuScene");

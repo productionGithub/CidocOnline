@@ -51,16 +51,13 @@ namespace StarterCore.Core.Scenes.Board.Deck
         private bool _isListFiltered = false;
         private bool _initDone = false;
 
+        //Initialization is done once.
         public void Init(List<EntityCard> initialDeck)
         {
             //Initialization is made only once
             if (_initDone == false)
             {
                 CurrentCard = new EntityCard();
-
-                _initialDeckContent = initialDeck;
-                _currentDeckContent = new List<EntityCard>(_initialDeckContent);
-                _addedCard = new List<EntityCard>();
 
                 //Card data
                 _entityCardController.Init();
@@ -80,12 +77,16 @@ namespace StarterCore.Core.Scenes.Board.Deck
                 _sliderController.Init();
                 _sliderController.OnSliderValueChangedUI += OnSliderValueChanged;
 
-                CurrentCard = initialDeck[0];
-
-                ReinitDeck();
-
                 _initDone = true;
             }
+        }
+
+        public void InitDeck(List<EntityCard> initialDeck)
+        {
+            _initialDeckContent = new List<EntityCard>(initialDeck);
+            _currentDeckContent = new List<EntityCard>(initialDeck);
+            _addedCard = new List<EntityCard>();
+            CurrentCard = initialDeck[0];
         }
 
         public void Show()
@@ -277,6 +278,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
                 _entityCardController.Show(_currentDeckContent[0]);
                 _entityCardController.ReinitBackground();
 
+                _hierarchyDisplayer.Init();
                 _hierarchyDisplayer.Show(_currentDeckContent[0]);
 
                 _sliderController.SetSliderActive(true);

@@ -32,7 +32,7 @@ namespace StarterCore.Core.Scenes.GameSelection
             _gameSelectioncontroller.OnGameSelectionControllerPlayChapterEvent += LoadChapter;
         }
 
-        private async void LoadChapter(string scenarioTitle, string chapterTitle)
+        public async void LoadChapter(string scenarioTitle, string chapterTitle)
         {
             _gameStateManager.GameStateModel.CurrentScenario = scenarioTitle;
             _gameStateManager.GameStateModel.CurrentChapter = chapterTitle;

@@ -63,7 +63,6 @@ namespace StarterCore.Core.Scenes.Board.Displayer
             _fullTextButton.onClick.AddListener(FullTextClicked);
         }
 
-        
         //Show UI
         public void Show(EntityCard card)
         {

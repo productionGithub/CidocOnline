@@ -2731,6 +2731,7 @@ MonoBehaviour:
   _continueText: {fileID: 1277595600}
   _continueZone: {fileID: 1471531549}
   _chooseScenario: {fileID: 1206805625}
+  _continue: {fileID: 1160573263}
 --- !u!1 &930461001
 GameObject:
   m_ObjectHideFlags: 0
@@ -4582,6 +4583,7 @@ GameObject:
   - component: {fileID: 1277595599}
   - component: {fileID: 1277595601}
   - component: {fileID: 1277595600}
+  - component: {fileID: 1277595602}
   m_Layer: 5
   m_Name: ContinueText
   m_TagString: Untagged
@@ -4629,7 +4631,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Last played
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4706,6 +4708,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1277595598}
   m_CullTransparentMesh: 1
+--- !u!114 &1277595602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1277595598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 955159e208a8449f98a4c39f53e33f91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <LocalizeKey>k__BackingField: mainmenu-scene-continuewaiting-text
+  <LocalizedText>k__BackingField: {fileID: 1277595600}
 --- !u!1 &1321754223
 GameObject:
   m_ObjectHideFlags: 0

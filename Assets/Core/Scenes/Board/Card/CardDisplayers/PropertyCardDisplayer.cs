@@ -120,7 +120,6 @@ namespace StarterCore.Core.Scenes.Board.Displayer
                     _colorBarLeftCenterTop.GetComponent<Image>().color = _entityDeckService.ColorsDictionary[card.domainColors[1]];
                     _colorBarLeftCenterBottom.GetComponent<Image>().color = _entityDeckService.ColorsDictionary[card.domainColors[1]];
                     _colorBarLeftBottom.GetComponent<Image>().color = _entityDeckService.ColorsDictionary[card.domainColors[2]];
-                    Debug.Log("");
                     break;
 
                 default:

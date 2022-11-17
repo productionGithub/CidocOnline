@@ -1,4 +1,4 @@
-#define TRACE_OFF
+#define TRACE_ON
 using System.Collections.Generic;
 using StarterCore.Core.Services.GameState;
 using StarterCore.Core.Services.Network;
@@ -30,32 +30,38 @@ namespace StarterCore.Core.Scenes.Board
 
         public async void Initialize()
         {
-            //Get catalog
-            _catalog = await GetScenariiCatalog(); 
+            Debug.Log("[BoardManager] AFTER PUSH BOARDSCENE : " + _gameStateManager.GameStateModel.CurrentChapter);
+            _catalog = await _networkService.GetCatalog();
+            Debug.Log("[BoardManager] AFTER PUSH BOARDSCENE : " + _gameStateManager.GameStateModel.CurrentChapter);
+
 
             //Get chapter filename from catalog
             string chapterFilename = GetChapterFilename();
 
-            //Fetch & Deserialize challenge and instances files
-            List<ChallengeData> challenges = await GetCurrentChapters(chapterFilename);
+            Trace.Log(string.Format("[BoardManager] AFTER GetFilename CurrentChapter is ", _gameStateManager.GameStateModel.CurrentChapter));
 
-            Debug.Log("");
+            Debug.Log("[BoardManager] GETCHAPTer filenAME = " + chapterFilename);
+
+            //Fetch & Deserialize challenge and instances files
+            List<ChallengeData> challenges = await FetchChallenges(chapterFilename);
 
             List<InstanceCardModelDown> instances = await _networkService.GetInstanceFile(_gameStateManager.GameStateModel.CurrentScenario);
 
             _boardController.Init(challenges, instances);
-            _boardController.OnCorrectAnswer_BoardCtrl += UpdateSession;
+            _boardController.InitBoard(challenges, instances);
+            _boardController.OnUpdateSession += UpdateSession;
 
             _boardController.Show();
         }
 
         private async void UpdateSession()
         {
+            Trace.Log(string.Format("We update DB with current challenge data : challenge index {0} and score {1}",
+    _gameStateManager.GameStateModel.CurrentChallengeIndex, _gameStateManager.GameStateModel.CurrentScore));
+
             //Update score and current challenge in current progression table
             //Fetch progression table
             //Update lastChallengeId + Score fields + Creation_time
-           Trace.Log(string.Format("We update DB with current challenge data : challenge index {0} and score {1}",
-                _gameStateManager.GameStateModel.CurrentChallengeIndex, _gameStateManager.GameStateModel.CurrentScore));
 
             UpdateSessionModelUp session = new UpdateSessionModelUp
             {
@@ -66,17 +72,22 @@ namespace StarterCore.Core.Scenes.Board
                 CurrentScore = _gameStateManager.GameStateModel.CurrentScore
             };
 
+            Debug.Log("");
+
             bool result = await _networkService.UpdateSession(session);
         }
 
-        private async UniTask<List<ChallengeData>> GetCurrentChapters(string chapterName)
+        private async UniTask<List<ChallengeData>> FetchChallenges(string chapterName)
         {
-            List<ChallengeData> chapter = await _networkService.LoadChapter(
+
+            Trace.Log("[BoardManager] GetChapters for chapterName " + "->"+chapterName+"<-");
+
+            List<ChallengeData> challenges = await _networkService.LoadChapter(
                 _gameStateManager.GameStateModel.CurrentScenario,
                 _gameStateManager.GameStateModel.CurrentChapter,
                 chapterName);
-
-            return chapter;
+            Trace.Log("[BoardManager] Got challenges count : " + challenges.Count);
+            return challenges;
         }
 
         private async UniTask<ScenariiModelDown> GetScenariiCatalog()
@@ -87,6 +98,7 @@ namespace StarterCore.Core.Scenes.Board
 
         private string GetChapterFilename()
         {
+            Debug.Log("[BoardManager] game model CurrentChapter is " + _gameStateManager.GameStateModel.CurrentChapter);
             //Get chapter filename property from catalog
             string name = string.Empty;
 
@@ -95,18 +107,17 @@ namespace StarterCore.Core.Scenes.Board
             {
                 foreach (Chapter c in s.Chapters)
                 {
-                    if (c.ChapterTitle == _gameStateManager.GameStateModel.CurrentChapter)
+                    Debug.Log("[BoardManager] CTitle ->" + c.ChapterTitle + "<-");
+                    Debug.Log("[BoardManager] CModel ->" + _gameStateManager.GameStateModel.CurrentChapter + "<-");
+
+                    if (c.ChapterTitle.ToLower().Equals(_gameStateManager.GameStateModel.CurrentChapter.ToLower()))
                     {
+                        Debug.Log("[BoardManager] FOUND -> " + c.ToString());
                         name = c.ChapterFilename;
                     }
                 }
             }
             return name;
-        }
-
-        private void UpdateChallengeState()
-        {
-            //Update BDD with current challenge and score
         }
 
         private void OnGamePaused()

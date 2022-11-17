@@ -75,7 +75,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
         {
             if (_initDone == false)
             {
-                _initialDeckContent = new List<PropertyCard>(initialDeck);
+                //_initialDeckContent = new List<PropertyCard>(initialDeck);
 
                 Trace.Log("[PropertyDeckController] Init!");
 
@@ -106,12 +106,19 @@ namespace StarterCore.Core.Scenes.Board.Deck
                 isDomainColorListWhite = true;
                 isRangeColorListWhite = true;
 
-                CurrentCard = initialDeck[0];
+                //CurrentCard = initialDeck[0];
 
                 _initDone = true;
             }
         }
 
+        public void InitDeck(List<PropertyCard> initialDeck)
+        {
+            _initialDeckContent = new List<PropertyCard>(initialDeck);
+            CurrentCard = initialDeck[0];
+            Trace.Log("[PropertyDeckController] Init!");
+
+        }
         public void Show()
         {
             domainColorFilter = new List<string>();

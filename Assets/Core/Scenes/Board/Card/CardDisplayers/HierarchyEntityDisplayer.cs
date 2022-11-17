@@ -66,7 +66,7 @@ namespace StarterCore.Core.Scenes.Board.Displayer
 
         public void Show(EntityCard card)
         {
-            Init(); //Clear list of instanciated prefabs, unsub to click events
+            //Init(); //Clear list of instanciated prefabs, unsub to click events
 
             string arrowUp = "\u02C4";
             string arrowDown = "\u02C5";

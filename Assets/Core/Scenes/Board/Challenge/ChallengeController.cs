@@ -38,9 +38,12 @@ namespace StarterCore.Core.Scenes.Board
         public bool EvaluateBoard(ChallengeData expectedAnswers, ChallengeData playerAnswers)
         {
             bool isCorrect = _evaluator.CheckAnswers(expectedAnswers, playerAnswers);
-
-            _displayer.DisplayResult(isCorrect, expectedAnswers);
             return isCorrect;
+        }
+
+        public void DisplayResult(bool isCorrect, ChallengeData expectedAnswers)
+        {
+            _displayer.DisplayResult(isCorrect, expectedAnswers);
         }
     }
 }

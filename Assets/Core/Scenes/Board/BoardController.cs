@@ -38,7 +38,7 @@ namespace StarterCore.Core.Scenes.Board
         [Inject] EntityDeckService _entityDeckService;
         [Inject] PropertyDeckService _propertyDeckService;
 
-        public event Action OnCorrectAnswer_BoardCtrl;
+        public event Action OnUpdateSession;
 
         [SerializeField] EntityDeckController _leftEntityDeckController;
         [SerializeField] PropertyDeckController _leftPropertyDeckController;
@@ -68,14 +68,14 @@ namespace StarterCore.Core.Scenes.Board
         private List<InstanceCardModelDown> _instances;
 
         private ChallengeData _playerResults;
-        //private bool _challengeAlreadyValidated;
+        private bool _challengeIndexUpdated;
 
         public void Init(List<ChallengeData> challengeList, List<InstanceCardModelDown> instances)
         {
             Trace.Log("[BoardController] Init!");
-            _instances = instances;
-            _challengeList = challengeList;
-            //_challengeAlreadyValidated = false;
+            //_instances = instances;
+            //_challengeList = challengeList;
+            //_challengeIndexUpdated = false;
 
             _refreshBoard.onClick.AddListener(Show);
             _validateBoard.onClick.AddListener(OnValidateBoard);
@@ -88,15 +88,31 @@ namespace StarterCore.Core.Scenes.Board
 
             _quitChapter.onClick.AddListener(QuitChapter);
 
-            _validateBoard.interactable = true;
-            _refreshBoard.interactable = true;
-            _retryChallenge.interactable = false;
-            _nextChallenge.interactable = false;
+            //_validateBoard.interactable = true;
+            //_refreshBoard.interactable = true;
+            //_retryChallenge.interactable = false;
+            //_nextChallenge.interactable = false;
+            //_quitChapter.gameObject.SetActive(false);
+        }
+
+        public void InitBoard(List<ChallengeData> challengeList, List<InstanceCardModelDown> instances)
+        {
+            Trace.Log("[BoardController] INITBOARD!");
+            _instances = instances;
+            _challengeList = challengeList;
+            _challengeIndexUpdated = false;
+
+            //_validateBoard.interactable = true;
+            //_refreshBoard.interactable = true;
+            //_retryChallenge.interactable = false;
+            //_nextChallenge.interactable = false;
             _quitChapter.gameObject.SetActive(false);
         }
 
         public void Show()
         {
+            Trace.Log(string.Format("Chapter name from game model is ", _gameStateManager.GameStateModel.CurrentChapter));
+
             _validateBoard.interactable = true;
             _refreshBoard.interactable = true;
             _retryChallenge.interactable = false;
@@ -110,6 +126,7 @@ namespace StarterCore.Core.Scenes.Board
             }
 
             _challengeController.Show();
+
             InstanciateDecks();
         }
 
@@ -117,17 +134,21 @@ namespace StarterCore.Core.Scenes.Board
         {
             //Initialization of Left Entity Deck
             string initStringEL = _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].ELeftInit;
+            Trace.Log("ELeftInit Sctring->" + initStringEL);
+
             if (!initStringEL.Equals(string.Empty))
             {
                 _leftEntityDeckController.gameObject.SetActive(true);
                 List<EntityCard> initialLeftEntityDeckContent = _entityDeckService.GetInitialDeck(initStringEL);
-                Trace.Log("Initial entity deck size is " + initialLeftEntityDeckContent.Count);
+                Trace.Log("[BoardController] Initial entity deck size is " + initialLeftEntityDeckContent.Count);
 
                 _leftEntityDeckController.Init(initialLeftEntityDeckContent);
+                _leftEntityDeckController.InitDeck(initialLeftEntityDeckContent);
+
                 _leftEntityDeckController.Show();
             }
 
-
+            
             //Initialization of Left Property Deck
             string initStringPL = _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].PLeftInit;
             if (!initStringPL.Equals(string.Empty))
@@ -138,9 +159,9 @@ namespace StarterCore.Core.Scenes.Board
                 Trace.Log("[BoardController] _leftPropertyDeckController Init call");
 
                 _leftPropertyDeckController.Init(initialLeftPropertyDeckContent);
+                _leftPropertyDeckController.InitDeck(initialLeftPropertyDeckContent);
                 _leftPropertyDeckController.Show();
             }
-
 
             //Initialization of Middle Entity Deck
             string initStringEM = _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].EMiddleInit;
@@ -150,6 +171,7 @@ namespace StarterCore.Core.Scenes.Board
                 List<EntityCard> initialMiddleEntityDeckContent = _entityDeckService.GetInitialDeck(initStringEM);
 
                 _middleEntityDeckController.Init(initialMiddleEntityDeckContent);
+                _middleEntityDeckController.InitDeck(initialMiddleEntityDeckContent);
                 _middleEntityDeckController.Show();
             }
 
@@ -163,6 +185,7 @@ namespace StarterCore.Core.Scenes.Board
                 Trace.Log("[BoardController] _rightPropertyDeckController Init call");
 
                 _rightPropertyDeckController.Init(initialRightPropertyDeckContent);
+                _rightPropertyDeckController.InitDeck(initialRightPropertyDeckContent);
                 _rightPropertyDeckController.Show();
             }
 
@@ -173,9 +196,10 @@ namespace StarterCore.Core.Scenes.Board
                 _rightEntityDeckController.gameObject.SetActive(true);
                 List<EntityCard> initialRightEntityDeckContent = _entityDeckService.GetInitialDeck(initStringER);
                 _rightEntityDeckController.Init(initialRightEntityDeckContent);
+                _rightEntityDeckController.InitDeck(initialRightEntityDeckContent);
                 _rightEntityDeckController.Show();
             }
-
+            
             
             //INSTANCES
             //Left instance
@@ -232,6 +256,7 @@ namespace StarterCore.Core.Scenes.Board
 
         private void OnValidateBoard()
         {
+            Trace.Log("[BoardController] Validate clicked!");
 
             //Update ChallengeData answers fields.
             //Player's answers are stored in a copy of the challenges[currentChallengeId] 'ChallengeData' object
@@ -259,45 +284,68 @@ namespace StarterCore.Core.Scenes.Board
             playerResults.ERightAnswer = _rightEntityDeckController.CurrentCard.id;
             }
 
-
             //Evaluate board
             bool isCorrect = _challengeController.EvaluateBoard(_challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex], playerResults);
             if(isCorrect)
             {
+                Trace.Log("[BoardController] ANSWER CORRECT!");
                 //update button states
                 _validateBoard.interactable = false;
                 _refreshBoard.interactable = false;
                 _retryChallenge.interactable = false;
                 _nextChallenge.interactable = true;
 
-                //update score
-
-                // Update session with new score
+                //update game model
                 _gameStateManager.GameStateModel.CurrentScore += _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].Score;
-                //_challengeController.Show();
+                _gameStateManager.GameStateModel.CurrentChallengeIndex++;
+                _challengeIndexUpdated = true;
 
-                OnCorrectAnswer_BoardCtrl?.Invoke();
+                //update DB
+                OnUpdateSession?.Invoke();
             }
             else
             {
+                Trace.Log("[BoardController] ANSWER NOT CORRECT!");
                 _validateBoard.interactable = false;
                 _refreshBoard.interactable = false;
                 _retryChallenge.interactable = true;
                 _nextChallenge.interactable = true;
             }
+
+            _challengeController.DisplayResult(isCorrect, _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex]);
         }
 
         private void NextChallenge()
         {
-            // Update session with new challengeIndex
-            _gameStateManager.GameStateModel.CurrentChallengeIndex++;
-            OnCorrectAnswer_BoardCtrl?.Invoke();
-            Trace.Log("CurrentChallengeIndex is : " + _gameStateManager.GameStateModel.CurrentChallengeIndex);
+            //If answer was right, challengeIndex already incremented, just reset the flag
+            if(_challengeIndexUpdated)
+            {
+                _challengeIndexUpdated = false;
+            }
+            else
+            {
+                //If answer was wrong, challengeIndex was not incremented.
+                _gameStateManager.GameStateModel.CurrentChallengeIndex++;
+                OnUpdateSession?.Invoke();
+            }
+
             Show();
+            Trace.Log("CurrentChallengeIndex is : " + _gameStateManager.GameStateModel.CurrentChallengeIndex);
         }
 
         private void QuitChapter()
         {
+            //If player quits before validating, we need to update the session anyway
+            if (_challengeIndexUpdated)
+            {
+                _challengeIndexUpdated = false;
+            }
+            else
+            {
+                //If answer was wrong, challengeIndex was not incremented.
+                _gameStateManager.GameStateModel.CurrentChallengeIndex++;
+                OnUpdateSession?.Invoke();
+            }
             _navigationService.Push("MainMenuScene");
         }
 
@@ -338,6 +386,6 @@ namespace StarterCore.Core.Scenes.Board
             _nextChallenge.onClick.RemoveListener(Show);
             _mainMenu.onClick.RemoveListener(BackToMainMenu);
             _quitChapter.onClick.RemoveListener(QuitChapter);
+}
         }
     }
-}

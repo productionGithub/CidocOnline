@@ -7,35 +7,65 @@ using StarterCore.Core.Services.GameState;
 using Zenject;
 using TMPro;
 using System;
+using StarterCore.Core.Services.Network;
 
 namespace StarterCore.Core.Scenes.MainMenu
 {
 
     public class MainMenuController : MonoBehaviour
     {
+        [Inject] private GameStateManager _gameStateManager;
+        [Inject] private MockNetService _networkService;
         [Inject] private NavigationService _navService;
         [Inject] private GameStateManager _gameState;
         [Inject] private LocalizationManager _localizationManager;
 
-        [SerializeField] TMP_Text _welcomeTitle;
-        [SerializeField] TMP_Text _continueText;
+        [SerializeField] TextMeshProUGUI _welcomeTitle;
+        [SerializeField] TextMeshProUGUI _continueText;
         [SerializeField] GameObject _continueZone;//Disabled if no history
 
         [SerializeField] Button _chooseScenario;
+        [SerializeField] Button _continue;
 
         public event Action OnChooseScenarioEvent;
+        public event Action OnContinueChapter;
 
         HistoryModelDown bundle;
 
-        public void Show()
+        public async void Show()
         {
-            //Get data passed from SignIn scene
-            //bundle = new HistoryModelDown("", "", "", "", "");
-            //_navService.GetMainBundle(out bundle);
+            //Set 'Continue' choice to waiting state
+            _continueZone.SetActive(true);
+            _continueText.text = _localizationManager.GetTranslation("mainmenu-scene-continuewaiting-text");
+            _continue.interactable = false;// (false);
+
+            //Get player history
+            HistoryModelDown history = await _networkService.GetHistory(_gameStateManager.GameStateModel.UserId);
+
+            if (!history.ScenarioName.Equals(string.Empty))
+            {
+                //Update game state model
+                _gameStateManager.GameStateModel.CurrentScenario = history.ScenarioName;
+                _gameStateManager.GameStateModel.CurrentChapter = history.ChapterName;
+                _gameStateManager.GameStateModel.CurrentChallengeIndex = Int32.Parse(history.ChallengeId);
+                _gameStateManager.GameStateModel.CurrentScore = Int32.Parse(history.Score.ToString());
+
+                Debug.Log("");
+            }
+            else
+            {
+                _gameStateManager.GameStateModel.CurrentScenario = string.Empty;
+                _gameStateManager.GameStateModel.CurrentChapter = string.Empty;
+                _gameStateManager.GameStateModel.CurrentChallengeIndex = 0;
+                _gameStateManager.GameStateModel.CurrentScore = 0;
+            }
+
+            Trace.Log(string.Format("[MaineMenuController] Scenario name from model is : ", _gameState.GameStateModel.CurrentScenario));
 
             TranslateUI();
 
             _chooseScenario.onClick.AddListener(OnChooseScenarioButtonClicked);
+            _continue.onClick.AddListener(OnContinue);
         }
 
         private void TranslateUI()
@@ -45,12 +75,12 @@ namespace StarterCore.Core.Scenes.MainMenu
 
             if(_gameState.GameStateModel.CurrentScenario == string.Empty)
             {
-                Trace.Log("Disable continue zone !");
-                _continueZone.SetActive(false);
+                _continue.interactable = false;// (false);
+                _continueText.text = _localizationManager.GetTranslation("mainmenu-scene-nocontinue-text");
             }
             else
             {
-                _continueZone.SetActive(true);
+                _continue.interactable = true;// (false);
                 _continueText.text = _localizationManager.GetTranslation("mainmenu-scene-continue-text") + " " +
                 _gameState.GameStateModel.CurrentScenario + "/" +
                 _gameState.GameStateModel.CurrentChapter + "/" +
@@ -58,14 +88,15 @@ namespace StarterCore.Core.Scenes.MainMenu
             }
         }
 
+        private void OnContinue()
+        {
+            Debug.Log("[MainMenuController] Scenario name is" + _gameState.GameStateModel.CurrentScenario);
+            OnContinueChapter?.Invoke();
+        }
+
         private void OnChooseScenarioButtonClicked()
         {
             OnChooseScenarioEvent?.Invoke();
-        }
-
-        private void OnContinueChapterClicked()
-        {
-            //Fire event for continue with scenario/chapter/challenge
         }
     }
 }

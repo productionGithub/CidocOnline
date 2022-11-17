@@ -30,7 +30,7 @@ public class HierarchyPropertyEntry : MonoBehaviour
 
     private void HierarchyPropertyClicked()
     {
-        Debug.Log(string.Format("[-PropertyEntry (Prefab)] {0} clicked.", _label));
+        //Debug.Log(string.Format("[-PropertyEntry (Prefab)] {0} clicked.", _label));
         OnHierarchyPropertyClickEvent?.Invoke(_label);
     }
 }

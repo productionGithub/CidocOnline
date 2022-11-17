@@ -89,12 +89,8 @@ namespace StarterCore.Core.Services.Network
         //FETCH SCENARII CATALOG
         public async UniTask<ScenariiModelDown> GetCatalog()
         {
-            //string url = Path.Combine(HomeUrl, URL_SCENARII_CATALOG);
             string url = Path.Combine(HomeUrl, URL_SCENARII_CATALOG);
-
             ScenariiModelDown result = await _net.GetAsync<ScenariiModelDown>(url);
-
-            Debug.Log("[MockNet Service] Result returned from GetCatalog" + result.ToString());
             return result;
         }
 
@@ -203,9 +199,10 @@ namespace StarterCore.Core.Services.Network
         public async UniTask<List<ChallengeData>> LoadChapter(string scenarioName, string chapterName, string fileName)
         {
             string chapterUrl = HomeUrl + "StreamingAssets/scenarii" + "/" + scenarioName + "/Chapters/" + fileName;
-            Debug.Log("URL CHAPTER IS : " + chapterUrl);
+            Debug.Log("[MockNetService] URL CHAPTER IS : " + chapterUrl);
 
             List<ChallengeData> result = await _net.GetAsync<List<ChallengeData>>(chapterUrl);
+            Debug.Log("[MockNetService] GOT CHALLENGES : " + result.Count);
             return result;
         }
 
