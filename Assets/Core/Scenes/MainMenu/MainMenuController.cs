@@ -26,11 +26,20 @@ namespace StarterCore.Core.Scenes.MainMenu
 
         [SerializeField] Button _chooseScenario;
         [SerializeField] Button _continue;
+        [SerializeField] Button _quit;
 
         public event Action OnChooseScenarioEvent;
         public event Action OnContinueChapter;
+        public event Action OnQuitEvent;
 
         HistoryModelDown bundle;
+
+        public void Init()
+        {
+            _chooseScenario.onClick.AddListener(OnChooseScenarioButtonClicked);
+            _continue.onClick.AddListener(OnContinue);
+            _quit.onClick.AddListener(OnQuit);
+        }
 
         public async void Show()
         {
@@ -50,7 +59,7 @@ namespace StarterCore.Core.Scenes.MainMenu
                 _gameStateManager.GameStateModel.CurrentChallengeIndex = Int32.Parse(history.ChallengeId);
                 _gameStateManager.GameStateModel.CurrentScore = Int32.Parse(history.Score.ToString());
 
-                Debug.Log("");
+                //Debug.Log("");
             }
             else
             {
@@ -64,8 +73,8 @@ namespace StarterCore.Core.Scenes.MainMenu
 
             TranslateUI();
 
-            _chooseScenario.onClick.AddListener(OnChooseScenarioButtonClicked);
-            _continue.onClick.AddListener(OnContinue);
+
+
         }
 
         private void TranslateUI()
@@ -97,6 +106,18 @@ namespace StarterCore.Core.Scenes.MainMenu
         private void OnChooseScenarioButtonClicked()
         {
             OnChooseScenarioEvent?.Invoke();
+        }
+
+        private void OnQuit()
+        {
+            OnQuitEvent?.Invoke();
+        }
+
+        public void OnDestroy()
+        {
+            _chooseScenario.onClick.RemoveListener(OnChooseScenarioButtonClicked);
+            _continue.onClick.RemoveListener(OnContinue);
+            _quit.onClick.RemoveListener(OnQuit);
         }
     }
 }

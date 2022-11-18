@@ -17,40 +17,42 @@ namespace StarterCore.Core.Scenes.MainMenu
         [Inject] NavigationService _navigation;
         [Inject] MockNetService _networkService;
 
-        public void Initialize()//was async
+        public async void Initialize()//was async
         {
 
             Trace.Log("[MainMenuManager] Initialized!");
-            ////Get player history
-            //HistoryModelDown history = await _networkService.GetHistory(_gameStateManager.GameStateModel.UserId);
+            //Get player history
+            HistoryModelDown history = await _networkService.GetHistory(_gameStateManager.GameStateModel.UserId);
 
-            //if (!history.ScenarioName.Equals(string.Empty))
-            //{
-            //    Trace.Log("[MainMenuManager] From gethistory, scenario is : " + history.ScenarioName);
+            if (!history.ScenarioName.Equals(string.Empty))
+            {
+                Trace.Log("[MainMenuManager] From gethistory, scenario is : " + history.ScenarioName);
 
-            //    //Update game state model
-            //    _gameStateManager.GameStateModel.CurrentScenario = history.ScenarioName;
-            //    _gameStateManager.GameStateModel.CurrentChapter = history.ChapterName;
-            //    _gameStateManager.GameStateModel.CurrentChallengeIndex = Int32.Parse(history.ChallengeId);
-            //    _gameStateManager.GameStateModel.CurrentScore = Int32.Parse(history.Score.ToString());
-            //}
-            //else
-            //{
-            //    Trace.Log("[MainMenuManager] History is null");
-            //    _gameStateManager.GameStateModel.CurrentScenario = string.Empty;
-            //    _gameStateManager.GameStateModel.CurrentChapter = string.Empty;
-            //    _gameStateManager.GameStateModel.CurrentChallengeIndex = 0;
-            //    _gameStateManager.GameStateModel.CurrentScore = 0;
-            //}
+                //Update game state model
+                _gameStateManager.GameStateModel.CurrentScenario = history.ScenarioName;
+                _gameStateManager.GameStateModel.CurrentChapter = history.ChapterName;
+                _gameStateManager.GameStateModel.CurrentChallengeIndex = Int32.Parse(history.ChallengeId);
+                _gameStateManager.GameStateModel.CurrentScore = Int32.Parse(history.Score.ToString());
+            }
+            else
+            {
+                Trace.Log("[MainMenuManager] History is null");
+                _gameStateManager.GameStateModel.CurrentScenario = string.Empty;
+                _gameStateManager.GameStateModel.CurrentChapter = string.Empty;
+                _gameStateManager.GameStateModel.CurrentChallengeIndex = 0;
+                _gameStateManager.GameStateModel.CurrentScore = 0;
+            }
 
             _mainMenuController.OnChooseScenarioEvent += LoadGameSelectionScreen;
             _mainMenuController.OnContinueChapter += ContinueChapter;
+            _mainMenuController.OnQuitEvent += OnQuit;
 
             Show();
         }
 
         public void Show()
         {
+            _mainMenuController.Init();
             _mainMenuController.Show();
         }
 
@@ -61,11 +63,16 @@ namespace StarterCore.Core.Scenes.MainMenu
 
         private void ContinueChapter()
         {
-            Debug.Log("[MainMenuManager] Before PUSH BOARDSCENE : " + _gameStateManager.GameStateModel.CurrentScenario);
-            Debug.Log("[MainMenuManager] Before PUSH BOARDSCENE : " + _gameStateManager.GameStateModel.CurrentChapter);
-            Debug.Log("[MainMenuManager] Before PUSH BOARDSCENE : " + _gameStateManager.GameStateModel.CurrentChallengeIndex);
-            Debug.Log("[MainMenuManager] Before PUSH BOARDSCENE : " + _gameStateManager.GameStateModel.CurrentScore);
+            //Debug.Log("[MainMenuManager] Before PUSH BOARDSCENE : " + _gameStateManager.GameStateModel.CurrentScenario);
+            //Debug.Log("[MainMenuManager] Before PUSH BOARDSCENE : " + _gameStateManager.GameStateModel.CurrentChapter);
+            //Debug.Log("[MainMenuManager] Before PUSH BOARDSCENE : " + _gameStateManager.GameStateModel.CurrentChallengeIndex);
+            //Debug.Log("[MainMenuManager] Before PUSH BOARDSCENE : " + _gameStateManager.GameStateModel.CurrentScore);
             _navigation.Push("BoardScene");
+        }
+
+        private void OnQuit()
+        {
+            _navigation.Push("SigninScene");
         }
     }
 }

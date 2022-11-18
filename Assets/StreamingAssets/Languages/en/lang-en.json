@@ -75,7 +75,11 @@
     },
       "MainMenuScene" :{
       "mainmenu-scene-welcometitle-text": "Hello",
-      "mainmenu-scene-continue-text": "Last played:",
+      "mainmenu-scene-continuewaiting-text": "Searching last session. Please wait...",
+      "mainmenu-scene-continue-text": "Last played: ",
+      "mainmenu-scene-nocontinue-text": "Last played session : none.",
+
+      "mainmenu-scene-continuebutton-text": "Continue",
       "mainmenu-scene-continuebutton-text": "Continue",
       "mainmenu-scene-choosebutton-text": "Choose",
       "mainmenu-scene-choosebutton-label": "Chose a scenario",

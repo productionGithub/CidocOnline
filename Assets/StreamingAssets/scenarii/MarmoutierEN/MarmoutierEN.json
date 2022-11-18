@@ -23,22 +23,22 @@
           "chapter-filename": "Chapter1.json"
         },
         {
-          "chapter-title": "Entities",
+          "chapter-title": "CIDOC CRM Basics",
           "chapter-description": "This is the description this very chapter...",
           "chapter-filename": "Chapter2.json"
         },
         {
-          "chapter-title": "Properties",
+          "chapter-title": "Instance modelling (1)",
           "chapter-description": "This is the description this very chapter...",
           "chapter-filename": "Chapter3.json"
         },
         {
-          "chapter-title": "Create relations",
+          "chapter-title": "Instance modelling (2)",
           "chapter-description": "This is the description this very chapter...",
           "chapter-filename": "Chapter4.json"
         },
         {
-          "chapter-title": "Complex relations",
+          "chapter-title": "Instance modelling (3)",
           "chapter-description": "This is the description this very chapter...",
           "chapter-filename": "Chapter5.json"
         }

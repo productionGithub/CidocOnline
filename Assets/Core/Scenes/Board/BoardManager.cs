@@ -63,6 +63,7 @@ namespace StarterCore.Core.Scenes.Board
             //Fetch progression table
             //Update lastChallengeId + Score fields + Creation_time
 
+
             UpdateSessionModelUp session = new UpdateSessionModelUp
             {
                 UserId = _gameStateManager.GameStateModel.UserId,
@@ -71,6 +72,12 @@ namespace StarterCore.Core.Scenes.Board
                 CurrentChallengeIndex = _gameStateManager.GameStateModel.CurrentChallengeIndex,
                 CurrentScore = _gameStateManager.GameStateModel.CurrentScore
             };
+
+            Debug.Log("[GSM] Session data UserId -> " + _gameStateManager.GameStateModel.UserId);
+            Debug.Log("[GSM]Session data Scenar -> " + _gameStateManager.GameStateModel.CurrentScenario);
+            Debug.Log("[GSM]Session data ChapterFileName-> " + GetChapterFilename());
+            Debug.Log("[GSM]Session data ChallengeIndex -> " + _gameStateManager.GameStateModel.CurrentChallengeIndex);
+            Debug.Log("[GSM]Session data Score -> " + _gameStateManager.GameStateModel.CurrentScore);
 
             Debug.Log("");
 
@@ -112,7 +119,7 @@ namespace StarterCore.Core.Scenes.Board
 
                     if (c.ChapterTitle.ToLower().Equals(_gameStateManager.GameStateModel.CurrentChapter.ToLower()))
                     {
-                        Debug.Log("[BoardManager] FOUND -> " + c.ToString());
+                        Debug.Log("[BoardManager] FOUND -> " + c.ChapterTitle);
                         name = c.ChapterFilename;
                     }
                 }

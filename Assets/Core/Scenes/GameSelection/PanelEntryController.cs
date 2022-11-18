@@ -28,8 +28,8 @@ namespace StarterCore.Core.Scenes.GameSelection
         [SerializeField] private TagsGroupController _tagsGroup;
 
         public event Action<string, string> OnPanelEntryControllerPlayEvent;
-
-        public event Action OnDetailClickEvent;
+        public event Action<string, string> OnResetProgressionEvent_PanelEntryCtrl;
+        //public event Action OnDetailClickEvent;
 
         //Scenario title needed when Play chapter is clicked. See OnPlayClicked().
         private string _scenarioTitle;
@@ -38,32 +38,25 @@ namespace StarterCore.Core.Scenes.GameSelection
 
         private Scenario _scenario;
 
-        //public void Init(Scenario scenario, ChapterCompletionModelDown c)
         public void Init(Scenario scenario)
         {
             Trace.Log("[PanelEntryController] Init!");
+
+            _detailPanel.Init();
+            _detailButton.onClick.AddListener(OnDetailButtonClicked);
+            _detailPanel.OnResetProgressionEvent_EntryCtrl += ResetProgression;
+            _detailPanel.OnDetailEntryControllerPlayEvent += OnPlayClicked;
+
             _scenario = scenario;
-            //_completions = c;
         }
 
         public void Show()
         {
             Trace.Log("[PanelEntryController] SHOW !");
             _scenarioTitle = _scenario.ScenarioTitle;
-
-            _detailButton.onClick.AddListener(OnDetailButtonClicked);
-
             _scenarioTitleTxt.text = $"{_scenario.ScenarioTitle}" + " - [" + $"{_scenario.LanguageTag}" + "]";
             _descriptionTxt.text = $"{_scenario.ScenarioDescription}";
-
-
-            //Detail panel
-            //_detailPanel.Show(_scenario.Chapters, _completions);
-            _detailPanel.Show(_scenario.Chapters);
-
-            _detailPanel.OnDetailEntryControllerPlayEvent += OnPlayClicked;
-
-            //TagsGroup
+            _detailPanel.Show(_scenario.Chapters);//Pass progressions parameter
             _tagsGroup.Show(_scenario.DomainTags, _scenario.OntologyTags, _scenario.AuthorTags);
         }
 
@@ -74,17 +67,21 @@ namespace StarterCore.Core.Scenes.GameSelection
 
         private void OnDetailButtonClicked()
         {
-
             _detailToggleState = !_detailToggleState;
             _detailPanel.gameObject.SetActive(_detailToggleState);
         }
 
-        //private async UniTask<ChapterCompletionsModelDown> GetChapterCompletions()
-        //{
-        //    Trace.Log("[PanelEntryController] GETCHAPTERCOMPLETIONS !");
-        //    ChapterCompletionsModelDown c = await _networkService.GetChapterCompletions(_gameStateManager.UserId, _scenario.ScenarioTitle);
-        //    return c;
-        //}
+        private void ResetProgression(string chapterName)
+        {
+            Debug.Log("RESET ! -> PanelEntryController");
+            OnResetProgressionEvent_PanelEntryCtrl?.Invoke(chapterName, _scenarioTitle);
+        }
 
+        private void OnDestroy()
+        {
+            _detailButton.onClick.RemoveListener(OnDetailButtonClicked);
+            _detailPanel.OnDetailEntryControllerPlayEvent -= OnPlayClicked;
+            _detailPanel.OnResetProgressionEvent_EntryCtrl -= ResetProgression;
+        }
     }
 }

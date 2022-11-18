@@ -124,6 +124,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
                 _sliderController.SetSliderRange(_currentDeckContent.Count - 1);
                 _sliderController.SetSliderValue(_currentDeckContent.Count - 1);
 
+
                 _deckCounterDisplayer.Show(_currentDeckContent.Count, _currentDeckContent.Count);
             }
         }
@@ -223,6 +224,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
                     }
                 }
             }
+            CurrentCard = _currentDeckContent[0];
             DisplayDeck();
         }
 

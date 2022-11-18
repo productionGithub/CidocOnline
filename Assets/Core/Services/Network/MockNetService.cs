@@ -78,6 +78,7 @@ namespace StarterCore.Core.Services.Network
 
         //UPDATE
         private string URL_UPDATE_SESSION = Path.Combine(HomeUrl, "php/updatesession.php");
+        private string URL_RESET_PROGRESSION = Path.Combine(HomeUrl, "php/resetprogression.php");
 
         //Test load games
         private string URL_GET_GAMES = "http://ontomatchgame.huma-num.fr/StreamingAssets/Games/Marmoutier/marmoutier.json";
@@ -299,27 +300,18 @@ namespace StarterCore.Core.Services.Network
 
         public async UniTask<bool> UpdateSession(UpdateSessionModelUp sessionData)
         {
-            /*
-             {
-                "userId" : "223",
-                "currentScenario" : "MarmoutierEN",
-                "currentChapter" : "Chapter1.json",
-                "currentChallengeIndex" : "2",
-                "currentScore" : "20"
-             }
-            */
-            //UpdateSessionModelUp session = new UpdateSessionModelUp
-            //{
-            //    UserId = _gameStateManager.GameStateModel.UserId,
-            //    CurrentScenario = _gameStateManager.GameStateModel.CurrentScenario,
-            //    CurrentChapter = _gameStateManager.GameStateModel.CurrentChapter,
-            //    CurrentChallengeIndex = _gameStateManager.GameStateModel.CurrentChallengeIndex,
-            //    CurrentScore = _gameStateManager.GameStateModel.CurrentScore
-            //};
-
-            Debug.Log("");
-
             ExistValidationDown doesExist = await _net.PostAsync<ExistValidationDown>(URL_UPDATE_SESSION, sessionData);
+            Trace.Log("[Mock Net] *** doesExist validation down => " + doesExist.DoesExist);
+            return doesExist.DoesExist;
+        }
+
+        public async UniTask<bool> ResetProgression(ResetProgressionModelUp sessionData)
+        {
+            Debug.Log("Session data -> " + sessionData.UserId);
+            Debug.Log("Session data -> " + sessionData.CurrentScenario);
+            Debug.Log("Session data -> " + sessionData.CurrentChapter);
+
+            ExistValidationDown doesExist = await _net.PostAsync<ExistValidationDown>(URL_RESET_PROGRESSION, sessionData);
             Trace.Log("[Mock Net] *** doesExist validation down => " + doesExist.DoesExist);
             return doesExist.DoesExist;
         }

@@ -101,11 +101,6 @@ namespace StarterCore.Core.Scenes.Board
             _instances = instances;
             _challengeList = challengeList;
             _challengeIndexUpdated = false;
-
-            //_validateBoard.interactable = true;
-            //_refreshBoard.interactable = true;
-            //_retryChallenge.interactable = false;
-            //_nextChallenge.interactable = false;
             _quitChapter.gameObject.SetActive(false);
         }
 

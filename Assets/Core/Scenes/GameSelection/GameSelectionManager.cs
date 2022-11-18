@@ -8,6 +8,7 @@ using StarterCore.Core.Services.Navigation;
 using StarterCore.Core.Scenes.Board.Challenge;
 using StarterCore.Core.Services.GameState;
 using System.Collections.Generic;
+using System;
 
 namespace StarterCore.Core.Scenes.GameSelection
 {
@@ -25,22 +26,28 @@ namespace StarterCore.Core.Scenes.GameSelection
         public void Initialize()
         {
             Debug.Log("[GameSelectionManager] Initialized!");
+
             //Get scenarii catalog and Show Game selection panel
             FetchScenariiData().Forget();
 
             _gameSelectioncontroller.OnBackEvent += BackEventClicked;
             _gameSelectioncontroller.OnGameSelectionControllerPlayChapterEvent += LoadChapter;
+            _gameSelectioncontroller.OnResetProgressionEvent_GameSelectionCtrl += ResetProgression;
         }
 
+        //TODO TRACK DOWN DATA => Chapter data sent to server is not good
         public async void LoadChapter(string scenarioTitle, string chapterTitle)
         {
+            //Debug.Log("[GSM] Scenar -> " + scenarioTitle);
+            //Debug.Log("[GSM] Chapter -> " + chapterTitle);
+
             _gameStateManager.GameStateModel.CurrentScenario = scenarioTitle;
             _gameStateManager.GameStateModel.CurrentChapter = chapterTitle;
 
             if (!scenarioTitle.Equals("YOUR GAME HERE!"))
             {
                 //Get progression for this scenario-chapter
-                _progression = await _networkService.GetChapterProgression(_gameStateManager.GameStateModel.UserId, scenarioTitle, GetChapterFilename());
+                _progression = await _networkService.GetChapterProgression(_gameStateManager.GameStateModel.UserId, scenarioTitle, GetChapterFilename(_gameStateManager.GameStateModel.CurrentChapter));
 
                 if(_progression.LastChallengeId != -1)
                 {
@@ -57,10 +64,13 @@ namespace StarterCore.Core.Scenes.GameSelection
                     //Update GameModel with default values for score and challende index.
                     Trace.Log("No progression, create session and load with defaults");
                     Trace.Log("BEFORE CREATING SESSION");
-                    bool _session = await _networkService.CreateSession(_gameStateManager.GameStateModel.UserId, scenarioTitle, GetChapterFilename());
+                    string chapterFileName = GetChapterFilename(chapterTitle);
+                    Debug.Log("[GSM]" + chapterFileName);
+
+                    bool _session = await _networkService.CreateSession(_gameStateManager.GameStateModel.UserId, scenarioTitle, chapterFileName);
 
                     //TODO Debug _session value : always false (but sent is true => Output writtent in error_log).
-                    //TODO For now, I don't check and set default values as if _session == true;
+                    //TODO For now, I don't check and set default values as if _session == true (#everything went fine);
 
                     _gameStateManager.GameStateModel.CurrentChallengeIndex = 1;
                     _gameStateManager.GameStateModel.CurrentScore = 0;
@@ -70,7 +80,7 @@ namespace StarterCore.Core.Scenes.GameSelection
             }
         }
 
-        private string GetChapterFilename()
+        private string GetChapterFilename(string chapterName)
         {
             //Get chapter filename property from catalog
             string name = string.Empty;
@@ -80,7 +90,7 @@ namespace StarterCore.Core.Scenes.GameSelection
             {
                 foreach (Chapter c in s.Chapters)
                 {
-                    if (c.ChapterTitle == _gameStateManager.GameStateModel.CurrentChapter)
+                    if (c.ChapterTitle == chapterName)
                     {
                         name = c.ChapterFilename;
                     }
@@ -91,23 +101,11 @@ namespace StarterCore.Core.Scenes.GameSelection
 
         private async UniTaskVoid FetchScenariiData()
         {
-            _catalog = await _networkService.GetCatalog(); ;// await GetScenariiCatalog();
-                                                            //_completion = await _networkService.GetChapterProgression();
-
-            //if (_completion != null)
-            //{
-            //    Trace.Log("GOT C : " + _completion.Completions[0].Completions[0]);
-            //}
-
-            //if(_catalog != null)
-            //{
-            //    _gameSelectioncontroller.Show(_catalog.Scenarii, _completion);
-            //    //DebugScenarii();
-            //}
-
+            _catalog = await _networkService.GetCatalog();
             if (_catalog != null)
             {
-                _gameSelectioncontroller.Show(_catalog.Scenarii);
+                _gameSelectioncontroller.Init();
+                _gameSelectioncontroller.Show(_catalog.Scenarii);//Plus progression ?
                 //DebugScenarii();
             }
         }
@@ -115,6 +113,23 @@ namespace StarterCore.Core.Scenes.GameSelection
         private void BackEventClicked()
         {
             _navService.Pop();
+        }
+
+        private async void ResetProgression(string chapterName, string scenarioName)
+        {
+            Debug.Log("[GSM] Session data -> " + _gameStateManager.GameStateModel.UserId);
+            Debug.Log("[GSM]Session data -> " + scenarioName);
+            Debug.Log("[GSM]Session data -> " + chapterName);
+            Debug.Log("[GSM]Session data REAL NAME -> " + GetChapterFilename(chapterName));
+
+            ResetProgressionModelUp sessiondata = new ResetProgressionModelUp
+            {
+                UserId = _gameStateManager.GameStateModel.UserId,
+                CurrentScenario = scenarioName,
+                CurrentChapter = GetChapterFilename(chapterName)
+            };
+
+            _ = await _networkService.ResetProgression(sessiondata);
         }
 
         //Debug

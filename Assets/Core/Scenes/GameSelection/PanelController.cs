@@ -21,20 +21,42 @@ namespace StarterCore.Core.Scenes.GameSelection
         private List<PanelEntryController> _entries;
 
         public event Action<string, string> OnPanelControllerPlayChapterEvent;
+        public event Action<string, string> OnResetProgressionEvent_PanelCtrl;
+
+        private List<PanelEntryController> _entriesList;
+
+        public void Init()
+        {
+            if (_entriesList == null)
+            {
+                _entriesList = new List<PanelEntryController>();
+            }
+            else
+            {
+                foreach (PanelEntryController e in _entriesList)
+                {
+                    e.OnPanelEntryControllerPlayEvent -= OnPlayChapterClicked;
+                    e.OnResetProgressionEvent_PanelEntryCtrl -= OnResetProgression;
+                    Destroy(e.gameObject);
+                }
+                _entriesList.Clear();
+            }
+        }
 
         //public void Show(List<Scenario> scenariiPanels, List<ChapterCompletionModelDown> c)
         public void Show(List<Scenario> scenariiPanels)
         {
             Clear();//Clear panel list _entries
 
-            int i = 0;
             foreach(Scenario scenario in scenariiPanels)
             {
+                //Await scenario progression ?
                 PanelEntryController instance = Instantiate(_panelTemplate, _templateContainer);
                 //instance.Init(scenario, c[i++]);
                 instance.Init(scenario);
                 instance.Show();
                 instance.OnPanelEntryControllerPlayEvent += OnPlayChapterClicked;
+                instance.OnResetProgressionEvent_PanelEntryCtrl += OnResetProgression;
                 instance.gameObject.SetActive(true);
                 _entries.Add(instance);
             }
@@ -61,5 +83,12 @@ namespace StarterCore.Core.Scenes.GameSelection
                 _entries.Clear();
             }
         }
+
+        private void OnResetProgression(string chapterName, string scenarioname)
+        {
+            Debug.Log("RESET ! -> PanelController");
+            OnResetProgressionEvent_PanelCtrl?.Invoke(chapterName, scenarioname);
+        }
+
     }
 }

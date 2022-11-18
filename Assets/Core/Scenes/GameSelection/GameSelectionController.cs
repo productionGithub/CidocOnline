@@ -16,6 +16,7 @@ namespace StarterCore.Core.Scenes.GameSelection
         [SerializeField] private DomainEntryController _domainEntryController;
 
         public event Action<string, string> OnGameSelectionControllerPlayChapterEvent;
+        public event Action<string, string> OnResetProgressionEvent_GameSelectionCtrl;
         public event Action OnBackEvent;
 
         List<Scenario> _scenarioList = new List<Scenario>();
@@ -24,26 +25,25 @@ namespace StarterCore.Core.Scenes.GameSelection
         List<string> _languageCriterias = new List<string>();
         List<string> _domainCriterias = new List<string>();
 
+        public void Init()
+        {
+            _panelController.Init();
+            _domainEntryController.OnDomainUpdateEvent += OnFilterDomainPanel;
+            _panelController.OnPanelControllerPlayChapterEvent += OnPlayChapter;
+            _languageEntryController.OnLanguageUpdateEvent += OnFilterLanguagePanel;
+            _panelController.OnResetProgressionEvent_PanelCtrl += OnResetProgression;
+            _BackButton.onClick.AddListener(BackClickedEvent);
+        }
 
         //public void Show(List<Scenario> entries, ScenarioCompletionModelDown c)
-        public void Show(List<Scenario> entries)
+        public void Show(List<Scenario> entries)// Pass progression?
         {
             _scenarioList = entries;
-            //_completions = c;
-
-            //_panelController.Show(entries, c.Completions);//Show game panels
             _panelController.Show(entries);//Show game panels
-            _panelController.OnPanelControllerPlayChapterEvent += OnPlayChapter;
-
             _languageEntryController.Show(entries);//update Language zone (list of language Toggles)
-            _languageEntryController.OnLanguageUpdateEvent += OnFilterLanguagePanel;
             _languageCriterias = _languageEntryController.SelectedLanguages;
-
             _domainEntryController.Show();
-            _domainEntryController.OnDomainUpdateEvent += OnFilterDomainPanel;
             _domainCriterias = _domainEntryController.SelectedDomains;
-
-            _BackButton.onClick.AddListener(BackClickedEvent);
         }
 
         private void OnFilterDomainPanel(List<string> domains)
@@ -82,8 +82,19 @@ namespace StarterCore.Core.Scenes.GameSelection
             OnBackEvent?.Invoke();
         }
 
+        private void OnResetProgression(string chapterName, string scenarioName)
+        {
+            Debug.Log("RESET ! -> GameSelectionController");
+            OnResetProgressionEvent_GameSelectionCtrl?.Invoke(chapterName, scenarioName);
+        }
+
         private void OnDestroy()
         {
+            _domainEntryController.OnDomainUpdateEvent -= OnFilterDomainPanel;
+            _panelController.OnPanelControllerPlayChapterEvent -= OnPlayChapter;
+            _languageEntryController.OnLanguageUpdateEvent -= OnFilterLanguagePanel;
+            _panelController.OnResetProgressionEvent_PanelCtrl -= OnResetProgression;
+            _BackButton.onClick.RemoveListener(BackClickedEvent);
             OnBackEvent -= BackClickedEvent;
         }
     }

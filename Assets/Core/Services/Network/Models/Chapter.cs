@@ -16,11 +16,5 @@ namespace StarterCore.Core.Services.Network.Models
         public string ChapterDescription;
         [JsonProperty("chapter-filename")]
         public string ChapterFilename;
-        //public Chapter(string cTitle, string cDescription)
-        //{
-        //    ChapterTitle = cTitle;
-        //    ChapterDescription = cDescription;
-        //    ChapterFilename = "";
-        //}
     }
 }

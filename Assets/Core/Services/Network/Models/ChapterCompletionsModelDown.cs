@@ -7,7 +7,9 @@ namespace StarterCore.Core.Services.Network.Models
     [Serializable]
     public class ChapterCompletionModelDown
     {
-        [JsonProperty("completions")]
-        public List<int> Completions { get; set; }
+        [JsonProperty("chapterName")]
+        public string ChapterName { get; set; }
+        [JsonProperty("challengeIndex")]
+        public List<int> ChallengeIndex { get; set; }
     }
 }
