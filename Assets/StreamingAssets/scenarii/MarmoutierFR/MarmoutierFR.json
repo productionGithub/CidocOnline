@@ -19,8 +19,8 @@
       "scenario-description": "Apprenez les bases du Cidoc-CRM avec les fouilles de Marmoutier",
       "chapters": [
         {
-          "chapter-title": "Connaissances de base sur les ontologies",
-          "chapter-description": "Apprenez les principaux concepts",
+          "chapter-title": "Introduction aux ontologies",
+          "chapter-description": "Acquérir les connaissances de base sur les ontologies",
           "chapter-filename":"Chapter1.json"
         }
       ]

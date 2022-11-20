@@ -1677,7 +1677,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &383448205
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1718,7 +1718,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _chapterTitleTxt: {fileID: 103167516}
   _chapterDescriptionTxt: {fileID: 349780652}
-  _chapterCompletionTxt: {fileID: 1001149595}
+  _chapterProgressionTxt: {fileID: 1001149595}
   _playChapterButton: {fileID: 867350125}
   _resetProgressionButton: {fileID: 1081055200}
 --- !u!1 &412736063
@@ -4391,7 +4391,7 @@ GameObject:
   - component: {fileID: 1001149596}
   - component: {fileID: 1001149595}
   m_Layer: 5
-  m_Name: Completion
+  m_Name: Progression
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4719,7 +4719,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1469652655}
   m_HandleRect: {fileID: 1469652654}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4985,7 +4985,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 55}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1170814781
 MonoBehaviour:
@@ -5575,7 +5575,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 933560577}
   m_HandleRect: {fileID: 933560576}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -8540,7 +8540,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1806302397}
   m_HandleRect: {fileID: 1806302396}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
