@@ -108,7 +108,7 @@ namespace StarterCore.Core.Scenes.Signin
         private async void InitGame(string playerEmail)
         {
             //Login OK, get progression and load main menu screen
-            UsernameModelDown userName = await _net.GetUsername(playerEmail);
+            UserNameModelDown userName = await _net.GetUsername(playerEmail);
             _gameState.Username = userName.Username;
             Trace.Log("Login with username : " + _gameState.Username);
 

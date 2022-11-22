@@ -8,11 +8,15 @@ using UnityEngine.EventSystems;
 using Zenject;
 using StarterCore.Core.Services.Network.Models;
 using UnityEngine.UI;
+using StarterCore.Core.Services.Network;
+using StarterCore.Core.Services.GameState;
+using Cysharp.Threading.Tasks;
 
 namespace StarterCore.Core.Scenes.GameSelection
 {
     public class PanelController : MonoBehaviour
     {
+        [Inject] DiContainer _diContainer;
 
         [Header("Dynamic")]
         [SerializeField] private PanelEntryController _panelTemplate;
@@ -44,7 +48,7 @@ namespace StarterCore.Core.Scenes.GameSelection
         }
 
         //public void Show(List<Scenario> scenariiPanels, List<ChapterCompletionModelDown> c)
-        public void Show(List<Scenario> scenariiPanels)
+        public void Show(List<Scenario> scenariiPanels, List<ChapterProgressionModelDown> userProgression)
         {
             Clear();//Clear panel list _entries
 
@@ -52,9 +56,10 @@ namespace StarterCore.Core.Scenes.GameSelection
             {
                 //Await scenario progression ?
                 PanelEntryController instance = Instantiate(_panelTemplate, _templateContainer);
-                //instance.Init(scenario, c[i++]);
+                _diContainer.InjectGameObject(instance.gameObject);
+
                 instance.Init(scenario);
-                instance.Show();
+                instance.Show(scenariiPanels, userProgression);
                 instance.OnPanelEntryControllerPlayEvent += OnPlayChapterClicked;
                 instance.OnResetProgressionEvent_PanelEntryCtrl += OnResetProgression;
                 instance.gameObject.SetActive(true);

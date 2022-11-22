@@ -30,17 +30,10 @@ namespace StarterCore.Core.Scenes.Board
 
         public async void Initialize()
         {
-            Debug.Log("[BoardManager] AFTER PUSH BOARDSCENE : " + _gameStateManager.GameStateModel.CurrentChapter);
             _catalog = await _networkService.GetCatalog();
-            Debug.Log("[BoardManager] AFTER PUSH BOARDSCENE : " + _gameStateManager.GameStateModel.CurrentChapter);
-
 
             //Get chapter filename from catalog
             string chapterFilename = GetChapterFilename();
-
-            Trace.Log(string.Format("[BoardManager] AFTER GetFilename CurrentChapter is ", _gameStateManager.GameStateModel.CurrentChapter));
-
-            Debug.Log("[BoardManager] GETCHAPTer filenAME = " + chapterFilename);
 
             //Fetch & Deserialize challenge and instances files
             List<ChallengeData> challenges = await FetchChallenges(chapterFilename);
@@ -56,13 +49,9 @@ namespace StarterCore.Core.Scenes.Board
 
         private async void UpdateSession()
         {
-            Trace.Log(string.Format("We update DB with current challenge data : challenge index {0} and score {1}",
-    _gameStateManager.GameStateModel.CurrentChallengeIndex, _gameStateManager.GameStateModel.CurrentScore));
-
             //Update score and current challenge in current progression table
             //Fetch progression table
             //Update lastChallengeId + Score fields + Creation_time
-
 
             UpdateSessionModelUp session = new UpdateSessionModelUp
             {
@@ -79,9 +68,7 @@ namespace StarterCore.Core.Scenes.Board
             Debug.Log("[GSM]Session data ChallengeIndex -> " + _gameStateManager.GameStateModel.CurrentChallengeIndex);
             Debug.Log("[GSM]Session data Score -> " + _gameStateManager.GameStateModel.CurrentScore);
 
-            Debug.Log("");
-
-            bool result = await _networkService.UpdateSession(session);
+            _ = await _networkService.UpdateSession(session);
         }
 
         private async UniTask<List<ChallengeData>> FetchChallenges(string chapterName)

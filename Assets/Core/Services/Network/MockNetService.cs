@@ -1,4 +1,4 @@
-﻿#define TRACE_ON
+﻿#define TRACE_OFF
 using Cysharp.Threading.Tasks;
 using StarterCore.Core.Services.Network.Models;
 using System.Collections.Generic;
@@ -17,36 +17,6 @@ namespace StarterCore.Core.Services.Network
         [Inject] private NetworkService _net;
         [Inject] private GameStateManager _gameStateManager;
 
-        /*
-        //const string HomeUrl = "https://ontomatchgame.huma-num.fr/";
-        const string HomeUrl = "";//offline
-        const string LanguagesFolder = "StreamingAssets/Languages/";
-
-        //Signin & Signup process
-        private string URL_CREATE_USER = Path.Combine(HomeUrl, "php/userSave.php");
-        private string URL_CHECK_USERNAME = Path.Combine(HomeUrl, "php/checkusername.php?username={0}");
-        private string URL_GET_USERNAME = Path.Combine(HomeUrl, "php/getusername.php?email={0}");
-        private string URL_CHECK_EMAIL = Path.Combine(HomeUrl, "php/checkemail.php?email={0}");
-        private string URL_CHECK_STATUS = Path.Combine(HomeUrl, "php/checkstatus.php?email={0}");
-        private string URL_LOGIN = Path.Combine(HomeUrl, "php/login.php");
-        private string URL_GET_ACTIVATION_CODE = Path.Combine(HomeUrl, "php/getactivationcode.php");
-        private string URL_SEND_RESET_EMAIL = Path.Combine(HomeUrl, "php/sendresetlink.php");
-        private string URL_GET_LOCALES_MANIFEST = "StreamingAssets/Languages/manifest.json";
-        //private string URL_GET_LOCALES_MANIFEST = "/Users/Fix/IndytionProd/OntoMatchGame/Assets/StreamingAssets/Languages/manifest.json";//offline
-
-        private string URL_GET_COUNTRIES = "StreamingAssets/Games/Marmoutier/marmoutier.json";
-        //private string URL_GET_COUNTRIES = "";
-
-        private string URL_SCENARII_CATALOG = "StreamingAssets/scenarii/scenariiCatalog.json";
-        //private string URL_SCENARII_CATALOG = "/Users/Fix/IndytionProd/OntoMatchGame/Assets/StreamingAssets/scenarii/scenariiCatalog.json";//offline
-
-
-        //Test load games
-        private string URL_GET_GAMES = "http://ontomatchgame.huma-num.fr/StreamingAssets/Games/Marmoutier/marmoutier.json";
-
-
-        */
-
         const string HomeUrl = "https://ontomatchgame.huma-num.fr/";
         const string LanguagesFolder = "StreamingAssets/Languages/";
 
@@ -61,6 +31,7 @@ namespace StarterCore.Core.Services.Network
         private string URL_GET_HISTORY = Path.Combine(HomeUrl, "php/gethistory.php?userId={0}");
         private string URL_GET_USERID = Path.Combine(HomeUrl, "php/getuserid.php?email={0}");
         private string URL_GET_SESSION = Path.Combine(HomeUrl, "php/getsession.php?userId={0}?scenarioName={1}?chapterName={2}");
+        private string URL_GET_PROGRESSIONS = Path.Combine(HomeUrl, "php/getprogressions.php?userId={0}");
 
         private string URL_GET_PROGRESSION = Path.Combine(HomeUrl, "php/getprogression.php?UserId={0}&ScenarioName={1}&ChapterName={2}");
 
@@ -161,12 +132,12 @@ namespace StarterCore.Core.Services.Network
         }
 
         //GET USERNAME
-        public async UniTask<UsernameModelDown> GetUsername(string email)
+        public async UniTask<UserNameModelDown> GetUsername(string email)
         {
             Debug.Log("[MockNetService] GetUsername param email" + email);
             string url = string.Format(URL_GET_USERNAME, email);
             Debug.Log("[MockNetService] GetUsername param url" + url);
-            UsernameModelDown result = await _net.GetAsync<UsernameModelDown>(url);
+            UserNameModelDown result = await _net.GetAsync<UserNameModelDown>(url);
             return result;
         }
 
@@ -280,6 +251,24 @@ namespace StarterCore.Core.Services.Network
             return progression;
         }
 
+        public async UniTask<List<ChapterProgressionModelDown>> GetUserProgressions(int userId)
+        {
+            Trace.Log("[MocNetService] GET USER PROGRESSIONS");
+            string url = string.Format(URL_GET_PROGRESSIONS, userId);
+            List<ChapterProgressionModelDown> userProgressions = await _net.GetAsync<List<ChapterProgressionModelDown>>(url);
+
+            Debug.Log("");
+            if(userProgressions[0].LastChallengeId != -1)
+            {
+            Trace.Log("PROGRESSIONS ARE -> " + userProgressions[0].ScenarioName);
+            }
+            else
+            {
+                Trace.Log("NO PROGRESSIONS YET!");
+            }
+
+            return userProgressions;
+        }
 
         //////////////////////////                UPDATES                //////////////////////////////////
 
@@ -307,9 +296,9 @@ namespace StarterCore.Core.Services.Network
 
         public async UniTask<bool> ResetProgression(ResetProgressionModelUp sessionData)
         {
-            Debug.Log("Session data -> " + sessionData.UserId);
-            Debug.Log("Session data -> " + sessionData.CurrentScenario);
-            Debug.Log("Session data -> " + sessionData.CurrentChapter);
+            //Debug.Log("Session data -> " + sessionData.UserId);
+            //Debug.Log("Session data -> " + sessionData.CurrentScenario);
+            //Debug.Log("Session data -> " + sessionData.CurrentChapter);
 
             ExistValidationDown doesExist = await _net.PostAsync<ExistValidationDown>(URL_RESET_PROGRESSION, sessionData);
             Trace.Log("[Mock Net] *** doesExist validation down => " + doesExist.DoesExist);

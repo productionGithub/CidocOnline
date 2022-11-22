@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using StarterCore.Core.Services.Network.Models;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 
 namespace StarterCore.Core.Scenes.GameSelection
 {
@@ -20,10 +21,13 @@ namespace StarterCore.Core.Scenes.GameSelection
         public event Action OnBackEvent;
 
         List<Scenario> _scenarioList = new List<Scenario>();
-        ScenarioCompletionModelDown _completions;
 
-        List<string> _languageCriterias = new List<string>();
-        List<string> _domainCriterias = new List<string>();
+        private List<string> _languageCriterias = new List<string>();
+        private List<string> _domainCriterias = new List<string>();
+
+        private List<ChapterProgressionModelDown> _userProgression;
+
+        private List<ChallengeData> _challenges;
 
         public void Init()
         {
@@ -35,30 +39,44 @@ namespace StarterCore.Core.Scenes.GameSelection
             _BackButton.onClick.AddListener(BackClickedEvent);
         }
 
-        //public void Show(List<Scenario> entries, ScenarioCompletionModelDown c)
-        public void Show(List<Scenario> entries)// Pass progression?
+        private void OnFilterDomainPanel(List<string> domains)
         {
-            _scenarioList = entries;
-            _panelController.Show(entries);//Show game panels
-            _languageEntryController.Show(entries);//update Language zone (list of language Toggles)
+            OnFilterDomainPanelAsync(domains);
+        }
+
+        private void OnFilterLanguagePanel(List<string> langages)
+        {
+            OnFilterLanguagePanelAsync(langages);
+        }
+
+        public void Show(List<Scenario> catalog, List<ChapterProgressionModelDown> userProgression)
+        {
+            _userProgression = userProgression;
+
+            Debug.Log("");
+
+            _scenarioList = catalog;
+
+            _panelController.Show(catalog, userProgression);//Show game panels
+            _languageEntryController.Show(catalog);//update Language zone (list of language Toggles)
             _languageCriterias = _languageEntryController.SelectedLanguages;
             _domainEntryController.Show();
             _domainCriterias = _domainEntryController.SelectedDomains;
         }
 
-        private void OnFilterDomainPanel(List<string> domains)
+        private void OnFilterDomainPanelAsync(List<string> domains)
         {
             _domainCriterias = domains;
-            FilterScenarii();
+            FilterScenarii(_userProgression);
         }
 
-        public void OnFilterLanguagePanel(List<string> languages)
+        public void OnFilterLanguagePanelAsync(List<string> languages)
         {
             _languageCriterias = languages;
-            FilterScenarii();
+            FilterScenarii(_userProgression);
         }
 
-        private void FilterScenarii()
+        private void FilterScenarii(List<ChapterProgressionModelDown> userProgression)
         {
             List<Scenario> filteredScenarioList = new List<Scenario>();
 
@@ -68,8 +86,7 @@ namespace StarterCore.Core.Scenes.GameSelection
                     _languageCriterias.Contains(p.LanguageTag))
             );
 
-            //_panelController.Show(filteredScenarioList, _completions.Completions);
-            _panelController.Show(filteredScenarioList);
+            _panelController.Show(filteredScenarioList, userProgression);
         }
 
         private void OnPlayChapter(string scenarioTitle, string chapterTitle)

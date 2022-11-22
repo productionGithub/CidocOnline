@@ -2,16 +2,20 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
+using System.Linq;
 
 using StarterCore.Core.Services.Network.Models;
+using StarterCore.Core.Services.GameState;
+using System.Collections.Generic;
 
 namespace StarterCore.Core.Scenes.GameSelection
 {
     public class DetailEntry : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI _chapterTitleTxt;
+        [SerializeField] public TextMeshProUGUI _chapterTitleTxt;
         [SerializeField] private TextMeshProUGUI _chapterDescriptionTxt;
-        [SerializeField] private TextMeshProUGUI _chapterProgressionTxt;
+        [SerializeField] public TextMeshProUGUI _chapterProgressionTxt;
 
         [SerializeField] private Button _playChapterButton;
         [SerializeField] private Button _resetProgressionButton;
@@ -25,11 +29,12 @@ namespace StarterCore.Core.Scenes.GameSelection
             _resetProgressionButton.onClick.AddListener(ResetProgression);
         }
         //public void Show(Chapter chapter, int completionRate)
-        public void Show(Chapter chapter)
+        public void Show(Chapter chapter, int lastChallengeId)
         {
             _chapterTitleTxt.text = $"{chapter.ChapterTitle}";
             _chapterDescriptionTxt.text = $"{chapter.ChapterDescription}";
-            _chapterProgressionTxt.text = "TODO";// Display current chapter
+
+            _chapterProgressionTxt.text = "[" + lastChallengeId.ToString() + "]";
         }
 
         private void PlayChapter()
@@ -39,7 +44,6 @@ namespace StarterCore.Core.Scenes.GameSelection
 
         private void ResetProgression()
         {
-            Debug.Log("RESET ! -> Entry");
             OnResetProgressionEvent_Entry?.Invoke(_chapterTitleTxt.text);
         }
 

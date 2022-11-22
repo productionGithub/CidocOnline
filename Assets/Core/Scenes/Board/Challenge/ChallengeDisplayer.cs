@@ -61,7 +61,7 @@ namespace StarterCore.Core.Scenes.Board.Challenge
 
         //
         public int currentChallengeId;
-        public Chapter currentChapter;
+        //public Chapter currentChapter;
 
         public void Show(List<ChallengeData> challengeList)
         {

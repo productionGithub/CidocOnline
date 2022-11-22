@@ -60,6 +60,7 @@
       "resetpassword-scene-backbutton-text" : "Retour"
     },
       "GameSelectionScene" :{
+      "toto" : "Dernier",
       "gameselection-scene-title-text": "SELECTION DES JEUX",
       "gameselection-scene-backbutton-text":"Retour",
       "gameselection-scene-listofscenarii-label":"Liste des scenario",

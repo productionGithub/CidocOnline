@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace StarterCore.Core.Services.Network.Models
 {
     [Serializable]
-    public class UsernameModelDown
+    public class UserNameModelDown
     {
         [JsonProperty("username")]
         public string Username;
