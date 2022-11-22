@@ -2732,6 +2732,7 @@ MonoBehaviour:
   _continueZone: {fileID: 1471531549}
   _chooseScenario: {fileID: 1206805625}
   _continue: {fileID: 1160573263}
+  _statistics: {fileID: 1321754227}
   _quit: {fileID: 1606481395}
 --- !u!1 &930461001
 GameObject:

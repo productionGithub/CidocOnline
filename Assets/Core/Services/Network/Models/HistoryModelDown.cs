@@ -28,5 +28,3 @@ namespace StarterCore.Core.Services.Network.Models
         }
     }
 }
-
-

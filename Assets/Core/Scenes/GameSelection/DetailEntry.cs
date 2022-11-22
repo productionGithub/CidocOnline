@@ -34,7 +34,8 @@ namespace StarterCore.Core.Scenes.GameSelection
             _chapterTitleTxt.text = $"{chapter.ChapterTitle}";
             _chapterDescriptionTxt.text = $"{chapter.ChapterDescription}";
 
-            _chapterProgressionTxt.text = "[" + lastChallengeId.ToString() + "]";
+            //_chapterProgressionTxt.text = "[" + lastChallengeId.ToString() + "]";
+            _chapterProgressionTxt.text = lastChallengeId.ToString() + "%";
         }
 
         private void PlayChapter()

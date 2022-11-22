@@ -31,8 +31,8 @@ namespace StarterCore.Core.Services.Network
         private string URL_GET_HISTORY = Path.Combine(HomeUrl, "php/gethistory.php?userId={0}");
         private string URL_GET_USERID = Path.Combine(HomeUrl, "php/getuserid.php?email={0}");
         private string URL_GET_SESSION = Path.Combine(HomeUrl, "php/getsession.php?userId={0}?scenarioName={1}?chapterName={2}");
-        private string URL_GET_PROGRESSIONS = Path.Combine(HomeUrl, "php/getprogressions.php?userId={0}");
-
+        //private string URL_GET_PROGRESSIONS = Path.Combine(HomeUrl, "php/getprogressions.php?userId={0}");
+        private string URL_GET_PROGRESSIONS = Path.Combine(HomeUrl, "php/getuserstats.php?userId={0}");
         private string URL_GET_PROGRESSION = Path.Combine(HomeUrl, "php/getprogression.php?UserId={0}&ScenarioName={1}&ChapterName={2}");
 
         private string URL_GET_LOCALES_MANIFEST = "StreamingAssets/Languages/manifest.json";

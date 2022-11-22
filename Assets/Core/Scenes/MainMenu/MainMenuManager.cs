@@ -32,7 +32,7 @@ namespace StarterCore.Core.Scenes.MainMenu
                 _gameStateManager.GameStateModel.CurrentScenario = history.ScenarioName;
                 _gameStateManager.GameStateModel.CurrentChapter = history.ChapterName;
                 _gameStateManager.GameStateModel.CurrentChallengeIndex = Int32.Parse(history.ChallengeId);
-                _gameStateManager.GameStateModel.CurrentScore = Int32.Parse(history.Score.ToString());
+                _gameStateManager.GameStateModel.CurrentScore = Int32.Parse(history.Score);
             }
             else
             {
@@ -43,8 +43,10 @@ namespace StarterCore.Core.Scenes.MainMenu
                 _gameStateManager.GameStateModel.CurrentScore = 0;
             }
 
+            //Events
+            _mainMenuController.OnContinueChapterEvent += ContinueChapter;
             _mainMenuController.OnChooseScenarioEvent += LoadGameSelectionScreen;
-            _mainMenuController.OnContinueChapter += ContinueChapter;
+            _mainMenuController.OnStatisticsEvent += LoadStatsScreen;
             _mainMenuController.OnQuitEvent += OnQuit;
 
             Show();
@@ -68,6 +70,12 @@ namespace StarterCore.Core.Scenes.MainMenu
             //Debug.Log("[MainMenuManager] Before PUSH BOARDSCENE : " + _gameStateManager.GameStateModel.CurrentChallengeIndex);
             //Debug.Log("[MainMenuManager] Before PUSH BOARDSCENE : " + _gameStateManager.GameStateModel.CurrentScore);
             _navigation.Push("BoardScene");
+        }
+
+
+        private void LoadStatsScreen()
+        {
+            _navigation.Push("StatsScene");
         }
 
         private void OnQuit()

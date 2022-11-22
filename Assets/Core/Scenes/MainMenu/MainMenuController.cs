@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using StarterCore.Core.Services.Network.Models;
-using StarterCore.Core.Services.Navigation;
 using StarterCore.Core.Services.Localization;
 using StarterCore.Core.Services.GameState;
 using Zenject;
@@ -16,7 +15,6 @@ namespace StarterCore.Core.Scenes.MainMenu
     {
         [Inject] private GameStateManager _gameStateManager;
         [Inject] private MockNetService _networkService;
-        [Inject] private NavigationService _navService;
         [Inject] private GameStateManager _gameState;
         [Inject] private LocalizationManager _localizationManager;
 
@@ -26,18 +24,19 @@ namespace StarterCore.Core.Scenes.MainMenu
 
         [SerializeField] Button _chooseScenario;
         [SerializeField] Button _continue;
+        [SerializeField] Button _statistics;
         [SerializeField] Button _quit;
 
         public event Action OnChooseScenarioEvent;
-        public event Action OnContinueChapter;
+        public event Action OnContinueChapterEvent;
+        public event Action OnStatisticsEvent;
         public event Action OnQuitEvent;
-
-        HistoryModelDown bundle;
 
         public void Init()
         {
             _chooseScenario.onClick.AddListener(OnChooseScenarioButtonClicked);
             _continue.onClick.AddListener(OnContinue);
+            _statistics.onClick.AddListener(OnStatistics);
             _quit.onClick.AddListener(OnQuit);
         }
 
@@ -57,7 +56,7 @@ namespace StarterCore.Core.Scenes.MainMenu
                 _gameStateManager.GameStateModel.CurrentScenario = history.ScenarioName;
                 _gameStateManager.GameStateModel.CurrentChapter = history.ChapterName;
                 _gameStateManager.GameStateModel.CurrentChallengeIndex = Int32.Parse(history.ChallengeId);
-                _gameStateManager.GameStateModel.CurrentScore = Int32.Parse(history.Score.ToString());
+                _gameStateManager.GameStateModel.CurrentScore = Int32.Parse(history.Score);
 
                 //Debug.Log("");
             }
@@ -69,12 +68,7 @@ namespace StarterCore.Core.Scenes.MainMenu
                 _gameStateManager.GameStateModel.CurrentScore = 0;
             }
 
-            Trace.Log(string.Format("[MaineMenuController] Scenario name from model is : ", _gameState.GameStateModel.CurrentScenario));
-
             TranslateUI();
-
-
-
         }
 
         private void TranslateUI()
@@ -100,12 +94,18 @@ namespace StarterCore.Core.Scenes.MainMenu
         private void OnContinue()
         {
             Debug.Log("[MainMenuController] Scenario name is" + _gameState.GameStateModel.CurrentScenario);
-            OnContinueChapter?.Invoke();
+            OnContinueChapterEvent?.Invoke();
         }
 
         private void OnChooseScenarioButtonClicked()
         {
             OnChooseScenarioEvent?.Invoke();
+        }
+
+
+        private void OnStatistics()
+        {
+            OnStatisticsEvent?.Invoke();
         }
 
         private void OnQuit()
@@ -117,6 +117,7 @@ namespace StarterCore.Core.Scenes.MainMenu
         {
             _chooseScenario.onClick.RemoveListener(OnChooseScenarioButtonClicked);
             _continue.onClick.RemoveListener(OnContinue);
+            _quit.onClick.RemoveListener(OnStatistics);
             _quit.onClick.RemoveListener(OnQuit);
         }
     }
