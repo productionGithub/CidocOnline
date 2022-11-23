@@ -23,10 +23,11 @@ namespace StarterCore.Core.Services.Network.Models
     }
 }
 
+
 /*
-    [Serializable]
-    public class ChapterProgressionModelDown
-    {
+ * 
+ *         [JsonProperty("userId")]
+        public string UserId { get; set; }
         [JsonProperty("scenarioName")]
         public string ScenarioName { get; set; }
         [JsonProperty("lastChapterName")]
@@ -35,5 +36,15 @@ namespace StarterCore.Core.Services.Network.Models
         public int LastChallengeId { get; set; }
         [JsonProperty("score")]
         public int Score { get; set; }
-    }
+*/
+
+
+
+
+
+
+/*
+ * 
+ * 
+
 */

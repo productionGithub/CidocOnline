@@ -57,7 +57,7 @@ namespace StarterCore.Core.Scenes.GameSelection
                 //Get right progression
                 ChapterProgressionModelDown progression = userProgressions.FirstOrDefault(p => p.ChapterName.ToLower().Equals(chapter.ChapterTitle.ToLower()));
 
-                if(progression != null)
+                if (progression != null)
                 {
                     if(progression.LastChallengeId == 1)
                     {

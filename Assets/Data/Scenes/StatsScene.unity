@@ -3228,8 +3228,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1546055602}
   m_HandleRect: {fileID: 1546055601}
   m_Direction: 2
-  m_Value: 1.0000002
-  m_Size: 0.6363636
+  m_Value: 1.0000006
+  m_Size: 0.63636357
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4494,8 +4494,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 59367076}
   m_HandleRect: {fileID: 59367075}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.6363636
+  m_Value: 1.0000004
+  m_Size: 0.63636357
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5237,7 +5237,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1170013817}
   m_HandleRect: {fileID: 1170013816}
   m_Direction: 2
-  m_Value: 1.0000026
+  m_Value: 1.0000024
   m_Size: 0.71032184
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -7087,8 +7087,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _chapterTitleTxt: {fileID: 994316408}
   _chapterDescriptionTxt: {fileID: 0}
-  _chapterCompletionTxt: {fileID: 830999418}
+  _chapterProgressionTxt: {fileID: 0}
   _playChapterButton: {fileID: 0}
+  _resetProgressionButton: {fileID: 0}
 --- !u!1 &913520285
 GameObject:
   m_ObjectHideFlags: 0
@@ -11229,8 +11230,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 933560577}
   m_HandleRect: {fileID: 933560576}
   m_Direction: 2
-  m_Value: 0.99999964
-  m_Size: 0.6363636
+  m_Value: 1.0000002
+  m_Size: 0.63636357
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11981,8 +11982,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _chapterTitleTxt: {fileID: 167273635}
   _chapterDescriptionTxt: {fileID: 0}
-  _chapterCompletionTxt: {fileID: 1116378483}
+  _chapterProgressionTxt: {fileID: 0}
   _playChapterButton: {fileID: 0}
+  _resetProgressionButton: {fileID: 0}
 --- !u!1 &1496797614
 GameObject:
   m_ObjectHideFlags: 0
@@ -13466,8 +13468,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _chapterTitleTxt: {fileID: 275930022}
   _chapterDescriptionTxt: {fileID: 0}
-  _chapterCompletionTxt: {fileID: 1496797616}
+  _chapterProgressionTxt: {fileID: 0}
   _playChapterButton: {fileID: 0}
+  _resetProgressionButton: {fileID: 0}
 --- !u!1 &1655615253
 GameObject:
   m_ObjectHideFlags: 0
@@ -16369,8 +16372,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2037984447}
   - component: {fileID: 2037984446}
-  - component: {fileID: 2037984445}
-  - component: {fileID: 2037984448}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -16378,19 +16379,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2037984445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2037984444}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b92dcfb783a674843a8d64862caa0750, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _controller: {fileID: 2037984448}
 --- !u!114 &2037984446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16405,7 +16393,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
-  - {fileID: 2037984445}
+  - {fileID: 0}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -16438,22 +16426,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2037984448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2037984444}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27e4f07f1c69d41a1add1588726fd0bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _BackButton: {fileID: 1403240494}
-  _panelController: {fileID: 0}
-  _languageEntryController: {fileID: 0}
-  _domainEntryController: {fileID: 0}
 --- !u!1 &2039411511
 GameObject:
   m_ObjectHideFlags: 0

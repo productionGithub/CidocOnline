@@ -31,7 +31,9 @@ namespace StarterCore.Core.Scenes.GameSelection
             //Get user progressions
             string chapterFileName = GetChapterFilename(_gameStateManager.GameStateModel.CurrentChapter);
 
-            _userProgressions = await _networkService.GetUserProgressions(_gameStateManager.GameStateModel.UserId);
+            Debug.Log("USER ID PASSED = " + _gameStateManager.GameStateModel.UserId);
+
+            _userProgressions = await _networkService.GetUserStats(_gameStateManager.GameStateModel.UserId);
 
             if (_catalog != null)
             {

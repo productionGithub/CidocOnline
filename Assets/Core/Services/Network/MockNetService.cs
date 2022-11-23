@@ -32,7 +32,7 @@ namespace StarterCore.Core.Services.Network
         private string URL_GET_USERID = Path.Combine(HomeUrl, "php/getuserid.php?email={0}");
         private string URL_GET_SESSION = Path.Combine(HomeUrl, "php/getsession.php?userId={0}?scenarioName={1}?chapterName={2}");
         //private string URL_GET_PROGRESSIONS = Path.Combine(HomeUrl, "php/getprogressions.php?userId={0}");
-        private string URL_GET_PROGRESSIONS = Path.Combine(HomeUrl, "php/getuserstats.php?userId={0}");
+        private string URL_GET_USER_STATS = Path.Combine(HomeUrl, "php/getuserstats.php?userId={0}");
         private string URL_GET_PROGRESSION = Path.Combine(HomeUrl, "php/getprogression.php?UserId={0}&ScenarioName={1}&ChapterName={2}");
 
         private string URL_GET_LOCALES_MANIFEST = "StreamingAssets/Languages/manifest.json";
@@ -251,10 +251,10 @@ namespace StarterCore.Core.Services.Network
             return progression;
         }
 
-        public async UniTask<List<ChapterProgressionModelDown>> GetUserProgressions(int userId)
+        public async UniTask<List<ChapterProgressionModelDown>> GetUserStats(int userId)
         {
-            Trace.Log("[MocNetService] GET USER PROGRESSIONS");
-            string url = string.Format(URL_GET_PROGRESSIONS, userId);
+            Trace.Log("[MocNetService] GET USER PROGRESSIONS WITH ID" + userId);
+            string url = string.Format(URL_GET_USER_STATS, userId);
             List<ChapterProgressionModelDown> userProgressions = await _net.GetAsync<List<ChapterProgressionModelDown>>(url);
 
             Debug.Log("");
