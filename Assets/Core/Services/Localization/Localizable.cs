@@ -1,7 +1,6 @@
 using Zenject;
 using TMPro;
 using UnityEngine;
-using StarterCore.Core.Services.GameState;
 
 namespace StarterCore.Core.Services.Localization
 {
@@ -9,12 +8,15 @@ namespace StarterCore.Core.Services.Localization
     {
         [Inject] private LocalizationManager _localization;
 
-        [field : SerializeField] public string LocalizeKey { get; private set; }
-        [field : SerializeField] public TMP_Text LocalizedText { get; private set; }
+        [field: SerializeField] public string LocalizeKey { get; private set; }
+        [field: SerializeField] public TMP_Text LocalizedText { get; private set; }
 
-        private void Start()
+        private void OnEnable()
         {
             _localization.OnTranslateEvent += GetTranslation;
+        }
+        private void Start()
+        {
             GetTranslation();
         }
 

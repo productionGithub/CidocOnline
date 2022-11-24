@@ -7015,7 +7015,6 @@ MonoBehaviour:
   _submitFormButton: {fileID: 175595811}
   _createAccountButton: {fileID: 1892113703}
   _forgotPassword: {fileID: 1987523325}
-  _test: {fileID: 1729679318}
   _englishFlagButton: {fileID: 218290842}
   _frenchFlagButton: {fileID: 1412399319}
   AlertNoAccount: {fileID: 1464862827}

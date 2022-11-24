@@ -42,16 +42,19 @@ namespace StarterCore.Core.Scenes.MainMenu
 
         public async void Show()
         {
+            //Get player history
+            HistoryModelDown history = await _networkService.GetHistory(_gameStateManager.GameStateModel.UserId);
+
             //Set 'Continue' choice to waiting state
             _continueZone.SetActive(true);
             _continueText.text = _localizationManager.GetTranslation("mainmenu-scene-continuewaiting-text");
             _continue.interactable = false;// (false);
 
-            //Get player history
-            HistoryModelDown history = await _networkService.GetHistory(_gameStateManager.GameStateModel.UserId);
-
             if (!history.ScenarioName.Equals(string.Empty))
             {
+                //Stats button valid
+                _statistics.interactable = true;
+
                 //Update game state model
                 _gameStateManager.GameStateModel.CurrentScenario = history.ScenarioName;
                 _gameStateManager.GameStateModel.CurrentChapter = history.ChapterName;
@@ -62,6 +65,8 @@ namespace StarterCore.Core.Scenes.MainMenu
             }
             else
             {
+                //Stats button not valid
+                _statistics.interactable = false;
                 _gameStateManager.GameStateModel.CurrentScenario = string.Empty;
                 _gameStateManager.GameStateModel.CurrentChapter = string.Empty;
                 _gameStateManager.GameStateModel.CurrentChallengeIndex = 0;

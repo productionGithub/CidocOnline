@@ -258,6 +258,7 @@ namespace StarterCore.Core.Scenes.Board
             //'__Anwsers' properties of this copy are update with players answers
             // This copy is then compared with expected results in the original ChallengeData object when the Validate button is pressed.
             ChallengeData playerResults = new ChallengeData();
+
             if(_leftEntityDeckController.isActiveAndEnabled)
             {
                 playerResults.ELeftAnswer = _leftEntityDeckController.CurrentCard.id;
@@ -292,7 +293,11 @@ namespace StarterCore.Core.Scenes.Board
 
                 //update game model
                 _gameStateManager.GameStateModel.CurrentScore += _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].Score;
-                _gameStateManager.GameStateModel.CurrentChallengeIndex++;
+                if(_gameStateManager.GameStateModel.CurrentChallengeIndex < _challengeList.Count - 1)
+                {
+                    _gameStateManager.GameStateModel.CurrentChallengeIndex++;
+                }
+
                 _challengeIndexUpdated = true;
 
                 //update DB
@@ -338,7 +343,10 @@ namespace StarterCore.Core.Scenes.Board
             else
             {
                 //If answer was wrong, challengeIndex was not incremented.
-                _gameStateManager.GameStateModel.CurrentChallengeIndex++;
+                if (_gameStateManager.GameStateModel.CurrentChallengeIndex < _challengeList.Count - 1)
+                {
+                    _gameStateManager.GameStateModel.CurrentChallengeIndex++;
+                }
                 OnUpdateSession?.Invoke();
             }
             _navigationService.Push("MainMenuScene");

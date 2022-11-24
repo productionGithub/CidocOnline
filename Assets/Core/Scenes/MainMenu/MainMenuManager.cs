@@ -19,15 +19,11 @@ namespace StarterCore.Core.Scenes.MainMenu
 
         public async void Initialize()//was async
         {
-
-            Trace.Log("[MainMenuManager] Initialized!");
             //Get player history
             HistoryModelDown history = await _networkService.GetHistory(_gameStateManager.GameStateModel.UserId);
 
             if (!history.ScenarioName.Equals(string.Empty))
             {
-                Trace.Log("[MainMenuManager] From gethistory, scenario is : " + history.ScenarioName);
-
                 //Update game state model
                 _gameStateManager.GameStateModel.CurrentScenario = history.ScenarioName;
                 _gameStateManager.GameStateModel.CurrentChapter = history.ChapterName;
@@ -36,7 +32,6 @@ namespace StarterCore.Core.Scenes.MainMenu
             }
             else
             {
-                Trace.Log("[MainMenuManager] History is null");
                 _gameStateManager.GameStateModel.CurrentScenario = string.Empty;
                 _gameStateManager.GameStateModel.CurrentChapter = string.Empty;
                 _gameStateManager.GameStateModel.CurrentChallengeIndex = 0;

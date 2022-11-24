@@ -20,6 +20,7 @@
       "signin-scene-noaccount-label" : "Don't have an account?",
       "signin-scene-createbutton-label" : "Create an account"
    },
+
       "SignupScene": {
       "signup-scene-title-text": "CREATE ACCOUNT",
       "signup-scene-username-label": "Username",
@@ -42,6 +43,7 @@
       "signup-scene-accountcreatedfailed-text" : "Ooops! Something went wrong\nPlease try again",
       "signup-scene-backbutton-text" : "Back"
     },
+
       "ResetPasswordScene" :{
       "resetpassword-scene-title-text": "RESET PASSWORD",
       "resetpassword-scene-intro-text" : "Type in your email and click 'Reset'\nWe will send you a message  with a link to reset your password",
@@ -56,6 +58,7 @@
       "resetpassword-scene-notactivated-text" : "Account not activated\nCheck your email and follow instructions",
       "resetpassword-scene-backbutton-text" : "Back"
     },
+
       "GameSelectionScene" :{
       "gameselection-scene-title-text": "GAME SELECTION",
       "gameselection-scene-backbutton-text":"Back",
@@ -73,12 +76,12 @@
       "gameselection-scene-language1-text":"English",
       "gameselection-scene-language2-text":"French"
     },
+
       "MainMenuScene" :{
       "mainmenu-scene-welcometitle-text": "Hello",
       "mainmenu-scene-continuewaiting-text": "Searching last session. Please wait...",
       "mainmenu-scene-continue-text": "Last played: ",
       "mainmenu-scene-nocontinue-text": "Last played session : none.",
-
       "mainmenu-scene-continuebutton-text": "Continue",
       "mainmenu-scene-continuebutton-text": "Continue",
       "mainmenu-scene-choosebutton-text": "Choose",
@@ -92,6 +95,7 @@
        "mainmenu-scene-quit-label": "Quit game",
       "mainmenu-scene-quitbutton-text": "Quit"
     },
+
       "BoardScene" :{
       "boardscene-scene-winbanner-text": "BRAVO! Good answer.",
       "boardscene-scene-explanationtitle-text": "Ooops! wrong answer.",
@@ -99,6 +103,15 @@
       "boardscene-scene-nextbutton-text": "Next",
       "boardscene-scene-retrybutton-text": "Retry",
       "boardscene-scene-quitbutton-text": "Quit"
+    },
+      
+      "StatsScene" :{
+      "statsscene-scene-title-text": "STATISTICS",
+      "statsscene-scene-listscenariolabel-text": "List of scenarii",
+      "statsscene-scene-progressionlabel-text": "Progression",
+      "statsscene-scene-scorelabel-text": "Score",
+      "statsscene-scene-totalscenariolabel-text": "Total scenario",
+      "statsscene-scene-grandtotallabel-text": "Grand total"
     }
     }
 }

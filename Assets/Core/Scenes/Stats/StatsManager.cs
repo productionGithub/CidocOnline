@@ -10,24 +10,35 @@ using Cysharp.Threading.Tasks;
 using StarterCore.Core.Services.Network.Models;
 using System;
 
-namespace StarterCore.Core.Scenes.Board
+namespace StarterCore.Core.Scenes.Stats
 {
     public class StatsManager : IInitializable
     {
-        //TODO
-        // Pour chacun des scenario
-            //
+        [Inject] MockNetService _mockNetService;
+        [Inject] GameStateManager _gameStateManager;
+        [Inject] StatsController _statsController;
+        [Inject] NavigationService _navigationService;
 
+        List<ChapterProgressionModelDown> _userStats;
 
         public async void Initialize()
         {
+            Debug.Log("[StatsManager] Show !");
+            _userStats = await _mockNetService.GetUserStats(_gameStateManager.GameStateModel.UserId);
+            _statsController.Init();
+            _statsController.Show(_userStats);
 
-
+            _statsController.OnMainMenuEvent += MainMenuButtonClicked;
         }
 
+        private void MainMenuButtonClicked()
+        {
+            _navigationService.Push("MainMenuScene");
+        }
 
         private void OnDestroy()
         {
+            _statsController.OnMainMenuEvent -= MainMenuButtonClicked;
         }
 
     }

@@ -19,20 +19,19 @@ namespace StarterCore.Core.Scenes.GameSelection
 
         ScenariiModelDown _catalog;
         ProgressionModelDown _progression;
+
         List<ChapterProgressionModelDown> _userProgressions;
 
         public async void Initialize()
         {
             Debug.Log("[GameSelectionManager] Initialized!");
 
-            //Get scenarii catalog and Show Game selection panel
+            //Get scenarii catalog from scenariiCatalog.json file
             _catalog = await _networkService.GetCatalog();
 
+            //string chapterFileName = GetChapterFilename(_gameStateManager.GameStateModel.CurrentChapter);
+
             //Get user progressions
-            string chapterFileName = GetChapterFilename(_gameStateManager.GameStateModel.CurrentChapter);
-
-            Debug.Log("USER ID PASSED = " + _gameStateManager.GameStateModel.UserId);
-
             _userProgressions = await _networkService.GetUserStats(_gameStateManager.GameStateModel.UserId);
 
             if (_catalog != null)
@@ -71,15 +70,8 @@ namespace StarterCore.Core.Scenes.GameSelection
                 }
                 else
                 {
-                    //Create Session + Default Progression in DB.
-                    //Update GameModel with default values for score and challende index.
-                    Trace.Log("No progression, create session and load with defaults");
-                    Trace.Log("BEFORE CREATING SESSION");
                     string chapterFileName = GetChapterFilename(chapterTitle);
-                    Debug.Log("[GSM]" + chapterFileName);
-
-                    bool _session = await _networkService.CreateSession(_gameStateManager.GameStateModel.UserId, scenarioTitle, chapterFileName);
-
+                    await _networkService.CreateSession(_gameStateManager.GameStateModel.UserId, scenarioTitle, chapterFileName);
                     //TODO Debug _session value : always false (but sent is true => Output writtent in error_log).
                     //TODO For now, I don't check and set default values as if _session == true (#everything went fine);
 

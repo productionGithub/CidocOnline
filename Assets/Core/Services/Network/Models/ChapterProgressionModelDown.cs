@@ -22,29 +22,3 @@ namespace StarterCore.Core.Services.Network.Models
         public int MaxPossibleScore { get; set; }
     }
 }
-
-
-/*
- * 
- *         [JsonProperty("userId")]
-        public string UserId { get; set; }
-        [JsonProperty("scenarioName")]
-        public string ScenarioName { get; set; }
-        [JsonProperty("lastChapterName")]
-        public string LastChapterName { get; set; }
-        [JsonProperty("lastChallengeId")]
-        public int LastChallengeId { get; set; }
-        [JsonProperty("score")]
-        public int Score { get; set; }
-*/
-
-
-
-
-
-
-/*
- * 
- * 
-
-*/

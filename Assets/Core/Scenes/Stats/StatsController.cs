@@ -1,30 +1,105 @@
-#define TRACE_ON
+using System;
 using UnityEngine;
-using StarterCore.Core.Services.Navigation;
 using StarterCore.Core.Services.Network.Models;
-using StarterCore.Core.Scenes.Board.Deck;
-using StarterCore.Core.Services.GameState;
-
 using System.Collections.Generic;
 using Zenject;
+using StarterCore.Core.Services.GameState;
 using System.Linq;
-using StarterCore.Core.Scenes.Board.Card.Cards;
-using StarterCore.Core.Scenes.Board.Displayer;
-using StarterCore.Core.Services.Network;
-using StarterCore.Core.Utils;
-using Cysharp.Threading.Tasks;
-
-using static ImageUtilities;
-using UnityEngine.UI;
+using System.Collections;
 using TMPro;
-using StarterCore.Core.Scenes.Board.Challenge;
-using System;
-using UnityEngine.Events;
+using UnityEngine.UI;
 
-namespace StarterCore.Core.Scenes.Board
+namespace StarterCore.Core.Scenes.Stats
 {
     public class StatsController : MonoBehaviour
     {
+        [Inject] GameStateManager _gameStateManager;
 
+        [SerializeField] private ScenarioPanelEntry _scenarioPanelTemplate;
+        [SerializeField] private Transform _panelContainer;
+
+
+        [SerializeField] private TextMeshProUGUI _grandTotalProgressionPercentageTxt;
+        [SerializeField] private TextMeshProUGUI _grandTotalScoreTxt;
+        [SerializeField] private TextMeshProUGUI _grandTotalMaximumPossibleScoreTxt;
+        [SerializeField] private Button _mainMenuButton;
+
+
+        public event Action OnMainMenuEvent;
+
+        private List<ScenarioPanelEntry> _entriesList;
+
+        //List<ChapterProgressionModelDown> _userProgressions;
+
+        public void Init()
+        {
+            if (_entriesList == null)
+            {
+                _entriesList = new List<ScenarioPanelEntry>();
+            }
+            else
+            {
+                foreach (ScenarioPanelEntry e in _entriesList)
+                {
+                    Destroy(e.gameObject);
+                }
+                _entriesList.Clear();
+            }
+            _mainMenuButton.onClick.AddListener(OnMainMenuClicked);
+        }
+
+        public void Show(List<ChapterProgressionModelDown> userProgressions)
+        {
+            Debug.Log("[StatsController] Show !");
+            _scenarioPanelTemplate.gameObject.SetActive(false);
+
+            List<string> scenarii = new List<string>();
+            List<string> chapterLines = new List<string>();
+
+            foreach (IEnumerable sname in userProgressions.Select(o => o.ScenarioName).Distinct())
+            {
+                scenarii.Add(sname.ToString());
+            }
+
+            foreach (string s in scenarii)
+            {
+                //Créer instance de scenario Panel
+                ScenarioPanelEntry instance = Instantiate(_scenarioPanelTemplate, _panelContainer);
+                _entriesList.Add(instance);
+
+                instance.gameObject.SetActive(true);
+
+                instance.Init();
+                instance.Show(s, userProgressions);
+            }
+
+            int grandTotalProgression = 0;
+            int grandTotalScore = 0;
+            int grandTotalMaximumPossibleScore = 0;
+            int grandTotalNbChapters = 0;
+
+            foreach (ScenarioPanelEntry scenarioEntry in _entriesList)
+            {
+                grandTotalProgression += scenarioEntry.totalScenarioProgression;
+                grandTotalScore += scenarioEntry.totalScenarioScore;
+                grandTotalMaximumPossibleScore += scenarioEntry.totalScenarioMaxPossibleScore;
+                grandTotalNbChapters += scenarioEntry.nbChapterInScenario;
+            }
+
+            _grandTotalProgressionPercentageTxt.text = (grandTotalProgression * 100) / (grandTotalNbChapters * 100)+"%";
+            Debug.Log("");
+            _grandTotalScoreTxt.text = grandTotalScore.ToString();
+            _grandTotalMaximumPossibleScoreTxt.text = grandTotalMaximumPossibleScore.ToString();
+        }
+
+        private void OnMainMenuClicked()
+        {
+            OnMainMenuEvent?.Invoke();
+        }
+
+        public void OnDestroy()
+        {
+            _mainMenuButton.onClick.RemoveListener(OnMainMenuClicked);
+        }
     }
 }

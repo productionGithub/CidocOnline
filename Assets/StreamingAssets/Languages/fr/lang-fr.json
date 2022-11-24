@@ -100,6 +100,16 @@
       "boardscene-scene-nextbutton-text": "Suivant",
       "boardscene-scene-retrybutton-text": "Retenter",
       "boardscene-scene-quitbutton-text": "Quitter"
+    },
+    "StatsScene" :{
+      "statsscene-scene-title-text": "STATISTIQUES",
+      "statsscene-scene-listscenariolabel-text": "Liste des scenarii joués",
+      "statsscene-scene-progressionlabel-text": "Progression",
+      "statsscene-scene-scorelabel-text": "Score",
+      "statsscene-scene-totalscenariolabel-text": "Total scénario",
+      "statsscene-scene-grandtotallabel-text": "Grand total"
     }
     }
 }
+
+

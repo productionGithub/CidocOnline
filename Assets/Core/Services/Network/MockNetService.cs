@@ -257,16 +257,6 @@ namespace StarterCore.Core.Services.Network
             string url = string.Format(URL_GET_USER_STATS, userId);
             List<ChapterProgressionModelDown> userProgressions = await _net.GetAsync<List<ChapterProgressionModelDown>>(url);
 
-            Debug.Log("");
-            if(userProgressions[0].LastChallengeId != -1)
-            {
-            Trace.Log("PROGRESSIONS ARE -> " + userProgressions[0].ScenarioName);
-            }
-            else
-            {
-                Trace.Log("NO PROGRESSIONS YET!");
-            }
-
             return userProgressions;
         }
 
