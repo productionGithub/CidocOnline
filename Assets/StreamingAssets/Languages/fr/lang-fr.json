@@ -9,7 +9,7 @@
       "signin-scene-email-placeholder-text" : "Entrez un email valide...",
       "signin-scene-emailnotvalid-text" : "Format d'email invalide.\nDevrait ressembler à 'martin@dupont.fr",
       "signin-scene-wrongcombination-text" : "Email ou mot de passe incorrect\nVeuillez réessayer",
-      "signin-scene-rightcombination-text" : "Login OK. Téléchargement de données.\nPlease wait...",
+      "signin-scene-rightcombination-text" : "Login OK. Téléchargement de données.\nVeuillez patienter...",
       "signin-scene-password-label" : "Votre mot de passe",
       "signin-scene-password-placeholder-text" : "Mot de passe associé au compte",
       "signin-scene-forgotpassword-text" : "Mot de passe oublié ?",
@@ -39,7 +39,7 @@
       "signup-scene-country-label" : "Pays",
       "signup-scene-optin-text" : "Oui, je veux recevoir des informations sur OntoMatchGame",
       "signup-scene-registerbutton-text" : "Créer",
-      "signup-scene-termsandconditions-text" : "Vos données personnelles ne seront jamais partagées avec des tiers",
+      "signup-scene-termsandconditions-text" : "Vos données personnelles ne seront jamais partagées avec des tiers.",
       "signup-scene-accountcreated-text" :"Votre compte a été créé !\nVérifiez vos emails pour l'activez",
       "signup-scene-waitingmessage-text" : "Création du compte.\nPatientez...",
       "signup-scene-accountcreatedfailed-text" : "Ooops! Une erreur est survenue\nVeuillez réessayer",
@@ -47,7 +47,7 @@
     },
       "ResetPasswordScene" :{
       "resetpassword-scene-title-text": "REINITIALISER LE MOT DE PASSE",
-      "resetpassword-scene-intro-text" : "Entrez votre email et cliquez sur 'Reset'\nNous vous enverrons un email avec un lien de réinitilisation.",
+      "resetpassword-scene-intro-text" : "Entrez votre email et cliquez sur 'Reset'.\nNous vous enverrons un email avec un lien de réinitilisation.",
       "resetpassword-scene-email-label" : "Entrez votre email",
       "resetpassword-scene-placeholder-text" : "Email associé à votre compte",
       "resetpassword-scene-noaccount-text" : "Email lié à aucun compte",
@@ -60,7 +60,6 @@
       "resetpassword-scene-backbutton-text" : "Retour"
     },
       "GameSelectionScene" :{
-      "toto" : "Dernier",
       "gameselection-scene-title-text": "SELECTION DES JEUX",
       "gameselection-scene-backbutton-text":"Retour",
       "gameselection-scene-listofscenarii-label":"Liste des scenario",
@@ -107,7 +106,14 @@
       "statsscene-scene-progressionlabel-text": "Progression",
       "statsscene-scene-scorelabel-text": "Score",
       "statsscene-scene-totalscenariolabel-text": "Total scénario",
-      "statsscene-scene-grandtotallabel-text": "Grand total"
+      "statsscene-scene-grandtotallabel-text": "Grand total",
+      "statsscene-scene-mainmenubutton-label": "Retour"
+    },
+
+      "LeaderBoardScene" :{
+      "leaderboard-scene-title-text": "LEADERBOARD",
+      "leaderboard-scene-bestrankings-label" : "Meilleurs classements",
+      "leaderboard-scene-mainmenubutton-label": "Menu Principal"
     }
     }
 }

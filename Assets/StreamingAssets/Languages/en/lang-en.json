@@ -111,7 +111,14 @@
       "statsscene-scene-progressionlabel-text": "Progression",
       "statsscene-scene-scorelabel-text": "Score",
       "statsscene-scene-totalscenariolabel-text": "Total scenario",
-      "statsscene-scene-grandtotallabel-text": "Grand total"
+      "statsscene-scene-grandtotallabel-text": "Grand total",
+      "statsscene-scene-mainmenubutton-label": "Back"
+    },
+
+      "LeaderBoardScene" :{
+      "leaderboard-scene-title-text": "LEADERBOARD",
+      "leaderboard-scene-bestrankings-label" : "Best Rankings",
+      "leaderboard-scene-mainmenubutton-label": "Main Menu"
     }
     }
 }

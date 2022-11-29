@@ -1,3 +1,4 @@
+#define TRACE_ON
 using UnityEngine;
 using UnityEngine.UI;
 using StarterCore.Core.Services.Network.Models;
@@ -25,11 +26,15 @@ namespace StarterCore.Core.Scenes.MainMenu
         [SerializeField] Button _chooseScenario;
         [SerializeField] Button _continue;
         [SerializeField] Button _statistics;
+        [SerializeField] Button _leaderBoard;
         [SerializeField] Button _quit;
+
+        [SerializeField] GameObject _waitingIcon;
 
         public event Action OnChooseScenarioEvent;
         public event Action OnContinueChapterEvent;
         public event Action OnStatisticsEvent;
+        public event Action OnLeaderBoardEvent;
         public event Action OnQuitEvent;
 
         public void Init()
@@ -37,13 +42,25 @@ namespace StarterCore.Core.Scenes.MainMenu
             _chooseScenario.onClick.AddListener(OnChooseScenarioButtonClicked);
             _continue.onClick.AddListener(OnContinue);
             _statistics.onClick.AddListener(OnStatistics);
+            _leaderBoard.onClick.AddListener(OnLeaderBoard);
             _quit.onClick.AddListener(OnQuit);
+        }
+
+        public void ShowWaitingIcon()
+        {
+            _waitingIcon.SetActive(true);
+        }
+        public void HideWaitingIcon()
+        {
+            _waitingIcon.SetActive(false);
         }
 
         public async void Show()
         {
             //Get player history
+            ShowWaitingIcon();
             HistoryModelDown history = await _networkService.GetHistory(_gameStateManager.GameStateModel.UserId);
+            HideWaitingIcon();
 
             //Set 'Continue' choice to waiting state
             _continueZone.SetActive(true);
@@ -113,6 +130,12 @@ namespace StarterCore.Core.Scenes.MainMenu
             OnStatisticsEvent?.Invoke();
         }
 
+        private void OnLeaderBoard()
+        {
+            Trace.Log("LEADERBOARD BTN CLIQUED");
+            OnLeaderBoardEvent?.Invoke();
+        }
+
         private void OnQuit()
         {
             OnQuitEvent?.Invoke();
@@ -123,6 +146,7 @@ namespace StarterCore.Core.Scenes.MainMenu
             _chooseScenario.onClick.RemoveListener(OnChooseScenarioButtonClicked);
             _continue.onClick.RemoveListener(OnContinue);
             _quit.onClick.RemoveListener(OnStatistics);
+            _quit.onClick.RemoveListener(OnLeaderBoard);
             _quit.onClick.RemoveListener(OnQuit);
         }
     }

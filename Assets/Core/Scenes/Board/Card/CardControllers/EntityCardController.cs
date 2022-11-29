@@ -47,5 +47,10 @@ namespace StarterCore.Core.Scenes.Board.Deck
         {
             _entityCardDisplayer.Show(card);
         }
+
+        public void ReInitFullText()
+        {
+            _entityCardDisplayer.ReInitFullText();
+        }
     }
 }

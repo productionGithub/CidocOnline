@@ -13,17 +13,18 @@ namespace StarterCore.Core.Scenes.Stats
 {
     public class StatsController : MonoBehaviour
     {
+        [Inject] DiContainer _diContainer;
         [Inject] GameStateManager _gameStateManager;
 
         [SerializeField] private ScenarioPanelEntry _scenarioPanelTemplate;
         [SerializeField] private Transform _panelContainer;
-
-
         [SerializeField] private TextMeshProUGUI _grandTotalProgressionPercentageTxt;
         [SerializeField] private TextMeshProUGUI _grandTotalScoreTxt;
         [SerializeField] private TextMeshProUGUI _grandTotalMaximumPossibleScoreTxt;
         [SerializeField] private Button _mainMenuButton;
-
+        [SerializeField] GameObject _waitingIcon;
+        [SerializeField] GameObject _statsScrollView;
+        [SerializeField] GameObject _grandTotal;
 
         public event Action OnMainMenuEvent;
 
@@ -48,6 +49,19 @@ namespace StarterCore.Core.Scenes.Stats
             _mainMenuButton.onClick.AddListener(OnMainMenuClicked);
         }
 
+        public void ShowWaitingIcon()
+        {
+            _waitingIcon.SetActive(true);
+            _statsScrollView.SetActive(false);
+            _grandTotal.SetActive(false);
+        }
+        public void HideWaitingIcon()
+        {
+            _waitingIcon.SetActive(false);
+            _statsScrollView.SetActive(true);
+            _grandTotal.SetActive(true);
+        }
+
         public void Show(List<ChapterProgressionModelDown> userProgressions)
         {
             Debug.Log("[StatsController] Show !");
@@ -65,6 +79,8 @@ namespace StarterCore.Core.Scenes.Stats
             {
                 //Créer instance de scenario Panel
                 ScenarioPanelEntry instance = Instantiate(_scenarioPanelTemplate, _panelContainer);
+                _diContainer.InjectGameObject(instance.gameObject);
+
                 _entriesList.Add(instance);
 
                 instance.gameObject.SetActive(true);

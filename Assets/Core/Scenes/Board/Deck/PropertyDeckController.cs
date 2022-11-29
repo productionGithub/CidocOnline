@@ -413,6 +413,8 @@ namespace StarterCore.Core.Scenes.Board.Deck
                 _noMatchCard.SetActive(true);
                 _sliderController.SetSliderActive(false);
                 _deckCounterDisplayer.Show(0, _initialDeckContent.Count);
+                //Hide FullText
+                _propertyCardController.ReInitFullText();
             }
         }
 

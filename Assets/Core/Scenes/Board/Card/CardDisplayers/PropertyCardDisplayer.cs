@@ -199,13 +199,17 @@ namespace StarterCore.Core.Scenes.Board.Displayer
             else
             {
                 //Invisible
-                _fullTextScrollView.SetActive(false);
-                _fullTextButton.GetComponentInChildren<TextMeshProUGUI>().text = "full text";
+                ReInitFullText();
             }
 
             _fullTextButtonState = !_fullTextButtonState;
         }
 
+        public void ReInitFullText()
+        {
+            _fullTextScrollView.SetActive(false);
+            _fullTextButton.GetComponentInChildren<TextMeshProUGUI>().text = "full text";
+        }
         private void DomainButtonClicked()
         {
             OnDomainButtonClick_Displayer?.Invoke(_domainButton.GetComponentInChildren<TextMeshProUGUI>().text);

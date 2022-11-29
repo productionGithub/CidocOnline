@@ -1,9 +1,6 @@
 using UnityEngine;
 using System;
-using UnityEngine.UI;
 using System.Collections.Generic;
-using StarterCore.Core.Services.Network.Models;
-using TMPro;
 
 namespace StarterCore.Core.Scenes.GameSelection
 {
@@ -21,7 +18,6 @@ namespace StarterCore.Core.Scenes.GameSelection
         {
             InitDomainDictionary();
 
-
             _domainEntryTemplate.gameObject.SetActive(false);
 
             foreach (string domainKey in _domainDictionary.Keys)
@@ -30,8 +26,6 @@ namespace StarterCore.Core.Scenes.GameSelection
 
                 instance.gameObject.SetActive(true);
                 instance.name = "Toggle" + domainKey;
-                //instance._domainCode = "HIS";//Get code from domain + Locale
-                //instance._domainTxt.text = "Histoire";//Get name from dictionary and Locale
                 instance.OnDomainEntryToggleEvent += () => OnDomainToggleCLicked(instance);
                 instance.Show(domainKey, _domainDictionary[domainKey]["en"]);
             }

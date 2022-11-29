@@ -60,6 +60,11 @@ namespace StarterCore.Core.Scenes.Board.Deck
             _propertyCardDisplayer.Show(card);
         }
 
+        public void ReInitFullText()
+        {
+        _propertyCardDisplayer.ReInitFullText();
+        }
+
         private void OnDestroy()
         {
             _propertyCardDisplayer.OnDomainButtonClick_Displayer -= DomainButtonClicked;

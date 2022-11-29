@@ -292,6 +292,8 @@ namespace StarterCore.Core.Scenes.Board.Deck
             else//If not, display 'No match' card and update deck counter
             {
                 _noMatchCard.SetActive(true);
+                //hide full text
+                _entityCardController.ReInitFullText();
                 _sliderController.SetSliderActive(false);
                 _deckCounterDisplayer.Show(0, _initialDeckContent.Count);
             }

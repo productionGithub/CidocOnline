@@ -92,7 +92,6 @@ namespace StarterCore.Core.Scenes.Signup
             {
                 _controller.HideAllAlerts();
                 _controller.AccountCreated();
-                //Trace.Log("Activation code is :" + code.Code);
             }
             else
             {
@@ -101,16 +100,6 @@ namespace StarterCore.Core.Scenes.Signup
                 Debug.LogError("[Server Error] : Sorry, could not create account. Please retry or contact administrator.");
             }
         }
-
-        //private async UniTaskVoid TestLoadGame()
-        //{
-        //    GameModelDown game = await _net.LoadGame();
-        //    Trace.Log("Game loaded game title : " + game.Title);
-        //    Trace.Log("Game loaded is : " + game.DomainTags[1]);
-        //    Trace.Log("Game loaded is : " + game.OntologyTags[0]);
-        //    Trace.Log("Game loaded is in language : " + game.LanguageTags[0]);
-        //    Trace.Log("Game loaded first challenge title is : " + game.ChallengeList[0].Title);
-        //}
 
         private void BackEventClicked()
         {

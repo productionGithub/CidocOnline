@@ -31,12 +31,12 @@ namespace StarterCore.Core.Services.Network
         private string URL_GET_HISTORY = Path.Combine(HomeUrl, "php/gethistory.php?userId={0}");
         private string URL_GET_USERID = Path.Combine(HomeUrl, "php/getuserid.php?email={0}");
         private string URL_GET_SESSION = Path.Combine(HomeUrl, "php/getsession.php?userId={0}?scenarioName={1}?chapterName={2}");
-        //private string URL_GET_PROGRESSIONS = Path.Combine(HomeUrl, "php/getprogressions.php?userId={0}");
         private string URL_GET_USER_STATS = Path.Combine(HomeUrl, "php/getuserstats.php?userId={0}");
         private string URL_GET_PROGRESSION = Path.Combine(HomeUrl, "php/getprogression.php?UserId={0}&ScenarioName={1}&ChapterName={2}");
+        private string URL_GET_RANKINGS = Path.Combine(HomeUrl, "php/getrankings.php");
 
         private string URL_GET_LOCALES_MANIFEST = "StreamingAssets/Languages/manifest.json";
-        private string URL_GET_COUNTRIES = "StreamingAssets/Games/Marmoutier/marmoutier.json";
+        //private string URL_GET_COUNTRIES = "StreamingAssets/Games/Marmoutier/marmoutier.json";
         private string URL_SCENARII_CATALOG = "StreamingAssets/scenarii/scenariiCatalog.json";
 
         private string URL_GET_CIDOC_XML = "StreamingAssets/Ontologies/CidocCRM/01-Referential-CidocRDF_Bootleg_GB_3_7_21.xml";
@@ -52,7 +52,7 @@ namespace StarterCore.Core.Services.Network
         private string URL_RESET_PROGRESSION = Path.Combine(HomeUrl, "php/resetprogression.php");
 
         //Test load games
-        private string URL_GET_GAMES = "http://ontomatchgame.huma-num.fr/StreamingAssets/Games/Marmoutier/marmoutier.json";
+        //private string URL_GET_GAMES = "http://ontomatchgame.huma-num.fr/StreamingAssets/Games/Marmoutier/marmoutier.json";
 
 
 
@@ -258,6 +258,14 @@ namespace StarterCore.Core.Services.Network
             List<ChapterProgressionModelDown> userProgressions = await _net.GetAsync<List<ChapterProgressionModelDown>>(url);
 
             return userProgressions;
+        }
+
+        public async UniTask<RankingModelDown> GetRankings()
+        {
+            string url = string.Format(URL_GET_RANKINGS);
+            RankingModelDown rankings = await _net.GetAsync<RankingModelDown>(url);
+
+            return rankings;
         }
 
         //////////////////////////                UPDATES                //////////////////////////////////

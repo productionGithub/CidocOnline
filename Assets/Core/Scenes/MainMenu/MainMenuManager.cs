@@ -20,7 +20,9 @@ namespace StarterCore.Core.Scenes.MainMenu
         public async void Initialize()//was async
         {
             //Get player history
+            _mainMenuController.ShowWaitingIcon();
             HistoryModelDown history = await _networkService.GetHistory(_gameStateManager.GameStateModel.UserId);
+            _mainMenuController.HideWaitingIcon();
 
             if (!history.ScenarioName.Equals(string.Empty))
             {
@@ -42,6 +44,7 @@ namespace StarterCore.Core.Scenes.MainMenu
             _mainMenuController.OnContinueChapterEvent += ContinueChapter;
             _mainMenuController.OnChooseScenarioEvent += LoadGameSelectionScreen;
             _mainMenuController.OnStatisticsEvent += LoadStatsScreen;
+            _mainMenuController.OnLeaderBoardEvent += LoadLeaderBoardScreen;
             _mainMenuController.OnQuitEvent += OnQuit;
 
             Show();
@@ -71,6 +74,12 @@ namespace StarterCore.Core.Scenes.MainMenu
         private void LoadStatsScreen()
         {
             _navigation.Push("StatsScene");
+        }
+
+        private void LoadLeaderBoardScreen()
+        {
+            Trace.Log("PUSH LEADERBOARD SCENE!!!!");
+            _navigation.Push("LeaderBoardScene");
         }
 
         private void OnQuit()

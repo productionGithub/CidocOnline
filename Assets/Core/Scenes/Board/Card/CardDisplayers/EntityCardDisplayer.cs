@@ -129,11 +129,16 @@ namespace StarterCore.Core.Scenes.Board.Displayer
             }
             else
             {
-                //Invisible
-                _fullTextScrollView.SetActive(false);
-                _fullTextButton.GetComponentInChildren<TextMeshProUGUI>().text = "full text";
+                ReInitFullText();
             }
             _fullTextButtonState = !_fullTextButtonState;
+        }
+
+        public void ReInitFullText()
+        {
+            //Invisible
+            _fullTextScrollView.SetActive(false);
+            _fullTextButton.GetComponentInChildren<TextMeshProUGUI>().text = "full text";
         }
 
         public void GhostBackground()

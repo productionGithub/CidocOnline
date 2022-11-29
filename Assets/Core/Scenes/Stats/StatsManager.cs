@@ -23,12 +23,16 @@ namespace StarterCore.Core.Scenes.Stats
 
         public async void Initialize()
         {
-            Debug.Log("[StatsManager] Show !");
+            _statsController.ShowWaitingIcon();
             _userStats = await _mockNetService.GetUserStats(_gameStateManager.GameStateModel.UserId);
-            _statsController.Init();
-            _statsController.Show(_userStats);
+            _statsController.HideWaitingIcon();
 
+
+
+            _statsController.Init();
             _statsController.OnMainMenuEvent += MainMenuButtonClicked;
+
+            _statsController.Show(_userStats);
         }
 
         private void MainMenuButtonClicked()
