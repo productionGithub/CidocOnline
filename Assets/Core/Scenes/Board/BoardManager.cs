@@ -114,14 +114,6 @@ namespace StarterCore.Core.Scenes.Board
             return name;
         }
 
-        private void OnGamePaused()
-        {
-        }
-
-        private void OnAnimateArrow()
-        {
-        }
-
         private void OnDestroy()
         {
         }

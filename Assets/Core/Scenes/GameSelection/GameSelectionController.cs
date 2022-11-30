@@ -15,6 +15,7 @@ namespace StarterCore.Core.Scenes.GameSelection
         [SerializeField] private PanelController _panelController;
         [SerializeField] private LanguageEntryController _languageEntryController;
         [SerializeField] private DomainEntryController _domainEntryController;
+        [SerializeField] private GameObject _waitingIcon;
 
         public event Action<string, string> OnGameSelectionControllerPlayChapterEvent;
         public event Action<string, string> OnResetProgressionEvent_GameSelectionCtrl;
@@ -38,6 +39,18 @@ namespace StarterCore.Core.Scenes.GameSelection
             _panelController.OnResetProgressionEvent_PanelCtrl += OnResetProgression;
             _BackButton.onClick.AddListener(BackClickedEvent);
         }
+
+        public void ShowWaitingIcon()
+        {
+            _waitingIcon.SetActive(true);
+            _panelController.gameObject.SetActive(false);
+        }
+        public void HideWaitingIcon()
+        {
+            _waitingIcon.SetActive(false);
+            _panelController.gameObject.SetActive(true);
+        }
+
 
         private void OnFilterDomainPanel(List<string> domains)
         {

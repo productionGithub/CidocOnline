@@ -28,6 +28,8 @@ namespace StarterCore.Core.Scenes.MainMenu
         [SerializeField] Button _statistics;
         [SerializeField] Button _leaderBoard;
         [SerializeField] Button _quit;
+        [SerializeField] Button _goingFurther;
+        [SerializeField] Button _fullCredits;
 
         [SerializeField] GameObject _waitingIcon;
 
@@ -36,6 +38,8 @@ namespace StarterCore.Core.Scenes.MainMenu
         public event Action OnStatisticsEvent;
         public event Action OnLeaderBoardEvent;
         public event Action OnQuitEvent;
+        public event Action OnGoingFurtherEvent;
+        public event Action OnFullCreditsEvent;
 
         public void Init()
         {
@@ -44,6 +48,8 @@ namespace StarterCore.Core.Scenes.MainMenu
             _statistics.onClick.AddListener(OnStatistics);
             _leaderBoard.onClick.AddListener(OnLeaderBoard);
             _quit.onClick.AddListener(OnQuit);
+            _goingFurther.onClick.AddListener(OnGoingFurther);
+            _fullCredits.onClick.AddListener(OnFullCredits);
         }
 
         public void ShowWaitingIcon()
@@ -77,8 +83,6 @@ namespace StarterCore.Core.Scenes.MainMenu
                 _gameStateManager.GameStateModel.CurrentChapter = history.ChapterName;
                 _gameStateManager.GameStateModel.CurrentChallengeIndex = Int32.Parse(history.ChallengeId);
                 _gameStateManager.GameStateModel.CurrentScore = Int32.Parse(history.Score);
-
-                //Debug.Log("");
             }
             else
             {
@@ -115,7 +119,6 @@ namespace StarterCore.Core.Scenes.MainMenu
 
         private void OnContinue()
         {
-            Debug.Log("[MainMenuController] Scenario name is" + _gameState.GameStateModel.CurrentScenario);
             OnContinueChapterEvent?.Invoke();
         }
 
@@ -132,7 +135,6 @@ namespace StarterCore.Core.Scenes.MainMenu
 
         private void OnLeaderBoard()
         {
-            Trace.Log("LEADERBOARD BTN CLIQUED");
             OnLeaderBoardEvent?.Invoke();
         }
 
@@ -141,13 +143,25 @@ namespace StarterCore.Core.Scenes.MainMenu
             OnQuitEvent?.Invoke();
         }
 
+        private void OnGoingFurther()
+        {
+            OnGoingFurtherEvent?.Invoke();
+        }
+
+        private void OnFullCredits()
+        {
+            OnFullCreditsEvent?.Invoke();
+        }
+
         public void OnDestroy()
         {
             _chooseScenario.onClick.RemoveListener(OnChooseScenarioButtonClicked);
             _continue.onClick.RemoveListener(OnContinue);
-            _quit.onClick.RemoveListener(OnStatistics);
-            _quit.onClick.RemoveListener(OnLeaderBoard);
+            _statistics.onClick.RemoveListener(OnStatistics);
+            _leaderBoard.onClick.RemoveListener(OnLeaderBoard);
             _quit.onClick.RemoveListener(OnQuit);
+            _goingFurther.onClick.RemoveListener(OnGoingFurther);
+            _fullCredits.onClick.RemoveListener(OnFullCredits);
         }
     }
 }

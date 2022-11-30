@@ -29,6 +29,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Data/Scenes/LeaderBoardScene.unity
     guid: 6c73db8e8c7e54710a6cc530d66ded0b
+  - enabled: 1
+    path: Assets/Data/Scenes/FullCreditsScene.unity
+    guid: 97bf2fb8c251b47eaaf02ec2eec3fb29
+  - enabled: 1
+    path: Assets/Data/Scenes/GoingFurtherScene.unity
+    guid: c7f93d9c15f0d43439ebdc5655efcf47
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 8fbc4261557184d04a0e478f7c16893b, type: 2}
     com.unity.localization.settings: {fileID: 11400000, guid: ef0639c84ed0940bfbf127268a6c418a, type: 2}

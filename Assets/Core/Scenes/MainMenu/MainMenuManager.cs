@@ -46,6 +46,8 @@ namespace StarterCore.Core.Scenes.MainMenu
             _mainMenuController.OnStatisticsEvent += LoadStatsScreen;
             _mainMenuController.OnLeaderBoardEvent += LoadLeaderBoardScreen;
             _mainMenuController.OnQuitEvent += OnQuit;
+            _mainMenuController.OnFullCreditsEvent += OnFullCredits;
+            _mainMenuController.OnGoingFurtherEvent += OnGoingFurther;
 
             Show();
         }
@@ -63,10 +65,6 @@ namespace StarterCore.Core.Scenes.MainMenu
 
         private void ContinueChapter()
         {
-            //Debug.Log("[MainMenuManager] Before PUSH BOARDSCENE : " + _gameStateManager.GameStateModel.CurrentScenario);
-            //Debug.Log("[MainMenuManager] Before PUSH BOARDSCENE : " + _gameStateManager.GameStateModel.CurrentChapter);
-            //Debug.Log("[MainMenuManager] Before PUSH BOARDSCENE : " + _gameStateManager.GameStateModel.CurrentChallengeIndex);
-            //Debug.Log("[MainMenuManager] Before PUSH BOARDSCENE : " + _gameStateManager.GameStateModel.CurrentScore);
             _navigation.Push("BoardScene");
         }
 
@@ -80,6 +78,16 @@ namespace StarterCore.Core.Scenes.MainMenu
         {
             Trace.Log("PUSH LEADERBOARD SCENE!!!!");
             _navigation.Push("LeaderBoardScene");
+        }
+
+        private void OnFullCredits()
+        {
+            _navigation.Push("FullCreditsScene");
+        }
+
+        private void OnGoingFurther()
+        {
+            _navigation.Push("GoingFurtherScene");
         }
 
         private void OnQuit()

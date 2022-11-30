@@ -26,6 +26,7 @@ namespace StarterCore.Core.Scenes.LeaderBoard
         // Start is called before the first frame update
         public void Init()
         {
+            //TODO DON'T FORGET ADDING ENTRIES!
             _leaderBoardDisplayer.Init();
             _mainMenuButton.onClick.AddListener(OnBack);
 
@@ -48,8 +49,6 @@ namespace StarterCore.Core.Scenes.LeaderBoard
             //For each language
             foreach (Language language in rankings.Languages)
             {
-                Debug.Log("Language name : " + language.LanguageName);
-
                 //Language Title
                 LanguageTitleEntry languageTitleInstance = Instantiate(_languageTitleTemplate, parent);
                 languageTitleInstance.gameObject.SetActive(true);
@@ -59,7 +58,7 @@ namespace StarterCore.Core.Scenes.LeaderBoard
                 foreach (ScenarioData scenarioDatum in language.Scenarii.Scenario)
                 {
                     //First sort playerData by score, descending
-                    List<PlayerDatum> SortedList = scenarioDatum.PlayerData.OrderBy(o => o.Score).ToList();
+                    List<PlayerDatum> SortedList = scenarioDatum.PlayerData.OrderByDescending(o => o.Score).ToList();
 
                     Debug.Log("ScenarioName : " + scenarioDatum.ScenarioName);
                     Debug.Log("Max Score Scenario : " + scenarioDatum.MaximumScore);
@@ -91,6 +90,10 @@ namespace StarterCore.Core.Scenes.LeaderBoard
             OnBackButtonClicked?.Invoke();
         }
 
+        private void OnDestroy()
+        {
+            _mainMenuButton.onClick.RemoveListener(OnBack);
+        }
     }
 }
 

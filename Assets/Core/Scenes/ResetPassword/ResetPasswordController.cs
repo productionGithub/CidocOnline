@@ -1,13 +1,7 @@
 using UnityEngine;
 using System;
-using Zenject;
 
-using System.Net.Mail;
 using System.Text.RegularExpressions;
-using System.Globalization;
-using System.Collections;
-using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
 
@@ -26,34 +20,6 @@ namespace StarterCore.Core.Scenes.ResetPassword
         public GameObject AlertEmailNotSent;
         public GameObject AlertStatus;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //[SerializeField] private ResetPasswordForm _template;
-        //[SerializeField] private Transform _parent;
-
-        //[Inject] private DiContainer _container;
-
-        //public ResetPasswordForm 
-
         public event Action<string> OnResetPasswordEvent;
         public event Action OnBackEvent;
 
@@ -62,18 +28,8 @@ namespace StarterCore.Core.Scenes.ResetPassword
             Debug.Log("ResetController instanciated");
             HideAllAlerts();
 
-            //_template.gameObject.SetActive(false); // Disable template
-
-            //= Instantiate(_template, _parent);
-            //_container.InjectGameObject(gameObject);//Inject dynamically : entity.gameObject injects on component AND children
-
-
-            //gameObject.SetActive(true);
             _ResetButton.onClick.AddListener(OnResetPasswordFormClicked);
             _BackButton.onClick.AddListener(OnBackClicked);
-
-            //OnBackClickedEvent += OnBackClicked; // Equiv to += () => OnSubmitSignupFormClicked();
-            //Show();
         }
 
         private void OnBackClicked()
@@ -116,10 +72,7 @@ namespace StarterCore.Core.Scenes.ResetPassword
             HideAllAlerts();
             AlertStatus.SetActive(true);
         }
-        /// <summary>
-        /// Form validation
-        /// </summary>
-        /// <returns></returns>
+
         public bool ValidateForm()
         {
             return ValidateEmail();
@@ -150,8 +103,8 @@ namespace StarterCore.Core.Scenes.ResetPassword
 
         private void OnDestroy()
         {
-            //OnResetPasswordClickedEvent -= OnResetPasswordFormClicked;
-            //OnBackClickedEvent -= OnBackClicked;
+            _ResetButton.onClick.RemoveListener(OnResetPasswordFormClicked);
+            _BackButton.onClick.RemoveListener(OnBackClicked);
         }
     }
 }

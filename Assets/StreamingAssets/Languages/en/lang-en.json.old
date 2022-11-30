@@ -3,7 +3,7 @@
    "static-text" : {
    "SigninScene": {
       "signin-scene-title-text": "WELCOME TO ONTOMATCHGAME!",
-      "signin-scene-intro-text": "Semantic Data Representation should let you generate, share and consume Cultural Heritage data with colleagues around the world, to ask and answer questions against more data and more integrated knowledge nets.\n\nBut to get there, you need to learn how to read and write semantic data in the first place. That’s where OntoMatchGame comes in. If you are interested in learning about ontology, semantics and how to apply them to real cultural heritage data, then the OntoMatchGame has been designed for you.",
+      "signin-scene-intro-text": "Semantic Data Representation should let you generate, share and consume Cultural Heritage data with colleagues around the world, to ask and answer questions against more data and more integrated knowledge nets.\n\nBut to get there, you need to learn how to read and write semantic data in the first place. That’s where CIDOC CRM the game comes in. If you are interested in learning about ontology, semantics and how to apply them to real cultural heritage data, then the CIDOC CRM Game has been designed for you.",
       "signin-scene-email-label": "Your Email",
       "signin-scene-wrongemail-text" : "This email is not link to any account",
       "signin-scene-email-placeholder-text" : "Enter a valid email address",
@@ -20,6 +20,7 @@
       "signin-scene-noaccount-label" : "Don't have an account?",
       "signin-scene-createbutton-label" : "Create an account"
    },
+
       "SignupScene": {
       "signup-scene-title-text": "CREATE ACCOUNT",
       "signup-scene-username-label": "Username",
@@ -42,6 +43,7 @@
       "signup-scene-accountcreatedfailed-text" : "Ooops! Something went wrong\nPlease try again",
       "signup-scene-backbutton-text" : "Back"
     },
+
       "ResetPasswordScene" :{
       "resetpassword-scene-title-text": "RESET PASSWORD",
       "resetpassword-scene-intro-text" : "Type in your email and click 'Reset'\nWe will send you a message  with a link to reset your password",
@@ -56,6 +58,7 @@
       "resetpassword-scene-notactivated-text" : "Account not activated\nCheck your email and follow instructions",
       "resetpassword-scene-backbutton-text" : "Back"
     },
+
       "GameSelectionScene" :{
       "gameselection-scene-title-text": "GAME SELECTION",
       "gameselection-scene-backbutton-text":"Back",
@@ -73,12 +76,12 @@
       "gameselection-scene-language1-text":"English",
       "gameselection-scene-language2-text":"French"
     },
+
       "MainMenuScene" :{
       "mainmenu-scene-welcometitle-text": "Hello",
       "mainmenu-scene-continuewaiting-text": "Searching last session. Please wait...",
       "mainmenu-scene-continue-text": "Last played: ",
       "mainmenu-scene-nocontinue-text": "Last played session : none.",
-
       "mainmenu-scene-continuebutton-text": "Continue",
       "mainmenu-scene-continuebutton-text": "Continue",
       "mainmenu-scene-choosebutton-text": "Choose",
@@ -101,7 +104,7 @@
       "boardscene-scene-retrybutton-text": "Retry",
       "boardscene-scene-quitbutton-text": "Quit"
     },
-
+      
       "StatsScene" :{
       "statsscene-scene-title-text": "STATISTICS",
       "statsscene-scene-listscenariolabel-text": "List of scenarii",
@@ -116,28 +119,6 @@
       "leaderboard-scene-title-text": "LEADERBOARD",
       "leaderboard-scene-bestrankings-label" : "Best Rankings",
       "leaderboard-scene-mainmenubutton-label": "Main Menu"
-    },
-    
-      "FullCreditsScene" :{
-      "fullcredits-scene-title-text": "ONTOMATCHGAME",
-      "fullcredits-scene-backbutton-text": "Main Menu",
-      "fullcredits-scene-masa-text": "A DIGITAL GAME FUNDED BY - MASA (<link=\"https://masa.hypothese.org\">https://masa.hypotheses.org</link>)",
-      "fullcredits-scene-originalgame-text": "Original Card Game and Prototype Digital Game created by - George Bruseker and Anaïs Guillem.\ngeorge@takin.solutions - aguillem@ucmerced.edu",
-      "fullcredits-scene-digitalgameproducer-text": "Digital game executive producer - Olivier Marlet (olivier.marlet@univ-tours.fr)",
-      "fullcredits-scene-digitalcreationteam-text": "Digital game design - 'Fanch' Fx. Talgorn - G. Bruseker - O. Marlet - A. Guillem",
-      "fullcredits-scene-digitalversionproduction-text": "Digital version created by 'Fanch' - INDYTION (<link=\"mailto:fx.talgorn@indytion.com\">fx.talgorn@indytion.com</link>)",
-      "fullcredits-scene-graphicdesign-text": "Graphic design by - Alexandre Moulineau (alex_41100@hotmail.fr)"
-    },
-
-    "GoingFurtherScene":{
-      "goingfurther-scene-title-text": "GOING FURTHER WITH CIDOC-CRM",
-      "goingfurther-scene-backbutton-text": "Main Menu",
-      "goingfurther-scene-CidocGameWebSite-label": "To find more information about and editions of the CIDOC CRM Game visit:",
-      "goingfurther-scene-youtube-label": "To learn more about semantics and the CIDOC CRM itself you can\ncheck out these YouTube videos:",
-      "goingfurther-scene-officialcidocwebsite-label": "And, of course, you can visit the official CIDOC CRM website:",
-      "goingfurther-scene-creators-label": "To contact the creators of the CIDOC CRM Game to discuss\nits use and extension, contact:",
-      "goingfurther-scene-contacts-label":"George Bruseker (Takin.solutions - george@takin.solutions)\nOlivier Marlet (Université de Tours - olivier.marlet@univ-tours.fr)\nFrançois-Xavier Talgorn (INDYTION - fx.talgorn@indytion.com)"
-    
     }
     }
 }

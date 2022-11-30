@@ -3,7 +3,7 @@
 {
       "scenario-title": "MarmoutierFR",
       "ontologyTags": [
-        "CIDOC-CRM"
+        "CidocCRM"
       ],
       "domainTags": [
         "Histoire",
@@ -14,15 +14,15 @@
         "ARC"
       ],
     "authorTags": [
-      "MASA",
-      "Huma-Num"
+      "Masa",
+      "Huma-num"
       ],
       "languageTag": "Français",
-      "scenario-description": "Apprenez les bases du CIDOC-CRM avec les fouilles de Marmoutier",
+      "scenario-description": "Apprenez les bases du Cidoc-CRM avec les fouilles de Marmoutier",
       "chapters": [
         {
           "chapter-title": "Introduction aux ontologies",
-          "chapter-description": "Apprenez les principes de l'ontologie",
+          "chapter-description": "Apprenez les principaux concepts",
           "chapter-filename":"Chapter1.json"
         }
       ]
@@ -33,8 +33,8 @@
 {
       "scenario-title": "MarmoutierEN",
       "ontologyTags": [
-        "CIDOC-CRM",
-        "RiC-O"
+        "CidocCRM",
+        "ric-O"
       ],
       "domainTags": [
         "Cultural heritage"
@@ -43,35 +43,35 @@
         "CUL"
       ],
     "authorTags": [
-      "MASA",
-      "Huma-Num"
+      "Masa",
+      "Huma-num"
       ],
       "languageTag": "English",
-      "scenario-description": "Learn basics of CIDOC-CRM with Marmoutier excavations",
+      "scenario-description": "This is an english description of the Marmoutier game, in english of course",
       "chapters": [
         {
           "chapter-title": "Ontology basics",
-          "chapter-description": "Learn the principles of ontology",
+          "chapter-description": "This is the description this very chapter...",
           "chapter-filename": "Chapter1.json"
         },
         {
           "chapter-title": "CIDOC CRM Basics",
-          "chapter-description": "Discover the structure of CIDOC-CRM",
+          "chapter-description": "This is the description this very chapter...",
           "chapter-filename": "Chapter2.json"
         },
         {
           "chapter-title": "Instance modelling (1)",
-          "chapter-description": "Linking data to CIDOC-CRM concepts",
+          "chapter-description": "This is the description this very chapter...",
           "chapter-filename": "Chapter3.json"
         },
         {
           "chapter-title": "Instance modelling (2)",
-          "chapter-description": "Find the best property to link two classes",
+          "chapter-description": "This is the description this very chapter...",
           "chapter-filename": "Chapter4.json"
         },
         {
           "chapter-title": "Instance modelling (3)",
-          "chapter-description": "Practice building complex links",
+          "chapter-description": "This is the description this very chapter...",
           "chapter-filename": "Chapter5.json"
         }
       ]
@@ -83,7 +83,7 @@
     {
       "scenario-title": "YOUR GAME HERE!",
       "ontologyTags": [
-        "CIDOC-CRM"
+        "CidocCRM"
       ],
       "domainTags": [
         "AnyDomain"
@@ -105,17 +105,17 @@
           "chapter-filename": ""
         },
         {
-          "chapter-title": "Level 1",
+          "chapter-title": "Level1",
           "chapter-description": "Explain here basic concepts",
           "chapter-filename": ""
         },
         {
-          "chapter-title": "Level 2",
+          "chapter-title": "Level2",
           "chapter-description": "Bring your audience to a higher level.",
           "chapter-filename": ""
         },
         {
-          "chapter-title": "Level 3",
+          "chapter-title": "Level3",
           "chapter-description": "Get people involved in your work!",
           "chapter-filename": ""
         }

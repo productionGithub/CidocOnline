@@ -21,20 +21,19 @@ namespace StarterCore.Core.Scenes.LeaderBoard
 
         public async void Initialize()
         {
-            Trace.Log("LeaderBoardManager Init!");
-            _leaderBoardController.Init();
-
-            _leaderBoardController.OnBackButtonClicked += OnBack;
-
             _leaderBoardController.ShowWaitingIcon();
             _rankings = await _networkService.GetRankings();
             _leaderBoardController.HideWaitingIcon();
+
+            _leaderBoardController.Init();
+            _leaderBoardController.OnBackButtonClicked += OnBack;
 
             Show();
         }
 
         public void Show()
         {
+            //Debug.Log("FOR NEW mmm : " + _rankings.Languages[0].LanguageName);
             _leaderBoardController.Show(_rankings);
         }
 

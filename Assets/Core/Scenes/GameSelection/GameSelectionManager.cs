@@ -27,12 +27,12 @@ namespace StarterCore.Core.Scenes.GameSelection
             Debug.Log("[GameSelectionManager] Initialized!");
 
             //Get scenarii catalog from scenariiCatalog.json file
+            _gameSelectioncontroller.ShowWaitingIcon();
             _catalog = await _networkService.GetCatalog();
-
-            //string chapterFileName = GetChapterFilename(_gameStateManager.GameStateModel.CurrentChapter);
-
             //Get user progressions
             _userProgressions = await _networkService.GetUserStats(_gameStateManager.GameStateModel.UserId);
+            _gameSelectioncontroller.HideWaitingIcon();
+
 
             if (_catalog != null)
             {
