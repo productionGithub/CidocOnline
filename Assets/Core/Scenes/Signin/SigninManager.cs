@@ -24,7 +24,10 @@ namespace StarterCore.Core.Scenes.Signin
             _controller.OnCreateAccountClickedEvent += SignUp;
 
             //Localization
-            _controller.OnLocalizationEvent += SetLocalization;
+            //_controller.OnLocalizationEvent += SetLocalization;
+
+            _controller.OnEnglishLocalizationFlagClickedEvent += SetEnglishLocalization;
+            _controller.OnFrenchLocalizationFlagClickedEvent += SetFrenchLocalization;
 
             //TEST
             _controller.OnTestEvent += LoadTestScene;
@@ -35,10 +38,21 @@ namespace StarterCore.Core.Scenes.Signin
             _navService.Push("GameSelectionScene");
         }
 
-        private void SetLocalization(string locale)
+        //private void SetLocalization(string locale)
+        //{
+        //    _gameState.SetLocale(locale);
+        //}
+
+        private void SetFrenchLocalization()
         {
-            _gameState.SetLocale(locale);
+            _gameState.SetLocale("fr");
         }
+
+        private void SetEnglishLocalization()
+        {
+            _gameState.SetLocale("en");
+        }
+
 
         //SUBMIT FORM
         private async void SubmitClicked(SigninEventData signinData)

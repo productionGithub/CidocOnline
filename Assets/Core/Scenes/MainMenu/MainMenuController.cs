@@ -27,9 +27,18 @@ namespace StarterCore.Core.Scenes.MainMenu
         [SerializeField] Button _continue;
         [SerializeField] Button _statistics;
         [SerializeField] Button _leaderBoard;
+        [SerializeField] Button _resetGame;
         [SerializeField] Button _quit;
         [SerializeField] Button _goingFurther;
         [SerializeField] Button _fullCredits;
+
+        [SerializeField] GameObject _blurrPanel;
+        [SerializeField] GameObject _confirmPanel;
+        [SerializeField] GameObject _resetConfirmedPanel;
+
+        [SerializeField] Button _resetYes;
+        [SerializeField] Button _resetNo;
+        [SerializeField] Button _confirmResetButton;
 
         [SerializeField] GameObject _waitingIcon;
 
@@ -38,6 +47,7 @@ namespace StarterCore.Core.Scenes.MainMenu
         public event Action OnStatisticsEvent;
         public event Action OnLeaderBoardEvent;
         public event Action OnQuitEvent;
+        public event Action OnResetGameEvent;
         public event Action OnGoingFurtherEvent;
         public event Action OnFullCreditsEvent;
 
@@ -48,14 +58,20 @@ namespace StarterCore.Core.Scenes.MainMenu
             _statistics.onClick.AddListener(OnStatistics);
             _leaderBoard.onClick.AddListener(OnLeaderBoard);
             _quit.onClick.AddListener(OnQuit);
+            _resetGame.onClick.AddListener(OnResetGame);
             _goingFurther.onClick.AddListener(OnGoingFurther);
             _fullCredits.onClick.AddListener(OnFullCredits);
+
+            _resetYes.onClick.AddListener(OnResetGameConfirmed);
+            _resetNo.onClick.AddListener(OnResetGameNotConfirmed);
+            _confirmResetButton.onClick.AddListener(OnResetConfirmButton);
         }
 
         public void ShowWaitingIcon()
         {
             _waitingIcon.SetActive(true);
         }
+
         public void HideWaitingIcon()
         {
             _waitingIcon.SetActive(false);
@@ -77,7 +93,7 @@ namespace StarterCore.Core.Scenes.MainMenu
             {
                 //Stats button valid
                 _statistics.interactable = true;
-
+                _resetGame.interactable = true;
                 //Update game state model
                 _gameStateManager.GameStateModel.CurrentScenario = history.ScenarioName;
                 _gameStateManager.GameStateModel.CurrentChapter = history.ChapterName;
@@ -88,6 +104,7 @@ namespace StarterCore.Core.Scenes.MainMenu
             {
                 //Stats button not valid
                 _statistics.interactable = false;
+                _resetGame.interactable = false;
                 _gameStateManager.GameStateModel.CurrentScenario = string.Empty;
                 _gameStateManager.GameStateModel.CurrentChapter = string.Empty;
                 _gameStateManager.GameStateModel.CurrentChallengeIndex = 0;
@@ -143,6 +160,33 @@ namespace StarterCore.Core.Scenes.MainMenu
             OnQuitEvent?.Invoke();
         }
 
+        private void OnResetGame()
+        {
+            _blurrPanel.SetActive(true);
+            _confirmPanel.SetActive(true);
+        }
+
+        private void OnResetGameConfirmed()//Yes on warinig panel
+        {
+            OnResetGameEvent?.Invoke();
+            _confirmPanel.SetActive(false);
+            _resetConfirmedPanel.SetActive(true);
+        }
+
+        private void OnResetGameNotConfirmed()//NO on warning panel
+        {
+            _blurrPanel.SetActive(false);
+            _confirmPanel.SetActive(false);
+
+        }
+
+        private void OnResetConfirmButton()//OK on Reset successfully done panel
+        {
+            _resetConfirmedPanel.SetActive(false);
+            _blurrPanel.SetActive(false);
+            Show();
+        }
+
         private void OnGoingFurther()
         {
             OnGoingFurtherEvent?.Invoke();
@@ -162,6 +206,9 @@ namespace StarterCore.Core.Scenes.MainMenu
             _quit.onClick.RemoveListener(OnQuit);
             _goingFurther.onClick.RemoveListener(OnGoingFurther);
             _fullCredits.onClick.RemoveListener(OnFullCredits);
+            _resetYes.onClick.RemoveListener(OnResetGameConfirmed);
+            _resetNo.onClick.RemoveListener(OnResetGameNotConfirmed);
+            _confirmResetButton.onClick.RemoveListener(OnResetConfirmButton);
         }
     }
 }

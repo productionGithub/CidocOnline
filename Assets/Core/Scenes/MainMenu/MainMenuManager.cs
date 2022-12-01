@@ -46,6 +46,7 @@ namespace StarterCore.Core.Scenes.MainMenu
             _mainMenuController.OnStatisticsEvent += LoadStatsScreen;
             _mainMenuController.OnLeaderBoardEvent += LoadLeaderBoardScreen;
             _mainMenuController.OnQuitEvent += OnQuit;
+            _mainMenuController.OnResetGameEvent += OnResetGame;
             _mainMenuController.OnFullCreditsEvent += OnFullCredits;
             _mainMenuController.OnGoingFurtherEvent += OnGoingFurther;
 
@@ -80,6 +81,17 @@ namespace StarterCore.Core.Scenes.MainMenu
             _navigation.Push("LeaderBoardScene");
         }
 
+        private void OnQuit()
+        {
+            _navigation.Push("SigninScene");
+        }
+
+        private void OnResetGame()
+        {
+            Debug.Log("Reset game Call to NetService ResetGame...");
+            _ = _networkService.ResetGame(_gameStateManager.GameStateModel.UserId);
+        }
+
         private void OnFullCredits()
         {
             _navigation.Push("FullCreditsScene");
@@ -90,9 +102,7 @@ namespace StarterCore.Core.Scenes.MainMenu
             _navigation.Push("GoingFurtherScene");
         }
 
-        private void OnQuit()
-        {
-            _navigation.Push("SigninScene");
-        }
+
+
     }
 }

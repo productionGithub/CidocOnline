@@ -20,7 +20,10 @@ namespace StarterCore.Core.Scenes.Signin
         public event Action OnTestEvent;//Todo : delete after use
 
         //Localization
-        public event Action<string> OnLocalizationFlagClickedEvent;
+        //public event Action<string> OnLocalizationFlagClickedEvent;
+
+        public event Action OnEnglishLocalizationFlagClickedEvent;
+        public event Action OnFrenchLocalizationFlagClickedEvent;
 
         //Form
         [SerializeField] internal TMP_InputField _email;
@@ -58,15 +61,30 @@ namespace StarterCore.Core.Scenes.Signin
             _createAccountButton.onClick.AddListener(OnCreateAccountClicked);// => OnCreateAccountClickedEvent?.Invoke());
 
             //Localization flags
-            _englishFlagButton.onClick.AddListener(() => OnLocalizationFlagClicked("en")); //OnLocalizationFlagClickedEvent?.Invoke("en"));
-            _frenchFlagButton.onClick.AddListener(() => OnLocalizationFlagClicked("fr"));//=> OnLocalizationFlagClickedEvent?.Invoke("fr"));
+            //_englishFlagButton.onClick.AddListener(() => OnLocalizationFlagClicked("en")); //OnLocalizationFlagClickedEvent?.Invoke("en"));
+            //_frenchFlagButton.onClick.AddListener(() => OnLocalizationFlagClicked("fr"));//=> OnLocalizationFlagClickedEvent?.Invoke("fr"));
+
+            _englishFlagButton.onClick.AddListener(OnEnglishLocalizationFlagClicked); //OnLocalizationFlagClickedEvent?.Invoke("en"));
+            _frenchFlagButton.onClick.AddListener(OnFrenchLocalizationFlagClicked); //OnLocalizationFlagClickedEvent?.Invoke("en"));
         }
 
         //Localization events
-        private void OnLocalizationFlagClicked(string locale)
+        //private void OnLocalizationFlagClicked(string locale)
+        //{
+        //    OnLocalizationEvent?.Invoke(locale);
+        //}
+
+        private void OnEnglishLocalizationFlagClicked()
         {
-            OnLocalizationEvent?.Invoke(locale);
+            OnEnglishLocalizationFlagClickedEvent?.Invoke();
         }
+
+        private void OnFrenchLocalizationFlagClicked()
+        {
+            OnFrenchLocalizationFlagClickedEvent?.Invoke();
+        }
+
+
 
         //Form events
         private void OnCreateAccountClicked()
@@ -162,7 +180,11 @@ namespace StarterCore.Core.Scenes.Signin
             OnCreateAccountClickedEvent -= OnCreateAccountClicked;
 
             //Localization events
-            OnLocalizationFlagClickedEvent -= OnLocalizationFlagClicked;
+            //OnLocalizationFlagClickedEvent -= OnLocalizationFlagClicked;
+
+            _englishFlagButton.onClick.RemoveListener(OnEnglishLocalizationFlagClicked); //OnLocalizationFlagClickedEvent?.Invoke("en"));
+            _frenchFlagButton.onClick.RemoveListener(OnFrenchLocalizationFlagClicked); //OnLocalizationFlagClickedEvent?.Invoke("en"));
+
         }
     }
 }

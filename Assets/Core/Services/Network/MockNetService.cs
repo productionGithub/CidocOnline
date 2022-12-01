@@ -36,7 +36,6 @@ namespace StarterCore.Core.Services.Network
         private string URL_GET_RANKINGS = Path.Combine(HomeUrl, "php/getrankings.php");
 
         private string URL_GET_LOCALES_MANIFEST = "StreamingAssets/Languages/manifest.json";
-        //private string URL_GET_COUNTRIES = "StreamingAssets/Games/Marmoutier/marmoutier.json";
         private string URL_SCENARII_CATALOG = "StreamingAssets/scenarii/scenariiCatalog.json";
 
         private string URL_GET_CIDOC_XML = "StreamingAssets/Ontologies/CidocCRM/01-Referential-CidocRDF_Bootleg_GB_3_7_21.xml";
@@ -51,10 +50,8 @@ namespace StarterCore.Core.Services.Network
         private string URL_UPDATE_SESSION = Path.Combine(HomeUrl, "php/updatesession.php");
         private string URL_RESET_PROGRESSION = Path.Combine(HomeUrl, "php/resetprogression.php");
 
-        //Test load games
-        //private string URL_GET_GAMES = "http://ontomatchgame.huma-num.fr/StreamingAssets/Games/Marmoutier/marmoutier.json";
-
-
+        //DELETE
+        private string URL_RESET_GAME = Path.Combine(HomeUrl, "php/resetgame.php?userId={0}");
 
         //TODO Refactor GetCountriesJson with URL_GET_COUNTRIES
 
@@ -256,7 +253,6 @@ namespace StarterCore.Core.Services.Network
             Trace.Log("[MocNetService] GET USER PROGRESSIONS WITH ID" + userId);
             string url = string.Format(URL_GET_USER_STATS, userId);
             List<ChapterProgressionModelDown> userProgressions = await _net.GetAsync<List<ChapterProgressionModelDown>>(url);
-
             return userProgressions;
         }
 
@@ -264,9 +260,18 @@ namespace StarterCore.Core.Services.Network
         {
             string url = string.Format(URL_GET_RANKINGS);
             RankingModelDown rankings = await _net.GetAsync<RankingModelDown>(url);
-
             return rankings;
         }
+
+        public async UniTask<bool> ResetGame(int userId)
+        {
+            Debug.Log("Reset game for userId : " + userId);
+            string url = string.Format(URL_RESET_GAME, userId);
+            Debug.Log("Reset game url : " + url);
+            ExistValidationDown result = await _net.GetAsync<ExistValidationDown> (url);
+            return result.DoesExist;
+        }
+
 
         //////////////////////////                UPDATES                //////////////////////////////////
 
