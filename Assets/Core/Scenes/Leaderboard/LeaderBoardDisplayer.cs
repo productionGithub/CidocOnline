@@ -1,7 +1,4 @@
-#define TRACE_ON
-using System.Collections;
-using System.Collections.Generic;
-using StarterCore.Core.Services.Network.Models;
+#define TRACE_OFF
 using UnityEngine;
 
 namespace StarterCore.Core.Scenes.LeaderBoard
@@ -10,11 +7,6 @@ namespace StarterCore.Core.Scenes.LeaderBoard
     {
         public Transform _leaderBoardContainer;
 
-        public void Init()
-        {
-        }
-
-        // Start is called before the first frame update
         public void ShowLanguageTitle(LanguageTitleEntry title)
         {
             title.gameObject.SetActive(true);

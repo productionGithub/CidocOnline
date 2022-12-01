@@ -1,13 +1,7 @@
-#define TRACE_ON
+#define TRACE_OFF
 using System;
 using UnityEngine;
 
-/// <summary>
-/// Acts as a proxy:
-/// Calls Entity or Property 'UpdateColorFilter()' depending on type of deck
-/// attached to the caller tick.
-/// </summary>
-///
 namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables.Ticks
 {
     public class PropertyTicksController : MonoBehaviour

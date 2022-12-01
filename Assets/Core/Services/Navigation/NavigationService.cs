@@ -17,7 +17,6 @@ namespace StarterCore.Core.Services.Navigation
         public bool FromPop { get; private set; }
         public int StackSize => _mainScenes.Count;
 
-        //public event Action OnSceneChangeEvent;
         public event Action<string> OnSceneChangeEvent;
 
 
@@ -131,11 +130,6 @@ namespace StarterCore.Core.Services.Navigation
                 _mainBundle = bundle;
                 (string sceneName, object bundle) mainSceneEntry = _mainScenes.Pop();
                 _mainScenes.Push((mainSceneEntry.sceneName, bundle));
-
-                // TODO: test if
-                //(string sceneName, object bundle) couple = _mainScenes.Peek();
-                //couple.bundle = bundle;
-                // would work
             }
         }
 

@@ -11,7 +11,6 @@ namespace StarterCore.Core.Scenes.GoingFurther
 
         public void Initialize()
         {
-            Debug.Log("GF MANAGER INIT!");
             _controller.OnCidocGameEvent += CidocGameClicked;
             _controller.OnYoutubeEvent += OnYoutubeClicked;
             _controller.OnCidocCrmEvent += CidocCrmClicked;

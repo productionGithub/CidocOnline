@@ -1,8 +1,5 @@
 ﻿#define TRACE_ON
-using System;
-using System.Linq;
 using StarterCore.Core.Scenes.Board.Card.Cards;
-using StarterCore.Core.Scenes.Board.Deck;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,14 +10,11 @@ namespace StarterCore.Core.Scenes.Board.Displayer
     public class EntityCardDisplayer : MonoBehaviour
     {
         /// <summary>
-        /// Display content of card
-        /// Contains a list of CARD_INTERACTABLE (Hierarchy, Ticks, Slider)
+        /// Display non interactable content of card (Hierarchy and Tick are managed separately
         /// Show conditional comment when full text button is clicked
         /// </summary>
 
         [Inject] EntityDeckService _entityDeckService;
-
-        public event Action OnFullTextClick;
 
         public EntityCard CurrentCard;
         //Card fields
@@ -59,7 +53,6 @@ namespace StarterCore.Core.Scenes.Board.Displayer
         //init events
         public void Init()
         {
-            Trace.Log("[EntityCardDisplayer] Init!");
             _fullTextButton.onClick.AddListener(FullTextClicked);
         }
 

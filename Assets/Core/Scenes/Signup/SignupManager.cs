@@ -6,14 +6,9 @@ using StarterCore.Core.Services.GameState;
 
 using UnityEngine;
 using Zenject;
-using System.Collections.Generic;
 
 namespace StarterCore.Core.Scenes.Signup
 {
-    // IInitializable : Zenject Start() equivalent
-    // ITickable : Zenject Update() equivalent
-    // IDisposable : C# OnDestroy() equivalent
-
     public class SignupManager : IInitializable
     {   
         [Inject] private MockNetService _net;
@@ -23,7 +18,7 @@ namespace StarterCore.Core.Scenes.Signup
 
         public void Initialize()
         {
-            Trace.Log("SignupManager initialized!");
+            _controller.Init();
             _controller.Show();
             _controller.OnFormSubmittedEvent += SubmitClicked;
             _controller.OnBackEvent += BackEventClicked;
@@ -31,9 +26,6 @@ namespace StarterCore.Core.Scenes.Signup
 
         private async void SubmitClicked(SignupEventData signupData)
         {
-            //Test load of game data
-            //TestLoadGame().Forget();
-
             //Check Username
             string username = signupData.Username;
             var resultUsername = await CheckUsername(username);
@@ -104,6 +96,12 @@ namespace StarterCore.Core.Scenes.Signup
         private void BackEventClicked()
         {
             _navService.Pop();
+        }
+
+        public void OnDestroy()
+        {
+            _controller.OnFormSubmittedEvent -= SubmitClicked;
+            _controller.OnBackEvent -= BackEventClicked;
         }
     }
 }

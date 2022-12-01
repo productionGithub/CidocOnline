@@ -5,6 +5,7 @@ using StarterCore.Core.Services.Navigation;
 using StarterCore.Core.Services.GameState;
 using StarterCore.Core.Services.Localization;
 
+
 namespace StarterCore.Core
 {
     [CreateAssetMenu(fileName = "GlobalInstaller", menuName = "StarterCore/GlobalInstaller", order = 0)]
@@ -15,7 +16,6 @@ namespace StarterCore.Core
 
         public override void InstallBindings()
         {
-            //TODO : Put it in scene installer
             Container.BindInterfacesAndSelfTo<EntityDeckService>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<PropertyDeckService>().AsSingle().NonLazy();
 
@@ -27,7 +27,6 @@ namespace StarterCore.Core
 
             Container.Bind<NavigationSetup>().FromInstance(_navSetup);
             Container.BindInterfacesAndSelfTo<NavigationService>().AsSingle().NonLazy();
-            //Container.Bind<DiContainer>().FromInstance(Container).AsSingle();
         }
     }
 }

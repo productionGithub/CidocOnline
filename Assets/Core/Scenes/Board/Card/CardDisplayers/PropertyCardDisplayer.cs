@@ -10,8 +10,7 @@ namespace StarterCore.Core.Scenes.Board.Displayer
     public class PropertyCardDisplayer : MonoBehaviour
     {
         /// <summary>
-        /// Display content of card
-        /// Contains a list of CARD_INTERACTABLE (Hierarchy, Ticks, Slider)
+        /// Manage the display of property cards
         /// </summary>
 
         [Inject] PropertyDeckService _entityDeckService;

@@ -1,4 +1,4 @@
-#define TRACE_ON
+#define TRACE_OFF
 using UnityEngine;
 using Zenject;
 using StarterCore.Core.Services.Navigation;
@@ -12,8 +12,6 @@ namespace StarterCore.Core.Scenes.Board
 {
     public class ChallengeController : MonoBehaviour
     {
-        [Inject] GameStateManager _gameStateManager;
-        [Inject] NavigationService _navigationService;
         [Inject] ChallengeEvaluator _evaluator;
 
         public event Action OnCorrectAnswer_ChallengeCtrl;
@@ -31,7 +29,6 @@ namespace StarterCore.Core.Scenes.Board
 
         public void Show()
         {
-            Trace.Log("[ChallengeController] Init OK");
             _displayer.Show(_challengeList);//Statement and other challenge related data
         }
 

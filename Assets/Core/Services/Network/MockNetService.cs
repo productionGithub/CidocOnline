@@ -4,18 +4,13 @@ using StarterCore.Core.Services.Network.Models;
 using System.Collections.Generic;
 using Zenject;
 using UnityEngine;
-using System.Threading.Tasks;
-using System;
 using System.IO;
-using Newtonsoft.Json;
-using StarterCore.Core.Services.GameState;
 
 namespace StarterCore.Core.Services.Network
 {
     public class MockNetService
     {
         [Inject] private NetworkService _net;
-        [Inject] private GameStateManager _gameStateManager;
 
         const string HomeUrl = "https://ontomatchgame.huma-num.fr/";
         const string LanguagesFolder = "StreamingAssets/Languages/";
@@ -53,8 +48,6 @@ namespace StarterCore.Core.Services.Network
         //DELETE
         private string URL_RESET_GAME = Path.Combine(HomeUrl, "php/resetgame.php?userId={0}");
 
-        //TODO Refactor GetCountriesJson with URL_GET_COUNTRIES
-
         //FETCH SCENARII CATALOG
         public async UniTask<ScenariiModelDown> GetCatalog()
         {
@@ -67,11 +60,9 @@ namespace StarterCore.Core.Services.Network
         public async UniTask<LocalesManifestModel> GetLocalesManifestFile()
         {
             string url = Path.Combine(HomeUrl, URL_GET_LOCALES_MANIFEST);
-            //string url = URL_GET_LOCALES_MANIFEST;//offline
 
             LocalesManifestModel result = await _net.GetAsync<LocalesManifestModel>(url);
 
-            //Debug.Log("[MockNet Service] Resutl returned from GetLocalesManifestFile()" + result.Locales.ToString());
             return result;
         }
 
@@ -82,7 +73,6 @@ namespace StarterCore.Core.Services.Network
             string countriesPath = LanguagesFolder + locale + "/countries/countries.json";
 
             string url = Path.Combine(HomeUrl, countriesPath);
-            //Debug.Log("LOCALE URL = " + url);
             CountriesModelDown result = await _net.GetAsync<CountriesModelDown>(url);
             return result;
         }
@@ -90,23 +80,18 @@ namespace StarterCore.Core.Services.Network
         //FETCH PLAYER HISTORY
         public async UniTask<HistoryModelDown> GetHistory(int id)
         {
-            //UserIdModelDown userId = await GetUserId(id);
             string url = string.Format(URL_GET_HISTORY, id);
 
             HistoryModelDown history = await _net.GetAsync<HistoryModelDown>(url);
-            Debug.Log("Returned from getHistory script ===> " + history.ScenarioName);
             return history;
         }
 
         //FETCH LANGUAGE DICTIONARY FOR LOCALIZATION
         public async UniTask<TranslationsModel> GetLocaleDictionary(string locale)
         {
-            //Debug.Log("[MockNetService] Get local dictionary from remote language file]");
-
             string localePath = LanguagesFolder + locale;
             string fileNamePath = localePath + "/lang-" + locale + ".json";
             string languagePath = Path.Combine(HomeUrl, fileNamePath);
-            //Debug.Log("LanguageFile path ===> " + languagePath);
 
             var dictionary = await _net.GetAsync<TranslationsModel>(languagePath);
             return dictionary;
@@ -131,9 +116,7 @@ namespace StarterCore.Core.Services.Network
         //GET USERNAME
         public async UniTask<UserNameModelDown> GetUsername(string email)
         {
-            Debug.Log("[MockNetService] GetUsername param email" + email);
             string url = string.Format(URL_GET_USERNAME, email);
-            Debug.Log("[MockNetService] GetUsername param url" + url);
             UserNameModelDown result = await _net.GetAsync<UserNameModelDown>(url);
             return result;
         }
@@ -142,16 +125,13 @@ namespace StarterCore.Core.Services.Network
         public async UniTask<UserIdModelDown> GetUserId(string email)
         {
             string url = string.Format(URL_GET_USERID, email);
-            Debug.Log("[MockNetService] GetUsername param url" + url);
             UserIdModelDown result = await _net.GetAsync<UserIdModelDown>(url);
-            Debug.Log("[MockNetService] Got username" + result.UserId);
             return result;
         }
 
         //CHECK EMAIL
         public async UniTask<ExistValidationDown> CheckEmail(string email)
         {
-            Debug.Log("[MockNetService] CheckEmail");
             string url = string.Format(URL_CHECK_EMAIL, email);
             ExistValidationDown result = await _net.GetAsync<ExistValidationDown>(url);
             return result;
@@ -168,17 +148,14 @@ namespace StarterCore.Core.Services.Network
         public async UniTask<List<ChallengeData>> LoadChapter(string scenarioName, string chapterName, string fileName)
         {
             string chapterUrl = HomeUrl + "StreamingAssets/scenarii" + "/" + scenarioName + "/Chapters/" + fileName;
-            Debug.Log("[MockNetService] URL CHAPTER IS : " + chapterUrl);
 
             List<ChallengeData> result = await _net.GetAsync<List<ChallengeData>>(chapterUrl);
-            Debug.Log("[MockNetService] GOT CHALLENGES : " + result.Count);
             return result;
         }
 
         //LOGIN
         public async UniTask<SigninModelDown> Login(SigninModelUp formData)
         {
-            Debug.Log("[MockNetService] Login");
             SigninModelDown result = await _net.PostAsync<SigninModelDown>(URL_LOGIN, formData);
             return result;
         }
@@ -194,7 +171,6 @@ namespace StarterCore.Core.Services.Network
         public async UniTask<ResetPasswordModelDown> SendResetEmail(ResetPasswordModelUp data)
         {
             ResetPasswordModelDown emailSent = await _net.PostAsync<ResetPasswordModelDown>(URL_SEND_RESET_EMAIL, data);
-            Debug.Log("Returned from reset.php script ===> " + emailSent.EmailSent);
             return emailSent;
         }
 
@@ -226,7 +202,6 @@ namespace StarterCore.Core.Services.Network
         public async UniTask<List<InstanceCardModelDown>> GetInstanceFile(string scenarioName)
         {
             string url = HomeUrl + "StreamingAssets/scenarii/" + scenarioName + "/Instances/Instances.json";
-            Debug.Log("URL -> " + url);
             List<InstanceCardModelDown> result = await _net.GetAsync<List<InstanceCardModelDown>>(url);
             return result;
         }
@@ -241,16 +216,13 @@ namespace StarterCore.Core.Services.Network
         //Get completion of a scenario
         public async UniTask<ProgressionModelDown> GetChapterProgression(int UserId, string scenarioName, string chapterFileName)
         {
-            Trace.Log("[MocNetService] GET PROGRESSION");
             string url = string.Format(URL_GET_PROGRESSION, UserId, scenarioName, chapterFileName);
-            Trace.Log("[MocNetService] URL GET PROGRESSION = " + url);
             ProgressionModelDown progression = await _net.GetAsync<ProgressionModelDown>(url);
             return progression;
         }
 
         public async UniTask<List<ChapterProgressionModelDown>> GetUserStats(int userId)
         {
-            Trace.Log("[MocNetService] GET USER PROGRESSIONS WITH ID" + userId);
             string url = string.Format(URL_GET_USER_STATS, userId);
             List<ChapterProgressionModelDown> userProgressions = await _net.GetAsync<List<ChapterProgressionModelDown>>(url);
             return userProgressions;
@@ -265,13 +237,10 @@ namespace StarterCore.Core.Services.Network
 
         public async UniTask<bool> ResetGame(int userId)
         {
-            Debug.Log("Reset game for userId : " + userId);
             string url = string.Format(URL_RESET_GAME, userId);
-            Debug.Log("Reset game url : " + url);
             ExistValidationDown result = await _net.GetAsync<ExistValidationDown> (url);
             return result.DoesExist;
         }
-
 
         //////////////////////////                UPDATES                //////////////////////////////////
 
@@ -285,26 +254,18 @@ namespace StarterCore.Core.Services.Network
             };
 
             ExistValidationDown doesExist = await _net.PostAsync<ExistValidationDown>(URL_CREATE_SESSION, session);
-            Trace.Log("[Mock Net] *** doesExist validation down => " + doesExist.DoesExist);
             return doesExist.DoesExist;
         }
-
 
         public async UniTask<bool> UpdateSession(UpdateSessionModelUp sessionData)
         {
             ExistValidationDown doesExist = await _net.PostAsync<ExistValidationDown>(URL_UPDATE_SESSION, sessionData);
-            Trace.Log("[Mock Net] *** doesExist validation down => " + doesExist.DoesExist);
             return doesExist.DoesExist;
         }
 
         public async UniTask<bool> ResetProgression(ResetProgressionModelUp sessionData)
         {
-            //Debug.Log("Session data -> " + sessionData.UserId);
-            //Debug.Log("Session data -> " + sessionData.CurrentScenario);
-            //Debug.Log("Session data -> " + sessionData.CurrentChapter);
-
             ExistValidationDown doesExist = await _net.PostAsync<ExistValidationDown>(URL_RESET_PROGRESSION, sessionData);
-            Trace.Log("[Mock Net] *** doesExist validation down => " + doesExist.DoesExist);
             return doesExist.DoesExist;
         }
     }

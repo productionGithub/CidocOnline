@@ -34,32 +34,28 @@ namespace StarterCore.Core.Scenes.Signup
         [SerializeField] private Button _registerButton;
         [SerializeField] internal TMP_Dropdown _dropDown;
 
-        //public event Action OnSubmitSignupFormClickedEvent;
-
-        //[SerializeField] private SignupForm _template;
-        //[SerializeField] private Transform _parent;
-
         [SerializeField] private Button _backButton;
 
-        //[Inject] private DiContainer _container;
         [Inject] private MockNetService _MockNetService;
         [Inject] private GameStateManager _gameState;
 
 
         private CountriesModelDown _countriesDic;
 
-        //public int OnBackButtonClicked { get; private set; }
-
         public event Action<SignupEventData> OnFormSubmittedEvent;
         public event Action OnBackEvent;
-        public event Action OnFetchCountriesList;
+        //public event Action OnFetchCountriesList;
+
+        public void Init()
+        {
+            _registerButton.onClick.AddListener(OnSubmitSignupFormClicked);
+            _backButton.onClick.AddListener(OnBackClicked);
+        }
 
         public void Show()
         {
             HideAllAlerts();
             UpdateCountryDropDown();
-            _registerButton.onClick.AddListener(OnSubmitSignupFormClicked);// () => OnSubmitSignupFormClickedEvent?.Invoke());
-            _backButton.onClick.AddListener(OnBackClicked);
         }
 
         //Populate list of countries
@@ -72,7 +68,6 @@ namespace StarterCore.Core.Scenes.Signup
             for (int i = 0; i < _countriesDic.Countries.Count; i++)
             {
                 countryNames.Add(_countriesDic.Countries[i].Name);
-                //Trace.Log("[Signup Manager] Adding country ->" + _countriesDic.Countries[i].Name);
             }
 
             //Populate item DropDown list with strings
@@ -91,10 +86,7 @@ namespace StarterCore.Core.Scenes.Signup
         {
             if (ValidateForm())
             {
-                //Trace.Log("Form validated");
-
                 string code ="";
-                //Trace.Log("_countriesDic.Countries.Count" + _countriesDic.Countries.Count);
 
                 for (int i=0; i < _countriesDic.Countries.Count; i++)
                 {
@@ -149,7 +141,7 @@ namespace StarterCore.Core.Scenes.Signup
 
             Regex regex = new(@"[^\u0020-\u03FF]+");
             Match match = regex.Match(_username.text);
-            //!string.IsNullOrEmpty(_username.text) && 
+
             if (!match.Success)
                 return true;
             else
@@ -172,29 +164,11 @@ namespace StarterCore.Core.Scenes.Signup
             }
         }
 
-
-        
-
-    
-
-        /// <summary>
-        /// Call this after modifying options while the dropdown is displayed
-        /// to make sure the visual is up to date.
-        /// </summary>
-        //public static void RefreshOptions(this TMPro.TMP_Dropdown dropdown)
-        //{
-        //    dropdown.enabled = false;
-        //    dropdown.enabled = true;
-        //    dropdown.Show();
-        //}
-
-
         public async UniTask<CountriesModelDown> GetCountries(string locale)
         {
             var result = await _MockNetService.GetCountriesJson(locale);
             return result;
         }
-
 
         //Messages hide/Show
         internal void UsernameAlreadyExists()
@@ -259,6 +233,8 @@ namespace StarterCore.Core.Scenes.Signup
 
         private void OnDestroy()
         {
+            _registerButton.onClick.RemoveListener(OnSubmitSignupFormClicked);
+            _backButton.onClick.RemoveListener(OnBackClicked);
         }
     }
 }

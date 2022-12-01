@@ -35,7 +35,6 @@ namespace StarterCore.Core.Services.GameState
                 DefaultLocale = "en",
                 Username = string.Empty 
             };
-            Trace.Log("[GameStateManager] Initialized.");
             SetLocale(Locale);
         }
 
@@ -43,7 +42,6 @@ namespace StarterCore.Core.Services.GameState
         {
             gameStateModel.Locale = locale;
             OnLocaleChanged?.Invoke();
-            Trace.Log("[GameStateManager] GameState set to language : " + Locale);
         }
     }
 }

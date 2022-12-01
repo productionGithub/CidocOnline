@@ -77,7 +77,6 @@ namespace StarterCore.Core.Scenes.MainMenu
 
         private void LoadLeaderBoardScreen()
         {
-            Trace.Log("PUSH LEADERBOARD SCENE!!!!");
             _navigation.Push("LeaderBoardScene");
         }
 

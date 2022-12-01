@@ -1,4 +1,4 @@
-﻿#define TRACE_ON
+﻿#define TRACE_OFF
 using System;
 using Cysharp.Threading.Tasks;
 using StarterCore.Core.Utils;
@@ -18,8 +18,6 @@ namespace StarterCore.Core.Services.Network
                     await webRequest.SendWebRequest();
 
                     string content = webRequest.downloadHandler.text;
-                    //Trace.Log("Content returned =====> " + content);
-
                     return content;// ParseResult<T>(webRequest);
                 }
             }
@@ -39,8 +37,6 @@ namespace StarterCore.Core.Services.Network
                     await webRequest.SendWebRequest();
 
                     string content = webRequest.downloadHandler.text;
-                    Trace.Log("Content returned =====> " + content);
-
                     return ParseResult<T>(webRequest);
                 }
             }
@@ -61,8 +57,6 @@ namespace StarterCore.Core.Services.Network
                     {
                         webRequest.method = "POST";
                         webRequest.SetRequestHeader("Content-Type", "application/json");
-                        //webRequest.SetRequestHeader("Accept", "application/json");
-
                         await webRequest.SendWebRequest();
                         return ParseResult<T>(webRequest);
                     }
@@ -83,13 +77,10 @@ namespace StarterCore.Core.Services.Network
         {
             if (webRequest.result == UnityWebRequest.Result.Success)
             {
-                //Trace.Log("Request is done ? -> " + webRequest.isDone); // True.
                 string content = webRequest.downloadHandler.text;
-                Trace.Log("WebRequest content: " + webRequest.downloadHandler.text);
 
                 if (JSON.TryDeserialize<T>(content, out T parsed))
                 {
-                    Trace.Log("Parsed Json response -> " + parsed.ToString());
                     return parsed;
                 }
                 else
@@ -119,27 +110,6 @@ namespace StarterCore.Core.Services.Network
             }
             return sb.ToString();
         }
-
-
-        // Kept as example for pure C# version, doesn't work on WebGL !
-        //private HttpClient _http;
-        //public async UniTask<T> GetPureAsync<T>(string url)
-        //{
-        //    if (!string.IsNullOrWhiteSpace(url))
-        //    {
-        //        HttpResponseMessage response = await _http.GetAsync(url);
-
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            string content = await response.Content.ReadAsStringAsync();
-        //            if (JSON.TryDeserialize<T>(content, out T parsed))
-        //            {
-        //                return parsed;
-        //            }
-        //        }
-        //    }
-        //    return default;
-        //}
     }
 
 }

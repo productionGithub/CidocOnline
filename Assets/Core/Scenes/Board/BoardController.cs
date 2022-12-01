@@ -1,25 +1,20 @@
-#define TRACE_ON
+#define TRACE_OFF
 using UnityEngine;
 using StarterCore.Core.Services.Navigation;
 using StarterCore.Core.Services.Network.Models;
 using StarterCore.Core.Scenes.Board.Deck;
 using StarterCore.Core.Services.GameState;
-
 using System.Collections.Generic;
 using Zenject;
 using System.Linq;
 using StarterCore.Core.Scenes.Board.Card.Cards;
 using StarterCore.Core.Scenes.Board.Displayer;
-using StarterCore.Core.Services.Network;
 using StarterCore.Core.Utils;
 using Cysharp.Threading.Tasks;
 
 using static ImageUtilities;
 using UnityEngine.UI;
-using TMPro;
-using StarterCore.Core.Scenes.Board.Challenge;
 using System;
-using UnityEngine.Events;
 
 namespace StarterCore.Core.Scenes.Board
 {
@@ -29,10 +24,9 @@ namespace StarterCore.Core.Scenes.Board
         /// Pass board UI events to manager (Pause, Blurr panel, Validate button, Arrow animation, ...),
         /// challenge events and decks events.
         /// Has ref to a challenge controller (UI content and Evaluation).
-        /// Has ref to Entity, Property and Instance cards.
+        /// Has ref to Entity & Property services
         /// </summary>
 
-        //[Inject] MockNetService _networkService;
         [Inject] NavigationService _navigationService;
         [Inject] GameStateManager _gameStateManager;
         [Inject] EntityDeckService _entityDeckService;
@@ -72,11 +66,6 @@ namespace StarterCore.Core.Scenes.Board
 
         public void Init(List<ChallengeData> challengeList, List<InstanceCardModelDown> instances)
         {
-            Trace.Log("[BoardController] Init!");
-            //_instances = instances;
-            //_challengeList = challengeList;
-            //_challengeIndexUpdated = false;
-
             _refreshBoard.onClick.AddListener(Show);
             _validateBoard.onClick.AddListener(OnValidateBoard);
 
@@ -87,17 +76,10 @@ namespace StarterCore.Core.Scenes.Board
             _challengeController.Init(challengeList);
 
             _quitChapter.onClick.AddListener(QuitChapter);
-
-            //_validateBoard.interactable = true;
-            //_refreshBoard.interactable = true;
-            //_retryChallenge.interactable = false;
-            //_nextChallenge.interactable = false;
-            //_quitChapter.gameObject.SetActive(false);
         }
 
         public void InitBoard(List<ChallengeData> challengeList, List<InstanceCardModelDown> instances)
         {
-            Trace.Log("[BoardController] INITBOARD!");
             _instances = instances;
             _challengeList = challengeList;
             _challengeIndexUpdated = false;
@@ -106,8 +88,6 @@ namespace StarterCore.Core.Scenes.Board
 
         public void Show()
         {
-            Trace.Log(string.Format("Chapter name from game model is ", _gameStateManager.GameStateModel.CurrentChapter));
-
             _validateBoard.interactable = true;
             _refreshBoard.interactable = true;
             _retryChallenge.interactable = false;
@@ -142,6 +122,10 @@ namespace StarterCore.Core.Scenes.Board
 
                 _leftEntityDeckController.Show();
             }
+            else
+            {
+                _leftEntityDeckController.gameObject.SetActive(false);
+            }
 
             
             //Initialization of Left Property Deck
@@ -151,11 +135,13 @@ namespace StarterCore.Core.Scenes.Board
                 _leftPropertyDeckController.gameObject.SetActive(true);
                 List<PropertyCard> initialLeftPropertyDeckContent = _propertyDeckService.GetInitialDeck(initStringPL);
 
-                Trace.Log("[BoardController] _leftPropertyDeckController Init call");
-
                 _leftPropertyDeckController.Init(initialLeftPropertyDeckContent);
                 _leftPropertyDeckController.InitDeck(initialLeftPropertyDeckContent);
                 _leftPropertyDeckController.Show();
+            }
+            else
+            {
+                _leftPropertyDeckController.gameObject.SetActive(false);
             }
 
             //Initialization of Middle Entity Deck
@@ -169,6 +155,10 @@ namespace StarterCore.Core.Scenes.Board
                 _middleEntityDeckController.InitDeck(initialMiddleEntityDeckContent);
                 _middleEntityDeckController.Show();
             }
+            else
+            {
+                _middleEntityDeckController.gameObject.SetActive(false);
+            }
 
             //Initialization of Right Property Deck
             string initStringPR = _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].PRightInit;
@@ -177,11 +167,13 @@ namespace StarterCore.Core.Scenes.Board
                 _rightPropertyDeckController.gameObject.SetActive(true);
                 List<PropertyCard> initialRightPropertyDeckContent = _propertyDeckService.GetInitialDeck(initStringPR);
 
-                Trace.Log("[BoardController] _rightPropertyDeckController Init call");
-
                 _rightPropertyDeckController.Init(initialRightPropertyDeckContent);
                 _rightPropertyDeckController.InitDeck(initialRightPropertyDeckContent);
                 _rightPropertyDeckController.Show();
+            }
+            else
+            {
+                _rightPropertyDeckController.gameObject.SetActive(false);
             }
 
             //Initialization of Right Entity Deck
@@ -190,12 +182,17 @@ namespace StarterCore.Core.Scenes.Board
             {
                 _rightEntityDeckController.gameObject.SetActive(true);
                 List<EntityCard> initialRightEntityDeckContent = _entityDeckService.GetInitialDeck(initStringER);
+
                 _rightEntityDeckController.Init(initialRightEntityDeckContent);
                 _rightEntityDeckController.InitDeck(initialRightEntityDeckContent);
                 _rightEntityDeckController.Show();
             }
-            
-            
+            else
+            {
+                _rightEntityDeckController.gameObject.SetActive(false);
+            }
+
+
             //INSTANCES
             //Left instance
             string initStringLI = _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].ILeftInit;
@@ -251,8 +248,6 @@ namespace StarterCore.Core.Scenes.Board
 
         private void OnValidateBoard()
         {
-            Trace.Log("[BoardController] Validate clicked!");
-
             //Update ChallengeData answers fields.
             //Player's answers are stored in a copy of the challenges[currentChallengeId] 'ChallengeData' object
             //'__Anwsers' properties of this copy are update with players answers
@@ -352,18 +347,6 @@ namespace StarterCore.Core.Scenes.Board
             _navigationService.Push("MainMenuScene");
         }
 
-        private void OnGamePaused()
-        {
-        }
-
-        private void OnAnimateArrow()
-        {
-        }
-
-        private void OntickClicked()
-        {
-        }
-
         public async UniTask<Texture2D> DownloadJPGImage(string url, string name)
         {
             Texture2D img = await ImageDownloader.DownloadImage(url, name, FileFormat.JPG);
@@ -372,12 +355,6 @@ namespace StarterCore.Core.Scenes.Board
 
         private void BackToMainMenu()
         {
-            
-            //ChallengeInfoBundle bundle = new ChallengeInfoBundle(
-            //    _gameStateManager.GameStateModel.CurrentScenario,
-            //    _gameStateManager.GameStateModel.CurrentChapter,
-            //    _gameStateManager.GameStateModel.CurrentChallengeIndex);
-            //_navigationService.GetMainBundle(out bundle);
             _navigationService.Clear("MainMenuScene");
         }
 
@@ -389,6 +366,6 @@ namespace StarterCore.Core.Scenes.Board
             _nextChallenge.onClick.RemoveListener(Show);
             _mainMenu.onClick.RemoveListener(BackToMainMenu);
             _quitChapter.onClick.RemoveListener(QuitChapter);
-}
         }
     }
+}

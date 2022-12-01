@@ -1,6 +1,5 @@
 #define TRACE_ON
 using StarterCore.Core.Scenes.Board.Card.Cards;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -18,12 +17,12 @@ namespace StarterCore.Core.Scenes.Board.Deck
         /// Manage current deck state
         /// Controls card controller and deck related interactables (Slider + Color ticks)
         /// Manage hierarchy display and events
-        /// Note : UI deck logic is managed at this controller level, not the manager
+        /// Note : UI deck logic is managed at this controller level, not the manager (Shortuct)
         /// </summary>
 
         [Inject] EntityDeckService _entityDeckService;
 
-        public event Action<float> OnTickFilterDeckController;
+        //public event Action<float> OnTickFilterDeckController;
 
         public List<EntityCard> _initialDeckContent;
         public List<EntityCard> _currentDeckContent;
@@ -50,6 +49,8 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
         private bool _isListFiltered = false;
         private bool _initDone = false;
+
+        private List<EntityCard> _initialDeck;
 
         //Initialization is done once.
         public void Init(List<EntityCard> initialDeck)
@@ -83,6 +84,8 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
         public void InitDeck(List<EntityCard> initialDeck)
         {
+            _initialDeck = initialDeck;
+
             _initialDeckContent = new List<EntityCard>(initialDeck);
             _currentDeckContent = new List<EntityCard>(initialDeck);
             _addedCard = new List<EntityCard>();
@@ -96,7 +99,20 @@ namespace StarterCore.Core.Scenes.Board.Deck
             _entityCardController.Show(_initialDeckContent[0]);
             _hierarchyDisplayer.Init();//Hierarachy is destroyer and recreated for each card
             _hierarchyDisplayer.Show(_initialDeckContent[0]);
-            _sliderController.Show(_currentDeckContent.Count - 1);
+            if (_initialDeck.Count > 1)
+            {
+                _sliderController.SetSliderActive(true);
+                _ticksController.gameObject.SetActive(true);
+                _deckCounterDisplayer.gameObject.SetActive(true);
+                _sliderController.Show(_currentDeckContent.Count - 1);
+            }
+            else
+            {
+                _ticksController.gameObject.SetActive(false);
+                _sliderController.SetSliderActive(false);
+                _deckCounterDisplayer.gameObject.SetActive(false);
+            }
+
             _deckCounterDisplayer.Show(_currentDeckContent.Count, _initialDeckContent.Count);
 
             _noMatchCard.SetActive(false);
@@ -114,6 +130,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
             if (_currentDeckContent.Exists(x => x.id.Equals(card.id)))
             {
                 int index = _currentDeckContent.FindIndex(c => c.id == card.id);
+                Trace.Log("[EntityDeckController] We are here -> DisplayCardFromHierarchy, index = " + index);
                 _sliderController.SetSliderValue(index);//Will fire a 'Refresh card' event
             }
             else //If newCard does not exist add it to the initial deck
@@ -168,6 +185,8 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
         private void GhostCardIfExists(int index)
         {
+            Trace.Log("[EntityDeckController] We are here -> GhostCardIfExists, index = " + index);
+
             if (_addedCard.Exists(x => x.id.Equals(_currentDeckContent[index].id)))
             {
                 _entityCardController.GhostBackground();
@@ -180,7 +199,6 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
         public void UpdateColorFilters(GameObject sender, EntityTick.TickColor color)
         {
-            Trace.Log("WE UPDATE COLOR WITH : " + sender.name + " " + color.ToString());
             _noMatchCard.SetActive(false);
             _sliderController.SetSliderActive(true);
 
@@ -232,14 +250,22 @@ namespace StarterCore.Core.Scenes.Board.Deck
         {
             foreach (EntityCard curCard in _initialDeckContent)
             {
-                if (curCard.colors[0].Equals((Color32)_entityDeckService.ColorsDictionary[e.ToString()]))
+                //TODO Debug this (no impact on gameplay) : On MarmoutierEN, Challenge 8.
+                //TODO If Deck initialized with 'E7' and Tick Grey or Pink is ticked
+                //TODO Out or range error on the following line (param nae : index).
+                if (curCard.colors[0].Equals(_entityDeckService.ColorsDictionary[e.ToString()]))
                 {
+                    Debug.Log("BEFORE...");
+                    Trace.Log("[EntityDeckController] We are here -> FilterAddColor, CurCard color " + curCard.colors[0]);
+
                     _currentDeckContent.Add(curCard);
                 }
                 else
                 {
                     if (curCard.colors.Count > 1)
                     {
+                        Trace.Log("[EntityDeckController] We are here -> FilterAddColor, + 1 CurCard color " + curCard.colors[1]);
+
                         if (curCard.colors[1].Equals((Color32)_entityDeckService.ColorsDictionary[e.ToString()]))
                         {
                             _currentDeckContent.Add(curCard);
@@ -253,7 +279,6 @@ namespace StarterCore.Core.Scenes.Board.Deck
         {
             foreach (EntityCard curCard in _initialDeckContent)
             {
-                //EntityCard curCard = decksCtrl.entityCards[id];
                 if (curCard.colors[0].Equals((Color32)_entityDeckService.ColorsDictionary[e.ToString()]))
                 {
                     _currentDeckContent.Remove(curCard);

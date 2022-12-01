@@ -1,12 +1,9 @@
-#define TRACE_ON
+#define TRACE_OFF
 using Zenject;
 using StarterCore.Core.Services.Network.Models;
 using StarterCore.Core.Services.Network;
 using StarterCore.Core.Services.Navigation;
 using UnityEngine;
-using UnityEngine.UI;
-using System.Collections.Generic;
-using UnityEditor;
 
 namespace StarterCore.Core.Scenes.LeaderBoard
 {
@@ -16,8 +13,7 @@ namespace StarterCore.Core.Scenes.LeaderBoard
         [Inject] NavigationService _navigationService;
         [Inject] LeaderBoardController _leaderBoardController;
 
-        [SerializeField] 
-        RankingModelDown _rankings;
+        [SerializeField] RankingModelDown _rankings;
 
         public async void Initialize()
         {
@@ -33,7 +29,6 @@ namespace StarterCore.Core.Scenes.LeaderBoard
 
         public void Show()
         {
-            //Debug.Log("FOR NEW mmm : " + _rankings.Languages[0].LanguageName);
             _leaderBoardController.Show(_rankings);
         }
 

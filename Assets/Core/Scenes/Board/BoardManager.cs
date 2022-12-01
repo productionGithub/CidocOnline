@@ -1,28 +1,17 @@
-#define TRACE_ON
+#define TRACE_OFF
 using System.Collections.Generic;
 using StarterCore.Core.Services.GameState;
 using StarterCore.Core.Services.Network;
 using UnityEngine;
 using Zenject;
-using StarterCore.Core.Scenes.Board.Challenge;
-using StarterCore.Core.Services.Navigation;
 using Cysharp.Threading.Tasks;
 using StarterCore.Core.Services.Network.Models;
-using System;
 
 namespace StarterCore.Core.Scenes.Board
 {
     public class BoardManager : IInitializable
     {
-        /// <summary>
-        /// BoardManager :
-        /// Fetch chapter data
-        /// Init BoardController with chapter data
-        /// Manage game loop global events such as validate, update gamestate, etc.
-        /// </summary>
-
         [Inject] GameStateManager _gameStateManager;
-        [Inject] NavigationService _navigationService;
         [Inject] BoardController _boardController;
         [Inject] MockNetService _networkService;
 
@@ -50,7 +39,6 @@ namespace StarterCore.Core.Scenes.Board
         private async void UpdateSession()
         {
             //Update score and current challenge in current progression table
-            //Fetch progression table
             //Update lastChallengeId + Score fields + Creation_time
 
             UpdateSessionModelUp session = new UpdateSessionModelUp
@@ -73,21 +61,11 @@ namespace StarterCore.Core.Scenes.Board
 
         private async UniTask<List<ChallengeData>> FetchChallenges(string chapterName)
         {
-
-            Trace.Log("[BoardManager] GetChapters for chapterName " + "->"+chapterName+"<-");
-
             List<ChallengeData> challenges = await _networkService.LoadChapter(
                 _gameStateManager.GameStateModel.CurrentScenario,
                 _gameStateManager.GameStateModel.CurrentChapter,
                 chapterName);
-            Trace.Log("[BoardManager] Got challenges count : " + challenges.Count);
             return challenges;
-        }
-
-        private async UniTask<ScenariiModelDown> GetScenariiCatalog()
-        {
-            ScenariiModelDown catalog = await _networkService.GetCatalog();
-            return catalog;
         }
 
         private string GetChapterFilename()
@@ -114,8 +92,9 @@ namespace StarterCore.Core.Scenes.Board
             return name;
         }
 
-        private void OnDestroy()
+        public void OnDestroy()
         {
+            _boardController.OnUpdateSession -= UpdateSession;
         }
 
     }

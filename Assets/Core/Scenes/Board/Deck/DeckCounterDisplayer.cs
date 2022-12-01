@@ -2,7 +2,6 @@
 using TMPro;
 using UnityEngine;
 
-
 namespace StarterCore.Core.Scenes.Board.Deck
 {
     public class DeckCounterDisplayer : MonoBehaviour

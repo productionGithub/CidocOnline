@@ -7,7 +7,6 @@ namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables.Ticks
 {
     public class EntityTick : MonoBehaviour
     {
-        //Public members
         public enum TickColor
         {
             White,

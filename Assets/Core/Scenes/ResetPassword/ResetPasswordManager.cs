@@ -1,9 +1,6 @@
 using Cysharp.Threading.Tasks;
 using StarterCore.Core.Services.Network;
 using StarterCore.Core.Services.Network.Models;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 using StarterCore.Core.Services.Navigation;
@@ -11,21 +8,14 @@ using StarterCore.Core.Services.GameState;
 
 namespace StarterCore.Core.Scenes.ResetPassword
 {
-    // IInitializable : Zenject Start() equivalent
-    // ITickable : Zenject Update() equivalent
-    // IDisposable : C# OnDestroy() equivalent
-
     public class ResetPasswordManager : IInitializable
     {
         [Inject] private MockNetService _net;
         [Inject] private ResetPasswordController _controller;
         [Inject] private NavigationService _navService;
-        [Inject] private GameStateManager _gameState;
 
         public void Initialize()
         {
-            Debug.Log("ResetPassword Manager initialized!");
-            Debug.Log("Manager Default locale is : " + _gameState.DefaultLocale);
             _controller.Show();
             _controller.OnResetPasswordEvent += CreateNewPassword;
             _controller.OnBackEvent += BackEventClicked;
@@ -45,15 +35,11 @@ namespace StarterCore.Core.Scenes.ResetPassword
                 if (status.IsActive == true)
                 {
                     //Get activation code
-                    Debug.Log("[Reset Manager] Call async task GetActivationCode with email : " + email);
                     ActivationCodeModelUp emailUp = new ActivationCodeModelUp
                     {
                         Email = email
                     };
                     ActivationCodeModelDown code = await _net.PostActivationCode(emailUp);
-
-                    Debug.Log("[Reset Manager] Got activation code: " + code.Code);
-
 
                     //Setup data to pass to php script.
                     ResetPasswordModelUp data = new ResetPasswordModelUp

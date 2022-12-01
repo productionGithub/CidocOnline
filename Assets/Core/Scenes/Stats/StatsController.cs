@@ -3,7 +3,6 @@ using UnityEngine;
 using StarterCore.Core.Services.Network.Models;
 using System.Collections.Generic;
 using Zenject;
-using StarterCore.Core.Services.GameState;
 using System.Linq;
 using System.Collections;
 using TMPro;
@@ -14,7 +13,6 @@ namespace StarterCore.Core.Scenes.Stats
     public class StatsController : MonoBehaviour
     {
         [Inject] DiContainer _diContainer;
-        [Inject] GameStateManager _gameStateManager;
 
         [SerializeField] private ScenarioPanelEntry _scenarioPanelTemplate;
         [SerializeField] private Transform _panelContainer;
@@ -29,8 +27,6 @@ namespace StarterCore.Core.Scenes.Stats
         public event Action OnMainMenuEvent;
 
         private List<ScenarioPanelEntry> _entriesList;
-
-        //List<ChapterProgressionModelDown> _userProgressions;
 
         public void Init()
         {
@@ -77,7 +73,6 @@ namespace StarterCore.Core.Scenes.Stats
 
             foreach (string s in scenarii)
             {
-                //Créer instance de scenario Panel
                 ScenarioPanelEntry instance = Instantiate(_scenarioPanelTemplate, _panelContainer);
                 _diContainer.InjectGameObject(instance.gameObject);
 
@@ -103,7 +98,6 @@ namespace StarterCore.Core.Scenes.Stats
             }
 
             _grandTotalProgressionPercentageTxt.text = (grandTotalProgression * 100) / (grandTotalNbChapters * 100)+"%";
-            Debug.Log("");
             _grandTotalScoreTxt.text = grandTotalScore.ToString();
             _grandTotalMaximumPossibleScoreTxt.text = grandTotalMaximumPossibleScore.ToString();
         }

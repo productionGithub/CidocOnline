@@ -1,19 +1,14 @@
-#define TRACE_ON
+#define TRACE_OFF
 using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using StarterCore.Core.Services.Network.Models;
 using System.Collections.Generic;
-using System.Linq;
-using StarterCore.Core.Services.Network;
-using Zenject;
-using StarterCore.Core.Services.GameState;
-using Cysharp.Threading.Tasks;
 
 namespace StarterCore.Core.Scenes.GameSelection
 {
-    public class PanelEntryController : MonoBehaviour//, IPointerClickHandler
+    public class PanelEntryController : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _scenarioTitleTxt;
         [SerializeField] private TextMeshProUGUI _descriptionTxt;
@@ -27,7 +22,6 @@ namespace StarterCore.Core.Scenes.GameSelection
 
         public event Action<string, string> OnPanelEntryControllerPlayEvent;
         public event Action<string, string> OnResetProgressionEvent_PanelEntryCtrl;
-        //public event Action OnDetailClickEvent;
 
         //Scenario title needed when Play chapter is clicked. See OnPlayClicked().
         private string _scenarioTitle;
@@ -36,8 +30,6 @@ namespace StarterCore.Core.Scenes.GameSelection
 
         public void Init(Scenario scenario)
         {
-            Trace.Log("[PanelEntryController] Init!");
-
             _detailPanel.Init();
             _detailButton.onClick.AddListener(OnDetailButtonClicked);
             _detailPanel.OnResetProgressionEvent_EntryCtrl += ResetProgression;
@@ -46,9 +38,8 @@ namespace StarterCore.Core.Scenes.GameSelection
             _scenario = scenario;
         }
 
-        public void Show(List<Scenario> scenarii, List<ChapterProgressionModelDown> userProgressions)
+        public void Show(List<ChapterProgressionModelDown> userProgressions)
         {
-            Trace.Log("[PanelEntryController] SHOW !");
             _scenarioTitle = _scenario.ScenarioTitle;
             _scenarioTitleTxt.text = $"{_scenario.ScenarioTitle}" + " - [" + $"{_scenario.LanguageTag}" + "]";
             _descriptionTxt.text = $"{_scenario.ScenarioDescription}";
@@ -70,7 +61,6 @@ namespace StarterCore.Core.Scenes.GameSelection
 
         private void ResetProgression(string chapterName)
         {
-            Debug.Log("RESET ! -> PanelEntryController");
             OnResetProgressionEvent_PanelEntryCtrl?.Invoke(chapterName, _scenarioTitle);
         }
 

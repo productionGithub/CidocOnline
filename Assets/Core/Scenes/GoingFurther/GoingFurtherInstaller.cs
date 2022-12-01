@@ -11,7 +11,6 @@ namespace StarterCore.Core.Scenes.GoingFurther
 
         public override void InstallBindings()
         {
-            Debug.Log("GF Installer Binding");
             Container.BindInterfacesAndSelfTo<GoingFurtherManager>().AsSingle();
             Container.Bind<GoingFurtherController>().FromInstance(_controller);
         }

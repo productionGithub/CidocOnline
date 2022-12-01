@@ -1,4 +1,4 @@
-#define TRACE_ON
+#define TRACE_OFF
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -8,6 +8,17 @@ using StarterCore.Core.Scenes.Board.Card.Cards;
 
 namespace StarterCore.Core.Scenes.Board.Challenge
 {
+    /// <summary>
+    ///Parse all properties and process each of __Answer fields
+    ///Evaluate each property's answer, result is stored in global 'isCorrect' flag
+    ///If at least one expected answer is false, we stop and return 'isCorrect' with the value 'false'
+    ///If none of property has been evaluated to false, the 'isCorrect' flag is returned with initial value: 'true'
+    /// </summary>
+    /// <param name="expectedResults"></param>
+    /// <param name="playerResults"></param>
+    /// <returns></returns>
+    ///
+
     public class ChallengeEvaluator : MonoBehaviour
     {
         [Inject] EntityDeckService _entityDeckService;
@@ -19,10 +30,8 @@ namespace StarterCore.Core.Scenes.Board.Challenge
 
         private bool _isInitDone = false;
 
-        // Start is called before the first frame update
         public void Init()
         {
-            Debug.Log("EVALUATOR INIT !");
             if (_isInitDone == false)
             {
                 props = new List<string>() {
@@ -38,23 +47,9 @@ namespace StarterCore.Core.Scenes.Board.Challenge
                 _isInitDone = true;
             }
         }
-
-
-        /// <summary>
-        ///Parse all properties and process each of __Answer fields
-        ///Evaluate each property's answer, result is stored in global 'isCorrect' flag
-        ///If at least one expected answer is false, we stop and return 'isCorrect' with the value 'false'
-        ///If none of property has been evaluated to false, the 'isCorrect' flag is returned with initial value: 'true'
-        /// </summary>
-        /// <param name="expectedResults"></param>
-        /// <param name="playerResults"></param>
-        /// <returns></returns>
+        
         public bool CheckAnswers(ChallengeData expectedResults, ChallengeData playerResults)
         {
-
-            //Trace.Log("[Challenge Evaluator] expectedResults : " + expectedResults.ELeftAnswer);
-            //Trace.Log("[Challenge Evaluator] playerResults : " + playerResults.ELeftAnswer);
-
             // We assume the proposition is correct.
             bool isCorrect = true; //Global challenge result returned: true = OK, false = wrong answer
 
@@ -71,7 +66,6 @@ namespace StarterCore.Core.Scenes.Board.Challenge
                             //Remove potential white spaces in expected answers string
                             string beautifulPossibleAnswers = parser.TrimWhiteSpace(leftEntityPossibleAnswers);
                             //if expected result is '*' then no need to evaluate, any answer matches.
-                            //if (!parser.isWildCard(beautifulPossibleAnswers))
                             if (beautifulPossibleAnswers != "*")
                             {
                                 //If this answser is false, the whole answer is wrong, isCorrect will shift to false

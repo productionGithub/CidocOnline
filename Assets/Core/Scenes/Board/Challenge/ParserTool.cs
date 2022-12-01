@@ -7,9 +7,8 @@ namespace StarterCore.Core.Scenes.Board.Challenge
     {
         /// <summary>
         /// Utility class for string parsing
-        /// Used by ChallengeEvaluator Class.
+        /// Used by ChallengeEvaluator Class
         /// </summary>
-
 
         //Return true if string is a '*'
         public bool isWildCard(string toParse)
@@ -17,15 +16,11 @@ namespace StarterCore.Core.Scenes.Board.Challenge
             return TrimWhiteSpace(toParse) == "*";
         }
 
-
-
         //return same string but without space characters
         public string TrimWhiteSpace(string s)
         {
             return (string)String.Concat(s.Where(c => !Char.IsWhiteSpace(c)));
         }
-
-
 
         //Process "-E23, E21" or "-P34, P89, ..." and return an array of Ids.
         public string[] GetArrayOfValues(string s)
@@ -42,8 +37,6 @@ namespace StarterCore.Core.Scenes.Board.Challenge
             }
             return listOfIds;
         }
-
-
 
         //Remove '-' or ':' or '[]' from strings
         public string TrimSelector(string s)

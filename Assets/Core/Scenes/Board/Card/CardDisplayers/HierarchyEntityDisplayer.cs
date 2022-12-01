@@ -1,38 +1,27 @@
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using System.Text;
 using System;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using StarterCore.Core.Scenes.Board.Card.Cards;
-using Cysharp.Threading.Tasks;
-
 
 /// <summary>
-/// Instantiate super and sub classes of a card (Buttons)
+/// Manager for EntityCard Hierarchy scrollable view
 /// </summary>
+///
+
 namespace StarterCore.Core.Scenes.Board.Displayer
 {
     public class HierarchyEntityDisplayer : MonoBehaviour
     {
         public event Action<string> HierarchyEntityEntryClickEvent;
 
-        [SerializeField]
-        HierarchyEntityEntry _entryEntityTemplate;
-        [SerializeField]
-        HierarchyCurrentEntry _currentEntryEntityTemplate;
+        [SerializeField] HierarchyEntityEntry _entryEntityTemplate;
+        [SerializeField] HierarchyCurrentEntry _currentEntryEntityTemplate;
 
         public Transform _hierarchyEntityContainer;//Parent object of scrollView
 
         private List<HierarchyEntityEntry> _entriesEntity;//Keeps track of hierarchy instanciated prefabs
         private List<HierarchyCurrentEntry> _currentEntityEntry;//Keeps track of hierarchy instanciated prefabs
 
-        //public void Show(EntityCard card)// List<EntityCard> parents, string current, List<EntityCard> children)
-        //{
-        //    CleanEntityHierarchy();
-        //    DisplayEntityHierarchy(card);
-        //}
 
         public void Init()
         {
@@ -66,8 +55,6 @@ namespace StarterCore.Core.Scenes.Board.Displayer
 
         public void Show(EntityCard card)
         {
-            //Init(); //Clear list of instanciated prefabs, unsub to click events
-
             string arrowUp = "\u02C4";
             string arrowDown = "\u02C5";
 
@@ -110,36 +97,6 @@ namespace StarterCore.Core.Scenes.Board.Displayer
         {
             string id = label.Substring(0, label.IndexOf("_")).Trim();//Fetch the sub string before first '_'
             HierarchyEntityEntryClickEvent?.Invoke(id);
-        }
-
-        public void CleanEntityHierarchy()
-        {
-            //if (_entriesEntity == null)
-            //{
-            //    _entriesEntity = new List<HierarchyEntityEntry>();
-            //}
-            //else
-            //{
-            //    foreach (HierarchyEntityEntry e in _entriesEntity)
-            //    {
-            //        e.OnHierarchyEntityClickEvent -= HierarchyEntityEntryClicked;
-            //        Destroy(e.gameObject);
-            //    }
-            //    _entriesEntity.Clear();
-            //}
-
-            //if (_currentEntityEntry == null)
-            //{
-            //    _currentEntityEntry = new List<HierarchyCurrentEntry>();
-            //}
-            //else
-            //{
-            //    foreach (HierarchyCurrentEntry e in _currentEntityEntry)
-            //    {
-            //        Destroy(e.gameObject);
-            //    }
-            //    _currentEntityEntry.Clear();
-            //}
         }
     }
 }

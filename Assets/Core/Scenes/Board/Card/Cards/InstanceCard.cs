@@ -1,10 +1,6 @@
 using System;
 using Newtonsoft.Json;
 
-/// <summary>
-/// Entity card Object used to instanciate 'entityCards' Dictionary<int, EntityCard>
-/// See DecksController.
-/// </summary>
 namespace StarterCore.Core.Scenes.Board.Card.Cards
 {
     [Serializable]

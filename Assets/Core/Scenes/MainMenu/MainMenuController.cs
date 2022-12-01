@@ -1,4 +1,3 @@
-#define TRACE_ON
 using UnityEngine;
 using UnityEngine.UI;
 using StarterCore.Core.Services.Network.Models;
@@ -117,7 +116,6 @@ namespace StarterCore.Core.Scenes.MainMenu
         private void TranslateUI()
         {
             _welcomeTitle.text = _localizationManager.GetTranslation("mainmenu-scene-welcometitle-text") + " " + _gameState.Username + " !";
-            //Trace.Log("WE BUNDLE ID: " + bundle.HistoryId);
 
             if(_gameState.GameStateModel.CurrentScenario == string.Empty)
             {

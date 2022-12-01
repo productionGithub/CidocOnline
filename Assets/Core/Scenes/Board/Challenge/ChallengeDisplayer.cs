@@ -1,7 +1,6 @@
-#define TRACE_ON
+#define TRACE_OFF
 using System.Collections.Generic;
 using StarterCore.Core.Services.GameState;
-using StarterCore.Core.Services.Navigation;
 using StarterCore.Core.Services.Network.Models;
 using TMPro;
 using UnityEngine;
@@ -13,11 +12,6 @@ namespace StarterCore.Core.Scenes.Board.Challenge
 {
     public class ChallengeDisplayer : MonoBehaviour
     {
-        /// <summary>
-        /// Display content of card
-        /// Contains a list of CARD_INTERACTABLE (Hierarchy, Ticks, Slider)
-        /// </summary>
-
         [Inject] GameStateManager _gameStateManager;
         [Inject] LocalizationManager _localizationManager;
 
@@ -59,15 +53,11 @@ namespace StarterCore.Core.Scenes.Board.Challenge
         [SerializeField]
         private TextMeshProUGUI _maxScore;
 
-        //
         public int currentChallengeId;
-        //public Chapter currentChapter;
 
         public void Show(List<ChallengeData> challengeList)
         {
             ChallengeData currentChallenge = challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex];
-            Trace.Log("[Challenge Displayer] Current challenge is : " + _gameStateManager.GameStateModel.CurrentChallengeIndex);
-            Trace.Log("[Challenge Displayer] ELeftAnswer expected answers is : " + currentChallenge.ELeftAnswer);
 
             //Hide message and explanation texts
             _explanationTitle.SetActive(false);
@@ -91,7 +81,6 @@ namespace StarterCore.Core.Scenes.Board.Challenge
             _winBanner.SetActive(false);
             _explanationTitle.SetActive(false);
             _explanationDescription.SetActive(false);
-
 
             _winIcon.SetActive(false);
             _looseIcon.SetActive(false);

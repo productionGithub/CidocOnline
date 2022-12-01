@@ -1,8 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// Each logo button uses this script to open the related web site.
-/// </summary>
 public class OpenWebSite : MonoBehaviour
 {
     string logoName;

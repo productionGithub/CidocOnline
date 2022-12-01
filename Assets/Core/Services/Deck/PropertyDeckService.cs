@@ -12,8 +12,8 @@ using Cysharp.Threading.Tasks;
 public class PropertyDeckService : IInitializable
 {
     /// <summary>
-    /// Initialize List of Entity and property cards, based on Cidoc rdf file parsing (.xml).
-    /// Provides public reference to decks' instances.
+    /// Initialize List of property cards, based on Cidoc rdf file parsing (.xml).
+    /// Provides public reference to deck instances.
     /// </summary>
 
     [Inject] MockNetService _netservice;
@@ -88,11 +88,9 @@ public class PropertyDeckService : IInitializable
     {
         //Fetch Cidoc Xml file
         _cidocXmlString = await _netservice.GetXmlCidocFile();
-        //Debug.Log("[PropertyDeckService] Got XML CIDOC string : " + _cidocXmlString);
 
         //Fetch EntityIconsColorMapping Xml file
         _propertyXmlString = await _netservice.GetXmlPropertyColorsFile();
-        //Debug.Log("[PropertyDeckService] Got XML PROPERTY Colors : " + _propertyXmlString);
 
         InitXpathNavigators();
         InitPropertyDeck();//Is it necessary to await? To be tested.
@@ -221,9 +219,6 @@ public class PropertyDeckService : IInitializable
 
                     PropertyCards[index].domainColors = new List<string>(dColors);
                     PropertyCards[index].rangeColors = new List<string>(rColors);
-
-                    //Debug.Log("PROPERTY TEST ID ***" + PropertyCards[index].id);
-                    //Debug.Log("PROPERTY TEST Color 0 ***" + PropertyCards[index].domainColors[0]);
 
                     break;
                 }

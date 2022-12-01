@@ -4,7 +4,6 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using StarterCore.Core.Services.Network.Models;
 using System.Linq;
-using Cysharp.Threading.Tasks;
 
 namespace StarterCore.Core.Scenes.GameSelection
 {
@@ -65,9 +64,6 @@ namespace StarterCore.Core.Scenes.GameSelection
         public void Show(List<Scenario> catalog, List<ChapterProgressionModelDown> userProgression)
         {
             _userProgression = userProgression;
-
-            Debug.Log("");
-
             _scenarioList = catalog;
 
             _panelController.Show(catalog, userProgression);//Show game panels
@@ -114,7 +110,6 @@ namespace StarterCore.Core.Scenes.GameSelection
 
         private void OnResetProgression(string chapterName, string scenarioName)
         {
-            Debug.Log("RESET ! -> GameSelectionController");
             OnResetProgressionEvent_GameSelectionCtrl?.Invoke(chapterName, scenarioName);
         }
 

@@ -1,4 +1,4 @@
-//#define TRACE_ON
+#define TRACE_OFF
 using UnityEngine;
 using System.Collections.Generic;
 using System.Xml;
@@ -9,19 +9,16 @@ using StarterCore.Core.Services.Network;
 using Zenject;
 using StarterCore.Core.Scenes.Board.Card.Cards;
 using Cysharp.Threading.Tasks;
-using System.Diagnostics;
-using Debug = UnityEngine.Debug;
 
 public class EntityDeckService : IInitializable
 {
     /// <summary>
-    /// Initialize List of Entity and property cards, based on Cidoc rdf file parsing (.xml).
-    /// Provides public reference to decks' instances.
+    /// Initialize List of Entity cards, based on Cidoc rdf file parsing (.xml).
+    /// Provides public reference to deck instances.
     /// </summary>
 
     [Inject] MockNetService _netservice;
 
-    //public Dictionary<int, EntityCard> EntityCards;
     public List<EntityCard> EntityCards;
 
     //Icon sprites
@@ -34,9 +31,6 @@ public class EntityDeckService : IInitializable
     //Temporary dictionary for superClass deduction
     private Dictionary<string, List<string>> allSuperClassDic;
 
-    //Icons enum
-    //public enum Icons { Axis, Clock, Cube, Forms, Id, Idea, Location, Moebius, Ruler, User }
-
     //XPath parsing - Namespaces management -> Edit here if needed.
     private XmlNamespaceManager CidocCrmNamespaceManager;
     readonly private string rdfNamespace = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
@@ -47,7 +41,6 @@ public class EntityDeckService : IInitializable
     //Navigators allows to parse in memory XML file mapping
     XPathNavigator cidocRdfFileNavigator;//Source file for generating Entity and Property decks
     XPathNavigator entityColorsIconsFileNavigator;//Source file for updating Entity instances with ad-hoc icons and colors;
-    //XPathNavigator propertyColorsFileNavigator;//Source file for updating Entity instances with ad-hoc icons and colors;
 
     //Raw xml string for Cidoc
     string _cidocXmlString;
@@ -55,7 +48,6 @@ public class EntityDeckService : IInitializable
 
     public void Initialize()
     {
-        Trace.Log("EntitdeckService initialized !");
         EntityCards = new List<EntityCard>();
         IconsDictionary = new Dictionary<string, int>();
 
@@ -67,8 +59,6 @@ public class EntityDeckService : IInitializable
     // <*************************** public methods ************************************>
     public List<EntityCard> GetInitialDeck(string initString)
     {
-        Trace.Log("[EntityDeckService] GetInitialDeck...");
-
         List<EntityCard> partialDeck = new List<EntityCard>();
         partialDeck.Clear();
 
@@ -88,8 +78,6 @@ public class EntityDeckService : IInitializable
             default:
                 break;
         }
-
-        Trace.Log(string.Format("[EntityDeckService] NB card in deck for {0} is {1}", initString, partialDeck.Count));
         return partialDeck;
     }
 
@@ -99,11 +87,9 @@ public class EntityDeckService : IInitializable
     {
         //Fetch Cidoc Xml file
         _cidocXmlString = await _netservice.GetXmlCidocFile();
-        Trace.Log("Got XML CIDOC string : " + _cidocXmlString);
 
         //Fetch EntityIconsColorMapping Xml file
         _entityXmlString = await _netservice.GetXmlEntityIconsColorsFile();
-        Trace.Log("Got XML ENTITY COLORS ICONS string : " + _entityXmlString);
 
         InitXpathNavigators();
         InitEntityDeck();
@@ -160,12 +146,10 @@ public class EntityDeckService : IInitializable
             foreach (XPathNavigator sub in subClasses)
             {
                 entityParents.Add(sub?.GetAttribute("resource", rdfNamespace));//Build list of direct parents
-                Trace.Log("Got resource: " + sub?.GetAttribute("resource", rdfNamespace));
             }
 
             EntityCards.Add(new EntityCard()
             {
-                //index = index,
                 id = entity.GetAttribute("about", rdfNamespace).Split('_')[0],
                 about = entity.GetAttribute("about", rdfNamespace),
                 label = entity.SelectSingleNode("./rdfs:label[@xml:lang='en']", CidocCrmNamespaceManager).ToString(),
@@ -255,7 +239,6 @@ public class EntityDeckService : IInitializable
             for (int i = 9; i <= 18; i++)//Icons are from index 9 TO 18
             {
                 IconsDictionary.Add(IconsSprites[i].name, i);
-                Trace.Log("Icon sprite names : " + IconsSprites[i].name);
             }
         }
         else

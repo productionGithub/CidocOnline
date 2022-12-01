@@ -12,13 +12,11 @@ namespace StarterCore.Core.Scenes.FullCredits
 
         public void Init()
         {
-            Debug.Log("FC CONTROLLER INIT!");
             _BackButton.onClick.AddListener(OnBackClicked);
         }
 
         private void OnBackClicked()
         {
-            Debug.Log("Back btn event ok");
             OnBackEvent?.Invoke();
         }
 

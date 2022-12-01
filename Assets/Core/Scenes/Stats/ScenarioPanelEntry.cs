@@ -1,12 +1,7 @@
-using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using Zenject;
-using System.Linq;
 
 using StarterCore.Core.Services.Network.Models;
-using StarterCore.Core.Services.GameState;
 using System.Collections.Generic;
 
 namespace StarterCore.Core.Scenes.Stats
@@ -45,7 +40,6 @@ namespace StarterCore.Core.Scenes.Stats
             _chapterLineTemplate.gameObject.SetActive(false);
         }
 
-        //public void Show(Chapter chapter, int completionRate)
         public void Show(string title, List<ChapterProgressionModelDown> chapterEntries)
         {
             totalScenarioProgression = 0;
@@ -76,17 +70,12 @@ namespace StarterCore.Core.Scenes.Stats
 
                     nbChapterInScenario++;
 
-                    chapLineInstance.Init();
                     chapLineInstance.Show(chap);
                 }
             }
             _scenarioTotalProgression.text = (totalScenarioProgression * 100) / (nbChapterInScenario * 100) + "%";
             _scenarioTotalScore.text = totalScenarioScore.ToString();
             _scenarioMaxPossibleScore.text = totalScenarioMaxPossibleScore.ToString();
-        }
-
-        public void OnDestroy()
-        {
         }
     }
 }

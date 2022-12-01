@@ -1,7 +1,6 @@
 using UnityEngine;
 using Zenject;
 using StarterCore.Core.Services.Localization;
-using StarterCore.Core.Scenes.Form;
 
 namespace StarterCore.Core.Scenes.Signin
 {
@@ -9,7 +8,6 @@ namespace StarterCore.Core.Scenes.Signin
     {
         [SerializeField] private SigninController _signinController;
         [SerializeField] private LocalizationManager _localization;
-        //[SerializeField] private FormController _FormController;
 
         public override void InstallBindings()
         {

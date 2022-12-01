@@ -21,7 +21,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
         public int currentCard;//???
 
-        public event Action<string> OnHierarchyPropertyClickedCardController;
+        //public event Action<string> OnHierarchyPropertyClickedCardController;
 
         public void Init()
         {

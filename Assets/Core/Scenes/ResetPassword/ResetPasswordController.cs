@@ -25,7 +25,6 @@ namespace StarterCore.Core.Scenes.ResetPassword
 
         public void Show()
         {
-            Debug.Log("ResetController instanciated");
             HideAllAlerts();
 
             _ResetButton.onClick.AddListener(OnResetPasswordFormClicked);

@@ -1,4 +1,3 @@
-
 #define TRACE_OFF
 using StarterCore.Core.Scenes.Board.Card.Cards;
 using System;
@@ -9,7 +8,6 @@ using System.Linq;
 using UnityEngine.UI;
 using StarterCore.Core.Scenes.Board.Deck.DeckInteractables;
 using StarterCore.Core.Scenes.Board.Displayer;
-using TMPro;
 using StarterCore.Core.Scenes.Board.Deck.DeckInteractables.Ticks;
 
 namespace StarterCore.Core.Scenes.Board.Deck
@@ -18,11 +16,11 @@ namespace StarterCore.Core.Scenes.Board.Deck
     {
         /// <summary>
         /// Manage current deck state
-        /// Controls deck conttrollers
+        /// Controls deck controllers
         /// Controls deck interactables (Slider + Ticks + hierarchy)
         /// Note : UI deck logic is managed at this controller level, not the manager
         /// </summary>
-        ///
+        
         [Inject] readonly EntityDeckService _entityDeckService;
         [Inject] readonly PropertyDeckService _propertyDeckService;
 
@@ -34,30 +32,19 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
         public PropertyCard CurrentCard;
 
-        [SerializeField]
-        PropertyCardController _propertyCardController;//Card
-        [SerializeField]
-        PropertyTicksController _domainTicksController;
-        [SerializeField]
-        PropertyTicksController _rangeTicksController;
-        [SerializeField]
-        HierarchyPropertyDisplayer _hierarchyDisplayer;//Class hierarchy of card
-        [SerializeField]
-        DeckSliderController _sliderController;//Slider
-        [SerializeField]
-        Button _previousStepper;//Stepper -
-        [SerializeField]
-        Button _nextStepper;// Stepper +
-        [SerializeField]
-        GameObject _noMatchCard;
-        [SerializeField]
-        DeckCounterDisplayer _deckCounterDisplayer;//Deck counter
+        [SerializeField] PropertyCardController _propertyCardController;//Card
+        [SerializeField] PropertyTicksController _domainTicksController;
+        [SerializeField] PropertyTicksController _rangeTicksController;
+        [SerializeField] HierarchyPropertyDisplayer _hierarchyDisplayer;//Class hierarchy of card
+        [SerializeField] DeckSliderController _sliderController;//Slider
+        [SerializeField] Button _previousStepper;//Stepper -
+        [SerializeField] Button _nextStepper;// Stepper +
+        [SerializeField] GameObject _noMatchCard;
+        [SerializeField] DeckCounterDisplayer _deckCounterDisplayer;//Deck counter
 
         //Ref to decks controllers for Domain and Range buttons
-        [SerializeField]
-        EntityDeckController _leftDeckController;
-        [SerializeField]
-        EntityDeckController _rightDeckController;
+        [SerializeField] EntityDeckController _leftDeckController;
+        [SerializeField] EntityDeckController _rightDeckController;
 
         //Update color filter
         private List<string> domainColorFilter;
@@ -66,19 +53,12 @@ namespace StarterCore.Core.Scenes.Board.Deck
         private bool isDomainColorListWhite;
         private bool isRangeColorListWhite;
 
-        //public GameObject domainTicksContainer;
-        //public GameObject rangeTicksContainer;
-
         private bool _initDone = false;
 
         public void Init(List<PropertyCard> initialDeck)
         {
             if (_initDone == false)
             {
-                //_initialDeckContent = new List<PropertyCard>(initialDeck);
-
-                Trace.Log("[PropertyDeckController] Init!");
-
                 //Card
                 _propertyCardController.Init();
 
@@ -105,8 +85,6 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
                 isDomainColorListWhite = true;
                 isRangeColorListWhite = true;
-
-                //CurrentCard = initialDeck[0];
 
                 _initDone = true;
             }
@@ -282,7 +260,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
                         {
                             domainColorFilter.Remove(color.ToString());
                             //If no color anymore in the list, re-init to white (All colors)
-                            if (_domainTicksController.TickCount == 0) ;//domainTicksContainer.GetComponent<PropertyTicksController>().TickCount == 0
+                            if (_domainTicksController.TickCount == 0)
                             {
                                 InitColorList(ref domainColorFilter);
                                 isDomainColorListWhite = true;

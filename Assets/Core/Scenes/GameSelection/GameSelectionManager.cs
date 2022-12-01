@@ -1,4 +1,4 @@
-#define TRACE_ON
+#define TRACE_OFF
 using Cysharp.Threading.Tasks;
 using StarterCore.Core.Services.Network;
 using StarterCore.Core.Services.Network.Models;
@@ -24,8 +24,6 @@ namespace StarterCore.Core.Scenes.GameSelection
 
         public async void Initialize()
         {
-            Debug.Log("[GameSelectionManager] Initialized!");
-
             //Get scenarii catalog from scenariiCatalog.json file
             _gameSelectioncontroller.ShowWaitingIcon();
             _catalog = await _networkService.GetCatalog();
@@ -61,9 +59,6 @@ namespace StarterCore.Core.Scenes.GameSelection
 
                 if(_progression.LastChallengeId != -1)
                 {
-                    Trace.Log(string.Format("Progression for {0}-{1} is : challenge Id {2} / Score = {3}",
-                        scenarioTitle, chapterTitle, _progression.LastChallengeId, _progression.Score));
-
                     //update GamaModel with values of progression
                     _gameStateManager.GameStateModel.CurrentChallengeIndex = _progression.LastChallengeId;
                     _gameStateManager.GameStateModel.CurrentScore = _progression.Score;
@@ -72,7 +67,7 @@ namespace StarterCore.Core.Scenes.GameSelection
                 {
                     string chapterFileName = GetChapterFilename(chapterTitle);
                     await _networkService.CreateSession(_gameStateManager.GameStateModel.UserId, scenarioTitle, chapterFileName);
-                    //TODO Debug _session value : always false (but sent is true => Output writtent in error_log).
+                    //TODO Debug _session value from server : always false (but sent is true => Output writtent in error_log).
                     //TODO For now, I don't check and set default values as if _session == true (#everything went fine);
 
                     _gameStateManager.GameStateModel.CurrentChallengeIndex = 1;
@@ -109,11 +104,6 @@ namespace StarterCore.Core.Scenes.GameSelection
 
         private async void ResetProgression(string chapterName, string scenarioName)
         {
-            //Debug.Log("[GSM] Session data -> " + _gameStateManager.GameStateModel.UserId);
-            //Debug.Log("[GSM]Session data -> " + scenarioName);
-            //Debug.Log("[GSM]Session data -> " + chapterName);
-            //Debug.Log("[GSM]Session data REAL NAME -> " + GetChapterFilename(chapterName));
-
             ResetProgressionModelUp sessiondata = new ResetProgressionModelUp
             {
                 UserId = _gameStateManager.GameStateModel.UserId,
@@ -142,8 +132,6 @@ namespace StarterCore.Core.Scenes.GameSelection
         {
             foreach (Scenario s in _catalog.Scenarii)
             {
-                Debug.Log("Scenar title : " + s.ScenarioTitle);
-                Debug.Log("Scenar description : " + s.ScenarioDescription);
                 foreach (string ont in s.OntologyTags)
                 {
                     Debug.Log("Ontology tags : " + ont);

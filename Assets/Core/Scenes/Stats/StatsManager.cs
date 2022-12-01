@@ -1,14 +1,10 @@
-#define TRACE_ON
+#define TRACE_OFF
 using System.Collections.Generic;
 using StarterCore.Core.Services.GameState;
 using StarterCore.Core.Services.Network;
-using UnityEngine;
 using Zenject;
-using StarterCore.Core.Scenes.Board.Challenge;
 using StarterCore.Core.Services.Navigation;
-using Cysharp.Threading.Tasks;
 using StarterCore.Core.Services.Network.Models;
-using System;
 
 namespace StarterCore.Core.Scenes.Stats
 {
@@ -27,8 +23,6 @@ namespace StarterCore.Core.Scenes.Stats
             _userStats = await _mockNetService.GetUserStats(_gameStateManager.GameStateModel.UserId);
             _statsController.HideWaitingIcon();
 
-
-
             _statsController.Init();
             _statsController.OnMainMenuEvent += MainMenuButtonClicked;
 
@@ -40,7 +34,7 @@ namespace StarterCore.Core.Scenes.Stats
             _navigationService.Push("MainMenuScene");
         }
 
-        private void OnDestroy()
+        public void OnDestroy()
         {
             _statsController.OnMainMenuEvent -= MainMenuButtonClicked;
         }

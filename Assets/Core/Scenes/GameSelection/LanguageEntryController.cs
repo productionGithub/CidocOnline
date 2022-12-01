@@ -52,23 +52,17 @@ namespace StarterCore.Core.Scenes.GameSelection
             //Update states of toggles
             if (toggle._languageToggle.isOn)
             {
-                Debug.Log("Toggle ON");
                 if (!SelectedLanguages.Contains(toggle._languageTxt.text))
                 {
-                    Debug.Log("List contains : " + toggle._languageTxt.text);
-
                     SelectedLanguages.Add(toggle._languageTxt.text);
                 }
             }
             else
             {
-                Debug.Log("Removing from list : " + toggle._languageTxt.text);
                 SelectedLanguages.Remove(toggle._languageTxt.text);
             }
 
-            //Fire event OnLanguageUpdate
             OnLanguageUpdateEvent?.Invoke(SelectedLanguages);
-            //Debug.Log(string.Format("Toggle {0} has value {1}", toggle.GetComponentInChildren<TextMeshProUGUI>().text, toggle.GetComponent<Toggle>().isOn));
         }
 
         private void DebugListLanguage()

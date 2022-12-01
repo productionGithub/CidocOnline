@@ -1,11 +1,9 @@
-#define TRACE_ON
 using Cysharp.Threading.Tasks;
 using StarterCore.Core.Services.Network;
 using StarterCore.Core.Services.Network.Models;
 using Zenject;
 using StarterCore.Core.Services.Navigation;
 using StarterCore.Core.Services.GameState;
-using System;
 
 namespace StarterCore.Core.Scenes.Signin
 {
@@ -22,26 +20,9 @@ namespace StarterCore.Core.Scenes.Signin
             _controller.OnSigninFormSubmittedEvent += SubmitClicked;
             _controller.OnForgotPasswordClickedEvent += ForgotPassword;
             _controller.OnCreateAccountClickedEvent += SignUp;
-
-            //Localization
-            //_controller.OnLocalizationEvent += SetLocalization;
-
             _controller.OnEnglishLocalizationFlagClickedEvent += SetEnglishLocalization;
             _controller.OnFrenchLocalizationFlagClickedEvent += SetFrenchLocalization;
-
-            //TEST
-            _controller.OnTestEvent += LoadTestScene;
         }
-
-        private void LoadTestScene()
-        {
-            _navService.Push("GameSelectionScene");
-        }
-
-        //private void SetLocalization(string locale)
-        //{
-        //    _gameState.SetLocale(locale);
-        //}
 
         private void SetFrenchLocalization()
         {
@@ -52,7 +33,6 @@ namespace StarterCore.Core.Scenes.Signin
         {
             _gameState.SetLocale("en");
         }
-
 
         //SUBMIT FORM
         private async void SubmitClicked(SigninEventData signinData)
@@ -103,7 +83,6 @@ namespace StarterCore.Core.Scenes.Signin
         //LOGIN PROCESS
         private async UniTaskVoid Login(SigninModelUp credentials)
         {
-            //Trace.Log("[SigninManager] Login param email : " + credentials.Email);
             SigninModelDown result = await _net.Login(credentials);
 
             if (result.LoginResult == true)
@@ -124,27 +103,22 @@ namespace StarterCore.Core.Scenes.Signin
             //Login OK, get progression and load main menu screen
             UserNameModelDown userName = await _net.GetUsername(playerEmail);
             _gameState.Username = userName.Username;
-            Trace.Log("Login with username : " + _gameState.Username);
 
             //Get User Id
             UserIdModelDown userId = await _net.GetUserId(playerEmail);
             _gameState.GameStateModel.UserId = userId.UserId;
-
-            //_navService.Push("MainMenuScene", history);
             _navService.Push("MainMenuScene");
         }
 
         //CLICK ON RESET PASSWORD LINK
         private void ForgotPassword()
         {
-            //Load SignUp scene
             _navService.Push("ResetPasswordScene");
         }
 
         //CLICK ON CREATE ACCOUNT BUTTON
         private void SignUp()
         {
-            //Load SignUp scene
             _navService.Push("SignupScene");
         }
 

@@ -13,7 +13,6 @@ namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables
 
         public void Init()
         {
-            Debug.Log("[CardSliderController] Init OK");
             _slider.onValueChanged.AddListener(OnSliderValueChanged);
         }
 

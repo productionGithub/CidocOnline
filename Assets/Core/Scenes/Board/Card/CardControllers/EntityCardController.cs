@@ -21,7 +21,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
         EntityCardDisplayer _entityCardDisplayer;
 
 
-        public int CurrentCard;//Utile pour le Board controller qui va la passer au Challenge (-> Challenge evaluator ???
+        public int CurrentCard;
 
         public void Init()
         {

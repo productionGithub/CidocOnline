@@ -1,10 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Entity card Object used to instanciate 'entityCards' Dictionary<int, EntityCard>
-/// See DecksController.
-/// </summary>
 namespace StarterCore.Core.Scenes.Board.Card.Cards
 {
     public class EntityCard
