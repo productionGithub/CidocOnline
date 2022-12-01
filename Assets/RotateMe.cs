@@ -6,7 +6,7 @@ public class RotateMe : MonoBehaviour
 
     void Start()
     {
-        rotationInc = 150.0f;
+        rotationInc = -150.0f;
     }
 
     void Update()
