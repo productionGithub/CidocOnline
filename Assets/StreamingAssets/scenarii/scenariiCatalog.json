@@ -28,54 +28,56 @@
       ]
     }
 ,
-
-
 {
       "scenario-title": "MarmoutierEN",
       "ontologyTags": [
-        "CIDOC-CRM",
-        "RiC-O"
+        "CidocCRM",
+        "ric-O"
       ],
       "domainTags": [
-        "Cultural heritage"
+        "Archeology",
+        "History"
       ],
     "domainCodes" : [
-        "CUL"
+        "ARC",
+        "HIS"
       ],
     "authorTags": [
-      "MASA",
-      "Huma-Num"
+      "Masa",
+      "Huma-num"
       ],
       "languageTag": "English",
-      "scenario-description": "Learn basics of CIDOC-CRM with Marmoutier excavations",
+      "scenario-description": "This is an english description of the Marmoutier game, in english of course",
       "chapters": [
         {
           "chapter-title": "Ontology basics",
-          "chapter-description": "Learn the principles of ontology",
+          "chapter-description": "This is the description this very chapter...",
           "chapter-filename": "Chapter1.json"
         },
         {
           "chapter-title": "CIDOC CRM Basics",
-          "chapter-description": "Discover the structure of CIDOC-CRM",
+          "chapter-description": "This is the description this very chapter...",
           "chapter-filename": "Chapter2.json"
         },
         {
           "chapter-title": "Instance modelling (1)",
-          "chapter-description": "Linking data to CIDOC-CRM concepts",
+          "chapter-description": "This is the description this very chapter...",
           "chapter-filename": "Chapter3.json"
         },
         {
           "chapter-title": "Instance modelling (2)",
-          "chapter-description": "Find the best property to link two classes",
+          "chapter-description": "This is the description this very chapter...",
           "chapter-filename": "Chapter4.json"
         },
         {
           "chapter-title": "Instance modelling (3)",
-          "chapter-description": "Practice building complex links",
+          "chapter-description": "This is the description this very chapter...",
           "chapter-filename": "Chapter5.json"
         }
       ]
     }
+
+
 
 ,
 
@@ -89,9 +91,18 @@
         "AnyDomain"
       ],
     "domainCodes" : [
-        "HIS",
         "ARC",
-        "CUL"
+        "ACT",
+        "ARK",
+        "ART",
+        "CSV",
+        "ETH",
+        "HIS",
+        "LIN",
+        "LIT",
+        "OLB",
+        "MSM",
+        "MUS"
       ],
     "authorTags": [
       "Your Org."

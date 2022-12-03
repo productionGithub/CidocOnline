@@ -17,6 +17,7 @@ namespace StarterCore.Core.Scenes.LeaderBoard
 
         public async void Initialize()
         {
+            Debug.Log("LEADER BOARD MANAGER INIT !");
             _leaderBoardController.ShowWaitingIcon();
             _rankings = await _networkService.GetRankings();
             _leaderBoardController.HideWaitingIcon();

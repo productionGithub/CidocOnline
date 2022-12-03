@@ -30,6 +30,7 @@ namespace StarterCore.Core.Scenes.LeaderBoard
 
         public void Init()
         {
+            Debug.Log("Leaderboard CONTROLLER INIT !");
             //LanguageTitleEntry management
             if (_languageEntries == null)
             {
@@ -102,7 +103,8 @@ namespace StarterCore.Core.Scenes.LeaderBoard
 
         public void Show(RankingModelDown rankings)
         {
-            //TODO DON'T FORGET ADDING ENTRIES!
+            Debug.Log("Leaderboard CONTROLLER SHOW !");
+
             //For each language
             foreach (Language language in rankings.Languages)
             {

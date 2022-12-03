@@ -58,10 +58,10 @@
       "resetpassword-scene-backbutton-text" : "Retour"
     },
       "GameSelectionScene" :{
-      "gameselection-scene-title-text": "SÉLECTION DES JEUX",
+      "gameselection-scene-title-text": "SÉLECTION DES SCENARII",
       "gameselection-scene-backbutton-text":"Retour",
       "gameselection-scene-listofscenarii-label":"Liste des scénarios",
-      "gameselection-scene-domain-label":"Domaine",
+      "gameselection-scene-domain-label":"Thèmes",
       "gameselection-scene-domain1-text":"Archéologie",
       "gameselection-scene-domain2-text":"Histoire",
       "gameselection-scene-domain3-text":"Science",

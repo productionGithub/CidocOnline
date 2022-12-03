@@ -13,7 +13,7 @@ namespace StarterCore.Core.Scenes.GameSelection
         [SerializeField] private Button _BackButton;
         [SerializeField] private PanelController _panelController;
         [SerializeField] private LanguageEntryController _languageEntryController;
-        [SerializeField] private DomainEntryController _domainEntryController;
+        [SerializeField] private TopicEntryController _topicEntryController;
         [SerializeField] private GameObject _waitingIcon;
 
         public event Action<string, string> OnGameSelectionControllerPlayChapterEvent;
@@ -23,20 +23,35 @@ namespace StarterCore.Core.Scenes.GameSelection
         List<Scenario> _scenarioList = new List<Scenario>();
 
         private List<string> _languageCriterias = new List<string>();
-        private List<string> _domainCriterias = new List<string>();
+        private List<string> _topicCriteria = new List<string>();
 
         private List<ChapterProgressionModelDown> _userProgression;
 
-        private List<ChallengeData> _challenges;
+        //private List<ChallengeData> _challenges;
 
         public void Init()
         {
+            Debug.Log("GAME SELECTION CONTROLLER INIT !");
+
             _panelController.Init();
-            _domainEntryController.OnDomainUpdateEvent += OnFilterDomainPanel;
+            _topicEntryController.OnTopicUpdateEvent += OnFilterTopicPanel;
             _panelController.OnPanelControllerPlayChapterEvent += OnPlayChapter;
             _languageEntryController.OnLanguageUpdateEvent += OnFilterLanguagePanel;
             _panelController.OnResetProgressionEvent_PanelCtrl += OnResetProgression;
             _BackButton.onClick.AddListener(BackClickedEvent);
+        }
+
+        public void Show(List<Scenario> catalog, List<ChapterProgressionModelDown> userProgression)
+        {
+            _userProgression = userProgression;
+            _scenarioList = catalog;
+
+            _panelController.Show(catalog, userProgression);//Show game panels
+            _languageEntryController.Show(catalog);//update Language zone (list of language Toggles)
+            _languageCriterias = _languageEntryController.SelectedLanguages;
+
+            _topicEntryController.Init();
+            _topicCriteria = _topicEntryController.SelectedTopics;
         }
 
         public void ShowWaitingIcon()
@@ -50,38 +65,20 @@ namespace StarterCore.Core.Scenes.GameSelection
             _panelController.gameObject.SetActive(true);
         }
 
-
-        private void OnFilterDomainPanel(List<string> domains)
+        private void OnFilterTopicPanel(List<string> topics)
         {
-            OnFilterDomainPanelAsync(domains);
+            OnFilterTopicPanelAsync(topics);
         }
 
-        private void OnFilterLanguagePanel(List<string> langages)
+        private void OnFilterLanguagePanel(List<string> languages)
         {
-            OnFilterLanguagePanelAsync(langages);
-        }
-
-        public void Show(List<Scenario> catalog, List<ChapterProgressionModelDown> userProgression)
-        {
-            _userProgression = userProgression;
-            _scenarioList = catalog;
-
-            _panelController.Show(catalog, userProgression);//Show game panels
-            _languageEntryController.Show(catalog);//update Language zone (list of language Toggles)
-            _languageCriterias = _languageEntryController.SelectedLanguages;
-            _domainEntryController.Show();
-            _domainCriterias = _domainEntryController.SelectedDomains;
-        }
-
-        private void OnFilterDomainPanelAsync(List<string> domains)
-        {
-            _domainCriterias = domains;
+            _languageCriterias = languages;
             FilterScenarii(_userProgression);
         }
 
-        public void OnFilterLanguagePanelAsync(List<string> languages)
+        private void OnFilterTopicPanelAsync(List<string> domains)
         {
-            _languageCriterias = languages;
+            _topicCriteria = domains;
             FilterScenarii(_userProgression);
         }
 
@@ -91,7 +88,7 @@ namespace StarterCore.Core.Scenes.GameSelection
 
             filteredScenarioList.AddRange(
                 _scenarioList.Where(
-                    p => p.DomainCodes.Intersect(_domainCriterias).Count() > 0 &&
+                    p => p.DomainCodes.Intersect(_topicCriteria).Count() > 0 &&
                     _languageCriterias.Contains(p.LanguageTag))
             );
 
@@ -115,7 +112,6 @@ namespace StarterCore.Core.Scenes.GameSelection
 
         private void OnDestroy()
         {
-            _domainEntryController.OnDomainUpdateEvent -= OnFilterDomainPanel;
             _panelController.OnPanelControllerPlayChapterEvent -= OnPlayChapter;
             _languageEntryController.OnLanguageUpdateEvent -= OnFilterLanguagePanel;
             _panelController.OnResetProgressionEvent_PanelCtrl -= OnResetProgression;
