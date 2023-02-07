@@ -4,24 +4,29 @@ using StarterCore.Core.Services.Network.Models;
 using Zenject;
 using StarterCore.Core.Services.Navigation;
 using StarterCore.Core.Services.GameState;
+using UnityEngine.SceneManagement;
+using UnityEngine;
 
 namespace StarterCore.Core.Scenes.Signin
 {
     public class SigninManager : IInitializable
     {
-        [Inject] private MockNetService _net;
+        [Inject] private APIService _net;
         [Inject] private SigninController _controller;
         [Inject] private NavigationService _navService;
         [Inject] private GameStateManager _gameState;
 
         public void Initialize()
         {
+            Debug.Log("Scene name is " + SceneManager.GetActiveScene().name);
             _controller.Show();
             _controller.OnSigninFormSubmittedEvent += SubmitClicked;
             _controller.OnForgotPasswordClickedEvent += ForgotPassword;
             _controller.OnCreateAccountClickedEvent += SignUp;
             _controller.OnEnglishLocalizationFlagClickedEvent += SetEnglishLocalization;
             _controller.OnFrenchLocalizationFlagClickedEvent += SetFrenchLocalization;
+
+            SetFrenchLocalization();
         }
 
         private void SetFrenchLocalization()
@@ -121,6 +126,5 @@ namespace StarterCore.Core.Scenes.Signin
         {
             _navService.Push("SignupScene");
         }
-
     }
 }

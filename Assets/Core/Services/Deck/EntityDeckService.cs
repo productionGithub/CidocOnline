@@ -17,7 +17,7 @@ public class EntityDeckService : IInitializable
     /// Provides public reference to deck instances.
     /// </summary>
 
-    [Inject] MockNetService _netservice;
+    [Inject] APIService _netservice;
 
     public List<EntityCard> EntityCards;
 

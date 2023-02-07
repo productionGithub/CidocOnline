@@ -1,0 +1,51 @@
+{
+      "scenario-title": "Marmoutier FR",
+      "ontologyTags": [
+        "CIDOC CRM"
+      ],
+      "domainTags": [
+        "Histoire",
+        "Archéologie",
+		    "Patrimoine cult."
+      ],
+    "domainCodes" : [
+        "HIS",
+        "ARC",
+		"CUL"
+      ],
+    "authorTags": [
+      "MASA",
+      "Huma-num"
+      ],
+      "languageTag": "Français",
+      "scenario-description": "Apprenez les bases du CIDOC CRM avec les fouilles archéologiques de Marmoutier",
+      "chapters": [
+        {
+          "chapter-title": "Base des ontologies",
+          "chapter-description": "Qu'est-ce qu'une ontologie ?",
+          "chapter-filename":"Chapter1.json"
+        },
+        {
+          "chapter-title": "Bases du CIDOC CRM",
+          "chapter-description": "Comment fonctionne le CIDOC CRM ?",
+          "chapter-filename": "Chapter2.json"
+        },
+        {
+          "chapter-title": "Instanciation (1)",
+          "chapter-description": "Associer une instance à une classe du CIDOC",
+          "chapter-filename": "Chapter3.json"
+        },
+        {
+          "chapter-title": "Instanciation (2)",
+          "chapter-description": "Connecter deux instances avec une propriété",
+          "chapter-filename": "Chapter4.json"
+        },
+        {
+          "chapter-title": "Instanciation (3)",
+          "chapter-description": "Réaliser une modélisation complexe avec trois instances",
+          "chapter-filename": "Chapter5.json"
+        }
+
+      ]
+    }
+

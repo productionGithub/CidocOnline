@@ -84,11 +84,14 @@ namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables.Ticks
             _tickCount = 0;
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
-            foreach (EntityTick tick in listOfTick)
+            if (listOfTick != null)
             {
-                tick.OnEntityTickClicked -= TickClicked;
+                foreach (EntityTick tick in listOfTick)
+                {
+                    tick.OnEntityTickClicked -= TickClicked;
+                }
             }
         }
     }

@@ -7,6 +7,7 @@ using StarterCore.Core.Services.Navigation;
 using StarterCore.Core.Services.Network;
 using StarterCore.Core.Services.GameState;
 using StarterCore.Core.Services.Network.Models;
+using UnityEngine.SceneManagement;
 
 namespace StarterCore.Core.Scenes.MainMenu
 {
@@ -15,10 +16,11 @@ namespace StarterCore.Core.Scenes.MainMenu
         [Inject] GameStateManager _gameStateManager;
         [Inject] MainMenuController _mainMenuController;
         [Inject] NavigationService _navigation;
-        [Inject] MockNetService _networkService;
+        [Inject] APIService _networkService;
 
         public async void Initialize()//was async
         {
+            Debug.Log("Scene name is " + SceneManager.GetActiveScene().name);
             //Get player history
             _mainMenuController.ShowWaitingIcon();
             HistoryModelDown history = await _networkService.GetHistory(_gameStateManager.GameStateModel.UserId);
@@ -87,7 +89,6 @@ namespace StarterCore.Core.Scenes.MainMenu
 
         private void OnResetGame()
         {
-            Debug.Log("Reset game Call to NetService ResetGame...");
             _ = _networkService.ResetGame(_gameStateManager.GameStateModel.UserId);
         }
 

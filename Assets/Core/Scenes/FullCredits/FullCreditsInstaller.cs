@@ -11,7 +11,6 @@ namespace StarterCore.Core.Scenes.FullCredits
 
         public override void InstallBindings()
         {
-            Debug.Log("FC Installer Binding");
             Container.BindInterfacesAndSelfTo<FullCreditsManager>().AsSingle();
             Container.Bind<FullCreditsController>().FromInstance(_controller);
         }

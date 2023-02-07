@@ -2377,6 +2377,7 @@ GameObject:
   - component: {fileID: 1436655763}
   - component: {fileID: 1436655765}
   - component: {fileID: 1436655764}
+  - component: {fileID: 1436655766}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -2424,7 +2425,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: Main menu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2501,6 +2502,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1436655762}
   m_CullTransparentMesh: 1
+--- !u!114 &1436655766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436655762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 955159e208a8449f98a4c39f53e33f91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <LocalizeKey>k__BackingField: fullcredits-scene-mainmenu-text
+  <LocalizedText>k__BackingField: {fileID: 1436655764}
 --- !u!1 &1445256061
 GameObject:
   m_ObjectHideFlags: 0
@@ -3058,7 +3073,6 @@ GameObject:
   - component: {fileID: 1926223520}
   - component: {fileID: 1926223519}
   - component: {fileID: 1926223518}
-  - component: {fileID: 1926223521}
   m_Layer: 5
   m_Name: ButtonBack
   m_TagString: Untagged
@@ -3169,20 +3183,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1926223515}
   m_CullTransparentMesh: 1
---- !u!114 &1926223521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1926223515}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 955159e208a8449f98a4c39f53e33f91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <LocalizeKey>k__BackingField: fullcredits-scene-backbutton-text
-  <LocalizedText>k__BackingField: {fileID: 1436655764}
 --- !u!1 &1947041882
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,13 +7,14 @@ using Zenject;
 using StarterCore.Core.Services.Navigation;
 using StarterCore.Core.Services.GameState;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 namespace StarterCore.Core.Scenes.GameSelection
 {
     public class GameSelectionManager : IInitializable
     {
         [Inject] private GameStateManager _gameStateManager;
-        [Inject] private MockNetService _networkService;
+        [Inject] private APIService _networkService;
         [Inject] private GameSelectionController _gameSelectioncontroller;
         [Inject] private NavigationService _navService;
 
@@ -24,6 +25,7 @@ namespace StarterCore.Core.Scenes.GameSelection
 
         public async void Initialize()
         {
+            Debug.Log("Scene name is " + SceneManager.GetActiveScene().name);
             //Get scenarii catalog from scenariiCatalog.json file
             _gameSelectioncontroller.ShowWaitingIcon();
             _catalog = await _networkService.GetCatalog();

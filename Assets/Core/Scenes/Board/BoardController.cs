@@ -107,13 +107,18 @@ namespace StarterCore.Core.Scenes.Board
 
         private async void InstanciateDecks()
         {
+            _leftEntityDeckController.gameObject.SetActive(false);
+            _leftPropertyDeckController.gameObject.SetActive(false);
+            _middleEntityDeckController.gameObject.SetActive(false);
+            _rightPropertyDeckController.gameObject.SetActive(false);
+            _rightEntityDeckController.gameObject.SetActive(false);
+
             //Initialization of Left Entity Deck
             string initStringEL = _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].ELeftInit;
             Trace.Log("ELeftInit Sctring->" + initStringEL);
 
             if (!initStringEL.Equals(string.Empty))
             {
-                _leftEntityDeckController.gameObject.SetActive(true);
                 List<EntityCard> initialLeftEntityDeckContent = _entityDeckService.GetInitialDeck(initStringEL);
                 Trace.Log("[BoardController] Initial entity deck size is " + initialLeftEntityDeckContent.Count);
 
@@ -121,85 +126,66 @@ namespace StarterCore.Core.Scenes.Board
                 _leftEntityDeckController.InitDeck(initialLeftEntityDeckContent);
 
                 _leftEntityDeckController.Show();
+                _leftEntityDeckController.gameObject.SetActive(true);
             }
-            else
-            {
-                _leftEntityDeckController.gameObject.SetActive(false);
-            }
-
             
             //Initialization of Left Property Deck
             string initStringPL = _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].PLeftInit;
             if (!initStringPL.Equals(string.Empty))
             {
-                _leftPropertyDeckController.gameObject.SetActive(true);
                 List<PropertyCard> initialLeftPropertyDeckContent = _propertyDeckService.GetInitialDeck(initStringPL);
 
                 _leftPropertyDeckController.Init(initialLeftPropertyDeckContent);
                 _leftPropertyDeckController.InitDeck(initialLeftPropertyDeckContent);
                 _leftPropertyDeckController.Show();
-            }
-            else
-            {
-                _leftPropertyDeckController.gameObject.SetActive(false);
+                _leftPropertyDeckController.gameObject.SetActive(true);
             }
 
             //Initialization of Middle Entity Deck
             string initStringEM = _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].EMiddleInit;
             if (!initStringEM.Equals(string.Empty))
             {
-                _middleEntityDeckController.gameObject.SetActive(true);
                 List<EntityCard> initialMiddleEntityDeckContent = _entityDeckService.GetInitialDeck(initStringEM);
 
                 _middleEntityDeckController.Init(initialMiddleEntityDeckContent);
                 _middleEntityDeckController.InitDeck(initialMiddleEntityDeckContent);
                 _middleEntityDeckController.Show();
-            }
-            else
-            {
-                _middleEntityDeckController.gameObject.SetActive(false);
+                _middleEntityDeckController.gameObject.SetActive(true);
             }
 
             //Initialization of Right Property Deck
             string initStringPR = _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].PRightInit;
             if (!initStringPR.Equals(string.Empty))
             {
-                _rightPropertyDeckController.gameObject.SetActive(true);
                 List<PropertyCard> initialRightPropertyDeckContent = _propertyDeckService.GetInitialDeck(initStringPR);
 
                 _rightPropertyDeckController.Init(initialRightPropertyDeckContent);
                 _rightPropertyDeckController.InitDeck(initialRightPropertyDeckContent);
                 _rightPropertyDeckController.Show();
-            }
-            else
-            {
-                _rightPropertyDeckController.gameObject.SetActive(false);
+                _rightPropertyDeckController.gameObject.SetActive(true);
             }
 
             //Initialization of Right Entity Deck
             string initStringER = _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].ERightInit;
             if (!initStringER.Equals(string.Empty))
             {
-                _rightEntityDeckController.gameObject.SetActive(true);
                 List<EntityCard> initialRightEntityDeckContent = _entityDeckService.GetInitialDeck(initStringER);
 
                 _rightEntityDeckController.Init(initialRightEntityDeckContent);
                 _rightEntityDeckController.InitDeck(initialRightEntityDeckContent);
                 _rightEntityDeckController.Show();
+                _rightEntityDeckController.gameObject.SetActive(true);
             }
-            else
-            {
-                _rightEntityDeckController.gameObject.SetActive(false);
-            }
-
 
             //INSTANCES
+            _leftInstanceDisplayer.gameObject.SetActive(false);
+            _middleInstanceDisplayer.gameObject.SetActive(false);
+            _rightInstanceDisplayer.gameObject.SetActive(false);
+
             //Left instance
             string initStringLI = _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].ILeftInit;
             if (!initStringLI.Equals(string.Empty))
             {
-                _leftInstanceDisplayer.gameObject.SetActive(true);
-
                 InstanceCardModelDown leftInstance = _instances.Single(c => c.Id == initStringLI[1..].Trim());
 
                 string iconName = leftInstance.ImageName;
@@ -210,13 +196,13 @@ namespace StarterCore.Core.Scenes.Board
                 Sprite iconSprite = Sprite.Create(image, new Rect(0, 0, 300, 300), new Vector2());
 
                 _leftInstanceDisplayer.Show(leftInstance, iconSprite);
+                _leftInstanceDisplayer.gameObject.SetActive(true);
             }
 
             ////Middle instance
             string initStringMI = _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].IMiddleInit;
             if (!initStringMI.Equals(string.Empty))
             {
-                _middleInstanceDisplayer.gameObject.SetActive(true);
                 InstanceCardModelDown middleInstance = _instances.Single(c => c.Id == initStringMI[1..].Trim());
 
                 string iconName = middleInstance.ImageName;
@@ -226,13 +212,13 @@ namespace StarterCore.Core.Scenes.Board
 
                 Sprite iconSprite = Sprite.Create(image, new Rect(0, 0, 300, 300), new Vector2());
                 _middleInstanceDisplayer.Show(middleInstance, iconSprite);
+                _middleInstanceDisplayer.gameObject.SetActive(true);
             }
 
             ////Right instance
             string initStringRI = _challengeList[_gameStateManager.GameStateModel.CurrentChallengeIndex].IRightInit;
             if (!initStringRI.Equals(string.Empty))
             {
-                _rightInstanceDisplayer.gameObject.SetActive(true);
                 InstanceCardModelDown rightInstance = _instances.Single(c => c.Id == initStringRI[1..].Trim());
 
                 string iconName = rightInstance.ImageName;
@@ -242,6 +228,7 @@ namespace StarterCore.Core.Scenes.Board
 
                 Sprite iconSprite = Sprite.Create(image, new Rect(0, 0, 300, 300), new Vector2());
                 _rightInstanceDisplayer.Show(rightInstance, iconSprite);
+                _rightInstanceDisplayer.gameObject.SetActive(true);
             }
 
         }

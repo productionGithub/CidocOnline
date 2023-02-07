@@ -185,8 +185,6 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
         private void GhostCardIfExists(int index)
         {
-            Trace.Log("[EntityDeckController] We are here -> GhostCardIfExists, index = " + index);
-
             if (_addedCard.Exists(x => x.id.Equals(_currentDeckContent[index].id)))
             {
                 _entityCardController.GhostBackground();
@@ -327,6 +325,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
         private void ReinitDeck()
         {
             _isListFiltered = false;
+            _entityCardController.ReinitBackground();
 
             _currentDeckContent.Clear();
             _currentDeckContent = new List<EntityCard>(_initialDeckContent);

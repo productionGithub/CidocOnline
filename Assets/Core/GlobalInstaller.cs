@@ -23,7 +23,7 @@ namespace StarterCore.Core
             Container.BindInterfacesAndSelfTo<LocalizationManager>().AsSingle().NonLazy();
 
             Container.Bind<NetworkService>().AsSingle().NonLazy();
-            Container.Bind<MockNetService>().AsSingle().NonLazy();
+            Container.Bind<APIService>().AsSingle().NonLazy();
 
             Container.Bind<NavigationSetup>().FromInstance(_navSetup);
             Container.BindInterfacesAndSelfTo<NavigationService>().AsSingle().NonLazy();

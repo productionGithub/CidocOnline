@@ -8,7 +8,7 @@ using System.IO;
 
 namespace StarterCore.Core.Services.Network
 {
-    public class MockNetService
+    public class APIService
     {
         [Inject] private NetworkService _net;
 

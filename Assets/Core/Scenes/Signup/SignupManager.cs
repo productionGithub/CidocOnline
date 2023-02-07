@@ -11,7 +11,7 @@ namespace StarterCore.Core.Scenes.Signup
 {
     public class SignupManager : IInitializable
     {   
-        [Inject] private MockNetService _net;
+        [Inject] private APIService _net;
         [Inject] private SignupController _controller;
         [Inject] private NavigationService _navService;
         [Inject] private GameStateManager _gameState;

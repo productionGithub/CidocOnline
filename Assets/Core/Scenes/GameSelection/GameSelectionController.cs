@@ -27,12 +27,8 @@ namespace StarterCore.Core.Scenes.GameSelection
 
         private List<ChapterProgressionModelDown> _userProgression;
 
-        //private List<ChallengeData> _challenges;
-
         public void Init()
         {
-            Debug.Log("GAME SELECTION CONTROLLER INIT !");
-
             _panelController.Init();
             _topicEntryController.OnTopicUpdateEvent += OnFilterTopicPanel;
             _panelController.OnPanelControllerPlayChapterEvent += OnPlayChapter;

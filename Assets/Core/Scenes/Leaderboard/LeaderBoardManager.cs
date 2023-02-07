@@ -9,7 +9,7 @@ namespace StarterCore.Core.Scenes.LeaderBoard
 {
     public class LeaderBoardManager : IInitializable
     {
-        [Inject] MockNetService _networkService;
+        [Inject] APIService _networkService;
         [Inject] NavigationService _navigationService;
         [Inject] LeaderBoardController _leaderBoardController;
 

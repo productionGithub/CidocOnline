@@ -6,6 +6,7 @@ using UnityEngine;
 using Zenject;
 using Cysharp.Threading.Tasks;
 using StarterCore.Core.Services.Network.Models;
+using UnityEngine.SceneManagement;
 
 namespace StarterCore.Core.Scenes.Board
 {
@@ -13,12 +14,13 @@ namespace StarterCore.Core.Scenes.Board
     {
         [Inject] GameStateManager _gameStateManager;
         [Inject] BoardController _boardController;
-        [Inject] MockNetService _networkService;
+        [Inject] APIService _networkService;
 
         ScenariiModelDown _catalog;
 
         public async void Initialize()
         {
+            Debug.Log("Scene name is " + SceneManager.GetActiveScene().name);
             _catalog = await _networkService.GetCatalog();
 
             //Get chapter filename from catalog
@@ -50,11 +52,11 @@ namespace StarterCore.Core.Scenes.Board
                 CurrentScore = _gameStateManager.GameStateModel.CurrentScore
             };
 
-            Debug.Log("[GSM] Session data UserId -> " + _gameStateManager.GameStateModel.UserId);
-            Debug.Log("[GSM]Session data Scenar -> " + _gameStateManager.GameStateModel.CurrentScenario);
-            Debug.Log("[GSM]Session data ChapterFileName-> " + GetChapterFilename());
-            Debug.Log("[GSM]Session data ChallengeIndex -> " + _gameStateManager.GameStateModel.CurrentChallengeIndex);
-            Debug.Log("[GSM]Session data Score -> " + _gameStateManager.GameStateModel.CurrentScore);
+            //Debug.Log("[GSM] Session data UserId -> " + _gameStateManager.GameStateModel.UserId);
+            //Debug.Log("[GSM]Session data Scenar -> " + _gameStateManager.GameStateModel.CurrentScenario);
+            //Debug.Log("[GSM]Session data ChapterFileName-> " + GetChapterFilename());
+            //Debug.Log("[GSM]Session data ChallengeIndex -> " + _gameStateManager.GameStateModel.CurrentChallengeIndex);
+            //Debug.Log("[GSM]Session data Score -> " + _gameStateManager.GameStateModel.CurrentScore);
 
             _ = await _networkService.UpdateSession(session);
         }
@@ -70,7 +72,6 @@ namespace StarterCore.Core.Scenes.Board
 
         private string GetChapterFilename()
         {
-            Debug.Log("[BoardManager] game model CurrentChapter is " + _gameStateManager.GameStateModel.CurrentChapter);
             //Get chapter filename property from catalog
             string name = string.Empty;
 
@@ -79,12 +80,12 @@ namespace StarterCore.Core.Scenes.Board
             {
                 foreach (Chapter c in s.Chapters)
                 {
-                    Debug.Log("[BoardManager] CTitle ->" + c.ChapterTitle + "<-");
-                    Debug.Log("[BoardManager] CModel ->" + _gameStateManager.GameStateModel.CurrentChapter + "<-");
+                    //Debug.Log("[BoardManager] CTitle ->" + c.ChapterTitle + "<-");
+                    //Debug.Log("[BoardManager] CModel ->" + _gameStateManager.GameStateModel.CurrentChapter + "<-");
 
                     if (c.ChapterTitle.ToLower().Equals(_gameStateManager.GameStateModel.CurrentChapter.ToLower()))
                     {
-                        Debug.Log("[BoardManager] FOUND -> " + c.ChapterTitle);
+                        //Debug.Log("[BoardManager] FOUND -> " + c.ChapterTitle);
                         name = c.ChapterFilename;
                     }
                 }

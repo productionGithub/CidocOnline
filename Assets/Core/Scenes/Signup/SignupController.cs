@@ -36,7 +36,7 @@ namespace StarterCore.Core.Scenes.Signup
 
         [SerializeField] private Button _backButton;
 
-        [Inject] private MockNetService _MockNetService;
+        [Inject] private APIService _MockNetService;
         [Inject] private GameStateManager _gameState;
 
 

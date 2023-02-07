@@ -1,0 +1,49 @@
+{
+      "scenario-title": "Marmoutier EN",
+      "ontologyTags": [
+        "CIDOC CRM"
+      ],
+      "domainTags": [
+        "History",
+        "Archaeology",
+        "Cultural heritage"
+      ],
+    "domainCodes" : [
+        "HIS",
+        "ARC"
+      ],
+    "authorTags": [
+      "MASA",
+      "Huma-num"
+      ],
+      "languageTag": "English",
+      "scenario-description": "Learn CIDOC CRM basics with the archaeological excavation of Marmoutier (France)",
+      "chapters": [
+        {
+          "chapter-title": "Ontology basics",
+          "chapter-description": "What is an ontology?",
+          "chapter-filename": "Chapter1.json"
+        },
+        {
+          "chapter-title": "CIDOC CRM Basics",
+          "chapter-description": "How is structured CIDOC CRM?",
+          "chapter-filename": "Chapter2.json"
+        },
+        {
+          "chapter-title": "Instance modelling (1)",
+          "chapter-description": "Mapping an instance to CIDOC class",
+          "chapter-filename": "Chapter3.json"
+        },
+        {
+          "chapter-title": "Instance modelling (2)",
+          "chapter-description": "Using property to connect two instances",
+          "chapter-filename": "Chapter4.json"
+        },
+        {
+          "chapter-title": "Instance modelling (3)",
+          "chapter-description": "Complex modelling with three instances",
+          "chapter-filename": "Chapter5.json"
+        }
+      ]
+    }
+

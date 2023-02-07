@@ -10,7 +10,7 @@ namespace StarterCore.Core.Scenes.Stats
 {
     public class StatsManager : IInitializable
     {
-        [Inject] MockNetService _mockNetService;
+        [Inject] APIService _mockNetService;
         [Inject] GameStateManager _gameStateManager;
         [Inject] StatsController _statsController;
         [Inject] NavigationService _navigationService;

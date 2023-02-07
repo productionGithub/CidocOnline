@@ -236,7 +236,7 @@ namespace StarterCore.Core.Services.Navigation
         {
             await _sceneLoader.LoadSceneAsync(nextSceneName, LoadSceneMode.Additive);
             _ = SceneManager.UnloadSceneAsync(previousSceneName);
-            OnSceneChangeEvent?.Invoke(SceneManager.GetActiveScene().name);
+            OnSceneChangeEvent?.Invoke(SceneManager.GetActiveScene().name);//Unused
         }
 
         public override string ToString()

@@ -10,7 +10,7 @@ namespace StarterCore.Core.Scenes.ResetPassword
 {
     public class ResetPasswordManager : IInitializable
     {
-        [Inject] private MockNetService _net;
+        [Inject] private APIService _net;
         [Inject] private ResetPasswordController _controller;
         [Inject] private NavigationService _navService;
 

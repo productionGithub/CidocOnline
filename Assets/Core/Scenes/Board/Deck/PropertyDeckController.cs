@@ -320,6 +320,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
             {
                 Trace.Log(string.Format("domain color : {0} ", c));
             }
+            Debug.Log("Break");
             UpdateDeck();
         }
 
@@ -382,7 +383,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
                 Trace.Log("[PropertyDeckController] UPDATE DECK COUNTER with value : " + _currentDeckContent.Count);
                 _deckCounterDisplayer.Show(_currentDeckContent.Count, _initialDeckContent.Count);
                 Trace.Log("[PropertyDeckController] CAll refresh card: ");
-                _propertyCardController.Show(_propertyDeckService.PropertyCards[0]);
+                _propertyCardController.Show(_currentDeckContent[0]);
             }
             else
             {

@@ -2,7 +2,7 @@
    "locale": "en",
    "static-text" : {
    "SigninScene": {
-      "signin-scene-title-text": "WELCOME TO ONTOMATCHGAME!",
+      "signin-scene-title-text": "Welcome to OntoMatchGame!",
       "signin-scene-intro-text": "Semantic Data Representation should let you generate, share and consume Cultural Heritage data with colleagues around the world, to ask and answer questions against more data and more integrated knowledge nets.\n\nBut to get there, you need to learn how to read and write semantic data in the first place. That’s where OntoMatchGame comes in. If you are interested in learning about ontology, semantics and how to apply them to real cultural heritage data, then the OntoMatchGame has been designed for you.",
       "signin-scene-email-label": "Your Email",
       "signin-scene-wrongemail-text" : "This email is not link to any account",
@@ -61,13 +61,18 @@
       "gameselection-scene-backbutton-text":"Back",
       "gameselection-scene-listofscenarii-label":"List of scenarii",
       "gameselection-scene-domain-label":"Topics",
-      "gameselection-scene-domain1-text":"Archeology",
-      "gameselection-scene-domain2-text":"History",
-      "gameselection-scene-domain3-text":"Science",
-      "gameselection-scene-domain4-text":"Civilization",
-      "gameselection-scene-domain5-text":"Art",
-      "gameselection-scene-domain6-text":"Literature",
-      "gameselection-scene-domain7-text":"Yet another tag",
+      "gameselection-scene-topicarcheology-text":"Archeology",
+      "gameselection-scene-topicarchitecture-text":"Architecture",
+      "gameselection-scene-topicarchive-text":"Archive",
+      "gameselection-scene-topicart-text":"Art",
+      "gameselection-scene-topicconservation-text":"Conservation",
+      "gameselection-scene-topicethnology-text":"Ethnology",
+      "gameselection-scene-topichistory-text":"History",
+      "gameselection-scene-topiclinguistic-text":"Linguistic",
+      "gameselection-scene-topicliterature-text":"Literature",
+      "gameselection-scene-topicoldbook-text":"Old book",
+      "gameselection-scene-topicmuseum-text":"Museum",
+      "gameselection-scene-topicmusicology-text":"Musicology",
       "gameselection-scene-ontology-label":"Ontology",
       "gameselection-scene-language-label":"Language",
       "gameselection-scene-language1-text":"English",
@@ -78,11 +83,10 @@
       "mainmenu-scene-continuewaiting-text": "Searching last session. Please wait...",
       "mainmenu-scene-continue-text": "Last played: ",
       "mainmenu-scene-nocontinue-text": "Last played session : none.",
-
       "mainmenu-scene-continuebutton-text": "Continue",
       "mainmenu-scene-continuebutton-text": "Continue",
       "mainmenu-scene-choosebutton-text": "Choose",
-      "mainmenu-scene-choosebutton-label": "Chose a scenario",
+      "mainmenu-scene-choosebutton-label": "Choose a scenario",
       "mainmenu-scene-statisticsbutton-text": "See stats",
       "mainmenu-scene-statistics-label": "See my statistics",
       "mainmenu-scene-hallbutton-text": "Ranking",
@@ -90,7 +94,9 @@
       "mainmenu-scene-reset-label": "Reset game data and start over",
        "mainmenu-scene-resetbutton-text": "Reset",
        "mainmenu-scene-quit-label": "Quit game",
-      "mainmenu-scene-quitbutton-text": "Quit"
+      "mainmenu-scene-quitbutton-text": "Quit",
+      "mainmenu-scene-more-label":"More info",
+      "mainmenu-scene-credits-label":"Full credits"
     },
 
       "BoardScene" :{
@@ -121,22 +127,23 @@
       "FullCreditsScene" :{
       "fullcredits-scene-title-text": "ONTOMATCHGAME",
       "fullcredits-scene-backbutton-text": "Main Menu",
-      "fullcredits-scene-masa-text": "A DIGITAL GAME FUNDED BY - MASA (<link=\"https://masa.hypothese.org\">https://masa.hypotheses.org</link>)",
-      "fullcredits-scene-originalgame-text": "Original Card Game and Prototype Digital Game created by - George Bruseker and Anaïs Guillem.\ngeorge@takin.solutions - aguillem@ucmerced.edu",
-      "fullcredits-scene-digitalgameproducer-text": "Digital game executive producer - Olivier Marlet (olivier.marlet@univ-tours.fr)",
-      "fullcredits-scene-digitalcreationteam-text": "Digital game design - 'Fanch' Fx. Talgorn - G. Bruseker - O. Marlet - A. Guillem",
-      "fullcredits-scene-digitalversionproduction-text": "Digital version created by 'Fanch' - INDYTION (<link=\"mailto:fx.talgorn@indytion.com\">fx.talgorn@indytion.com</link>)",
-      "fullcredits-scene-graphicdesign-text": "Graphic design by - Alexandre Moulineau (alex_41100@hotmail.fr)"
+      "fullcredits-scene-masa-text": "A digital game funded by Huma-Num MASA Consortium (<link=\"https://masa.hypothese.org\">https://masa.hypotheses.org</link>)",
+      "fullcredits-scene-originalgame-text": "Original Card Game and Prototype Digital Game:\nGeorge Bruseker (george@takin.solutions) and Anaïs Guillem (aguillem@ucmerced.edu)",
+      "fullcredits-scene-digitalgameproducer-text": "Digital game executive producer: Olivier Marlet (olivier.marlet@univ-tours.fr)",
+      "fullcredits-scene-digitalcreationteam-text": "Digital game design: 'Fanch' Fx. Talgorn, G. Bruseker, O. Marlet, A. Guillem",
+      "fullcredits-scene-digitalversionproduction-text": "Digital version: 'Fanch' - INDYTION (<link=\"mailto:fx.talgorn@indytion.com\">fx.talgorn@indytion.com</link>)",
+      "fullcredits-scene-graphicdesign-text": "Graphic design: Alexandre Moulineau (alex_41100@hotmail.fr)",
+      "fullcredits-scene-mainmenu-text":"Main menu"
     },
 
     "GoingFurtherScene":{
-      "goingfurther-scene-title-text": "GOING FURTHER WITH CIDOC-CRM",
+      "goingfurther-scene-title-text": "GOING FURTHER WITH CIDOC CRM",
       "goingfurther-scene-backbutton-text": "Main Menu",
       "goingfurther-scene-CidocGameWebSite-label": "To find more information about and editions of the CIDOC CRM Game visit:",
       "goingfurther-scene-youtube-label": "To learn more about semantics and the CIDOC CRM itself you can\ncheck out these YouTube videos:",
       "goingfurther-scene-officialcidocwebsite-label": "And, of course, you can visit the official CIDOC CRM website:",
-      "goingfurther-scene-creators-label": "To contact the creators of the CIDOC CRM Game to discuss\nits use and extension, contact:",
-      "goingfurther-scene-contacts-label":"George Bruseker (Takin.solutions - george@takin.solutions)\nOlivier Marlet (Université de Tours - olivier.marlet@univ-tours.fr)\nFrançois-Xavier Talgorn (INDYTION - fx.talgorn@indytion.com)"
+      "goingfurther-scene-creators-label": "To contact the creators of OntoMatchGame to discuss\nits use and extension, contact:",
+      "goingfurther-scene-contacts-label":"Anaïs Guillem (University of Merced - aguillem@ucmerced.edu)\nGeorge Bruseker (Takin.solutions - george@takin.solutions)\nOlivier Marlet (CNRS, University of Tours - olivier.marlet@univ-tours.fr)\nFrançois-Xavier Talgorn (INDYTION - fx.talgorn@indytion.com)"
     
     }
     }

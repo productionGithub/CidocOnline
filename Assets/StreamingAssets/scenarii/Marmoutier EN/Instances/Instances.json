@@ -1,0 +1,338 @@
+[
+ {
+   "Id": "I1",
+   "Title": "Marmoutier guesthouse",
+   "Label": "",
+   "ImageName": "01_site_Guesthouse.jpg"
+ },
+ {
+   "Id": "I2",
+   "Title": "Mrs Lorans (archaeologist)",
+   "Label": "http://viaf.org/viaf/120393",
+   "ImageName": "02_archaeologist.jpg"
+ },
+ {
+   "Id": "I3",
+   "Title": "Periode of Marmoutier excavation",
+   "Label": "2004-2020",
+   "ImageName": "03_2004-2020.jpg"
+ },
+ {
+   "Id": "I4",
+   "Title": "Tours",
+   "Label": "http://www.geonames.org/2972191",
+   "ImageName": "04_Tours.jpg"
+ },
+ {
+   "Id": "I5",
+   "Title": "Representation of Marmoutier abbey",
+   "Label": "engraving from Monasticon Gallicanum",
+   "ImageName": "05_Monasticon_Gallicanum.jpg"
+ },
+ {
+   "Id": "I6",
+   "Title": "Excavation of the Marmoutier guesthouse",
+   "Label": "",
+   "ImageName": "06_excavation.jpg"
+ },
+ {
+   "Id": "I7",
+   "Title": "Saint Martin denarius AJ.1.13",
+   "Label": "",
+   "ImageName": "07_denarius.jpg"
+ },
+ {
+   "Id": "I8",
+   "Title": "Bell mould pit F.1270",
+   "Label": "",
+   "ImageName": "08_moldBellPit.jpg"
+ },
+ {
+   "Id": "I9",
+   "Title": "\"Elisabeth Lorans\"",
+   "Label": "",
+   "ImageName": "09_nameELorans.jpg"
+ },
+ {
+   "Id": "I10",
+   "Title": "Archaeology students in Tours",
+   "Label": "",
+   "ImageName": "10_studients.jpg"
+ },
+ {
+   "Id": "I11",
+   "Title": "Tours archaeology research team",
+   "Label": "\"Laboratoire Archéologie et Territoires\"",
+   "ImageName": "11_CITERES_LAT.jpg"
+ },
+ {
+   "Id": "I12",
+   "Title": "\"F1270\"",
+   "Label": "",
+   "ImageName": "12_id_Fait1270.jpg"
+ },
+ {
+   "Id": "I13",
+   "Title": "Coin",
+   "Label": "http://vocab.getty.edu/aat/300037222",
+   "ImageName": "13_coin.jpg"
+ },
+ {
+   "Id": "I14",
+   "Title": "\"Laboratoire Archéologie et Territoires\"",
+   "Label": "",
+   "ImageName": "14_nameLAT.jpg"
+ },
+ {
+   "Id": "I15",
+   "Title": "Silver",
+   "Label": "http://vocab.getty.edu/aat/300011029",
+   "ImageName": "15_silver.jpg"
+ },
+ {
+   "Id": "I16",
+   "Title": "Pendant",
+   "Label": "http://vocab.getty.edu/aat/300046002",
+   "ImageName": "16_pendent.jpg"
+ },
+ {
+   "Id": "I17",
+   "Title": "Publication of excavation report",
+   "Label": "Lorans 2020",
+   "ImageName": "17_publication_report.jpg"
+ },
+ {
+   "Id": "I18",
+   "Title": "Excavation report Marmoutier 2020",
+   "Label": "",
+   "ImageName": "18_report.jpg"
+ },
+ {
+   "Id": "I19",
+   "Title": "Edmond Martène",
+   "Label": "http://viaf.org/viaf/179908716",
+   "ImageName": "19_dom_Martene.jpg"
+ },
+ {
+   "Id": "I20",
+   "Title": "Date of creation of the Monasticon Gallicanum",
+   "Label": "17th century",
+   "ImageName": "20_17th.jpg"
+ },
+ {
+   "Id": "I21",
+   "Title": "Engraving design of the Monasticon Gallicanum",
+   "Label": "",
+   "ImageName": "21_engraving_design.jpg"
+ },
+ {
+   "Id": "I22",
+   "Title": "Use of the denarius",
+   "Label": "",
+   "ImageName": "22_coinUse.jpg"
+ },
+ {
+   "Id": "I23",
+   "Title": "Periode of use of the denarius",
+   "Label": "1150-1200",
+   "ImageName": "23_1150-1200.jpg"
+ },
+ {
+   "Id": "I24",
+   "Title": "Marmoutier Abbey",
+   "Label": "",
+   "ImageName": "24_MarmoutierAbbey.jpg"
+ },
+ {
+   "Id": "I25",
+   "Title": "Middle Ages",
+   "Label": "http://n2t.net/ark:/99152/p0qhb66k5qn",
+   "ImageName": "25_middle-ages.jpg"
+ },
+ {
+   "Id": "I26",
+   "Title": "Foundation of Marmoutier Abbey",
+   "Label": "",
+   "ImageName": "26_foundation.jpg"
+ },
+ {
+   "Id": "I27",
+   "Title": "Year of foundation of Marmoutier",
+   "Label": "372",
+   "ImageName": "27_372.jpg"
+ },
+ {
+   "Id": "I28",
+   "Title": "Saint Martin de Tours",
+   "Label": "http://viaf.org/viaf/73825464",
+   "ImageName": "28_saintMartin.jpg"
+ },
+ {
+   "Id": "I29",
+   "Title": "Year of Saint Martin birth ",
+   "Label": "316",
+   "ImageName": "29_316.jpg"
+ },
+ {
+   "Id": "I30",
+   "Title": "Year of Saint Martin death",
+   "Label": "397",
+   "ImageName": "30_397.jpg"
+ },
+ {
+   "Id": "I31",
+   "Title": "Vita sancti Martini",
+   "Label": "",
+   "ImageName": "31_Vita.jpg"
+ },
+ {
+   "Id": "I32",
+   "Title": "Sulpice Severus",
+   "Label": "http://viaf.org/viaf/30332452",
+   "ImageName": "32_SulpiceSeverus.jpg"
+ },
+ {
+   "Id": "I33",
+   "Title": "CITERES-LAT logo",
+   "Label": "",
+   "ImageName": "33_logo.jpg"
+ },
+ {
+   "Id": "I34",
+   "Title": "Charcoal AJ.40893.1",
+   "Label": "",
+   "ImageName": "34_charcoal.jpg"
+ },
+ {
+   "Id": "I35",
+   "Title": "Flood deposit US.43187",
+   "Label": "",
+   "ImageName": "35_flood_deposit.jpg"
+ },
+ {
+   "Id": "I36",
+   "Title": "Wheat grains from pit F1308",
+   "Label": "",
+   "ImageName": "36_wheat.jpg"
+ },
+ {
+   "Id": "I37",
+   "Title": "University Professor",
+   "Label": "http://vocab.getty.edu/aat/300025533",
+   "ImageName": "37_professor.jpg"
+ },
+ {
+   "Id": "I38",
+   "Title": "Guesthouse built remains",
+   "Label": "",
+   "ImageName": "38_elevated_remains.jpg"
+ },
+ {
+   "Id": "I39",
+   "Title": "Denarius weight",
+   "Label": "0,90g",
+   "ImageName": "39_weight.jpg"
+ },
+ {
+   "Id": "I40",
+   "Title": "Saint Martin's mantle",
+   "Label": "",
+   "ImageName": "40_mantle.jpg"
+ },
+ {
+   "Id": "I41",
+   "Title": "Clothing",
+   "Label": "http://vocab.getty.edu/aat/300266639",
+   "ImageName": "41_clothing.jpg"
+ },
+ {
+   "Id": "I42",
+   "Title": "Great Prior's house",
+   "Label": "",
+   "ImageName": "42_great_prior_house.jpg"
+ },
+ {
+   "Id": "I43",
+   "Title": "Transformation",
+   "Label": "from guesthouse to Great Prior house",
+   "ImageName": "43_transformation.jpg"
+ },
+ {
+   "Id": "I44",
+   "Title": "Printed version of the excavation report",
+   "Label": "Lorans 2020",
+   "ImageName": "44_printed_report.jpg"
+ },
+ {
+   "Id": "I45",
+   "Title": "Chapter of the excavation report",
+   "Label": "",
+   "ImageName": "45_chapter.jpg"
+ },
+ {
+   "Id": "I46",
+   "Title": "Guesthouse buried remains",
+   "Label": "",
+   "ImageName": "46_buried_remains.jpg"
+ },
+ {
+   "Id": "I47",
+   "Title": "lorans@univ-tours.fr",
+   "Label": "",
+   "ImageName": "47_email.jpg"
+ },
+ {
+   "Id": "I48",
+   "Title": "Writing of the Vita Sancti Martini",
+   "Label": "",
+   "ImageName": "48_writing.jpg"
+ },
+ {
+   "Id": "I49",
+   "Title": "Saint Martin death",
+   "Label": "",
+   "ImageName": "49_death.jpg"
+ },
+ {
+   "Id": "I50",
+   "Title": "Saint Martin birth",
+   "Label": "",
+   "ImageName": "50_birth.jpg"
+ },
+ {
+   "Id": "I51",
+   "Title": "Marmoutier evolution history",
+   "Label": "",
+   "ImageName": "51_evolution.jpg"
+ },
+ {
+   "Id": "I52",
+   "Title": "SCS MARTINVS",
+   "Label": "title on the denarius obverse ",
+   "ImageName": "52_scsmartinus.jpg"
+ },
+ {
+   "Id": "I53",
+   "Title": "Minting of coins in Marmoutier",
+   "Label": "from 1000 to 1204",
+   "ImageName": "53_mint.jpg"
+ },
+ {
+   "Id": "I54",
+   "Title": "Castle with a cross on top",
+   "Label": "symbol on the denarius obverse",
+   "ImageName": "54_castle.jpg"
+ },
+ {
+   "Id": "I55",
+   "Title": "Collapse of the hillside of Marmoutier",
+   "Label": "1985",
+   "ImageName": "55_collapse.jpg"
+ },
+ {
+   "Id": "I56",
+   "Title": "The valuation of the Saint Martin denarius",
+   "Label": "by collectors",
+   "ImageName": "56_valuation.jpg"
+ }
+]

@@ -22,7 +22,7 @@ namespace StarterCore.Core.Services.Localization
     public class LocalizationManager : IInitializable
     {
         [Inject] private NavigationService _navService;
-        [Inject] private MockNetService _netService;
+        [Inject] private APIService _netService;
         [Inject] private GameStateManager _gamestate;
 
         public event Action OnTranslateEvent;

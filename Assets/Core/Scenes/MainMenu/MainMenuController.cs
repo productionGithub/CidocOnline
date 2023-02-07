@@ -14,7 +14,7 @@ namespace StarterCore.Core.Scenes.MainMenu
     public class MainMenuController : MonoBehaviour
     {
         [Inject] private GameStateManager _gameStateManager;
-        [Inject] private MockNetService _networkService;
+        [Inject] private APIService _networkService;
         [Inject] private GameStateManager _gameState;
         [Inject] private LocalizationManager _localizationManager;
 
@@ -66,16 +66,6 @@ namespace StarterCore.Core.Scenes.MainMenu
             _confirmResetButton.onClick.AddListener(OnResetConfirmButton);
         }
 
-        public void ShowWaitingIcon()
-        {
-            _waitingIcon.SetActive(true);
-        }
-
-        public void HideWaitingIcon()
-        {
-            _waitingIcon.SetActive(false);
-        }
-
         public async void Show()
         {
             //Get player history
@@ -111,6 +101,16 @@ namespace StarterCore.Core.Scenes.MainMenu
             }
 
             TranslateUI();
+        }
+
+        public void ShowWaitingIcon()
+        {
+            _waitingIcon.SetActive(true);
+        }
+
+        public void HideWaitingIcon()
+        {
+            _waitingIcon.SetActive(false);
         }
 
         private void TranslateUI()

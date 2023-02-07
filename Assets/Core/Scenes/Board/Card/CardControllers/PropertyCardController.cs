@@ -1,4 +1,4 @@
-#define TRACE_ON
+#define TRACE_OFF
 using System;
 using System.Collections.Generic;
 using StarterCore.Core.Scenes.Board.Card.Cards;
