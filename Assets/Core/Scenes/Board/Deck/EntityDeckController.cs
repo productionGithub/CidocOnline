@@ -1,4 +1,4 @@
-#define TRACE_ON
+#define TRACE_OFF
 using StarterCore.Core.Scenes.Board.Card.Cards;
 using System.Collections.Generic;
 using UnityEngine;
@@ -162,6 +162,7 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
                 //Update player answer
                 CurrentCard = currentCard;
+                Debug.Log("Current card : " + CurrentCard.label);
             }
         }
 
@@ -221,7 +222,9 @@ namespace StarterCore.Core.Scenes.Board.Deck
                     if (_currentDeckContent.Count > 0)
                     {
                         _isListFiltered = true;
+                        CurrentCard = _currentDeckContent[0];
                     }
+
                 }
                 else
                 //Remove corresponding tick color to filter
@@ -237,32 +240,28 @@ namespace StarterCore.Core.Scenes.Board.Deck
                         _addedCard.Clear();
                         _addedCard = new List<EntityCard>();
                         _isListFiltered = false;
+
+                        CurrentCard = _currentDeckContent[0];
                     }
                 }
             }
-            CurrentCard = _currentDeckContent[0];
             DisplayDeck();
         }
 
         private void FilterAddColor(EntityTick.TickColor e)//From current deckContent
         {
+            Trace.Log("[EntityDeckController] FilterAdd - Color ticked : " + e.ToString());
+
             foreach (EntityCard curCard in _initialDeckContent)
             {
-                //TODO Debug this (no impact on gameplay) : On MarmoutierEN, Challenge 8.
-                //TODO If Deck initialized with 'E7' and Tick Grey or Pink is ticked
-                //TODO Out or range error on the following line (param nae : index).
                 if (curCard.colors[0].Equals(_entityDeckService.ColorsDictionary[e.ToString()]))
                 {
-                    Debug.Log("BEFORE...");
-                    Trace.Log("[EntityDeckController] We are here -> FilterAddColor, CurCard color " + curCard.colors[0]);
-
                     _currentDeckContent.Add(curCard);
                 }
                 else
                 {
                     if (curCard.colors.Count > 1)
                     {
-                        Trace.Log("[EntityDeckController] We are here -> FilterAddColor, + 1 CurCard color " + curCard.colors[1]);
 
                         if (curCard.colors[1].Equals((Color32)_entityDeckService.ColorsDictionary[e.ToString()]))
                         {
@@ -329,6 +328,8 @@ namespace StarterCore.Core.Scenes.Board.Deck
 
             _currentDeckContent.Clear();
             _currentDeckContent = new List<EntityCard>(_initialDeckContent);
+
+            CurrentCard = _currentDeckContent[0];
 
             _addedCard.Clear();//Maybe will be remove depending on chosen logic
             _addedCard = new List<EntityCard>();

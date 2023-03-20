@@ -47,23 +47,34 @@ namespace StarterCore.Core.Scenes.Stats
             totalScenarioMaxPossibleScore = 0;
             nbChapterInScenario = 0;
 
+            float _totalChapterProgression;
+        
             _scenarioTitle.text = title;
 
             foreach (ChapterProgressionModelDown chap in chapterEntries)
             {
+                _totalChapterProgression = 0;
+
                 if (chap.ScenarioName.Equals(title))
                 {
                     ChapterLineDetailEntry chapLineInstance = Instantiate(_chapterLineTemplate, _detailContainer);
                     _entriesList.Add(chapLineInstance);
                     chapLineInstance.gameObject.SetActive(true);
-                    if(chap.LastChallengeId == 1)
+
+                    if (chap.LastChallengeId == 1)
                     {
-                        totalScenarioProgression = 0;
+                        //totalScenarioProgression = 0;
+                        _totalChapterProgression = 0;
                     }
                     else
                     {
-                        totalScenarioProgression += (chap.LastChallengeId * 100) / chap.MaxChallengeCount;
+                        _totalChapterProgression += (chap.LastChallengeId * 100) / chap.MaxChallengeCount;
+
+                        //totalScenarioProgression += (chap.LastChallengeId * 100) / chap.MaxChallengeCount;
+                        Debug.Log("");
                     }
+
+                    totalScenarioProgression += (int) _totalChapterProgression;
 
                     totalScenarioScore += chap.Score;
                     totalScenarioMaxPossibleScore += chap.MaxPossibleScore;
@@ -72,8 +83,13 @@ namespace StarterCore.Core.Scenes.Stats
 
                     chapLineInstance.Show(chap);
                 }
+
+                Debug.Log("");
+
             }
-            _scenarioTotalProgression.text = (totalScenarioProgression * 100) / (nbChapterInScenario * 100) + "%";
+            //_scenarioTotalProgression.text = (totalScenarioProgression * 100) / (nbChapterInScenario * 100) + "%";
+            _scenarioTotalProgression.text = totalScenarioProgression / nbChapterInScenario + "%";
+            Debug.Log("");
             _scenarioTotalScore.text = totalScenarioScore.ToString();
             _scenarioMaxPossibleScore.text = totalScenarioMaxPossibleScore.ToString();
         }

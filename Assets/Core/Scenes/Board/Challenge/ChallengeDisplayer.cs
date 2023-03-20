@@ -91,6 +91,8 @@ namespace StarterCore.Core.Scenes.Board.Challenge
         public void DisplayResult(bool answerCorrect, ChallengeData expectedAnswers)
         {
             _boardMask.SetActive(true);
+
+            //Switch (Case -> Enum {Branch, Entity, Property} -> Logique d'affichage?
             if (answerCorrect)
             {
                 _currentScore.text = _gameStateManager.GameStateModel.CurrentScore.ToString();
@@ -103,7 +105,8 @@ namespace StarterCore.Core.Scenes.Board.Challenge
             {
                 _winBanner.SetActive(false);
                 //Display explanation message
-                _explanationTitle.GetComponentInChildren<TextMeshProUGUI>().text = _localizationManager.GetTranslation("boardscene-scene-explanationtitle-text");
+                _explanationTitle.GetComponentInChildren<TextMeshProUGUI>().text = _localizationManager.GetTranslation("boardscene-scene-explanationtitle-text"); //-> Seems useless ?
+
                 _explanationTitle.SetActive(true);
                 _explanationDescription.GetComponentInChildren<TextMeshProUGUI>().text = expectedAnswers.Explanation;
                 _explanationDescription.SetActive(true);

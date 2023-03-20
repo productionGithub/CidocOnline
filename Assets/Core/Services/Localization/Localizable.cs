@@ -22,6 +22,7 @@ namespace StarterCore.Core.Services.Localization
 
         private void GetTranslation()
         {
+            Debug.Log("Tranlating text...> " + _localization.GetTranslation(LocalizeKey)) ;
             LocalizedText.SetText(_localization.GetTranslation(LocalizeKey));
         }
 

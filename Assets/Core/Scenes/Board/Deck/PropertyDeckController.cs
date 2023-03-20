@@ -196,6 +196,8 @@ namespace StarterCore.Core.Scenes.Board.Deck
         {
             string id = cardAbout.Substring(0, cardAbout.IndexOf("_")).Trim();//Fetch the sub string before first '_'
             EntityCard card = _entityDeckService.EntityCards.Single(c => c.id == id);
+
+            _leftDeckController.CurrentCard = card;
             _leftDeckController.DisplayCardFromHierarchy(card);
         }
 
@@ -203,6 +205,8 @@ namespace StarterCore.Core.Scenes.Board.Deck
         {
             string id = cardAbout.Substring(0, cardAbout.IndexOf("_")).Trim();//Fetch the sub string before first '_'
             EntityCard card = _entityDeckService.EntityCards.Single(c => c.id == id);
+
+            _rightDeckController.CurrentCard = card;
             _rightDeckController.DisplayCardFromHierarchy(card);
         }
 
@@ -384,6 +388,8 @@ namespace StarterCore.Core.Scenes.Board.Deck
                 _deckCounterDisplayer.Show(_currentDeckContent.Count, _initialDeckContent.Count);
                 Trace.Log("[PropertyDeckController] CAll refresh card: ");
                 _propertyCardController.Show(_currentDeckContent[0]);
+
+                CurrentCard = _currentDeckContent[0];
             }
             else
             {

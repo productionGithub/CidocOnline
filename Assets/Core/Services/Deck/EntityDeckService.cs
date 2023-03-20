@@ -26,7 +26,7 @@ public class EntityDeckService : IInitializable
     public Dictionary<string, int> IconsDictionary;//Get reference index in spriteSheet by name of icon (more readable)
 
     //Colors
-    public Dictionary<string, Color32> ColorsDictionary;
+    public Dictionary<string, Color32> ColorsDictionary;//Map color names to Color32 value
 
     //Temporary dictionary for superClass deduction
     private Dictionary<string, List<string>> allSuperClassDic;

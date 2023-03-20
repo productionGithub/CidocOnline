@@ -18,14 +18,12 @@ namespace StarterCore.Core.Scenes.Signin
 
         public void Initialize()
         {
-            Debug.Log("Scene name is " + SceneManager.GetActiveScene().name);
-            _controller.Show();
             _controller.OnSigninFormSubmittedEvent += SubmitClicked;
             _controller.OnForgotPasswordClickedEvent += ForgotPassword;
             _controller.OnCreateAccountClickedEvent += SignUp;
             _controller.OnEnglishLocalizationFlagClickedEvent += SetEnglishLocalization;
             _controller.OnFrenchLocalizationFlagClickedEvent += SetFrenchLocalization;
-
+            _controller.Show();
             SetFrenchLocalization();
         }
 
@@ -36,6 +34,7 @@ namespace StarterCore.Core.Scenes.Signin
 
         private void SetEnglishLocalization()
         {
+            Debug.Log("[Sign Manager] ENGLISH !");
             _gameState.SetLocale("en");
         }
 

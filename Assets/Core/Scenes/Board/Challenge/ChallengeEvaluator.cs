@@ -170,6 +170,9 @@ namespace StarterCore.Core.Scenes.Board.Challenge
                             break;
                         }
                         else eval = false;
+                        //V3 -> Check branch with card colors / expected card colors
+                        //If !possible.colors.Contains(_entityDeckService[answer.colors]) => Wrong branch (just the idea)
+                        //If !WrongBranch { If( !answer == possible) => Wrong class / Entity)
                     }
 
                     break;
@@ -228,7 +231,7 @@ namespace StarterCore.Core.Scenes.Board.Challenge
                             eval = true;
                             break;
                         }
-                        else eval = false;
+                        else eval = false; // => Wrong property !
                     }
 
                     break;

@@ -36,6 +36,7 @@ namespace StarterCore.Core.Services.Localization
 
         private async void SetLocaleDictionary()
         {
+            Debug.Log("[LocalizationMgr] English !");
             //Set the new locale from remote language files
             LocalesManifestModel manifestModel = await GetLocaleManifest();//Contains languages file paths
 
@@ -44,10 +45,12 @@ namespace StarterCore.Core.Services.Localization
             {
                 //If yes, get the corresponding language file
                 _languageDictionary = await GetLocaleDictionary(_gamestate.Locale);
+                Debug.Log("Locale changed to : " + _gamestate.Locale);
             }
             else
             {
                 _gamestate.SetLocale(_gamestate.DefaultLocale);
+                Debug.Log("Locale changed to : " + _gamestate.DefaultLocale);
                 _languageDictionary = await GetLocaleDictionary(_gamestate.Locale);
             }
 

@@ -107,7 +107,8 @@
       "boardscene-scene-validatebutton-text": "Valider",
       "boardscene-scene-nextbutton-text": "Suivant",
       "boardscene-scene-retrybutton-text": "Réessayer",
-      "boardscene-scene-quitbutton-text": "Quitter"
+      "boardscene-scene-quitbutton-text": "Quitter",
+      "boardscene-scene-branchmistake-text": "Erreur de branche"
     },
 
     "StatsScene" :{

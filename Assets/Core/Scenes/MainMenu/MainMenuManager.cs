@@ -101,8 +101,5 @@ namespace StarterCore.Core.Scenes.MainMenu
         {
             _navigation.Push("GoingFurtherScene");
         }
-
-
-
     }
 }

@@ -59,6 +59,7 @@ namespace StarterCore.Core.Scenes.Signin
 
         private void OnEnglishLocalizationFlagClicked()
         {
+            Debug.Log("ENGLISH !!!");
             OnEnglishLocalizationFlagClickedEvent?.Invoke();
         }
 

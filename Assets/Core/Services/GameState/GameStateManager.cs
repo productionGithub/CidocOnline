@@ -40,6 +40,7 @@ namespace StarterCore.Core.Services.GameState
 
         public void SetLocale(string locale)
         {
+            Debug.Log("[GameStateMgr] English !");
             gameStateModel.Locale = locale;
             OnLocaleChanged?.Invoke();
         }

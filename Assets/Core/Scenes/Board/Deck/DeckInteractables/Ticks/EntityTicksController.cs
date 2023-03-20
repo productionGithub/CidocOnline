@@ -42,6 +42,7 @@ namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables.Ticks
         // - If all but White are Off, White is set to On
         public void RefreshTicks(GameObject senderTick)
         {
+            Debug.Log("[EntityTicksController] RefreshTicks()");
             EntityTick tick = senderTick.GetComponentInParent<EntityTick>();
 
             if (tick != null)
@@ -55,6 +56,7 @@ namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables.Ticks
                 {
                     if (tick.IsTicked)
                     {
+                        Trace.Log("[EntityTicksController] Tick already ON");
                         tick.TickOff();
                         _tickCount--;
                         if (_tickCount == 0)
@@ -64,6 +66,7 @@ namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables.Ticks
                     }
                     else
                     {
+                        Trace.Log("[EntityTicksController] Tick already OFF");
                         tick.TickOn();
                         _tickCount++;
                         whiteTick.GetComponent<EntityTick>().TickOff();
@@ -74,6 +77,8 @@ namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables.Ticks
 
         public void ResetTicks()
         {
+            Trace.Log("[EntityTicks] RESET TICKS !");
+
             //Set all ticks to Off
             foreach (EntityTick tick in GetComponentsInChildren<EntityTick>())
             {
@@ -84,7 +89,8 @@ namespace StarterCore.Core.Scenes.Board.Deck.DeckInteractables.Ticks
             _tickCount = 0;
         }
 
-        private void OnDisable()
+        
+        private void OnDestroy()
         {
             if (listOfTick != null)
             {
